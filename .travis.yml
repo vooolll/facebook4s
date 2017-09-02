@@ -18,7 +18,7 @@ script:
   - travis_retry sbt clean test
 
 scala:
-  - 2.11.8
+  - 2.11.11
 
 jdk:
   - oraclejdk8
