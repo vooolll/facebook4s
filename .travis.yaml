@@ -1,0 +1,29 @@
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.ivy2/cache
+    - $HOME/.sbt/boot/
+
+before_cache:
+  - find $HOME/.ivy2 -name "ivydata-*.properties" -delete
+  - find $HOME/.sbt -name "*.lock" -delete
+
+language: scala
+
+env:
+  - SBT_OPTS = -XX:MaxPermSize=1024M -XX:+UseConcMarkSweepGC -XX:+CMSPermGenSweepingEnabled -XX:+CMSClassUnloadingEnabled
+
+script:
+  - travis_retry sbt clean test
+
+scala:
+  - 2.11.8
+
+jdk:
+  - oraclejdk8
+
+# whitelist
+branches:
+  only:
+    - master
