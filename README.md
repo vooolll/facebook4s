@@ -8,7 +8,7 @@ facebook4s
 
 ### License
 
-Spracebook is released under the [Apache 2 License][5].
+Facebook4s is released under the [Apache 2 License][5].
 
 ### Credits
 

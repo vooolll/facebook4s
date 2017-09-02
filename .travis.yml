@@ -15,7 +15,10 @@ env:
   - SBT_OPTS = -XX:MaxPermSize=1024M -XX:+UseConcMarkSweepGC -XX:+CMSPermGenSweepingEnabled -XX:+CMSClassUnloadingEnabled
 
 script:
-  - travis_retry sbt clean test
+  - sbt clean coverage test coverageReport
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
 
 scala:
   - 2.11.11
