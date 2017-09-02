@@ -1,13 +1,11 @@
 package spracebook
 
-import spray.json._
-
-object FacebookGraphApiJsonProtocol extends DefaultJsonProtocol {
+object FacebookGraphApiJsonProtocol {
   
   case class TokenData(
     app_id: Long, 
     is_valid: Boolean, 
-    application: String, 
+    application: String,
     user_id: Long, 
     issued_at: Option[Long], 
     expires_at: Long, 
@@ -20,17 +18,6 @@ object FacebookGraphApiJsonProtocol extends DefaultJsonProtocol {
     access_token: String, 
     expires: Long
   )
-
-  object AccessToken {
-    //for unmarshalling response from Graph API: String => AccessToken
-    import spray.httpx.unmarshalling.Unmarshaller
-    import spray.http.MediaTypes._
-    def decode(s: String): String = java.net.URLDecoder.decode(s, "UTF-8")
-    implicit val AccessTokenUnmarshaller = Unmarshaller.delegate[String, AccessToken](`text/plain`) { string => 
-      val map = string.split('&').map(_.split('=')).map(a => (a(0), decode(a(1)))).toMap
-      AccessToken(map("access_token"), map("expires").toLong)
-    }
-  }
 
   case class Image(
     width: Int,
@@ -155,30 +142,4 @@ object FacebookGraphApiJsonProtocol extends DefaultJsonProtocol {
 
   case class Error(message: String, `type`: String, code: Int, error_subcode: Option[Int])
   case class ErrorResponse(error: Error)
-
-  implicit val tokenDataFormat = jsonFormat7(TokenData)
-  implicit val tokenDataWrapperFormat = jsonFormat1(TokenDataWrapper)
-  implicit val imageFormat = jsonFormat3(Image.apply)
-  implicit val photoFormat = jsonFormat3(Photo)
-  implicit val cursorsFormat = jsonFormat2(Cursors)
-  implicit val pagingFormat = jsonFormat3(Paging)
-  implicit def responseFormat[T : JsonFormat] = jsonFormat2(Response.apply[T])
-  implicit val userProfilePic = jsonFormat2(UserProfilePic)
-  implicit val userProfilePicContainer = jsonFormat1(UserProfilePicContainer)
-  implicit val userFormat = jsonFormat10(User)
-  implicit val pageFormat = jsonFormat3(Page)
-  implicit val tabFormat = jsonFormat3(Tab)
-  implicit val createdStory = jsonFormat2(CreatedStory)
-  implicit val createdComment = jsonFormat1(CreatedComment)
-  implicit val facebookFriends = jsonFormat1(FacebookFriends)
-  implicit val commentFormat = jsonFormat7(Comment)
-  implicit val propertiesFormat = jsonFormat3(Properties)
-  implicit val shareFormat = jsonFormat12(Share)
-  
-  implicit val insightValueFormat = jsonFormat5(InsightValue)
-  implicit val insightDataPointFormat = jsonFormat2(InsightDataPoint)
-  implicit val insightFormat = jsonFormat6(Insight)
-
-  implicit val errorFormat = jsonFormat4(Error)
-  implicit val errorResponseFormat = jsonFormat1(ErrorResponse)
 }

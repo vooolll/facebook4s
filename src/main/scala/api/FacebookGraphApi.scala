@@ -1,7 +1,8 @@
-package spracebook
+package api
 
-import akka.dispatch.Future
-import FacebookGraphApiJsonProtocol._
+import spracebook.FacebookGraphApiJsonProtocol._
+
+import scala.concurrent.Future
 
 trait FacebookGraphApi {
 
@@ -38,3 +39,5 @@ trait FacebookGraphApi {
   
   def getApplicationOpenGraphActionImpressions(appId: String, accessToken: String, since: Long, until: Long): Future[Seq[Insight]]  
 }
+
+//https://www.facebook.com/v2.10/dialog/oauth?client_id=1969406143275709&redirect_uri=http://vk.com&response_type=token

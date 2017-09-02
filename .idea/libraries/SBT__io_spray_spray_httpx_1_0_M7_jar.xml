@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="SBT: io.spray:spray-httpx:1.0-M7:jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/io.spray/spray-httpx/jars/spray-httpx-1.0-M7.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/io.spray/spray-httpx/srcs/spray-httpx-1.0-M7-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
