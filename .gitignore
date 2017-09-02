@@ -3,3 +3,4 @@ project/project
 project/target
 *.swp
 .facebook-dev.conf
+.idea/
