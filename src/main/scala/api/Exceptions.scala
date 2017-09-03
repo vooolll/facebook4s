@@ -1,4 +1,4 @@
-package spracebook
+package api
 
 object Exceptions {
 

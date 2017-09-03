@@ -1,6 +1,6 @@
 package api
 
-import spracebook.FacebookGraphApiJsonProtocol._
+import FacebookGraphApiJsonProtocol._
 
 import scala.concurrent.Future
 
