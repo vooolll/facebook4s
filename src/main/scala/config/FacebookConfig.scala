@@ -1,7 +1,7 @@
 package config
 
 import com.typesafe.config._
-import domain.FacebookVersion
+import domain._
 
 import scala.util.Properties
 
@@ -10,9 +10,9 @@ object FacebookConfig extends ConfigurationDetector {
   val config = ConfigFactory.load
 
   val version = FacebookVersion("2.10")
-  val clientId = envVarOrConfig("FACEBOOK_CLIENT_ID", "facebook.clientId")
-  val redirectUri = envVarOrConfig("FACEBOOK_REDIRECT_URI", "facebook.redirectUri")
-  val appSecret = envVarOrConfig("FACEBOOK_APP_SECRET", "facebook.appSecret")
+  val clientId = FacebookClientId(envVarOrConfig("FACEBOOK_CLIENT_ID", "facebook.clientId"))
+  val redirectUri = FacebookRedirectUri(envVarOrConfig("FACEBOOK_REDIRECT_URI", "facebook.redirectUri"))
+  val appSecret = FacebookAppSecret(envVarOrConfig("FACEBOOK_APP_SECRET", "facebook.appSecret"))
 }
 
 trait ConfigurationDetector {
