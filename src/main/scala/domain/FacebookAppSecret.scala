@@ -9,5 +9,5 @@ object FacebookAppSecret {
 }
 
 object FacebookAppSecretOps {
-  implicit val facebookAppSecret = Show.show[FacebookAppSecret](facebookSecret => facebookSecret.value)
+  implicit val facebookAppSecret = Show.show[FacebookAppSecret](_.value)
 }
