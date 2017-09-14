@@ -14,6 +14,7 @@ import scala.concurrent.Future
 import FacebookJsonSerializers._
 import akka.http.scaladsl.unmarshalling.Unmarshal
 import de.heikoseeberger.akkahttpplayjson.PlayJsonSupport
+import org.f100ded.scalaurlbuilder.URLBuilder
 
 class FacebookClient() extends PlayJsonSupport {
 
@@ -22,12 +23,18 @@ class FacebookClient() extends PlayJsonSupport {
   implicit val ec = system.dispatcher
 
   def appAccessToken(): Future[AccessToken] = {
-    val response: Future[HttpResponse] =
-      Http().singleRequest(HttpRequest(
-        uri = s"$host${version.show}$oauthUri?client_id=$clientId&client_secret=$appSecret" +
-          s"&grant_type=client_credentials"))
+    val url = URLBuilder(base = host)
+      .withPathSegments(version.show, oauthUri)
+      .withQueryParameters(
+        "client_id"     -> clientId,
+        "client_secret" -> appSecret,
+        "grant_type"    -> "client_credentials"
+      )
 
-    response.flatMap(response => Unmarshal(response.entity).to[AccessToken])
+    for {
+      response <- Http().singleRequest(HttpRequest(uri = url.toString()))
+      accessToken <- Unmarshal(response.entity).to[AccessToken]
+    } yield accessToken
   }
 
 }
