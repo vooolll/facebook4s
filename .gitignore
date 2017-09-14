@@ -3,4 +3,5 @@ project/project
 project/target
 *.swp
 src/test/resources/.facebook-dev.conf
+src/main/resources/.facebook-dev.conf
 .idea/

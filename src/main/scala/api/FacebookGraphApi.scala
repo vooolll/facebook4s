@@ -6,6 +6,8 @@ import scala.concurrent.Future
 
 trait FacebookGraphApi {
 
+  def appAccessToken(appId: String, appSecret: String, redirectUri: String): Future[AccessToken]
+
   def debugToken(appAccessToken: String, userAccessToken: String): Future[TokenData]
 
   def extendToken(appId: String, appSecret: String, accessToken: String): Future[AccessToken]

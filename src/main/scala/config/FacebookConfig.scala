@@ -1,6 +1,7 @@
 package config
 
 import com.typesafe.config._
+import domain.FacebookVersion
 
 import scala.util.Properties
 
@@ -8,15 +9,17 @@ object FacebookConfig extends ConfigurationDetector {
 
   val config = ConfigFactory.load
 
-  val clientId = envVarOrConfig("FACEBOOK_CLIENT_ID", "facebook.client_id")
-  val redirectUri = envVarOrConfig("FACEBOOK_REDIRECT_URI", "facebook.redirect_uri")
+  val version = FacebookVersion("2.10")
+  val clientId = envVarOrConfig("FACEBOOK_CLIENT_ID", "facebook.clientId")
+  val redirectUri = envVarOrConfig("FACEBOOK_REDIRECT_URI", "facebook.redirectUri")
+  val appSecret = envVarOrConfig("FACEBOOK_APP_SECRET", "facebook.appSecret")
 }
 
 trait ConfigurationDetector {
 
   def config: Config
 
-  protected def envVarOrConfig(envVar: String, configName: String): String =
+  def envVarOrConfig(envVar: String, configName: String): String =
     try {
       environmentVariable(envVar) getOrElse configuration(configName)
     } catch {
@@ -25,7 +28,8 @@ trait ConfigurationDetector {
         throw new RuntimeException(msg)
     }
 
-  protected def environmentVariable(name: String): Option[String] = Properties.envOrNone(name)
+  def environmentVariable(name: String): Option[String] = Properties.envOrNone(name)
 
-  protected def configuration(path: String): String = config.getString(path)
+  def configuration(path: String): String = config.getString(path)
+
 }
