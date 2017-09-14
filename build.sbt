@@ -22,6 +22,7 @@ libraryDependencies ++= {
     "com.typesafe.akka" %% "akka-actor" % akkaV,
     "com.typesafe.akka" %% "akka-http" % akkaHttpV,
     "com.typesafe.play" %% "play-json" % playV,
+    "de.heikoseeberger" %% "akka-http-play-json" % "1.18.0",
     "org.scalatest" %% "scalatest" % scalaTestV % "test",
     "org.mockito" % "mockito-core" % mockitoV % "test"
   )
