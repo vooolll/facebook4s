@@ -23,7 +23,7 @@ libraryDependencies ++= {
     "com.typesafe.akka" %% "akka-http" % akkaHttpV,
     "com.typesafe.play" %% "play-json" % playV,
     "org.scalatest" %% "scalatest" % scalaTestV % "test",
-    "org.mockito" % "mockito-core" % "1.8.5" % "test"
+    "org.mockito" % "mockito-core" % mockitoV % "test"
   )
 }
 
@@ -42,7 +42,7 @@ scalacOptions ++= Seq(
 
 fork := true
 
-javaOptions in Test ++= Seq("-Dconfig.file=src/test/resources/.facebook-dev.conf")
+javaOptions in Test ++= Seq(sys.env.getOrElse("TRAVIS_OPTION", "-Dconfig.file=src/test/resources/.facebook-dev.conf"))
 
 scalacOptions in ThisBuild ++= Seq("-language:postfixOps",
   "-language:implicitConversions",
