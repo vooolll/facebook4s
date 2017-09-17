@@ -27,4 +27,7 @@ object FacebookJsonSerializers {
     (JsPath \ "access_token").read[TokenValue] and
       (JsPath \ "token_type").read[FacebookTokenType]
     )(FacebookAccessToken.apply _)
+
+  implicit val facebookError = Json.reads[FacebookError]
+  implicit val facebookLoginError = Json.reads[FacebookLoginError]
 }
