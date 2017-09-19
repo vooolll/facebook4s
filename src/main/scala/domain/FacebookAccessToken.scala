@@ -1,7 +1,5 @@
 package domain
 
-import domain.TokenValue._
-
 sealed trait FacebookTokenType
 
 final case class TokenValue(value: String)
@@ -17,6 +15,5 @@ object TokenValue {
 }
 
 final case class AppAccessToken(oauthTokenType: String) extends FacebookTokenType
-
 
 final case class FacebookAccessToken(valueToken: TokenValue, tokenType: FacebookTokenType)

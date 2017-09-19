@@ -19,7 +19,7 @@ class AppAccessTokenSpec extends AsyncWordSpec with Matchers with MockitoSugar w
     "return facebook error with on invalid secret either" in {
       facebookWrongClientSecret.appAccessTokenEither() map {
         case Right(_) => fail("right unexpected in wrong secret")
-        case Left(facebookLoginError) => facebookLoginError shouldBe FacebookLoginError(
+        case Left(facebookLoginError) => facebookLoginError shouldBe FacebookTokenError(
           FacebookError("Error validating client secret."))
       }
     }
@@ -27,7 +27,7 @@ class AppAccessTokenSpec extends AsyncWordSpec with Matchers with MockitoSugar w
     "return facebook error with on invalid secret and clientId either" in {
       facebookWrongClientIdAndSecret.appAccessTokenEither() map {
         case Right(_) => fail("right unexpected in wrong secret")
-        case Left(facebookLoginError) => facebookLoginError shouldBe FacebookLoginError(
+        case Left(facebookLoginError) => facebookLoginError shouldBe FacebookTokenError(
           FacebookError("Invalid Client ID"))
       }
     }

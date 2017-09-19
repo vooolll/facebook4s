@@ -44,6 +44,6 @@ object FacebookJsonSerializers {
   }
 
   implicit val facebookErrorReads = Json.reads[FacebookError]
-  implicit val facebookLoginErrorReads = Json.reads[FacebookLoginError]
+  implicit val facebookLoginErrorReads = Json.reads[FacebookTokenError]
 
 }
