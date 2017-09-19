@@ -1,29 +1,28 @@
 package api
 
-import akka.actor.ActorSystem
-import akka.http.scaladsl.Http
 import akka.http.scaladsl.model._
 import akka.http.scaladsl.unmarshalling.Unmarshal
-import akka.stream.ActorMaterializer
+import api.FacebookClient._
 import cats.implicits._
-import config.FacebookConfig.{appSecret, clientId, version, redirectUri}
+import config.FacebookConfig.{appSecret, clientId, redirectUri, version}
 import config.FacebookConstants._
 import de.heikoseeberger.akkahttpplayjson.PlayJsonSupport
 import domain.FacebookShowOps._
 import domain.{FacebookAccessToken, _}
 import org.f100ded.scalaurlbuilder.URLBuilder
 import play.api.libs.json.Reads
-import FacebookClient._
+import services.AsyncRequestService
 
 import scala.concurrent.Future
 
-class FacebookClient(clientId: FacebookClientId, appSecret: FacebookAppSecret) extends PlayJsonSupport {
+class FacebookClient(clientId: FacebookClientId, appSecret: FacebookAppSecret)
+                    (implicit asyncRequestService: AsyncRequestService = new AsyncRequestService)
+  extends PlayJsonSupport {
 
   import api.FacebookJsonSerializers._
 
-  implicit val system = ActorSystem()
-  implicit val materializer = ActorMaterializer()
-  implicit val ec = system.dispatcher
+  implicit val ec = asyncRequestService.ec
+  implicit val map = asyncRequestService.materializer
 
   def appAccessToken(): Future[FacebookAccessToken] = {
     appAccessTokenEither() map {
@@ -42,7 +41,7 @@ class FacebookClient(clientId: FacebookClientId, appSecret: FacebookAppSecret) e
       )
 
     for {
-      response <- Http().singleRequest(HttpRequest(uri = url.toString()))
+      response <- asyncRequestService.send(url)
       accessToken <- response.status  match {
         case StatusCodes.OK                  => parse[FacebookAccessToken](response.entity).map(_ asRight)
         case StatusCodes.BadRequest          => parse[FacebookTokenError](response.entity).map(_ asLeft)
@@ -63,12 +62,15 @@ class FacebookClient(clientId: FacebookClientId, appSecret: FacebookAppSecret) e
       )
 
     for {
-      response <- Http().singleRequest(HttpRequest(uri = url.toString()))
-      userAccessToken <- response.status  match {
-        case StatusCodes.OK                  => parse[FacebookAccessToken](response.entity).map(_ asRight)
-        case StatusCodes.BadRequest          => parse[FacebookTokenError](response.entity).map(_ asLeft)
-        case StatusCodes.InternalServerError => Future.successful(loginError("Internal server error.") asLeft)
-        case _                               => Future.successful(loginError("Unknown exception") asLeft)
+      response <- asyncRequestService.send(url)
+      userAccessToken <- {
+        println(response.entity)
+        response.status  match {
+          case StatusCodes.OK                  => parse[FacebookAccessToken](response.entity).map(_ asRight)
+          case StatusCodes.BadRequest          => parse[FacebookTokenError](response.entity).map(_ asLeft)
+          case StatusCodes.InternalServerError => Future.successful(loginError("Internal server error.") asLeft)
+          case _                               => Future.successful(loginError("Unknown exception") asLeft)
+        }
       }
     } yield userAccessToken
   }
@@ -83,6 +85,9 @@ object FacebookClient {
 
   def apply(): FacebookClient =
     new FacebookClient(clientId, appSecret)
+
+  def apply(asyncRequestService: AsyncRequestService): FacebookClient =
+    new FacebookClient(clientId, appSecret)(asyncRequestService)
 
   def loginError(message: String) = FacebookTokenError(FacebookError(message))
 
