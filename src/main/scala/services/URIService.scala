@@ -27,5 +27,7 @@ class URIService(clientId: FacebookClientId, appSecret: FacebookAppSecret) {
 }
 
 object URIService {
-  def apply(): URIService = new URIService(clientId, appSecret)
+  def apply() = new URIService(clientId, appSecret)
+
+  def apply(clientId: FacebookClientId, appSecret: FacebookAppSecret) = new URIService(clientId, appSecret)
 }

@@ -6,7 +6,7 @@ import api.FacebookClient._
 import cats.implicits._
 import config.FacebookConfig.{appSecret, clientId}
 import de.heikoseeberger.akkahttpplayjson.PlayJsonSupport
-import domain.{FacebookAccessToken, _}
+import domain._
 import play.api.libs.json.Reads
 import services.{AsyncRequestService, URIService}
 
@@ -14,8 +14,7 @@ import scala.concurrent.Future
 
 class FacebookClient(clientId: FacebookClientId, appSecret: FacebookAppSecret)
                     (implicit asyncRequestService: AsyncRequestService = AsyncRequestService(),
-                      uriService: URIService = URIService())
-  extends PlayJsonSupport {
+                      uriService: URIService = URIService()) extends PlayJsonSupport {
 
   import api.FacebookJsonSerializers._
   import asyncRequestService._
@@ -51,11 +50,12 @@ class FacebookClient(clientId: FacebookClientId, appSecret: FacebookAppSecret)
       case _                               => Future.successful(errorFormatter("Unknown exception") asLeft)
     }
   }
+
 }
 
 object FacebookClient {
   def apply(clientId: FacebookClientId, appSecret: FacebookAppSecret): FacebookClient =
-    new FacebookClient(clientId, appSecret)
+    new FacebookClient(clientId, appSecret)(uriService = URIService(clientId, appSecret))
 
   def apply(): FacebookClient =
     new FacebookClient(clientId, appSecret)
