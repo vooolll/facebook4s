@@ -19,6 +19,6 @@ class AsyncRequestServiceSpec extends AsyncWordSpec with Matchers with MockitoSu
         "grant_type"    -> "client_credentials"
       )
     val asyncRequestService = new AsyncRequestService
-    asyncRequestService.send(url).map(_.status shouldBe StatusCodes.OK)
+    asyncRequestService.sendRequest(url).map(_.status shouldBe StatusCodes.OK)
   }
 }

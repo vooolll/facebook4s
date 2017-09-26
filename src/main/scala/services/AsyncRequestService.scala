@@ -14,5 +14,9 @@ class AsyncRequestService {
   implicit val materializer = ActorMaterializer()
   implicit val ec = system.dispatcher
 
-  def send(url: URLBuilder): Future[HttpResponse] = Http().singleRequest(HttpRequest(uri = url.toString()))
+  def sendRequest(url: URLBuilder): Future[HttpResponse] = Http().singleRequest(HttpRequest(uri = url.toString()))
+}
+
+object AsyncRequestService {
+  def apply() = new AsyncRequestService()
 }

@@ -38,7 +38,7 @@ trait MockedAsyncRequestService extends MockitoSugar {
   val asyncRequestService = mock[AsyncRequestService]
 
   def mockSendWithResource(resourcePath: String) = {
-    when(asyncRequestService.send(anyObject[URLBuilder])).thenReturn(
+    when(asyncRequestService.sendRequest(anyObject[URLBuilder])).thenReturn(
       Future.successful(
         HttpResponse(
           entity = HttpEntity(

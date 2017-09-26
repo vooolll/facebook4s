@@ -9,5 +9,4 @@ object FacebookShowOps {
   implicit val showFacebookAppSecret = Show.show[FacebookAppSecret](_.value)
   implicit val showFacebookAccessToken = Show.show[FacebookAccessToken](_.valueToken.value)
   implicit val showFacebookRedirectUri = Show.show[FacebookRedirectUri](_.uri)
-
 }
