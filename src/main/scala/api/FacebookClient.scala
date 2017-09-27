@@ -25,12 +25,12 @@ class FacebookClient(clientId: FacebookClientId, appSecret: FacebookAppSecret)
     case Left(facebookError) => throw new RuntimeException(facebookError.error.message)
   }
 
-  def appAccessTokenEither(): AppAccessTokenResult = for {
+  def appAccessTokenEither(): FacebookAccessTokenResult = for {
     response <- sendRequest(appTokenURI)
     accessToken <- parseToJson(response)
   } yield accessToken
 
-  def userAccessToken(code: String): AppAccessTokenResult = for {
+  def userAccessToken(code: String): FacebookAccessTokenResult = for {
     response <- sendRequest(userTokenURI(code))
     userAccessToken <- parseToJson(response)
   } yield userAccessToken
@@ -65,6 +65,6 @@ object FacebookClient {
 
   def loginError(message: String) = FacebookTokenError(FacebookError(message))
 
-  type AppAccessTokenResult = Future[Either[FacebookTokenError, FacebookAccessToken]]
+  type FacebookAccessTokenResult = Future[Either[FacebookTokenError, FacebookAccessToken]]
 }
 
