@@ -2,16 +2,14 @@ package api
 
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpResponse, StatusCodes}
 import akka.http.scaladsl.unmarshalling.Unmarshal
-import play.api.libs.json.Reads
+import akka.stream.Materializer
 import cats.implicits._
 import de.heikoseeberger.akkahttpplayjson.PlayJsonSupport
-import services.AsyncRequestService
+import play.api.libs.json.Reads
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
-class JsonUnmarshaler(asyncRequestService: AsyncRequestService) extends PlayJsonSupport {
-
-  import asyncRequestService._
+class JsonUnmarshaler()(implicit mat: Materializer, ec: ExecutionContext) extends PlayJsonSupport {
 
   def parseResponse[E, T](response: HttpResponse)(errorFormatter: String => Future[Either[E, T]])
     (implicit reads: Reads[T], reads1: Reads[E]): Future[Either[E, T]] = {

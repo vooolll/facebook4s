@@ -17,7 +17,7 @@ class FacebookClient(clientId: FacebookClientId, appSecret: FacebookAppSecret)
   import api.FacebookJsonSerializers._
   import asyncRequestService._
   import uriService._
-  val jsonUnmarshaler = new JsonUnmarshaler(asyncRequestService)
+  val jsonUnmarshaler = new JsonUnmarshaler()
 
   import jsonUnmarshaler._
 
