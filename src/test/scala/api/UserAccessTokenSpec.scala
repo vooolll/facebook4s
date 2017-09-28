@@ -20,7 +20,7 @@ class UserAccessTokenSpec extends AsyncWordSpec with Matchers with MockitoSugar 
     "return user access token" in {
       mockSendWithResource(resourcePath = "testdata/user_access_token.json")
       val client = FacebookClient(asyncRequestService)
-      client.userAccessToken("code") map {
+      client.userAccessTokenEither("code") map {
         case Right(token) =>
           token.valueToken.value shouldBe "test token"
           token.tokenType shouldBe AppAccessToken("bearer")
