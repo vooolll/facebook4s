@@ -9,7 +9,7 @@ import play.api.libs.json.Reads
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class JsonUnmarshaler()(implicit mat: Materializer, ec: ExecutionContext) extends PlayJsonSupport {
+class DomainTransformer()(implicit mat: Materializer, ec: ExecutionContext) extends PlayJsonSupport {
 
   def parseResponse[E, T](response: HttpResponse)(errorFormatter: String => Future[Either[E, T]])
     (implicit reads: Reads[T], reads1: Reads[E]): Future[Either[E, T]] = {
@@ -29,6 +29,12 @@ class JsonUnmarshaler()(implicit mat: Materializer, ec: ExecutionContext) extend
       case StatusCodes.InternalServerError => errorFormatter("Internal server error.")
       case _                               => errorFormatter("Unknown exception")
     }
+  }
+
+
+  def valueOrException[T](facebookResult: Either[HasFacebookError, T]): T = facebookResult match {
+    case Right(facebookResult) => facebookResult
+    case Left(facebookError) => throw new RuntimeException(facebookError.error.message)
   }
 
 }

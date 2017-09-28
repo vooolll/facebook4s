@@ -17,26 +17,20 @@ class FacebookClient(clientId: FacebookClientId, appSecret: FacebookAppSecret)
   import api.FacebookJsonSerializers._
   import asyncRequestService._
   import uriService._
-  val jsonUnmarshaler = new JsonUnmarshaler()
+  val jsonUnmarshaler = new DomainTransformer()
 
   import jsonUnmarshaler._
 
-  def appAccessToken(): Future[FacebookAccessToken] = appAccessTokenEither() map {
-    case Right(facebookAccessToken) => facebookAccessToken
-    case Left(facebookError) => throw new RuntimeException(facebookError.error.message)
-  }
+  def appAccessToken(): Future[FacebookAccessToken] = appAccessTokenEither() map valueOrException
 
-  def appAccessTokenEither(): FacebookAccessTokenResult =
-    for {
-      response <- sendRequest(appTokenURI)
-      accessToken <- parseToJson(response)
-    } yield accessToken
+  def appAccessTokenEither(): FutureFacebookAccessTokenResult = obtainAccessToken()
 
-  def userAccessToken(code: String): FacebookAccessTokenResult =
-    for {
-      response <- sendRequest(userTokenURI(code))
-      userAccessToken <- parseToJson(response)
-    } yield userAccessToken
+  def userAccessToken(code: String): FutureFacebookAccessTokenResult = obtainAccessToken(code.some)
+
+  private def obtainAccessToken(code: Option[String] = None): FutureFacebookAccessTokenResult = for {
+    response <- sendRequest(tokenUri(code))
+    userAccessToken <- parseToJson(response)
+  } yield userAccessToken
 
   private def parseToJson(response: HttpResponse) = parseResponse(response)(loginErrorFE)(
     facebookAccessTokenReads, facebookLoginErrorReads)
@@ -54,6 +48,7 @@ object FacebookClient {
 
   def loginErrorFE(message: String) = Future.successful(FacebookTokenError(FacebookError(message)).asLeft)
 
-  type FacebookAccessTokenResult = Future[Either[FacebookTokenError, FacebookAccessToken]]
+  type FutureFacebookAccessTokenResult = Future[Either[FacebookTokenError, FacebookAccessToken]]
+  type FacebookAccessTokenResult = Either[FacebookTokenError, FacebookAccessToken]
 }
 

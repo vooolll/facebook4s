@@ -24,6 +24,11 @@ class URIService(clientId: FacebookClientId, appSecret: FacebookAppSecret) {
       "redirect_uri"  -> redirectUri.show,
       "code"          -> code
     )
+
+  def tokenUri(code: Option[String] = None) = code match {
+    case Some(code) => userTokenURI(code)
+    case _ => appTokenURI
+  }
 }
 
 object URIService {
