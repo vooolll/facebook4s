@@ -12,14 +12,14 @@ import scala.concurrent.Future
 
 class FacebookClient(clientId: FacebookClientId, appSecret: FacebookAppSecret)
                     (implicit asyncRequestService: AsyncRequestService = AsyncRequestService(),
-                      uriService: URIService = URIService()) extends PlayJsonSupport {
+                      uriService: URIService = URIService()) {
 
   import api.FacebookJsonSerializers._
   import asyncRequestService._
   import uriService._
-  val jsonUnmarshaler = new DomainTransformer()
+  val transformer = new DomainTransformer()
 
-  import jsonUnmarshaler._
+  import transformer._
 
   def appAccessToken(): Future[FacebookAccessToken] = appAccessTokenEither() map valueOrException
 
