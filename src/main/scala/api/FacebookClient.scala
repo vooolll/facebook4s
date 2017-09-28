@@ -1,31 +1,34 @@
 package api
 
 import akka.http.scaladsl.model._
-import api.FacebookClient._
-import cats.implicits._
-import config.FacebookConfig.{appSecret, clientId}
-import de.heikoseeberger.akkahttpplayjson.PlayJsonSupport
+
+import config.FacebookConfig._
 import domain._
-import services.{AsyncRequestService, URIService}
+import services._
 
-import scala.concurrent.Future
+import cats.syntax.either._
+import cats.syntax.option._
 
-class FacebookClient(clientId: FacebookClientId, appSecret: FacebookAppSecret)
-                    (implicit asyncRequestService: AsyncRequestService = AsyncRequestService(),
-                      uriService: URIService = URIService()) {
+import scala.concurrent._
+
+class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppSecret)
+  extends FacebookInternalServices {
 
   import api.FacebookJsonSerializers._
-  import asyncRequestService._
-  import uriService._
-  val transformer = new DomainTransformer()
+  import api.FacebookClient._
 
+  import asyncRequestService._
   import transformer._
+  import uriService._
 
   def appAccessToken(): Future[FacebookAccessToken] = appAccessTokenEither() map valueOrException
 
+  def userAccessToken(code: String): Future[FacebookAccessToken] =
+    userAccessTokenEither(code) map valueOrException
+
   def appAccessTokenEither(): FutureFacebookAccessTokenResult = obtainAccessToken()
 
-  def userAccessToken(code: String): FutureFacebookAccessTokenResult = obtainAccessToken(code.some)
+  def userAccessTokenEither(code: String): FutureFacebookAccessTokenResult = obtainAccessToken(code.some)
 
   private def obtainAccessToken(code: Option[String] = None): FutureFacebookAccessTokenResult = for {
     response <- sendRequest(tokenUri(code))
@@ -38,13 +41,13 @@ class FacebookClient(clientId: FacebookClientId, appSecret: FacebookAppSecret)
 
 object FacebookClient {
   def apply(clientId: FacebookClientId, appSecret: FacebookAppSecret): FacebookClient =
-    new FacebookClient(clientId, appSecret)(uriService = URIService(clientId, appSecret))
+    new FacebookClient(clientId, appSecret)
 
   def apply(): FacebookClient =
     new FacebookClient(clientId, appSecret)
 
   def apply(asyncRequestService: AsyncRequestService): FacebookClient =
-    new FacebookClient(clientId, appSecret)(asyncRequestService)
+    new FacebookClient(clientId, appSecret)
 
   def loginErrorFE(message: String) = Future.successful(FacebookTokenError(FacebookError(message)).asLeft)
 

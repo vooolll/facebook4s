@@ -1,15 +1,15 @@
 package api
 
 import akka.actor.ActorSystem
-import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpResponse, ResponseEntity}
+import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpResponse}
 import akka.stream.ActorMaterializer
 import domain.AppAccessToken
 import org.f100ded.scalaurlbuilder.URLBuilder
-import org.scalatest.{AsyncWordSpec, Matchers, WordSpec}
-import org.scalatest.mockito.MockitoSugar
 import org.mockito.Matchers._
 import org.mockito.Mockito._
-import services.AsyncRequestService
+import org.scalatest.mockito.MockitoSugar
+import org.scalatest.{AsyncWordSpec, Matchers}
+import services.{AsyncRequestService, FacebookInternalServices}
 
 import scala.concurrent.Future
 import scala.io.Source
@@ -35,7 +35,9 @@ trait MockedAsyncRequestService extends MockitoSugar {
   implicit val actorSystem = ActorSystem()
   val materializer = ActorMaterializer()
 
+  val facebookServices = mock[FacebookInternalServices]
   val asyncRequestService = mock[AsyncRequestService]
+
 
   def mockSendWithResource(resourcePath: String) = {
     when(asyncRequestService.sendRequest(anyObject[URLBuilder])).thenReturn(
