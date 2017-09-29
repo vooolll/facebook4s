@@ -10,6 +10,7 @@ import org.mockito.Mockito._
 import org.scalatest.mockito.MockitoSugar
 import org.scalatest.{AsyncWordSpec, Matchers}
 import services.{AsyncRequestService, FacebookInternalServices}
+import config.FacebookConfig._
 
 import scala.concurrent.Future
 import scala.io.Source
@@ -17,7 +18,7 @@ import scala.io.Source
 class UserAccessTokenSpec
   extends AsyncWordSpec with Matchers with MockitoSugar with MockedAsyncRequestService {
 
-  class ClientProbe extends FacebookInternalServices {
+  trait ClientProbe extends FacebookInternalServices {
     override val asyncRequestService = mockAsyncRequestService
     override val clientId = mock[FacebookClientId]
     override val appSecret = mock[FacebookAppSecret]
@@ -26,7 +27,7 @@ class UserAccessTokenSpec
   "Facebook Graph Api" should {
     "return user access token" in {
       mockSendWithResource(resourcePath = "testdata/user_access_token.json")
-      val client = FacebookClient()
+      val client = new FacebookClient(clientId, appSecret) with ClientProbe
       client.userAccessTokenEither("code") map {
         case Right(token) =>
           token.valueToken.value shouldBe "test token"
