@@ -3,7 +3,7 @@ package api
 import akka.actor.ActorSystem
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpResponse}
 import akka.stream.ActorMaterializer
-import domain.AppAccessToken
+import domain.{AppAccessToken, FacebookAppSecret, FacebookClientId}
 import org.f100ded.scalaurlbuilder.URLBuilder
 import org.mockito.Matchers._
 import org.mockito.Mockito._
@@ -14,12 +14,19 @@ import services.{AsyncRequestService, FacebookInternalServices}
 import scala.concurrent.Future
 import scala.io.Source
 
-class UserAccessTokenSpec extends AsyncWordSpec with Matchers with MockitoSugar with MockedAsyncRequestService {
+class UserAccessTokenSpec
+  extends AsyncWordSpec with Matchers with MockitoSugar with MockedAsyncRequestService {
+
+  class ClientProbe extends FacebookInternalServices {
+    override val asyncRequestService = mockAsyncRequestService
+    override val clientId = mock[FacebookClientId]
+    override val appSecret = mock[FacebookAppSecret]
+  }
 
   "Facebook Graph Api" should {
     "return user access token" in {
       mockSendWithResource(resourcePath = "testdata/user_access_token.json")
-      val client = FacebookClient(asyncRequestService)
+      val client = FacebookClient()
       client.userAccessTokenEither("code") map {
         case Right(token) =>
           token.valueToken.value shouldBe "test token"
@@ -36,11 +43,12 @@ trait MockedAsyncRequestService extends MockitoSugar {
   val materializer = ActorMaterializer()
 
   val facebookServices = mock[FacebookInternalServices]
-  val asyncRequestService = mock[AsyncRequestService]
+  val mockAsyncRequestService = mock[AsyncRequestService]
+
 
 
   def mockSendWithResource(resourcePath: String) = {
-    when(asyncRequestService.sendRequest(anyObject[URLBuilder])).thenReturn(
+    when(mockAsyncRequestService.sendRequest(anyObject[URLBuilder])).thenReturn(
       Future.successful(
         HttpResponse(
           entity = HttpEntity(
@@ -50,6 +58,6 @@ trait MockedAsyncRequestService extends MockitoSugar {
       )
     )
   }
-  when(asyncRequestService.ec) thenReturn actorSystem.dispatcher
-  when(asyncRequestService.materializer) thenReturn materializer
+  when(mockAsyncRequestService.ec) thenReturn actorSystem.dispatcher
+  when(mockAsyncRequestService.materializer) thenReturn materializer
 }

@@ -13,8 +13,7 @@ class URIService(clientId: FacebookClientId, appSecret: FacebookAppSecret) {
     .withQueryParameters(
       "client_id"     -> clientId.show,
       "client_secret" -> appSecret.show,
-      "grant_type"    -> "client_credentials"
-    )
+      "grant_type"    -> "client_credentials")
 
   def userTokenURI(code: String) = URLBuilder(base = host)
     .withPathSegments(version.show, oauthUri)
@@ -22,8 +21,7 @@ class URIService(clientId: FacebookClientId, appSecret: FacebookAppSecret) {
       "client_id"     -> clientId.show,
       "client_secret" -> appSecret.show,
       "redirect_uri"  -> redirectUri.show,
-      "code"          -> code
-    )
+      "code"          -> code)
 
   def tokenUri(code: Option[String] = None) = code match {
     case Some(code) => userTokenURI(code)

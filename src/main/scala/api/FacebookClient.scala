@@ -46,9 +46,6 @@ object FacebookClient {
   def apply(): FacebookClient =
     new FacebookClient(clientId, appSecret)
 
-  def apply(asyncRequestService: AsyncRequestService): FacebookClient =
-    new FacebookClient(clientId, appSecret)
-
   def loginErrorFE(message: String) = Future.successful(FacebookTokenError(FacebookError(message)).asLeft)
 
   type FutureFacebookAccessTokenResult = Future[Either[FacebookTokenError, FacebookAccessToken]]
