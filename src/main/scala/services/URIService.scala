@@ -8,6 +8,7 @@ import domain.{FacebookAppSecret, FacebookClientId}
 import org.f100ded.scalaurlbuilder.URLBuilder
 
 class URIService(clientId: FacebookClientId, appSecret: FacebookAppSecret) {
+
   val appTokenURI = URLBuilder(base = host)
     .withPathSegments(version.show, oauthUri)
     .withQueryParameters(

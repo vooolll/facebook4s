@@ -12,7 +12,7 @@ import cats.syntax.option._
 import scala.concurrent._
 
 class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppSecret)
-  extends FacebookInternalServices {
+  extends FacebookInternals {
 
   import api.FacebookJsonSerializers._
   import api.FacebookClient._

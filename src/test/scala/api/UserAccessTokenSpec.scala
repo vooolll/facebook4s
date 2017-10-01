@@ -9,7 +9,7 @@ import org.mockito.Matchers._
 import org.mockito.Mockito._
 import org.scalatest.mockito.MockitoSugar
 import org.scalatest.{AsyncWordSpec, Matchers}
-import services.{AsyncRequestService, FacebookInternalServices}
+import services.{AsyncRequestService, FacebookInternals}
 import config.FacebookConfig._
 
 import scala.concurrent.Future
@@ -18,10 +18,12 @@ import scala.io.Source
 class UserAccessTokenSpec
   extends AsyncWordSpec with Matchers with MockitoSugar with MockedAsyncRequestService {
 
-  trait ClientProbe extends FacebookInternalServices {
+  trait ClientProbe extends FacebookInternals {
+    override implicit lazy val system = ActorSystem()
+    override implicit lazy val mat = ActorMaterializer()
+    override implicit lazy val ec = system.dispatcher
     override val asyncRequestService = mockAsyncRequestService
-    override val clientId = mock[FacebookClientId]
-    override val appSecret = mock[FacebookAppSecret]
+    override val transformer = new DomainTransformer()
   }
 
   "Facebook Graph Api" should {
@@ -43,7 +45,7 @@ trait MockedAsyncRequestService extends MockitoSugar {
   implicit val actorSystem = ActorSystem()
   val materializer = ActorMaterializer()
 
-  val facebookServices = mock[FacebookInternalServices]
+  val facebookServices = mock[FacebookInternals]
   val mockAsyncRequestService = mock[AsyncRequestService]
 
 
@@ -59,6 +61,4 @@ trait MockedAsyncRequestService extends MockitoSugar {
       )
     )
   }
-  when(mockAsyncRequestService.ec) thenReturn actorSystem.dispatcher
-  when(mockAsyncRequestService.materializer) thenReturn materializer
 }

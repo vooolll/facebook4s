@@ -9,7 +9,7 @@ import org.f100ded.scalaurlbuilder.URLBuilder
 import org.scalatest.mockito.MockitoSugar
 import org.scalatest.{AsyncWordSpec, Matchers}
 
-class AsyncRequestServiceSpec extends AsyncWordSpec with Matchers with MockitoSugar {
+class AsyncRequestServiceSpec extends AsyncWordSpec with Matchers with MockitoSugar with ApplicationResources {
   "Should send request" in {
     val url = URLBuilder(base = host)
       .withPathSegments(version.show, oauthUri)
@@ -18,7 +18,7 @@ class AsyncRequestServiceSpec extends AsyncWordSpec with Matchers with MockitoSu
         "client_secret" -> appSecret.show,
         "grant_type"    -> "client_credentials"
       )
-    val asyncRequestService = new AsyncRequestService
+    val asyncRequestService = new AsyncRequestService()(system, mat, ec)
     asyncRequestService.sendRequest(url).map(_.status shouldBe StatusCodes.OK)
   }
 }
