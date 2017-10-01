@@ -1,0 +1,8 @@
+{
+  "error": {
+    "message": "Invalid verification code format.",
+    "type": "OAuthException",
+    "code": 100,
+    "fbtrace_id": "HXxlmxxxvlw"
+  }
+}
