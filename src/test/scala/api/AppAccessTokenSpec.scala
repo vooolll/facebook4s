@@ -11,7 +11,7 @@ class AppAccessTokenSpec extends AsyncWordSpec with Matchers with MockitoSugar w
       facebookClient.appAccessTokenEither() map {
         case Right(appAccessToken) =>
           appAccessToken.tokenType shouldBe AppAccessToken("bearer")
-          appAccessToken.valueToken.value.length() shouldBe 27
+          appAccessToken.tokenValue.value.length() shouldBe 27
         case Left(_) => fail("left unexpected in right credentials")
       }
     }

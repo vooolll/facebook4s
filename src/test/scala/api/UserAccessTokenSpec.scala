@@ -1,18 +1,21 @@
 package api
 
+import java.time.Instant
+
 import akka.actor.ActorSystem
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpResponse}
 import akka.stream.ActorMaterializer
-import domain.{AppAccessToken, FacebookAppSecret, FacebookClientId}
+import config.FacebookConfig._
+import domain.UserAccessToken
 import org.f100ded.scalaurlbuilder.URLBuilder
 import org.mockito.Matchers._
 import org.mockito.Mockito._
 import org.scalatest.mockito.MockitoSugar
 import org.scalatest.{AsyncWordSpec, Matchers}
 import services.{AsyncRequestService, FacebookInternals}
-import config.FacebookConfig._
 
 import scala.concurrent.Future
+import scala.concurrent.duration.DurationInt
 import scala.io.Source
 
 class UserAccessTokenSpec
@@ -32,8 +35,8 @@ class UserAccessTokenSpec
       val client = new FacebookClient(clientId, appSecret) with ClientProbe
       client.userAccessTokenEither("code") map {
         case Right(token) =>
-          token.valueToken.value shouldBe "test token"
-          token.tokenType shouldBe AppAccessToken("bearer")
+          token.tokenValue.value shouldBe "test token"
+          token.tokenType shouldBe UserAccessToken("bearer", 5107587.seconds)
          case Left(e) => fail(e.error.message)
       }
     }

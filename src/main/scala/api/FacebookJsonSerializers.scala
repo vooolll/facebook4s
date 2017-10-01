@@ -5,10 +5,12 @@ import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
 import play.api.libs.json._
 
-object FacebookJsonSerializers {
-  implicit val facebookAppAccessTokenReads = Json.reads[AppAccessToken]
+import scala.concurrent.duration.DurationInt
 
-  implicit val facebookTokenTypeReads = new Reads[FacebookTokenType] {
+object FacebookJsonSerializers {
+
+  implicit val facebookTokenTypeReads = new Reads[AppAccessToken] {
+    implicit val facebookAppTokenReads = Json.reads[AppAccessToken]
     override def reads(json: JsValue) = json match {
       case JsString(any) => Json.fromJson[AppAccessToken](Json.obj("oauthTokenType" -> any))
       case _             => JsError(s"Unexpected JSON value $json")
@@ -23,10 +25,24 @@ object FacebookJsonSerializers {
     }
   }
 
-  implicit val facebookAccessTokenReads: Reads[FacebookAccessToken] = (
+  implicit val facebookAppAccessTokenReads: Reads[FacebookAccessToken] = (
     (JsPath \ "access_token").read[TokenValue] and
-      (JsPath \ "token_type").read[FacebookTokenType]
+      (JsPath \ "token_type").read[AppAccessToken]
     )(FacebookAccessToken.apply _)
+
+  implicit val facebookUserAccessTokenReads = new Reads[FacebookAccessToken] {
+    override def reads(json: JsValue) = {
+      json match {
+        case obj: JsObject =>
+          val tokenValueRaw = (obj \ "access_token").as[String]
+          val tokenExpiresIn = (obj \ "expires_in").as[Int]
+          val oauthTokenType = (obj \ "token_type").as[String]
+          JsSuccess(FacebookAccessToken(
+            TokenValue(tokenValueRaw),UserAccessToken(oauthTokenType, tokenExpiresIn.seconds)))
+        case _             => JsError(s"Unexpected JSON value $json")
+      }
+    }
+  }
 
   implicit val facebookAppIdReads = new Reads[FacebookAppId] {
     override def reads(json: JsValue) = json match {

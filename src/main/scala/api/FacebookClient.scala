@@ -1,13 +1,12 @@
 package api
 
 import akka.http.scaladsl.model._
-
 import config.FacebookConfig._
 import domain._
 import services._
-
 import cats.syntax.either._
 import cats.syntax.option._
+import play.api.libs.json.Reads
 
 import scala.concurrent._
 
@@ -26,17 +25,21 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
   def userAccessToken(code: String): Future[FacebookAccessToken] =
     userAccessTokenEither(code) map valueOrException
 
-  def appAccessTokenEither(): FutureFacebookAccessTokenResult = obtainAccessToken()
+  def appAccessTokenEither(): FutureFacebookAccessTokenResult =
+    obtainAccessToken()(facebookAppAccessTokenReads)
 
-  def userAccessTokenEither(code: String): FutureFacebookAccessTokenResult = obtainAccessToken(code.some)
+  def userAccessTokenEither(code: String): FutureFacebookAccessTokenResult =
+    obtainAccessToken(code.some)(facebookUserAccessTokenReads)
 
-  private def obtainAccessToken(code: Option[String] = None): FutureFacebookAccessTokenResult = for {
+  private def obtainAccessToken(code: Option[String] = None)
+                               (tokenReads: Reads[FacebookAccessToken]): FutureFacebookAccessTokenResult = for {
     response <- sendRequest(tokenUri(code))
-    userAccessToken <- parseToJson(response)
+    userAccessToken <- parseToJson(response)(tokenReads)
   } yield userAccessToken
 
-  private def parseToJson(response: HttpResponse) = parseResponse(response)(loginErrorFE)(
-    facebookAccessTokenReads, facebookLoginErrorReads)
+  private def parseToJson(response: HttpResponse)
+                         (tokenReads: Reads[FacebookAccessToken]) = parseResponse(response)(loginErrorFE)(
+    tokenReads, facebookLoginErrorReads)
 }
 
 object FacebookClient {

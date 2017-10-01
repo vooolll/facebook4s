@@ -1,5 +1,9 @@
 package domain
 
+import java.time.Instant
+
+import scala.concurrent.duration.FiniteDuration
+
 sealed trait FacebookTokenType
 
 final case class TokenValue(value: String)
@@ -16,4 +20,6 @@ object TokenValue {
 
 final case class AppAccessToken(oauthTokenType: String) extends FacebookTokenType
 
-final case class FacebookAccessToken(valueToken: TokenValue, tokenType: FacebookTokenType)
+final case class UserAccessToken(oauthTokenType: String, expiresIn: FiniteDuration) extends FacebookTokenType
+
+final case class FacebookAccessToken(tokenValue: TokenValue, tokenType: FacebookTokenType)
