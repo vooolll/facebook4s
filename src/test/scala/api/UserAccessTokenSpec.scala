@@ -36,7 +36,7 @@ class UserAccessTokenSpec extends AsyncWordSpec with Matchers {
 
       c.mockSendError(resourcePath = "testdata/user_access_token_wrong_code.json")
       recoverToSucceededIf[RuntimeException] {
-        c.userAccessTokenEither("code")
+        c.userAccessToken("code")
       }
     }
   }
