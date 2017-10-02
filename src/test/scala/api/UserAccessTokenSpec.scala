@@ -16,70 +16,71 @@ import scala.concurrent.Future
 import scala.concurrent.duration.DurationInt
 import scala.io.Source
 
-class UserAccessTokenSpec
-  extends AsyncWordSpec with Matchers with MockitoSugar {
+class UserAccessTokenSpec extends AsyncWordSpec with Matchers {
 
-  trait ClientProbe extends FacebookInternals {
-    val facebookServices = mock[FacebookInternals]
-    val mockAsyncRequestService = mock[AsyncRequestService]
-
-
-
-    def mockSendWithResource(resourcePath: String) = {
-      when(mockAsyncRequestService.sendRequest(anyObject[URLBuilder])).thenReturn(
-        Future.successful(
-          HttpResponse(
-            entity = HttpEntity(
-              contentType = ContentTypes.`application/json`,
-              string      = Source.fromResource(resourcePath).mkString)
-          )
-        )
-      )
-    }
-
-    def mockSendError(resourcePath: String) = {
-      when(mockAsyncRequestService.sendRequest(anyObject[URLBuilder])).thenReturn(
-        Future.successful(
-          HttpResponse(
-            status = StatusCodes.BadRequest,
-            entity = HttpEntity(
-              contentType = ContentTypes.`application/json`,
-              string      = Source.fromResource(resourcePath).mkString)
-          )
-        )
-      )
-    }
-
-    override implicit lazy val system = ActorSystem()
-    override implicit lazy val mat = ActorMaterializer()
-    override implicit lazy val ec = system.dispatcher
-    override val asyncRequestService = mockAsyncRequestService
-    override val transformer = new DomainTransformer()
-  }
-
+  def client = ClientProbe()
 
   "Facebook Graph Api" should {
     "return user access token" in {
-      val client = new FacebookClient(clientId, appSecret) with ClientProbe
+      val c = client
 
-      client.mockSendWithResource(resourcePath = "testdata/user_access_token.json")
-      client.userAccessTokenEither("code") map {
-        case Right(token) =>
-          token.tokenValue.value shouldBe "test token"
-          token.tokenType shouldBe UserAccessToken("bearer", 5107587.seconds)
-         case Left(e) => fail(e.error.message)
+      c.mockSendWithResource(resourcePath = "testdata/user_access_token.json")
+      c.userAccessToken("code") map { token =>
+        token.tokenValue.value shouldBe "test token"
+        token.tokenType shouldBe UserAccessToken("bearer", 5107587.seconds)
       }
     }
 
     "return error in wrong code" in {
-      val client = new FacebookClient(clientId, appSecret) with ClientProbe
+      val c = client
 
-      client.mockSendError(resourcePath = "testdata/user_access_token_wrong_code.json")
-      client.userAccessTokenEither("code") map {
-        case Right(token) => fail("left expected")
-        case Left(e) => e.error.message shouldBe "Invalid verification code format."
+      c.mockSendError(resourcePath = "testdata/user_access_token_wrong_code.json")
+      recoverToSucceededIf[RuntimeException] {
+        c.userAccessTokenEither("code")
       }
     }
   }
 
+}
+
+trait ClientProbe extends FacebookInternals with MockitoSugar {
+  val facebookServices = mock[FacebookInternals]
+  val mockAsyncRequestService = mock[AsyncRequestService]
+
+
+
+  def mockSendWithResource(resourcePath: String) = {
+    when(mockAsyncRequestService.sendRequest(anyObject[URLBuilder])).thenReturn(
+      Future.successful(
+        HttpResponse(
+          entity = HttpEntity(
+            contentType = ContentTypes.`application/json`,
+            string      = Source.fromResource(resourcePath).mkString)
+        )
+      )
+    )
+  }
+
+  def mockSendError(resourcePath: String) = {
+    when(mockAsyncRequestService.sendRequest(anyObject[URLBuilder])).thenReturn(
+      Future.successful(
+        HttpResponse(
+          status = StatusCodes.BadRequest,
+          entity = HttpEntity(
+            contentType = ContentTypes.`application/json`,
+            string      = Source.fromResource(resourcePath).mkString)
+        )
+      )
+    )
+  }
+
+  override implicit lazy val system = ActorSystem()
+  override implicit lazy val mat = ActorMaterializer()
+  override implicit lazy val ec = system.dispatcher
+  override val asyncRequestService = mockAsyncRequestService
+  override val transformer = new DomainTransformer()
+}
+
+object ClientProbe {
+  def apply() = new FacebookClient(clientId, appSecret) with ClientProbe
 }
