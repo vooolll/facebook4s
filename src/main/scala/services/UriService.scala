@@ -7,16 +7,18 @@ import domain.FacebookShowOps._
 import domain.{FacebookAppSecret, FacebookClientId}
 import org.f100ded.scalaurlbuilder.URLBuilder
 
-class URIService(clientId: FacebookClientId, appSecret: FacebookAppSecret) {
+class UriService(clientId: FacebookClientId, appSecret: FacebookAppSecret) {
 
-  val appTokenURI = URLBuilder(base = host)
+  val hostBuilder = URLBuilder(base = host)
+
+  val appTokenUri = hostBuilder
     .withPathSegments(version.show, oauthUri)
     .withQueryParameters(
       "client_id"     -> clientId.show,
       "client_secret" -> appSecret.show,
       "grant_type"    -> "client_credentials")
 
-  def userTokenURI(code: String) = URLBuilder(base = host)
+  def userTokenUri(code: String) = hostBuilder
     .withPathSegments(version.show, oauthUri)
     .withQueryParameters(
       "client_id"     -> clientId.show,
@@ -24,14 +26,22 @@ class URIService(clientId: FacebookClientId, appSecret: FacebookAppSecret) {
       "redirect_uri"  -> redirectUri.show,
       "code"          -> code)
 
+  def longLivedTokenUri(shortLeavingTokenValue: String) = hostBuilder
+    .withPathSegments(version.show, oauthUri)
+    .withQueryParameters(
+      "client_id"         -> clientId.show,
+      "client_secret"     -> appSecret.show,
+      "grant_type"        -> "fb_exchange_token",
+      "fb_exchange_token" -> shortLeavingTokenValue)
+
   def tokenUri(code: Option[String] = None) = code match {
-    case Some(code) => userTokenURI(code)
-    case _ => appTokenURI
+    case Some(code) => userTokenUri(code)
+    case _ => appTokenUri
   }
 }
 
-object URIService {
-  def apply() = new URIService(clientId, appSecret)
+object UriService {
+  def apply() = new UriService(clientId, appSecret)
 
-  def apply(clientId: FacebookClientId, appSecret: FacebookAppSecret) = new URIService(clientId, appSecret)
+  def apply(clientId: FacebookClientId, appSecret: FacebookAppSecret) = new UriService(clientId, appSecret)
 }

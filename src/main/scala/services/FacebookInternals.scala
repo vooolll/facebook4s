@@ -11,7 +11,7 @@ abstract class FacebookInternals extends ApplicationResources {
 
   val asyncRequestService = AsyncRequestService()(system, mat, ec)
 
-  val uriService = URIService(clientId, appSecret)
+  val uriService = UriService(clientId, appSecret)
   val transformer = new DomainTransformer()(mat, ec)
 }
 

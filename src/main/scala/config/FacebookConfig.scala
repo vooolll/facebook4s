@@ -4,6 +4,7 @@ import com.typesafe.config._
 import domain._
 
 import scala.util.Properties
+import scala.util.control.NonFatal
 
 object FacebookConfig extends ConfigurationDetector {
 
@@ -23,7 +24,7 @@ trait ConfigurationDetector {
     try {
       environmentVariable(envVar) getOrElse configuration(configName)
     } catch {
-      case _: Throwable =>
+      case NonFatal(_) =>
         val msg = s"[facebook4s] configuration missing: Environment variable $envVar or configuration $configName not found."
         throw new RuntimeException(msg)
     }
