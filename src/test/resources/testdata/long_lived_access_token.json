@@ -3,3 +3,5 @@
   "token_type":"bearer",
   "expires_in":5184000
 }
+
+//https://graph.facebook.com/v2.10/oauth/client_code?client_id=1969406143275709&client_secret=41725f9990f489d5f1b1533a77a17262&access_token=EAAbZCKhmWor0BANSHwpErXOEGguMfxvCrzPN0JDiuZAY1QJ8y1xrFfpkQV6F1Br7ZByJp59fJ9ip8s33MKKfQmeKsUkXln455wPEHjJZCgKA2u3Px2gW1HtGl79gXjKrb7qlfgJCYSU1fug1Aygt1NzzkwvRLe3zNQuNMRJYqwq7akkM4SVsLEoFZC3ZCvcWyA8ZClYxsecvgZDZD&redirect_uri=http://localhost:9000/redirect

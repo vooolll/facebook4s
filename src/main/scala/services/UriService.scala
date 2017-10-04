@@ -23,9 +23,7 @@ class UriService(clientId: FacebookClientId, appSecret: FacebookAppSecret) {
       "client_id"     -> clientId.show,
       "client_secret" -> appSecret.show)
 
-  val appTokenUri = oauthTokenBuilder.withQueryParameters(
-    "redirect_uri" -> redirectUri.show,
-    "grant_type"   -> "client_credentials")
+  val appTokenUri = oauthTokenBuilder.withQueryParameters("grant_type" -> "client_credentials")
 
   def userTokenUri(code: String) = oauthTokenBuilder.withQueryParameters(
     "redirect_uri"  -> redirectUri.show,
@@ -36,8 +34,8 @@ class UriService(clientId: FacebookClientId, appSecret: FacebookAppSecret) {
     "fb_exchange_token" -> shortLeavingTokenValue)
 
   def accessTokenCodeUri(longLeavingTokenValue: String) = oauthCodeBuilder.withQueryParameters(
-    "access_token"  -> longLeavingTokenValue,
-    "redirect_uri"  -> redirectUri.show)
+    "access_token" -> longLeavingTokenValue,
+    "redirect_uri" -> redirectUri.show)
 
   def tokenUri(code: Option[String] = None) = code match {
     case Some(code) => userTokenUri(code)
