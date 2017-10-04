@@ -31,11 +31,25 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
   def userAccessTokenEither(code: String): FutureFacebookAccessTokenResult =
     obtainAccessToken(code.some)(facebookUserAccessTokenReads)
 
+  def extendUserAccessTokenEither(shortLivedToken: String): FutureFacebookAccessTokenResult =
+    extendAccessToken(shortLivedToken)(facebookUserAccessTokenReads)
+
+  def extendUserAccessToken(shortLivedToken: String): Future[FacebookAccessToken] =
+    extendUserAccessTokenEither(shortLivedToken) map valueOrException
+
   private def obtainAccessToken(code: Option[String] = None)
-                               (tokenReads: Reads[FacebookAccessToken]): FutureFacebookAccessTokenResult = for {
-    response <- sendRequest(tokenUri(code))
-    userAccessToken <- parseToJson(response)(tokenReads)
-  } yield userAccessToken
+                               (tokenReads: Reads[FacebookAccessToken]): FutureFacebookAccessTokenResult =
+    for {
+      response <- sendRequest(tokenUri(code))
+      userAccessToken <- parseToJson(response)(tokenReads)
+    } yield userAccessToken
+
+  private def extendAccessToken(shortLivedToken: String)
+                                (tokenReads: Reads[FacebookAccessToken]): FutureFacebookAccessTokenResult =
+    for {
+      response <- sendRequest(longLivedTokenUri(shortLivedToken))
+      userAccessToken <- parseToJson(response)(tokenReads)
+    } yield userAccessToken
 
   private def parseToJson(response: HttpResponse)
                          (tokenReads: Reads[FacebookAccessToken]) = parseResponse(response)(loginErrorFE)(
