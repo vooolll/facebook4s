@@ -30,6 +30,8 @@ object FacebookJsonSerializers {
       (JsPath \ "token_type").read[AppAccessToken]
     )(FacebookAccessToken.apply _)
 
+  implicit val facebookClientCodeReads = Json.reads[FacebookClientCode]
+
   implicit val facebookUserAccessTokenReads = new Reads[FacebookAccessToken] {
     override def reads(json: JsValue) = {
       json match {
