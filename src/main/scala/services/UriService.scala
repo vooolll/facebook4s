@@ -36,11 +36,6 @@ class UriService(clientId: FacebookClientId, appSecret: FacebookAppSecret) {
   def accessTokenCodeUri(longLeavingTokenValue: String) = oauthCodeBuilder.withQueryParameters(
     "access_token" -> longLeavingTokenValue,
     "redirect_uri" -> redirectUri.show)
-
-  def tokenUri(code: Option[String] = None) = code match {
-    case Some(code) => userTokenUri(code)
-    case _ => appTokenUri
-  }
 }
 
 object UriService {

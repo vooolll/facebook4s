@@ -1,22 +1,20 @@
 package api
 
 import akka.http.scaladsl.model._
+import cats.syntax.either._
 import config.FacebookConfig._
 import domain._
-import services._
-import cats.syntax.either._
-import cats.syntax.option._
 import org.f100ded.scalaurlbuilder.URLBuilder
 import play.api.libs.json.Reads
+import services._
 
 import scala.concurrent._
 
 class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppSecret)
   extends FacebookInternals {
 
-  import api.FacebookJsonSerializers._
   import api.FacebookClient._
-
+  import api.FacebookJsonSerializers._
   import asyncRequestService._
   import transformer._
   import uriService._
@@ -31,25 +29,16 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
   def extendUserAccessToken(shortLivedToken: String): Future[AccessToken] =
     extendUserAccessTokenEither(shortLivedToken) map valueOrException
 
-  def appAccessTokenEither(): AsyncAccessTokenResult = obtainAccessToken()(facebookAppAccessTokenReads)
+  def appAccessTokenEither(): AsyncAccessTokenResult = sendAndParseTo(appTokenUri)(facebookAppAccessTokenReads)
 
   def clientCodeEither(longLivedTokenValue: String): AsyncClientCodeResult =
-    obtainClientCode(longLivedTokenValue)(facebookClientCodeReads)
+    sendAndParseTo(accessTokenCodeUri(longLivedTokenValue))(facebookClientCodeReads)
 
   def userAccessTokenEither(code: String): AsyncAccessTokenResult =
-    obtainAccessToken(code.some)(facebookUserAccessTokenReads)
+    sendAndParseTo(userTokenUri(code))(facebookUserAccessTokenReads)
 
   def extendUserAccessTokenEither(shortLivedTokenValue: String): AsyncAccessTokenResult =
     extendAccessToken(shortLivedTokenValue)(facebookUserAccessTokenReads)
-
-  private def obtainAccessToken(code: Option[String] = None)
-                               (tokenReads: Reads[AccessToken]): AsyncAccessTokenResult =
-    sendAndParseTo(tokenUri(code))(tokenReads)
-
-  private def obtainClientCode(longLivedAccessTokenValue: String)
-                              (tokenReads: Reads[ClientCode]): AsyncClientCodeResult =
-    sendAndParseTo(accessTokenCodeUri(longLivedAccessTokenValue))(tokenReads)
-
 
   private def sendAndParseTo[T](uri: URLBuilder)(tokenReads: Reads[T]) = for {
     response <- sendRequest(uri)
