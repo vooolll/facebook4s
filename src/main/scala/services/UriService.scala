@@ -25,9 +25,13 @@ class UriService(clientId: FacebookClientId, appSecret: FacebookAppSecret) {
 
   val appTokenUri = oauthTokenBuilder.withQueryParameters("grant_type" -> "client_credentials")
 
-  def userTokenUri(code: String) = oauthTokenBuilder.withQueryParameters(
-    "redirect_uri"  -> redirectUri.show,
-    "code"          -> code)
+  def userTokenUri(code: String, machineId: Option[String]) = {
+    val mid = machineId.map("machine_id" -> _)
+    val params = Seq(
+      "redirect_uri"  -> redirectUri.show,
+      "code"          -> code) ++ mid
+    oauthTokenBuilder.withQueryParameters(params:_*)
+  }
 
   def longLivedTokenUri(shortLeavingTokenValue: String) = oauthTokenBuilder.withQueryParameters(
     "grant_type"        -> "fb_exchange_token",

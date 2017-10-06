@@ -21,7 +21,8 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
 
   def appAccessToken(): Future[AccessToken] = appAccessTokenEither() map valueOrException
 
-  def userAccessToken(code: String): Future[AccessToken] = userAccessTokenEither(code) map valueOrException
+  def userAccessToken(code: String, machineId: Option[String] = None): Future[AccessToken] =
+    userAccessTokenEither(code, machineId) map valueOrException
 
   def clientCode(longLivedTokenValue: String): Future[ClientCode] =
     clientCodeEither(longLivedTokenValue) map valueOrException
@@ -34,8 +35,8 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
   def clientCodeEither(longLivedTokenValue: String): AsyncClientCodeResult =
     sendAndParseTo(accessTokenCodeUri(longLivedTokenValue))(facebookClientCodeReads)
 
-  def userAccessTokenEither(code: String): AsyncAccessTokenResult =
-    sendAndParseTo(userTokenUri(code))(facebookUserAccessTokenReads)
+  def userAccessTokenEither(code: String, machineId: Option[String]): AsyncAccessTokenResult =
+    sendAndParseTo(userTokenUri(code, machineId))(facebookUserAccessTokenReads)
 
   def extendUserAccessTokenEither(shortLivedTokenValue: String): AsyncAccessTokenResult =
     extendAccessToken(shortLivedTokenValue)(facebookUserAccessTokenReads)

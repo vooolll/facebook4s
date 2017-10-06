@@ -1,1 +1,4 @@
-{"code" : "test-test-test-test"}
+{
+  "code" : "test-test-test-test",
+  "machine_id": "machine id"
+}
