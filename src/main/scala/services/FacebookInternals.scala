@@ -2,17 +2,15 @@ package services
 
 import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
-import api.DomainTransformer
 import domain.{FacebookAppSecret, FacebookClientId}
 
 abstract class FacebookInternals extends ApplicationResources {
   val clientId: FacebookClientId
   val appSecret: FacebookAppSecret
 
-  val asyncRequestService = AsyncRequestService()(system, mat, ec)
+  val domainParseService = DomainParseService(system, mat, ec)
 
   val uriService = UriService(clientId, appSecret)
-  val transformer = new DomainTransformer()(mat, ec)
 }
 
 trait ApplicationResources {

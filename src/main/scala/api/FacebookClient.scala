@@ -15,8 +15,7 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
 
   import api.FacebookClient._
   import api.FacebookJsonSerializers._
-  import asyncRequestService._
-  import transformer._
+  import domainParseService._
   import uriService._
 
   def appAccessToken(): Future[AccessToken] = appAccessTokenEither() map valueOrException
@@ -24,38 +23,46 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
   def userAccessToken(code: String, machineId: Option[String] = None): Future[AccessToken] =
     userAccessTokenEither(code, machineId) map valueOrException
 
-  def clientCode(longLivedTokenValue: String): Future[ClientCode] =
+  def clientCode(longLivedTokenValue: String): Future[ClientCode] = {
     clientCodeEither(longLivedTokenValue) map valueOrException
+  }
 
   def extendUserAccessToken(shortLivedToken: String): Future[AccessToken] =
     extendUserAccessTokenEither(shortLivedToken) map valueOrException
 
-  def appAccessTokenEither(): AsyncAccessTokenResult = sendAndParseTo(appTokenUri)(facebookAppAccessTokenReads)
+  def appAccessTokenEither(): AsyncAccessTokenResult = sendRequest(appTokenUri)(facebookAppAccessTokenReads)
 
-  def clientCodeEither(longLivedTokenValue: String): AsyncClientCodeResult =
-    sendAndParseTo(accessTokenCodeUri(longLivedTokenValue))(facebookClientCodeReads)
+  def clientCodeEither(longLivedTokenValue: String): AsyncClientCodeResult = {
+    println("alive")
+    sendRequest(accessTokenCodeUri(longLivedTokenValue))(facebookClientCodeReads)
+  }
 
   def userAccessTokenEither(code: String, machineId: Option[String]): AsyncAccessTokenResult =
-    sendAndParseTo(userTokenUri(code, machineId))(facebookUserAccessTokenReads)
+    sendRequest(userTokenUri(code, machineId))(facebookUserAccessTokenReads)
 
   def extendUserAccessTokenEither(shortLivedTokenValue: String): AsyncAccessTokenResult =
-    extendAccessToken(shortLivedTokenValue)(facebookUserAccessTokenReads)
+    sendRequest(longLivedTokenUri(shortLivedTokenValue))(facebookUserAccessTokenReads)
 
-  private def sendAndParseTo[T](uri: URLBuilder)(tokenReads: Reads[T]) = for {
-    response <- sendRequest(uri)
-    userAccessToken <- parseToJson(response)(tokenReads)
-  } yield userAccessToken
 
-  private def extendAccessToken(shortLivedToken: String)
-                                (tokenReads: Reads[FacebookAccessToken]): AsyncAccessTokenResult =
-    for {
-      response <- sendRequest(longLivedTokenUri(shortLivedToken))
-      userAccessToken <- parseToJson(response)(tokenReads)
-    } yield userAccessToken
+  private def sendRequest[A](uri: URLBuilder)(reads: Reads[A]) = {
+    sendAndParseTo(uri)(reads, facebookLoginErrorReads)(loginErrorFE)
+  }
 
-  private def parseToJson[T](response: HttpResponse)
-                         (tokenReads: Reads[T]) = parseResponse(response)(loginErrorFE)(
-    tokenReads, facebookLoginErrorReads)
+//  private def sendAndParseTo[T](uri: URLBuilder)(tokenReads: Reads[T]) = for {
+//    response <- sendRequest(uri)
+//    userAccessToken <- parseToJson(response)(tokenReads)
+//  } yield userAccessToken
+//
+//  private def extendAccessToken(shortLivedToken: String)
+//                                (tokenReads: Reads[FacebookAccessToken]): AsyncAccessTokenResult =
+//    for {
+//      response <- sendRequest(longLivedTokenUri(shortLivedToken))
+//      userAccessToken <- parseToJson(response)(tokenReads)
+//    } yield userAccessToken
+
+//  private def parseToJson[T](response: HttpResponse)
+//                         (tokenReads: Reads[T]) = parseResponse(response)(loginErrorFE)(
+//    tokenReads, facebookLoginErrorReads)
 }
 
 object FacebookClient {

@@ -6,10 +6,10 @@ import akka.stream.ActorMaterializer
 import config.FacebookConfig.{appSecret, clientId}
 import org.f100ded.scalaurlbuilder.URLBuilder
 import org.mockito.Matchers.anyObject
-import org.mockito.Mockito.when
+import org.mockito.Mockito._
 import org.scalatest._
 import org.scalatest.mockito.MockitoSugar
-import services.{AsyncRequestService, FacebookInternals}
+import services.{AsyncRequestService, DomainParseService, FacebookInternals}
 
 import scala.concurrent.Future
 import scala.io.Source
@@ -27,6 +27,7 @@ trait FacebookClientSpec extends fixture.AsyncWordSpec with Matchers {
 
 trait ClientProbe extends FacebookInternals with MockitoSugar {
   val facebookServices = mock[FacebookInternals]
+
   val mockAsyncRequestService = mock[AsyncRequestService]
 
 
@@ -59,8 +60,7 @@ trait ClientProbe extends FacebookInternals with MockitoSugar {
   override implicit lazy val system = ActorSystem()
   override implicit lazy val mat = ActorMaterializer()
   override implicit lazy val ec = system.dispatcher
-  override val asyncRequestService = mockAsyncRequestService
-  override val transformer = new DomainTransformer()
+  override val domainParseService = new DomainParseService()(mockAsyncRequestService)
 }
 
 object ClientProbe {
