@@ -48,21 +48,6 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
     sendAndParseTo(uri)(reads, facebookLoginErrorReads)(loginErrorFE)
   }
 
-//  private def sendAndParseTo[T](uri: URLBuilder)(tokenReads: Reads[T]) = for {
-//    response <- sendRequest(uri)
-//    userAccessToken <- parseToJson(response)(tokenReads)
-//  } yield userAccessToken
-//
-//  private def extendAccessToken(shortLivedToken: String)
-//                                (tokenReads: Reads[FacebookAccessToken]): AsyncAccessTokenResult =
-//    for {
-//      response <- sendRequest(longLivedTokenUri(shortLivedToken))
-//      userAccessToken <- parseToJson(response)(tokenReads)
-//    } yield userAccessToken
-
-//  private def parseToJson[T](response: HttpResponse)
-//                         (tokenReads: Reads[T]) = parseResponse(response)(loginErrorFE)(
-//    tokenReads, facebookLoginErrorReads)
 }
 
 object FacebookClient {
