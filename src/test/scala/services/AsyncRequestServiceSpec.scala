@@ -18,17 +18,4 @@ class AsyncRequestServiceSpec extends AsyncWordSpec with Matchers with MockitoSu
   "Should send request" in {
     asyncRequestService.sendRequest(uriService.appTokenUri).map(_.status shouldBe StatusCodes.OK)
   }
-
-//  "Should close actor system after unmarshaling to specified type" in {
-//    sendRequest(uriService.appTokenUri)(facebookAppAccessTokenReads) flatMap { _ =>
-//      val terminatedCallback = system.whenTerminated
-//      eventually {
-//        Future.successful(terminatedCallback.isCompleted shouldBe true)
-//      }
-//    }
-//  }
-//
-//  private def sendRequest[A](uri: URLBuilder)(reads: Reads[A]) = {
-//    asyncRequestService.sendAndParseTo(uri)(reads, facebookLoginErrorReads)(loginErrorFE)
-//  }
 }
