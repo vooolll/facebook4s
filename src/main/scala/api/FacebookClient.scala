@@ -1,6 +1,5 @@
 package api
 
-import akka.http.scaladsl.model._
 import cats.syntax.either._
 import config.FacebookConfig._
 import domain._
@@ -18,22 +17,21 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
   import domainParseService._
   import uriService._
 
-  def appAccessToken(): Future[AccessToken] = appAccessTokenEither() map valueOrException
+  def appAccessToken(): Future[AccessToken] = sendRequestOrFail(appTokenUri)(facebookAppAccessTokenReads)
 
   def userAccessToken(code: String, machineId: Option[String] = None): Future[AccessToken] =
-    userAccessTokenEither(code, machineId) map valueOrException
+    sendRequestOrFail(userTokenUri(code, machineId))(facebookUserAccessTokenReads)
 
   def clientCode(longLivedTokenValue: String): Future[ClientCode] = {
-    clientCodeEither(longLivedTokenValue) map valueOrException
+    sendRequestOrFail(accessTokenCodeUri(longLivedTokenValue))(facebookClientCodeReads)
   }
 
-  def extendUserAccessToken(shortLivedToken: String): Future[AccessToken] =
-    extendUserAccessTokenEither(shortLivedToken) map valueOrException
+  def extendUserAccessToken(shortLivedTokenValue: String): Future[AccessToken] =
+    sendRequestOrFail(longLivedTokenUri(shortLivedTokenValue))(facebookUserAccessTokenReads)
 
   def appAccessTokenEither(): AsyncAccessTokenResult = sendRequest(appTokenUri)(facebookAppAccessTokenReads)
 
   def clientCodeEither(longLivedTokenValue: String): AsyncClientCodeResult = {
-    println("alive")
     sendRequest(accessTokenCodeUri(longLivedTokenValue))(facebookClientCodeReads)
   }
 
@@ -45,7 +43,11 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
 
 
   private def sendRequest[A](uri: URLBuilder)(reads: Reads[A]) = {
-    sendAndParseTo(uri)(reads, facebookLoginErrorReads)(loginErrorFE)
+    send(uri)(reads, facebookLoginErrorReads)(loginErrorFE)(appResources)
+  }
+
+  private def sendRequestOrFail[A](uri: URLBuilder)(reads: Reads[A]) = {
+    sendOrFail(uri)(reads, facebookLoginErrorReads)(loginErrorFE)(appResources)
   }
 
 }

@@ -10,20 +10,35 @@ import org.f100ded.scalaurlbuilder.URLBuilder
 import play.api.libs.json.Reads
 import cats.implicits._
 import de.heikoseeberger.akkahttpplayjson.PlayJsonSupport
+import services.DomainParseService.AppResources
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class DomainParseService()(asyncRequest: AsyncRequestService)
-  (implicit system: ActorSystem, mat: ActorMaterializer, ec: ExecutionContext) extends PlayJsonSupport {
+class DomainParseService(asyncRequest: AsyncRequestService) extends PlayJsonSupport {
 
-  def sendAndParseTo[T, E](uri: URLBuilder)(successReads: Reads[T], failReads: Reads[E])
-                          (errorFormatter: String => Future[Either[E, T]]) = for {
-    response <- asyncRequest.sendRequest(uri)
-    userAccessToken <- parseResponse[E, T](response)(errorFormatter)(successReads, failReads)
-  } yield userAccessToken
+  def sendOrFail[T, E <: HasFacebookError](uri: URLBuilder)(successReads: Reads[T], failReads: Reads[E])
+    (errorFormatter: String => Future[Either[E, T]])(resources: AppResources) = {
+    implicit val AppResources(system, mat, ec) = resources
+
+    val entity = sendAndParseTo(uri)(successReads, failReads)(errorFormatter) map valueOrException
+
+    entity.onComplete(_ => system.terminate())
+    entity
+  }
+
+  def send[T, E](uri: URLBuilder)
+    (successReads: Reads[T], failReads: Reads[E])
+    (errorFormatter: String => Future[Either[E, T]])(resources: AppResources) = {
+    implicit val AppResources(system, mat, ec) = resources
+
+    val entity = sendAndParseTo(uri)(successReads, failReads)(errorFormatter)
+    entity.onComplete(_ => system.terminate())
+    entity
+  }
 
   def parseResponse[E, T](response: HttpResponse)(errorFormatter: String => Future[Either[E, T]])
-    (implicit reads: Reads[T], reads1: Reads[E]): Future[Either[E, T]] = {
+    (implicit reads: Reads[T], reads1: Reads[E],
+      mat: ActorMaterializer, ec: ExecutionContext): Future[Either[E, T]] = {
     def parseFE(httpEntity: HttpEntity): Future[Either[E, T]] = Unmarshal[HttpEntity](
       httpEntity.withContentType(ContentTypes.`application/json`)).to[T] map(_.asRight) recoverWith {
       case e => errorFormatter(e.getLocalizedMessage)
@@ -49,17 +64,33 @@ class DomainParseService()(asyncRequest: AsyncRequestService)
       case Left(facebookError) => throw new RuntimeException(facebookError.error.message)
     }
   }
+
+  private def sendAndParseTo[T, E](uri: URLBuilder)
+    (successReads: Reads[T], failReads: Reads[E])
+    (errorFormatter: String => Future[Either[E, T]])
+    (implicit system: ActorSystem, mat: ActorMaterializer, ec: ExecutionContext) = {
+
+    val entity = for {
+      response <- asyncRequest.sendRequest(uri)(system, mat)
+      entity <- parseResponse[E, T](response)(errorFormatter)(successReads, failReads, mat, ec)
+    } yield entity
+
+    entity.onComplete(_ => system.terminate())
+
+    entity
+  }
 }
 
-class AsyncRequestService()
-  (implicit val system: ActorSystem, val mat: ActorMaterializer, val ec: ExecutionContext) {
-  def sendRequest(url: URLBuilder): Future[HttpResponse] = {
-    Http().singleRequest(HttpRequest(uri = url.toString()))
+class AsyncRequestService() {
+  def sendRequest(url: URLBuilder)
+    (actorSystem: ActorSystem, mat: ActorMaterializer): Future[HttpResponse] = {
+    Http(actorSystem).singleRequest(HttpRequest(uri = url.toString()))(mat)
   }
 }
 
 object DomainParseService {
-  def apply(implicit system: ActorSystem, mat: ActorMaterializer, ec: ExecutionContext) =
-    new DomainParseService()(new AsyncRequestService())
+  def apply() = new DomainParseService(new AsyncRequestService())
+  def apply(asyncService: AsyncRequestService) = new DomainParseService(asyncService)
 
+  case class AppResources(system: ActorSystem, mat: ActorMaterializer, ec: ExecutionContext)
 }

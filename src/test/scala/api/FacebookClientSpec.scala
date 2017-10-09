@@ -6,6 +6,7 @@ import akka.stream.ActorMaterializer
 import config.FacebookConfig.{appSecret, clientId}
 import org.f100ded.scalaurlbuilder.URLBuilder
 import org.mockito.Matchers.anyObject
+import org.mockito.{Matchers => M}
 import org.mockito.Mockito._
 import org.scalatest._
 import org.scalatest.mockito.MockitoSugar
@@ -30,10 +31,13 @@ trait ClientProbe extends FacebookInternals with MockitoSugar {
 
   val mockAsyncRequestService = mock[AsyncRequestService]
 
-
+  implicit lazy val system = ActorSystem()
+  implicit lazy val mat = ActorMaterializer()
+  implicit lazy val ec = system.dispatcher
 
   def mockSendWithResource(resourcePath: String) = {
-    when(mockAsyncRequestService.sendRequest(anyObject[URLBuilder])).thenReturn(
+    when(mockAsyncRequestService.sendRequest(anyObject[URLBuilder])(
+      anyObject[ActorSystem], anyObject[ActorMaterializer])).thenReturn(
       Future.successful(
         HttpResponse(
           entity = HttpEntity(
@@ -45,7 +49,8 @@ trait ClientProbe extends FacebookInternals with MockitoSugar {
   }
 
   def mockSendError(resourcePath: String) = {
-    when(mockAsyncRequestService.sendRequest(anyObject[URLBuilder])).thenReturn(
+    when(mockAsyncRequestService.sendRequest(anyObject[URLBuilder])(
+      anyObject[ActorSystem], anyObject[ActorMaterializer])).thenReturn(
       Future.successful(
         HttpResponse(
           status = StatusCodes.BadRequest,
@@ -57,10 +62,7 @@ trait ClientProbe extends FacebookInternals with MockitoSugar {
     )
   }
 
-  override implicit lazy val system = ActorSystem()
-  override implicit lazy val mat = ActorMaterializer()
-  override implicit lazy val ec = system.dispatcher
-  override val domainParseService = new DomainParseService()(mockAsyncRequestService)
+  override val domainParseService = new DomainParseService(mockAsyncRequestService)
 }
 
 object ClientProbe {
