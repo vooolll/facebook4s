@@ -14,6 +14,10 @@ import services.DomainParseService.AppResources
 
 import scala.concurrent.{ExecutionContext, Future}
 
+/**
+  * Transforms http domain to facebook domain
+  * @param asyncRequest service for async requests
+  */
 class DomainParseService(asyncRequest: AsyncRequestService) extends PlayJsonSupport {
 
   def sendOrFail[T, E <: HasFacebookError](uri: URLBuilder)(successReads: Reads[T], failReads: Reads[E])
@@ -81,6 +85,9 @@ class DomainParseService(asyncRequest: AsyncRequestService) extends PlayJsonSupp
   }
 }
 
+/**
+  * Service that provides async requests to api, via akk http
+  */
 class AsyncRequestService() {
   def sendRequest(url: URLBuilder)
     (actorSystem: ActorSystem, mat: ActorMaterializer): Future[HttpResponse] = {
@@ -88,6 +95,9 @@ class AsyncRequestService() {
   }
 }
 
+/**
+  * DomainParseService helper object
+  */
 object DomainParseService {
   def apply() = new DomainParseService(new AsyncRequestService())
   def apply(asyncService: AsyncRequestService) = new DomainParseService(asyncService)

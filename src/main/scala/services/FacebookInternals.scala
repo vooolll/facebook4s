@@ -21,9 +21,3 @@ abstract class FacebookInternals {
     AppResources(system, mat, ec)
   }
 }
-
-trait ApplicationResources {
-  implicit lazy val system = ActorSystem()
-  implicit lazy val mat = ActorMaterializer()
-  implicit lazy val ec = system.dispatcher
-}

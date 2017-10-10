@@ -2,6 +2,9 @@ package domain
 
 import cats.Show
 
+/**
+  * Cats show implementation for domain
+  */
 object FacebookShowOps {
   implicit val showFacebookVersion = Show.show[FacebookVersion](fbVersion => "v" + fbVersion.value)
   implicit val showFacebookClientId = Show.show[FacebookClientId](_.value)

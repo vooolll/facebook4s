@@ -7,6 +7,11 @@ import domain.FacebookShowOps._
 import domain.{FacebookAppSecret, FacebookClientId}
 import org.f100ded.scalaurlbuilder.URLBuilder
 
+/**
+  * Service that constructs uri to facebook api
+  * @param clientId client id(application id)
+  * @param appSecret application secret
+  */
 class UriService(clientId: FacebookClientId, appSecret: FacebookAppSecret) {
 
   val hostBuilder = URLBuilder(base = host).withPathSegments(version.show)

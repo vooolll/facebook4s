@@ -3,9 +3,13 @@ package config
 import com.typesafe.config._
 import domain._
 
-import scala.util.{Failure, Properties, Success, Try}
-import scala.util.control.NonFatal
+import scala.util._
 
+/**
+  * Helper object that loads configuration
+  * @throws RuntimeException if required configuration
+  *                          not specified(FACEBOOK_CLIENT_ID, FACEBOOK_REDIRECT_URI, FACEBOOK_APP_SECRET)
+  */
 object FacebookConfig extends ConfigurationDetector {
 
   val config = ConfigFactory.load
@@ -16,10 +20,22 @@ object FacebookConfig extends ConfigurationDetector {
   val appSecret = FacebookAppSecret(envVarOrConfig("FACEBOOK_APP_SECRET", "facebook.appSecret"))
 }
 
+/**
+  * Trait that implements configuration detection
+  */
 trait ConfigurationDetector {
 
+  /**
+    * Config file
+    * @return type safe config
+    */
   def config: Config
 
+  /**
+    * @param envVar OS environment variable key
+    * @param configName Type safe configuration key
+    * @return configuration value
+    */
   def envVarOrConfig(envVar: String, configName: String): String = {
     Try(environmentVariable(envVar) getOrElse configuration(configName)) match {
       case Success(s)        => s
@@ -30,8 +46,21 @@ trait ConfigurationDetector {
     }
   }
 
+  /**
+    * @param name OS environment variable key
+    * @return Optional environment variable value
+    */
   def environmentVariable(name: String): Option[String] = Properties.envOrNone(name)
 
+  /**
+    * @param path Path at type safe config
+    * @return the { @code Enum} value at the requested path
+    *                     of the requested enum class
+    * @throws ConfigException.Missing
+    * if value is absent or null
+    * @throws ConfigException.WrongType
+    * if value is not convertible to an Enum
+    */
   def configuration(path: String): String = config.getString(path)
 
 }

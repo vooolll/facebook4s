@@ -1,6 +1,7 @@
 package services
 
 import akka.http.scaladsl.model.StatusCodes
+import api.ApplicationResources
 import org.scalatest.concurrent.Eventually
 import org.scalatest.mockito.MockitoSugar
 import org.scalatest.{AsyncWordSpec, Matchers}

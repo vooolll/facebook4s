@@ -1,5 +1,6 @@
 package services
 
+import api.ApplicationResources
 import api.FacebookClient.loginErrorFE
 import api.FacebookJsonSerializers._
 import org.scalatest.concurrent.Eventually

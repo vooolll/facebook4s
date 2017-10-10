@@ -7,6 +7,9 @@ import play.api.libs.json._
 
 import scala.concurrent.duration.DurationInt
 
+/**
+  * Play json serializers
+  */
 object FacebookJsonSerializers {
 
   implicit val facebookTokenTypeReads = new Reads[AppAccessToken] {
@@ -65,6 +68,6 @@ object FacebookJsonSerializers {
   }
 
   implicit val facebookErrorReads = Json.reads[FacebookError]
-  implicit val facebookLoginErrorReads = Json.reads[FacebookTokenError]
+  implicit val facebookLoginErrorReads = Json.reads[FacebookOauthError]
 
 }
