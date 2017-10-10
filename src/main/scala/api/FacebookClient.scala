@@ -14,7 +14,6 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
 
   import api.FacebookClient._
   import api.FacebookJsonSerializers._
-  import domainParseService._
   import uriService._
 
   def appAccessToken(): Future[AccessToken] = sendRequestOrFail(appTokenUri)(facebookAppAccessTokenReads)
@@ -43,11 +42,11 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
 
 
   private def sendRequest[A](uri: URLBuilder)(reads: Reads[A]) = {
-    send(uri)(reads, facebookLoginErrorReads)(loginErrorFE)(appResources)
+    domainParseService.send(uri)(reads, facebookLoginErrorReads)(loginErrorFE)(appResources)
   }
 
   private def sendRequestOrFail[A](uri: URLBuilder)(reads: Reads[A]) = {
-    sendOrFail(uri)(reads, facebookLoginErrorReads)(loginErrorFE)(appResources)
+    domainParseService.sendOrFail(uri)(reads, facebookLoginErrorReads)(loginErrorFE)(appResources)
   }
 
 }

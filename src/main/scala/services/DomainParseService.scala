@@ -32,7 +32,7 @@ class DomainParseService(asyncRequest: AsyncRequestService) extends PlayJsonSupp
   }
 
   def shutdownActorSystem[T](f: Future[T])(implicit system: ActorSystem) = {
-    f.onComplete(_ => system.terminate())
+    f.onComplete(_ => system.terminate())(system.dispatcher)
     f
   }
 
