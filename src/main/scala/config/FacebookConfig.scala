@@ -3,7 +3,7 @@ package config
 import com.typesafe.config._
 import domain._
 
-import scala.util.Properties
+import scala.util.{Failure, Properties, Success, Try}
 import scala.util.control.NonFatal
 
 object FacebookConfig extends ConfigurationDetector {
@@ -20,14 +20,15 @@ trait ConfigurationDetector {
 
   def config: Config
 
-  def envVarOrConfig(envVar: String, configName: String): String =
-    try {
-      environmentVariable(envVar) getOrElse configuration(configName)
-    } catch {
-      case NonFatal(_) =>
-        val msg = s"[facebook4s] configuration missing: Environment variable $envVar or configuration $configName not found."
+  def envVarOrConfig(envVar: String, configName: String): String = {
+    Try(environmentVariable(envVar) getOrElse configuration(configName)) match {
+      case Success(s)        => s
+      case Failure(e) =>
+        val msg = s"[facebook4s] configuration missing: " +
+          s"Environment variable $envVar or configuration $configName not found."
         throw new RuntimeException(msg)
     }
+  }
 
   def environmentVariable(name: String): Option[String] = Properties.envOrNone(name)
 

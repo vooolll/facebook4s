@@ -1,3 +1,3 @@
 package domain
 
-case class FacebookClientCode(code: String, machineId: Option[String])
+final case class FacebookClientCode(code: String, machineId: Option[String])
