@@ -1,12 +1,72 @@
+import SonatypeKeys._
+
+sonatypeSettings
+
 name := "facebook4s"
 
-version := "0.0.1-SNAPSHOT"
+version := "0.1.2"
 
 scalaVersion := "2.12.1"
 
 resolvers ++= Seq(
   "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/"
 )
+
+publishMavenStyle := true
+
+publishTo := {
+  val nexus = "https://oss.sonatype.org/"
+  if (isSnapshot.value)
+    Some("snapshots" at nexus + "content/repositories/snapshots")
+  else
+    Some("releases" at nexus + "service/local/staging/deploy/maven2")
+}
+
+publishArtifact in Test := false
+
+pomIncludeRepository := { _ => false }
+
+organization := "com.github.vooolll"
+
+organizationHomepage := Some(url("https://github.com/vooolll"))
+
+description := "Async Scala SDK for the Facebook Graph API."
+
+autoAPIMappings := true
+apiMappings ++= {
+  val classpath = (fullClasspath in Compile).value
+  def findJar(name: String): File = {
+    val regex = ("/" + name + "[^/]*.jar$").r
+    classpath.find { jar => regex.findFirstIn(jar.data.toString).nonEmpty }.get.data // fail hard if not found
+  }
+
+
+  Map(
+    findJar("scala-library") -> url("http://scala-lang.org/api/" + "2.12.1" + "/"),
+    findJar("config") -> url("https://typesafehub.github.io/config/latest/api/")
+  )
+}
+
+pomExtra :=
+  <url>https://github.com/vooolll/facebook4s</url>
+    <licenses>
+      <license>
+        <name>Apache-2.0</name>
+        <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        <distribution>repo</distribution>
+      </license>
+    </licenses>
+    <scm>
+      <url>https://github.com/vooolll/facebook4s</url>
+      <connection>scm:git:git@github.com:vooolll/facebook4s.git</connection>
+    </scm>
+    <developers>
+      <developer>
+        <id>slow_harry</id>
+        <name>Valeryi Baibossynov</name>
+        <url>https://github.com/vooolll</url>
+      </developer>
+    </developers>
 
 libraryDependencies ++= {
   val akkaV = "2.4.19"

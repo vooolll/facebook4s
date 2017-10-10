@@ -10,7 +10,7 @@ import services._
 import scala.concurrent._
 
 /**
-  * Facebook client, api should be used via this object, it provides api methods for you application
+  * Facebook client, api should be used via this object, it provides api methods for your application
   * @param clientId your application id
   * @param appSecret your application secret
   */
@@ -30,7 +30,7 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
     * @param code client code
     * @param machineId optional value that helps to identify specified client
     * @return future long lived user access token
-    *         @throws RuntimeException if facebook responds with bad request
+    *         @throws scala.RuntimeException if facebook responds with bad request
     */
   def userAccessToken(code: String, machineId: Option[String] = None): Future[AccessToken] =
     sendRequestOrFail(userTokenUri(code, machineId))(facebookUserAccessTokenReads)
@@ -38,7 +38,7 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
   /**
     * @param longLivedTokenValue long lived token
     * @return future client code
-    *         @throws RuntimeException if facebook responds with bad request
+    *         @throws scala.RuntimeException if facebook responds with bad request
     */
   def clientCode(longLivedTokenValue: String): Future[ClientCode] = {
     sendRequestOrFail(accessTokenCodeUri(longLivedTokenValue))(facebookClientCodeReads)
@@ -47,7 +47,7 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
   /**
     * @param shortLivedTokenValue short lived token
     * @return future long lived user access token
-    *         @throws RuntimeException if facebook responds with bad request
+    *         @throws scala.RuntimeException if facebook responds with bad request
     */
   def extendUserAccessToken(shortLivedTokenValue: String): Future[AccessToken] =
     sendRequestOrFail(longLivedTokenUri(shortLivedTokenValue))(facebookUserAccessTokenReads)

@@ -5,7 +5,7 @@ facebook4s
 
 ### Road map
 
-## 1.0.1
+## 0.2.0
 Implement, test and write documentation that covers workflow described [here][1]. And make it available via sbt. 
 
 ### sbt

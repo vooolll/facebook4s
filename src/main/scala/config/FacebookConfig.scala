@@ -7,7 +7,7 @@ import scala.util._
 
 /**
   * Helper object that loads configuration
-  * @throws RuntimeException if required configuration
+  * @throws scala.RuntimeException if required configuration
   *                          not specified(FACEBOOK_CLIENT_ID, FACEBOOK_REDIRECT_URI, FACEBOOK_APP_SECRET)
   */
 object FacebookConfig extends ConfigurationDetector {
@@ -56,9 +56,9 @@ trait ConfigurationDetector {
     * @param path Path at type safe config
     * @return the { @code Enum} value at the requested path
     *                     of the requested enum class
-    * @throws ConfigException.Missing
+    * @throws com.typesafe.config.ConfigException.Missing
     * if value is absent or null
-    * @throws ConfigException.WrongType
+    * @throws com.typesafe.config.ConfigException.WrongType
     * if value is not convertible to an Enum
     */
   def configuration(path: String): String = config.getString(path)

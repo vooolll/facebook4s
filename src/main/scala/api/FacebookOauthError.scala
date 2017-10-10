@@ -1,7 +1,7 @@
 package api
 
 /**
-  * Token error
+  * Oauth error
   * @param error facebook error message
   */
 case class FacebookOauthError(error: FacebookError) extends HasFacebookError
