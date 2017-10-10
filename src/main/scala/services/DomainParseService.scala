@@ -20,20 +20,20 @@ class DomainParseService(asyncRequest: AsyncRequestService) extends PlayJsonSupp
     (errorFormatter: String => Future[Either[E, T]])(resources: AppResources) = {
     implicit val AppResources(system, mat, ec) = resources
 
-    val entity = sendAndParseTo(uri)(successReads, failReads)(errorFormatter) map valueOrException
-
-    entity.onComplete(_ => system.terminate())
-    entity
+    shutdownActorSystem(sendAndParseTo(uri)(successReads, failReads)(errorFormatter) map valueOrException)
   }
 
   def send[T, E](uri: URLBuilder)
     (successReads: Reads[T], failReads: Reads[E])
-    (errorFormatter: String => Future[Either[E, T]])(resources: AppResources) = {
+    (errorFormatter: String => Future[Either[E, T]])(resources: AppResources): Future[Either[E, T]] = {
     implicit val AppResources(system, mat, ec) = resources
 
-    val entity = sendAndParseTo(uri)(successReads, failReads)(errorFormatter)
-    entity.onComplete(_ => system.terminate())
-    entity
+    shutdownActorSystem(sendAndParseTo(uri)(successReads, failReads)(errorFormatter))
+  }
+
+  def shutdownActorSystem[T](f: Future[T])(implicit system: ActorSystem) = {
+    f.onComplete(_ => system.terminate())
+    f
   }
 
   def parseResponse[E, T](response: HttpResponse)(errorFormatter: String => Future[Either[E, T]])
