@@ -119,7 +119,7 @@ facebookClient.appAccessToken() onComplete {
 
 ## Road map
 
-### 0.2.0
+### 0.1.2
 Implement, test and write documentation that covers workflow described [here][1]. And make it available via sbt.
 
 ### License
