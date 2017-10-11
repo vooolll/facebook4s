@@ -5,3 +5,4 @@ project/target
 src/test/resources/.facebook-dev.conf
 src/main/resources/.facebook-dev.conf
 .idea/
+.DS_Store
