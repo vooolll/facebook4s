@@ -4,8 +4,8 @@ version := "0.0.1"
 
 scalaVersion := "2.12.1"
 
-resolvers += Resolver.sonatypeRepo("snapshot")
+resolvers += Resolver.sonatypeRepo("releases")
 
 libraryDependencies ++= Seq(
-  "com.github.vooolll" %% "facebook4s" % "0.0.1"
+  "com.github.vooolll" %% "facebook4s" % "0.1.2"
 )
