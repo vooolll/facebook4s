@@ -1,4 +1,4 @@
-package samples
+package example
 
 import api.FacebookClient
 

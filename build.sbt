@@ -49,24 +49,17 @@ apiMappings ++= {
 
 pomExtra :=
   <url>https://github.com/vooolll/facebook4s</url>
-    <licenses>
-      <license>
-        <name>Apache-2.0</name>
-        <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-        <distribution>repo</distribution>
-      </license>
-    </licenses>
-    <scm>
-      <url>https://github.com/vooolll/facebook4s</url>
-      <connection>scm:git:git@github.com:vooolll/facebook4s.git</connection>
-    </scm>
-    <developers>
-      <developer>
-        <id>slow_harry</id>
-        <name>Valeryi Baibossynov</name>
-        <url>https://github.com/vooolll</url>
-      </developer>
-    </developers>
+  <scm>
+    <url>https://github.com/vooolll/facebook4s</url>
+    <connection>scm:git:git@github.com:vooolll/facebook4s.git</connection>
+  </scm>
+  <developers>
+    <developer>
+      <id>slow_harry</id>
+      <name>Valeryi Baibossynov</name>
+      <url>https://github.com/vooolll</url>
+    </developer>
+  </developers>
 
 libraryDependencies ++= {
   val akkaV = "2.4.19"

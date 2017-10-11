@@ -105,6 +105,14 @@ object FacebookClient {
     new FacebookClient(clientId, appSecret)
 
   /**
+    * @param clientIdValue your application id value
+    * @param appSecretValue your application secret value
+    * @return
+    */
+  def apply(clientIdValue: String, appSecretValue: String): FacebookClient =
+    new FacebookClient(FacebookClientId(clientIdValue), FacebookAppSecret(appSecretValue))
+
+  /**
     * @return FacebookClient created from application id and application secret from type safe config or
     *         OS environmental variables
     */
