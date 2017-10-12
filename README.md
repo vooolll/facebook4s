@@ -6,10 +6,12 @@ facebook4s
 Prerequisites
 -------------
 Scala 2.12.x
+
 SBT 0.13.x
 
 
 ### Installation
+[Link to a header]
 Add the following line to your sbt dependencies: 
 ```scala
 "com.github.vooolll" %% "facebook4s" % "0.1.2"
@@ -23,7 +25,7 @@ resolvers += Resolver.sonatypeRepo("releases")
 ### Usage
 
 #### Configuration
-Add your client id(application id) and application secret to your environment variables:
+Add your `client id`(`application id`) and `application secret` to your environment variables:
 ```bash
 export FACEBOOK_CLIENT_ID='your client id'
 export FACEBOOK_APP_SECRET='your application secret'
@@ -46,7 +48,7 @@ import api.FacebookClient
 
 val facebookClient = FacebookClient()
 ```
-In example above `FacebookClient` will use configured parameters, see Configuration section.
+In example above `FacebookClient` will use configured parameters, see [Configuration](#configuration).
 
 If you want to specify client id and application secret explicitly you can do it as expected:
 ```scala
@@ -55,7 +57,7 @@ import api.FacebookClient
 val facebookClient = FacebookClient("your client id", "your app secret")
 ```
 
-or you can use types for your advantage:
+or you can use types to your advantage:
 ```scala
 import api.FacebookClient
 import domain.{FacebookClientId, FacebookAppSecret}
