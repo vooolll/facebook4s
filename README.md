@@ -119,7 +119,7 @@ facebookClient.appAccessToken() onComplete {
 }
 ```
 
-### Api reference
+### Api references
 * [FacebookClient][2]
 * [FacebookAccessToken][3]
 * [AppAccessToken][10]
