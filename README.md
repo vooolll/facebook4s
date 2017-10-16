@@ -86,7 +86,7 @@ facebookClient.extendUserAccessToken(shortLivedAccessToken) onComplete {
 }
 ```
 
-#### Exchange long lived token to client code
+#### Exchange long-lived token to client code
 It is possible to obtain client code using api call and long lived token from previous auth:
 ```scala
 import api.FacebookClient
