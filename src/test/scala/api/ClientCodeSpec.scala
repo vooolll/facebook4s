@@ -1,6 +1,6 @@
 package api
 
-import domain.FacebookClientCode
+import domain.oauth.FacebookClientCode
 
 class ClientCodeSpec extends FacebookClientSpec {
   "Facebook Graph Api" should {

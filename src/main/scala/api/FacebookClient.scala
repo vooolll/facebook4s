@@ -3,6 +3,7 @@ package api
 import cats.syntax.either._
 import config.FacebookConfig._
 import domain._
+import domain.oauth.{FacebookAccessToken, FacebookAppSecret, FacebookClientCode, FacebookClientId}
 import org.f100ded.scalaurlbuilder.URLBuilder
 import play.api.libs.json.Reads
 import services._

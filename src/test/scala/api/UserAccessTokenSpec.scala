@@ -1,6 +1,6 @@
 package api
 
-import domain.UserAccessToken
+import domain.oauth.UserAccessToken
 import org.scalatest.Matchers
 
 import scala.concurrent.duration.DurationInt

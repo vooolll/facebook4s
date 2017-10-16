@@ -1,4 +1,4 @@
-package domain
+package domain.oauth
 
 /**
   * Case class that represents facebook client code, can be exchanged to access_token

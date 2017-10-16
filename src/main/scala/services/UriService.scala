@@ -2,9 +2,9 @@ package services
 
 import cats.implicits._
 import config.FacebookConfig.{appSecret, clientId, redirectUri, version}
-import config.FacebookConstants.{host, oauthClientCodeUri, oauthAccessTokenUri}
-import domain.FacebookShowOps._
-import domain.{FacebookAppSecret, FacebookClientId}
+import config.FacebookConstants.{host, oauthAccessTokenUri, oauthClientCodeUri}
+import other.FacebookShowOps._
+import domain.oauth.{FacebookAppSecret, FacebookClientId}
 import org.f100ded.scalaurlbuilder.URLBuilder
 
 /**

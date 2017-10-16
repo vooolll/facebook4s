@@ -2,7 +2,7 @@ package services
 
 import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
-import domain.{FacebookAppSecret, FacebookClientId}
+import domain.oauth.{FacebookAppSecret, FacebookClientId}
 import services.DomainParseService.AppResources
 
 abstract class FacebookInternals {

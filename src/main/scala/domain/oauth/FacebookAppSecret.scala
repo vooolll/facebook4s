@@ -1,6 +1,6 @@
-package domain
+package domain.oauth
 
-import domain.FacebookAppSecret._
+import FacebookAppSecret._
 
 /**
   * Facebook application secret that can be obtained at https://developers.facebook.com/apps/your_app_id/settings/

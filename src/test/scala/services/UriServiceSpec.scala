@@ -1,6 +1,6 @@
 package services
 
-import domain.{FacebookAppSecret, FacebookClientId}
+import domain.oauth.{FacebookAppSecret, FacebookClientId}
 import org.scalatest.{Matchers, WordSpec}
 
 class UriServiceSpec extends WordSpec with Matchers {

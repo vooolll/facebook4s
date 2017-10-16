@@ -1,4 +1,4 @@
-package domain
+package domain.oauth
 
 import org.f100ded.scalaurlbuilder.URLBuilder
 

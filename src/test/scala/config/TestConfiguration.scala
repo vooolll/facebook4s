@@ -1,7 +1,7 @@
 package config
 
 import com.typesafe.config.ConfigFactory
-import domain.{AppAccessToken, FacebookAccessToken, TokenValue}
+import domain.oauth.{AppAccessToken, FacebookAccessToken, TokenValue}
 
 object TestConfiguration extends ConfigurationDetector {
 

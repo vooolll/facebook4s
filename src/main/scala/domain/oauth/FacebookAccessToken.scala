@@ -1,4 +1,4 @@
-package domain
+package domain.oauth
 
 import scala.concurrent.duration.FiniteDuration
 

@@ -2,6 +2,7 @@ package config
 
 import com.typesafe.config._
 import domain._
+import domain.oauth.{FacebookAppSecret, FacebookClientId, FacebookRedirectUri}
 
 import scala.util._
 

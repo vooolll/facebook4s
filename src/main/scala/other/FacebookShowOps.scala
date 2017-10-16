@@ -1,6 +1,8 @@
-package domain
+package other
 
 import cats.Show
+import domain.FacebookVersion
+import domain.oauth._
 
 /**
   * Cats show implementation for domain

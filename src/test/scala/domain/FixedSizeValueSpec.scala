@@ -1,5 +1,6 @@
 package domain
 
+import domain.oauth.FixedSizeValue
 import org.scalatest.{Matchers, WordSpec}
 import org.scalatest.mockito.MockitoSugar
 

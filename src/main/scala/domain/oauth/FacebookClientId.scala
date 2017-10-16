@@ -1,6 +1,6 @@
-package domain
+package domain.oauth
 
-import domain.FacebookClientId._
+import FacebookClientId._
 
 /**
   * Facebook client id, it is also called app id
