@@ -155,4 +155,4 @@ Facebook4s is released under the [Apache 2 License][5].
 [9]: https://vooolll.github.io/facebook4s/domain/oauth/FacebookVersion.html
 [10]: https://vooolll.github.io/facebook4s/domain/oauth/AppAccessToken.html
 [11]: https://vooolll.github.io/facebook4s/domain/oauth/UserAccessToken.html
-[12]: https://vooolll.github.io/facebook4s/domain/api/FacebookOauthError.html
+[12]: https://vooolll.github.io/facebook4s/api/FacebookOauthError.html
