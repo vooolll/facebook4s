@@ -10,7 +10,7 @@ object TokenApp extends App {
   val facebookClient = FacebookClient()
 
   //long lived token creation
-  val longLivedToken = facebookClient.extendUserAccessToken("EAAbZCKhmWor0BAOCsAZCOAlpWvfH7g7VSZC0X5YqCV4yv9HdCx6JYHXN9Jb90gm5wKELtJdndFU7bsKlnbJweO43M4wzcjfNVQXM4fyQWmPmXCe0bWF1uCjfassz2yJZA5apaVhbwzZBpM9cc4wFPEMR8rACmnabqKQ3JZBp9vX8xPkMnqqdTmsG6mwCLZCSFROEB1yv9U5PgZDZD")// https://developers.facebook.com/tools/accesstoken/
+  val longLivedToken = facebookClient.extendUserAccessToken("your token")// https://developers.facebook.com/tools/accesstoken/
 
   longLivedToken onComplete {
     case Success(token) =>

@@ -131,11 +131,6 @@ facebookClient.appAccessToken() onComplete {
 * [FacebookVersion][9]
 * [FacebookOauthError][12]
 
-## Road map
-
-### 0.1.2
-Implement, test and write documentation that covers workflow described [here][1]. And make it available via sbt.
-
 ### License
 
 Facebook4s is released under the [Apache 2 License][5].
