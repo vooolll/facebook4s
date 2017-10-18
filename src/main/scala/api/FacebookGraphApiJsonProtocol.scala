@@ -1,5 +1,7 @@
 package api
 
+import domain.feed.Paging
+
 object FacebookGraphApiJsonProtocol {
   
   case class TokenData(
@@ -37,16 +39,7 @@ object FacebookGraphApiJsonProtocol {
     images: Seq[Image]
   )
 
-  case class Cursors(
-    after: String,
-    before: String
-  )
 
-  case class Paging(
-    cursors: Option[Cursors],
-    next: Option[String],
-    previous: Option[String]
-  )
 
   case class Response[T](
     data: Seq[T],
