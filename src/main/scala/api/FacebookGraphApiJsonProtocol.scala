@@ -1,6 +1,6 @@
 package api
 
-import domain.feed.Paging
+import domain.feed.FacebookPaging
 
 object FacebookGraphApiJsonProtocol {
   
@@ -43,7 +43,7 @@ object FacebookGraphApiJsonProtocol {
 
   case class Response[T](
     data: Seq[T],
-    paging: Option[Paging]
+    paging: Option[FacebookPaging]
   )
 
   case class UserProfilePic (url: String, is_silhouette: Boolean)

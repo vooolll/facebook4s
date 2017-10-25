@@ -3,6 +3,7 @@ package api
 import cats.syntax.either._
 import config.FacebookConfig._
 import domain._
+import domain.feed.FacebookUserFeed
 import domain.oauth.{FacebookAccessToken, FacebookAppSecret, FacebookClientCode, FacebookClientId}
 import org.f100ded.scalaurlbuilder.URLBuilder
 import play.api.libs.json.Reads
@@ -53,6 +54,10 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
   def extendUserAccessToken(shortLivedTokenValue: String): Future[AccessToken] =
     sendRequestOrFail(longLivedTokenUri(shortLivedTokenValue))(facebookUserAccessTokenReads)
 
+
+  def feed(userId: FacebookUserId, accessToken: AccessToken): Future[UserFeed] =
+    sendRequestOrFail(userFeedUri(accessToken, userId))(facebookFeedReads)
+
   /**
     * @return Either future value of facebook app access token or FacebookOauthError
     */
@@ -80,6 +85,10 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
     */
   def extendUserAccessTokenEither(shortLivedTokenValue: String): AsyncAccessTokenResult =
     sendRequest(longLivedTokenUri(shortLivedTokenValue))(facebookUserAccessTokenReads)
+
+
+  def feedEither(userId: FacebookUserId, accessToken: AccessToken) =
+    sendRequest(userFeedUri(accessToken, userId))(facebookFeedReads)
 
 
   private def sendRequest[A](uri: URLBuilder)(reads: Reads[A]) = {
@@ -129,6 +138,7 @@ object FacebookClient {
   type AccessToken = FacebookAccessToken
   type TokenError = FacebookOauthError
   type ClientCode = FacebookClientCode
+  type UserFeed = FacebookUserFeed
 
   type AsyncAccessTokenResult = Future[Either[TokenError, AccessToken]]
   type AsyncClientCodeResult = Future[Either[TokenError, ClientCode]]

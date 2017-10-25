@@ -1,6 +1,10 @@
 package api
 
+import java.text.SimpleDateFormat
+import java.time.Instant
+
 import domain._
+import domain.feed.{FacebookPaging, FacebookPost, FacebookUserFeed}
 import domain.oauth._
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
@@ -52,6 +56,26 @@ object FacebookJsonSerializers {
       }
     }
   }
+
+  implicit val facebookPagingReads: Reads[FacebookPaging] = Json.reads[FacebookPaging]
+
+  val facebookInstant = new Reads[Instant] {
+    override def reads(json: JsValue) = json match {
+      case JsString(any) => JsSuccess(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(any).toInstant)
+      case _             => JsError(s"Unexpected JSON value $json")
+    }
+  }
+
+  implicit val facebookPostReads: Reads[FacebookPost] = (
+    (JsPath \ "id").read[String] and
+      (JsPath \ "story").read[String] and
+      (JsPath \ "created_time").read[Instant](facebookInstant)
+    )(FacebookPost.apply _)
+
+  implicit val facebookFeedReads: Reads[FacebookUserFeed] = (
+    (JsPath \ "data").read[List[FacebookPost]] and
+      (JsPath \ "paging").read[FacebookPaging]
+    )(FacebookUserFeed.apply _)
 
   implicit val facebookAppIdReads = new Reads[FacebookAppId] {
     override def reads(json: JsValue) = json match {

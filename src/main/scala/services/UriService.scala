@@ -2,9 +2,10 @@ package services
 
 import cats.implicits._
 import config.FacebookConfig.{appSecret, clientId, redirectUri, version}
-import config.FacebookConstants.{host, oauthAccessTokenUri, oauthClientCodeUri}
+import config.FacebookConstants._
+import domain.FacebookUserId
 import other.FacebookShowOps._
-import domain.oauth.{FacebookAppSecret, FacebookClientId}
+import domain.oauth.{FacebookAccessToken, FacebookAppSecret, FacebookClientId}
 import org.f100ded.scalaurlbuilder.URLBuilder
 
 /**
@@ -45,6 +46,11 @@ class UriService(clientId: FacebookClientId, appSecret: FacebookAppSecret) {
   def accessTokenCodeUri(longLeavingTokenValue: String) = oauthCodeBuilder.withQueryParameters(
     "access_token" -> longLeavingTokenValue,
     "redirect_uri" -> redirectUri.show)
+
+  def userFeedUri(accessToken: FacebookAccessToken, userId: FacebookUserId = FacebookUserId("me")) = {
+    hostBuilder.withPathSegments(userId.show).withPathSegments(feedUri)
+      .withQueryParameters("access_token" -> accessToken.show)
+  }
 }
 
 object UriService {

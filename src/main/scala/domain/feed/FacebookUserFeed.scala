@@ -1,13 +1,12 @@
 package domain.feed
 
-import org.joda.time.Instant
+import java.time.Instant
 
+final case class FacebookUserFeed(data: List[FacebookPost], paging: FacebookPaging)
 
-final class FacebookUserFeed(data: List[Post], paging: Paging)
+final case class FacebookPost(id: String, story: String, createdTime: Instant)
 
-final case class Post(id: Long, story: String, createdTime: Instant)
-
-final case class Paging(
+final case class FacebookPaging(
   next: Option[String],
   previous: Option[String]
 )

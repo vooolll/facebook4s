@@ -1,7 +1,7 @@
 package other
 
 import cats.Show
-import domain.FacebookVersion
+import domain.{FacebookUserId, FacebookVersion}
 import domain.oauth._
 
 /**
@@ -14,4 +14,5 @@ object FacebookShowOps {
   implicit val showFacebookAppSecret = Show.show[FacebookAppSecret](_.value)
   implicit val showFacebookAccessToken = Show.show[FacebookAccessToken](_.tokenValue.value)
   implicit val showFacebookRedirectUri = Show.show[FacebookRedirectUri](_.uri)
+  implicit val showFacebookUserId = Show.show[FacebookUserId](_.value)
 }
