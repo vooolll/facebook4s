@@ -1,9 +1,9 @@
 package domain.permission
 
 object FacebookPermissions {
-  sealed trait FacebookPermission
+  sealed trait FacebookUserPermission
 
-  final case object UserPosts extends FacebookPermission {
+  final case object UserPosts extends FacebookUserPermission {
     val value = "user_posts"
   }
 }
