@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat
 import domain.FacebookUserId
 import domain.feed.{FacebookPaging, FacebookPost, FacebookUserFeed}
 import domain.oauth.{FacebookAccessToken, TokenValue, UserAccessToken}
+import cats.syntax.option._
 
 import scala.concurrent.duration.DurationInt
 
@@ -18,7 +19,7 @@ class FeedSpec extends FacebookClientSpec {
         "Valeryi Baibossynov added a life event from May 2, 1993: Born on May 2, 1993.",
         toInstant("1993-05-02T07:00:00+0000"))
     ),
-    FacebookPaging(Some("https://graph.facebook.com1"), Some("https://graph.facebook.com")))
+    FacebookPaging("https://graph.facebook.com1".some, "https://graph.facebook.com".some))
 
 
   def toInstant(string: String) = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(string).toInstant
