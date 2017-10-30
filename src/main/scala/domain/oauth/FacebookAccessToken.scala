@@ -1,5 +1,7 @@
 package domain.oauth
 
+import domain.permission.FacebookPermissions.FacebookPermission
+
 import scala.concurrent.duration.FiniteDuration
 
 /**
@@ -34,7 +36,10 @@ final case class AppAccessToken(oauthTokenType: String) extends FacebookTokenTyp
   * @param oauthTokenType A token_type from oauth(https://tools.ietf.org/html/rfc6749) often has value "bearer"
   * @param expiresIn The time interval after which token will be expired
   */
-final case class UserAccessToken(oauthTokenType: String, expiresIn: FiniteDuration) extends FacebookTokenType
+final case class UserAccessToken(
+  oauthTokenType : String,
+  expiresIn      : FiniteDuration,
+  permissions    : Seq[FacebookPermission] = Nil) extends FacebookTokenType
 
 /**
   * Base class for access token - https://developers.facebook.com/docs/facebook-login/access-tokens/
