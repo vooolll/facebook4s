@@ -38,8 +38,7 @@ final case class AppAccessToken(oauthTokenType: String) extends FacebookTokenTyp
   */
 final case class UserAccessToken(
   oauthTokenType : String,
-  expiresIn      : FiniteDuration,
-  permissions    : Seq[FacebookUserPermission] = Nil) extends FacebookTokenType
+  expiresIn      : FiniteDuration) extends FacebookTokenType
 
 /**
   * Base class for access token - https://developers.facebook.com/docs/facebook-login/access-tokens/

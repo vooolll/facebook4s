@@ -54,7 +54,11 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
   def extendUserAccessToken(shortLivedTokenValue: String): Future[AccessToken] =
     sendRequestOrFail(longLivedTokenUri(shortLivedTokenValue))(facebookUserAccessTokenReads)
 
-
+  /**
+    * @param userId Facebook user id
+    * @param accessToken User access token
+    * @return Facebook user feed
+    */
   def feed(userId: FacebookUserId, accessToken: AccessToken): Future[UserFeed] =
     sendRequestOrFail(userFeedUri(accessToken, userId))(facebookFeedReads)
 
@@ -86,8 +90,12 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
   def extendUserAccessTokenEither(shortLivedTokenValue: String): AsyncAccessTokenResult =
     sendRequest(longLivedTokenUri(shortLivedTokenValue))(facebookUserAccessTokenReads)
 
-
-  def feedEither(userId: FacebookUserId, accessToken: AccessToken) =
+  /**
+    * @param userId Facebook user id
+    * @param accessToken Facebook user access token with "user_posts" permission
+    * @return Facebook user feed
+    */
+  def feedEither(userId: FacebookUserId, accessToken: AccessToken): AsyncUserFeed =
     sendRequest(userFeedUri(accessToken, userId))(facebookFeedReads)
 
 
@@ -140,6 +148,7 @@ object FacebookClient {
   type ClientCode = FacebookClientCode
   type UserFeed = FacebookUserFeed
 
+  type AsyncUserFeed = Future[Either[TokenError, UserFeed]]
   type AsyncAccessTokenResult = Future[Either[TokenError, AccessToken]]
   type AsyncClientCodeResult = Future[Either[TokenError, ClientCode]]
   type FacebookAccessTokenResult = Either[TokenError, AccessToken]
