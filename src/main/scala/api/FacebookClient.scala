@@ -98,6 +98,7 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
   def feedEither(userId: FacebookUserId, accessToken: AccessToken): AsyncUserFeed =
     sendRequest(userFeedUri(accessToken, userId))(facebookFeedReads)
 
+  def authUrl(): String = uriService.authUrl().toString()
 
   private def sendRequest[A](uri: URLBuilder)(reads: Reads[A]) = {
     domainParseService.send(uri)(reads, facebookLoginErrorReads)(loginErrorFE)(appResources)

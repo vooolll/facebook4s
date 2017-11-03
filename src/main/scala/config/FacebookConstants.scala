@@ -8,5 +8,5 @@ object FacebookConstants {
   final val oauthAccessTokenUri = "/oauth/access_token"
   final val oauthClientCodeUri = "/oauth/client_code"
   final val feedUri = "/feed"
-  final val authUri = ""
+  final val authUri = "/dialog/oauth"
 }

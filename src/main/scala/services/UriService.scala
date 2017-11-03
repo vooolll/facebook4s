@@ -2,6 +2,7 @@ package services
 
 import cats.implicits._
 import config.FacebookConfig.{appSecret, clientId, redirectUri, version}
+import config.FacebookConstants
 import config.FacebookConstants._
 import domain.FacebookUserId
 import other.FacebookShowOps._
@@ -51,6 +52,12 @@ class UriService(clientId: FacebookClientId, appSecret: FacebookAppSecret) {
     hostBuilder.withPathSegments(userId.show).withPathSegments(feedUri)
       .withQueryParameters("access_token" -> accessToken.show)
   }
+
+  def authUrl() = hostBuilder.withPathSegments(FacebookConstants.authUri)
+    .withQueryParameters(
+      "client_id"     -> clientId.show,
+      "redirect_uri"  -> redirectUri.show
+    )
 }
 
 object UriService {
