@@ -1,6 +1,7 @@
 package config
 
 import com.typesafe.config._
+import com.typesafe.scalalogging.LazyLogging
 import domain._
 import domain.oauth.{FacebookAppSecret, FacebookClientId, FacebookRedirectUri}
 
@@ -11,7 +12,7 @@ import scala.util._
   * @throws scala.RuntimeException if required configuration
   *                          not specified(FACEBOOK_CLIENT_ID, FACEBOOK_REDIRECT_URI, FACEBOOK_APP_SECRET)
   */
-object FacebookConfig extends ConfigurationDetector {
+object FacebookConfig extends ConfigurationDetector with LazyLogging {
 
   val config = ConfigFactory.load
 
@@ -19,6 +20,8 @@ object FacebookConfig extends ConfigurationDetector {
   val clientId = FacebookClientId(envVarOrConfig("FACEBOOK_CLIENT_ID", "facebook.clientId"))
   val redirectUri = FacebookRedirectUri(envVarOrConfig("FACEBOOK_REDIRECT_URI", "facebook.redirectUri"))
   val appSecret = FacebookAppSecret(envVarOrConfig("FACEBOOK_APP_SECRET", "facebook.appSecret"))
+
+  logger.info(s"Client id - $clientId, redirect uri - $redirectUri")
 }
 
 /**

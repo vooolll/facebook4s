@@ -69,12 +69,15 @@ libraryDependencies ++= {
   val typesafeV = "1.3.1"
   val mockitoV = "1.8.5"
   val catsV = "1.0.0-MF"
+  val scalaLogging = "3.7.2"
   Seq(
     "org.typelevel" %% "cats-core" % catsV,
     "com.typesafe" % "config" % typesafeV,
     "com.typesafe.akka" %% "akka-actor" % akkaV,
     "com.typesafe.akka" %% "akka-http" % akkaHttpV,
     "com.typesafe.play" %% "play-json" % playV,
+    "ch.qos.logback" % "logback-classic" % "1.2.3",
+    "com.typesafe.scala-logging" %% "scala-logging" % scalaLogging,
     "de.heikoseeberger" %% "akka-http-play-json" % "1.18.0",
     "org.f100ded.scala-url-builder" %% "scala-url-builder" % "0.9.0",
     "org.scalatest" %% "scalatest" % scalaTestV % "test",
