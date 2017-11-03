@@ -64,6 +64,7 @@ import domain.{FacebookClientId, FacebookAppSecret}
 
 val facebookClient = FacebookClient(FacebookClientId("your client id"), FacebookAppSecret("your app secret"))
 ```
+
 #### Exchange short lived to long lived token
 
 In order to access api you typically need user access token, it is often obtained by client application,

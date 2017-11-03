@@ -5,6 +5,7 @@ import config.FacebookConfig._
 import domain._
 import domain.feed.FacebookUserFeed
 import domain.oauth.{FacebookAccessToken, FacebookAppSecret, FacebookClientCode, FacebookClientId}
+import domain.permission.FacebookPermissions.FacebookUserPermission
 import org.f100ded.scalaurlbuilder.URLBuilder
 import play.api.libs.json.Reads
 import services._
@@ -59,7 +60,7 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
     * @param accessToken User access token
     * @return Facebook user feed
     */
-  def feed(userId: FacebookUserId, accessToken: AccessToken): Future[UserFeed] =
+  def feed(userId: UserId, accessToken: AccessToken): Future[UserFeed] =
     sendRequestOrFail(userFeedUri(accessToken, userId))(facebookFeedReads)
 
   /**
@@ -95,10 +96,10 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
     * @param accessToken Facebook user access token with "user_posts" permission
     * @return Facebook user feed
     */
-  def feedEither(userId: FacebookUserId, accessToken: AccessToken): AsyncUserFeed =
+  def feedEither(userId: UserId, accessToken: AccessToken): AsyncUserFeed =
     sendRequest(userFeedUri(accessToken, userId))(facebookFeedReads)
 
-  def authUrl(): String = uriService.authUrl().toString()
+  def authUrl(permissions: Seq[Permissions]): String = uriService.authUrl(permissions).toString()
 
   private def sendRequest[A](uri: URLBuilder)(reads: Reads[A]) = {
     domainParseService.send(uri)(reads, facebookLoginErrorReads)(loginErrorFE)(appResources)
@@ -148,6 +149,8 @@ object FacebookClient {
   type TokenError = FacebookOauthError
   type ClientCode = FacebookClientCode
   type UserFeed = FacebookUserFeed
+  type UserId = FacebookUserId
+  type Permissions = FacebookUserPermission
 
   type AsyncUserFeed = Future[Either[TokenError, UserFeed]]
   type AsyncAccessTokenResult = Future[Either[TokenError, AccessToken]]
