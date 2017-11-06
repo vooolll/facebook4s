@@ -14,7 +14,7 @@ SBT 0.13.x
 [Link to a header]
 Add the following line to your sbt dependencies: 
 ```scala
-"com.github.vooolll" %% "facebook4s" % "0.1.3"
+"com.github.vooolll" %% "facebook4s" % "0.1.5"
 ```
 
 Note: make sure that you have in your `build.sbt`
@@ -63,6 +63,47 @@ import api.FacebookClient
 import domain.{FacebookClientId, FacebookAppSecret}
 
 val facebookClient = FacebookClient(FacebookClientId("your client id"), FacebookAppSecret("your app secret"))
+```
+
+#### Getting authentication uri
+
+`FacebookClient` can be used to get authentication url for client. It is starting point if you want to use api.
+```scala
+import api.FacebookClient
+import domain.permission.FacebookPermissions.FacebookUserPosts
+
+val facebookClient = FacebookClient()
+
+val urlWithCodeAsQueryParam = facebookClient.authUrl(Seq(FacebookUserPosts))
+
+println(url) // prints url client needs to request to get credentials (client code by default)
+```
+
+Or you can tell to `FacebookClient` that you want to receive `access token` instead of `client code`
+by passing specific argument: 
+
+```scala
+import domain.permission.FacebookPermissions.FacebookUserPosts
+import domain.oauth.FacebookToken
+
+val urlWithTokenAsQueryParam = facebookClient.authUrl(Seq(FacebookUserPosts), FacebookToken)
+```
+
+#### Exchanging client code to access token
+After `client code` received, it can be exchanged to `access token`.
+
+
+```scala
+import api.FacebookClient
+import scala.util.{Success, Failure}
+
+val facebookClient = FacebookClient()
+val clientCode = "code from request"
+
+facebookClient.userAccessToken(clientCode) onComplete {
+  case Success(token) => println(token)
+  case Failure(e) => println(e.getMessage)
+}
 ```
 
 #### Exchange short lived to long lived token
