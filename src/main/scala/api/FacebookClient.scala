@@ -99,6 +99,10 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
   def feedEither(userId: UserId, accessToken: AccessToken): AsyncUserFeed =
     sendRequest(userFeedUri(accessToken, userId))(facebookFeedReads)
 
+  /**
+    * @param permissions permissions you require for your application
+    * @return url that can be used by user of your app log in facebook
+    */
   def authUrl(permissions: Seq[Permissions]): String = uriService.authUrl(permissions).toString()
 
   private def sendRequest[A](uri: URLBuilder)(reads: Reads[A]) = {
