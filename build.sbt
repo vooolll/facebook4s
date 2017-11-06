@@ -4,7 +4,7 @@ sonatypeSettings
 
 name := "facebook4s"
 
-version := "0.1.3"
+version := "0.1.4"
 
 scalaVersion := "2.12.1"
 
@@ -84,9 +84,9 @@ libraryDependencies ++= {
     "org.f100ded.scala-url-builder"  %% "scala-url-builder"   % uriBuilder,
     "org.scalatest"                  %% "scalatest"           % scalaTestV % "test",
 
-    "ch.qos.logback"                 % "logback-classic"      % logbackClassic,
-    "org.mockito"                    % "mockito-core"         % mockitoV % "test",
-    "com.typesafe"                   % "config"               % typesafeV
+    "ch.qos.logback"                 %  "logback-classic"      % logbackClassic,
+    "org.mockito"                    %  "mockito-core"         % mockitoV % "test",
+    "com.typesafe"                   %  "config"               % typesafeV
   )
 }
 

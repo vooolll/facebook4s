@@ -2,6 +2,8 @@ package services
 
 import cats.implicits._
 import config.FacebookConfig._
+import domain.oauth.FacebookToken
+import domain.permission.FacebookPermissions.FacebookUserPosts
 import org.scalatest.{Matchers, WordSpec}
 import other.FacebookShowOps._
 
@@ -19,9 +21,22 @@ class UriServiceSpec extends WordSpec with Matchers {
     }
 
     "return auth uri" in {
-      s.authUrl(Seq.empty).toString() shouldBe s"https://graph.facebook.com/v2.10/dialog/oauth" +
+      s.authUrl(Seq.empty).toString() shouldBe s"https://facebook.com/v2.10/dialog/oauth" +
         s"?client_id=${clientId.show}" +
-        s"&redirect_uri=http%3A%2F%2Flocalhost%3A9000%2Fredirect"
+        s"&redirect_uri=http%3A%2F%2Flocalhost%3A9000%2Fredirect" +
+        s"&response_type=code"
+    }
+
+    "return auth uri with state, response_type and permissions" in {
+      s.authUrl(
+        permissions  = Seq(FacebookUserPosts),
+        responseType = FacebookToken,
+        state = Some("asd")).toString() shouldBe s"https://facebook.com/v2.10/dialog/oauth" +
+        s"?client_id=${clientId.show}" +
+        s"&redirect_uri=http%3A%2F%2Flocalhost%3A9000%2Fredirect" +
+        s"&response_type=${FacebookToken.value}" +
+        s"&scope=${FacebookUserPosts.value}" +
+        s"&state=asd"
     }
   }
 

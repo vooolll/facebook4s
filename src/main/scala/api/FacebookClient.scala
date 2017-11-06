@@ -4,7 +4,7 @@ import cats.syntax.either._
 import config.FacebookConfig._
 import domain._
 import domain.feed.FacebookUserFeed
-import domain.oauth.{FacebookAccessToken, FacebookAppSecret, FacebookClientCode, FacebookClientId}
+import domain.oauth._
 import domain.permission.FacebookPermissions.FacebookUserPermission
 import org.f100ded.scalaurlbuilder.URLBuilder
 import play.api.libs.json.Reads
@@ -100,10 +100,17 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
     sendRequest(userFeedUri(accessToken, userId))(facebookFeedReads)
 
   /**
+    *
     * @param permissions permissions you require for your application
+    * @param responseType Determines whether the response data included when the redirect back to the app occurs is in
+    *                     URL parameters or fragments. Could be (code, token, code and token or granted_scopes)
+    * @param state An arbitrary unique string created by your app to guard against Cross-site Request Forgery
     * @return url that can be used by user of your app log in facebook
     */
-  def authUrl(permissions: Seq[Permissions]): String = uriService.authUrl(permissions).toString()
+  def authUrl(permissions  : Seq[Permissions],
+              responseType : ResponseType = FacebookCode,
+              state        : Option[String] = None): String =
+    uriService.authUrl(permissions, responseType, state).toString()
 
   private def sendRequest[A](uri: URLBuilder)(reads: Reads[A]) = {
     domainParseService.send(uri)(reads, facebookLoginErrorReads)(loginErrorFE)(appResources)
@@ -155,6 +162,7 @@ object FacebookClient {
   type UserFeed = FacebookUserFeed
   type UserId = FacebookUserId
   type Permissions = FacebookUserPermission
+  type ResponseType = FacebookOauthResponseType
 
   type AsyncUserFeed = Future[Either[TokenError, UserFeed]]
   type AsyncAccessTokenResult = Future[Either[TokenError, AccessToken]]
