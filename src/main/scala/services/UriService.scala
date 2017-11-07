@@ -54,6 +54,9 @@ class UriService(clientId: FacebookClientId, appSecret: FacebookAppSecret) {
     graphHostBuilder.withPathSegments(userId.show).withPathSegments(feedUri)
       .withQueryParameters("access_token" -> accessToken.show)
 
+  def postUri(postId: String, accessToken: FacebookAccessToken) =
+    graphHostBuilder.withPathSegments(postId).withQueryParameters("access_token" -> accessToken.show)
+
   def authUrl(permissions: Seq[FacebookUserPermission],
               responseType: FacebookOauthResponseType = FacebookCode,
               state: Option[String] = None) = {

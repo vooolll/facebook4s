@@ -2,12 +2,12 @@ package api
 
 import cats.syntax.either._
 import config.FacebookConfig._
+import org.f100ded.scalaurlbuilder._
+import play.api.libs.json._
 import domain._
-import domain.feed.FacebookUserFeed
+import domain.feed._
 import domain.oauth._
-import domain.permission.FacebookPermissions.FacebookUserPermission
-import org.f100ded.scalaurlbuilder.URLBuilder
-import play.api.libs.json.Reads
+import domain.permission.FacebookPermissions._
 import services._
 
 import scala.concurrent._
