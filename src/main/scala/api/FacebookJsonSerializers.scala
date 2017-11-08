@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat
 import java.time.Instant
 
 import domain._
-import domain.feed.{FacebookPaging, FacebookPost, FacebookUserFeed}
+import domain.feed.{FacebookPaging, FacebookPost, FacebookSimplePost, FacebookUserFeed}
 import domain.oauth._
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
@@ -66,14 +66,14 @@ object FacebookJsonSerializers {
     }
   }
 
-  implicit val facebookPostReads: Reads[FacebookPost] = (
+  implicit val facebookPostReads: Reads[FacebookSimplePost] = (
     (JsPath \ "id").read[String] and
       (JsPath \ "story").read[String] and
       (JsPath \ "created_time").read[Instant](facebookInstant)
-    )(FacebookPost.apply _)
+    )(FacebookSimplePost.apply _)
 
   implicit val facebookFeedReads: Reads[FacebookUserFeed] = (
-    (JsPath \ "data").read[List[FacebookPost]] and
+    (JsPath \ "data").read[List[FacebookSimplePost]] and
       (JsPath \ "paging").read[FacebookPaging]
     )(FacebookUserFeed.apply _)
 

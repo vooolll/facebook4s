@@ -3,7 +3,7 @@ package api
 import java.text.SimpleDateFormat
 
 import domain.FacebookUserId
-import domain.feed.{FacebookPaging, FacebookPost, FacebookUserFeed}
+import domain.feed.{FacebookPaging, FacebookPost, FacebookSimplePost, FacebookUserFeed}
 import domain.oauth.{FacebookAccessToken, TokenValue, UserAccessToken}
 import cats.syntax.option._
 
@@ -13,9 +13,9 @@ class FeedSpec extends FacebookClientSpec {
 
   val feed = FacebookUserFeed(
     List(
-      FacebookPost("499313270413277_504668796544391", "Valeryi Baibossynov updated his profile picture.",
+      FacebookSimplePost("499313270413277_504668796544391", "Valeryi Baibossynov updated his profile picture.",
         toInstant("2017-10-01T13:43:05+0000")),
-      FacebookPost("499313270413277_139299253081349",
+      FacebookSimplePost("499313270413277_139299253081349",
         "Valeryi Baibossynov added a life event from May 2, 1993: Born on May 2, 1993.",
         toInstant("1993-05-02T07:00:00+0000"))
     ),
