@@ -62,7 +62,7 @@ final case class FacebookPost(
   callToAction          : Map[String, String] = Map.empty,
   caption               : Option[String] = none,
   description           : Option[String] = none,
-  feed_targeting        : Map[String, String] = Map.empty,
+  feedTargeting         : Map[String, String] = Map.empty,
   from                  : Option[FacebookProfile] = none,
   icon                  : Option[String] = none,
   instagramEligibility  : Option[String] = none,
