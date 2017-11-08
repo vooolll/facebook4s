@@ -2,7 +2,6 @@ package domain.feed
 
 import java.time.Instant
 
-import .Properties
 import cats.syntax.option._
 import play.api.libs.json.JsObject
 
