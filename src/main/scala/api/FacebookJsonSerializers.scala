@@ -1,11 +1,10 @@
 package api
 
-import java.text.SimpleDateFormat
 import java.time.Instant
-import java.time.format.DateTimeFormatter
+import java.time.format._
 
 import domain._
-import domain.feed.{FacebookPaging, FacebookPost, FacebookSimplePost, FacebookUserFeed}
+import domain.feed.{FacebookPaging, FacebookSimplePost, FacebookUserFeed}
 import domain.oauth._
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
@@ -41,11 +40,10 @@ object FacebookJsonSerializers {
       TokenValue(tokenValueRaw),UserAccessToken(oauthTokenType, tokenExpiresIn.seconds))
   }
 
-  // Avoid mixing of DSL-based and macros-based formats
   implicit val facebookPagingReads: Reads[FacebookPaging] = Json.reads[FacebookPaging]
 
   val facebookInstant: Reads[Instant] = Reads[Instant] {
-    case JsString(any) => JsSuccess(DateTimeFormatter.ISO_DATE_TIME.parse(any, Instant.from _))
+    case JsString(any) => JsSuccess(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ").parse(any, Instant.from _))
     case json          => JsError(s"Unexpected JSON value $json")
   }
 
@@ -60,20 +58,8 @@ object FacebookJsonSerializers {
       (JsPath \ "paging").read[FacebookPaging]
     )(FacebookUserFeed.apply _)
 
-  implicit val facebookAppIdReads = new Reads[FacebookAppId] {
-    override def reads(json: JsValue) = json match {
-      case JsString(any) => Json.fromJson[FacebookAppId](Json.obj("value" -> any))(Json.reads[FacebookAppId])
-      case _             => JsError(s"Unexpected JSON value $json")
-    }
-  }
-
-
-  implicit val facebookUserIdReads = new Reads[FacebookUserId] {
-    override def reads(json: JsValue) = json match {
-      case JsString(any) => Json.fromJson[FacebookUserId](Json.obj("value" -> any))(Json.reads[FacebookUserId])
-      case _ => JsError(s"Unexpected JSON value $json")
-    }
-  }
+  implicit val facebookAppIdReads =  __.read[String].map(FacebookAppId)
+  implicit val facebookUserIdReads = __.read[String].map(FacebookUserId)
 
   implicit val facebookErrorReads = Json.reads[FacebookError]
   implicit val facebookLoginErrorReads = Json.reads[FacebookOauthError]
