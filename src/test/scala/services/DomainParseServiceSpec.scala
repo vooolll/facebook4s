@@ -1,8 +1,8 @@
 package services
 
-import api.ApplicationResources
-import api.FacebookClient.loginErrorFE
-import api.FacebookJsonSerializers._
+import client.ApplicationResources
+import client.FacebookClient.loginErrorFE
+import serialization.FacebookJsonSerializers._
 import org.scalatest.concurrent.Eventually
 import org.scalatest.mockito.MockitoSugar
 import org.scalatest.{AsyncWordSpec, Matchers}

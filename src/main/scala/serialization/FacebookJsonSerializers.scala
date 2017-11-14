@@ -1,4 +1,4 @@
-package api
+package serialization
 
 import java.time._
 import java.time.format._
@@ -6,9 +6,9 @@ import java.time.format._
 import domain._
 import domain.feed._
 import domain.oauth._
-import play.api.libs.json._
-import play.api.libs.json.Reads._
 import play.api.libs.functional.syntax._
+import play.api.libs.json.Reads._
+import play.api.libs.json._
 
 import scala.concurrent.duration._
 

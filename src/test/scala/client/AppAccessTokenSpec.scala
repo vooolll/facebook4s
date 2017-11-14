@@ -1,6 +1,6 @@
-package api
+package client
 
-import domain.oauth.{AppAccessToken, FacebookAppSecret, FacebookClientId}
+import domain.oauth._
 import org.scalatest.mockito.MockitoSugar
 import org.scalatest.{AsyncWordSpec, Matchers}
 

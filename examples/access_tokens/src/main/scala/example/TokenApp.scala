@@ -1,6 +1,6 @@
 package example
 
-import api.FacebookClient
+import client.FacebookClient
 import domain.oauth.FacebookCode
 import domain.permission.FacebookPermissions.FacebookUserPosts
 

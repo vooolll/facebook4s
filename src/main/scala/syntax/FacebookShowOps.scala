@@ -1,4 +1,4 @@
-package other
+package syntax
 
 import cats.Show
 import domain.{FacebookUserId, FacebookVersion}

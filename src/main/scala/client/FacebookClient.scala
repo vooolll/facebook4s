@@ -1,4 +1,4 @@
-package api
+package client
 
 import cats.syntax.either._
 import config.FacebookConfig._
@@ -20,8 +20,8 @@ import scala.concurrent._
 class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppSecret)
   extends FacebookInternals {
 
-  import api.FacebookClient._
-  import api.FacebookJsonSerializers._
+  import client.FacebookClient._
+  import serialization.FacebookJsonSerializers._
   import uriService._
 
   /**

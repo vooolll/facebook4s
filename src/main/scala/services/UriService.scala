@@ -5,7 +5,7 @@ import config.FacebookConfig.{appSecret, clientId, redirectUri, version}
 import config.FacebookConstants
 import config.FacebookConstants._
 import domain.FacebookUserId
-import other.FacebookShowOps._
+import syntax.FacebookShowOps._
 import domain.oauth._
 import domain.permission.FacebookPermissions.FacebookUserPermission
 import org.f100ded.scalaurlbuilder.URLBuilder

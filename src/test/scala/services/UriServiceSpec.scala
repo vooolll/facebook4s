@@ -5,7 +5,7 @@ import config.FacebookConfig._
 import domain.oauth.{FacebookAccessToken, FacebookToken, TokenValue, UserAccessToken}
 import domain.permission.FacebookPermissions.FacebookUserPosts
 import org.scalatest.{Matchers, WordSpec}
-import other.FacebookShowOps._
+import syntax.FacebookShowOps._
 
 import scala.concurrent.duration.DurationInt
 

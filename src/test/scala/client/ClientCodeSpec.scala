@@ -1,4 +1,4 @@
-package api
+package client
 
 import domain.oauth.FacebookClientCode
 

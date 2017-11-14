@@ -1,4 +1,4 @@
-package api
+package client
 
 import domain.permission.FacebookPermissions.{FacebookUserPermission, FacebookUserPosts}
 import services.UriService

@@ -1,7 +1,8 @@
-package api
+package domain.oauth
 
 /**
   * Oauth error
+  *
   * @param error facebook error message
   */
 case class FacebookOauthError(error: FacebookError) extends HasFacebookError
