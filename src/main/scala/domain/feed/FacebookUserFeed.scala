@@ -9,14 +9,6 @@ final case class FacebookUserFeed(data: List[FacebookSimplePost], paging: Facebo
 
 final case class FacebookAdminCreator(id: Int, name: String)
 
-final case class FacebookApp(id: String)
-
-sealed trait FacebookProfile
-
-sealed trait FacebookTagProfile
-
-final case class FacebookUser(id: String) extends FacebookProfile with FacebookTagProfile
-
 final case class FacebookPlace(id: String)
 
 final case class FacebookMessageTag(

@@ -1,16 +1,16 @@
 package api
 
-import java.time.Instant
+import java.time._
 import java.time.format._
 
 import domain._
-import domain.feed.{FacebookPaging, FacebookSimplePost, FacebookUserFeed}
+import domain.feed._
 import domain.oauth._
-import play.api.libs.functional.syntax._
-import play.api.libs.json.Reads._
 import play.api.libs.json._
+import play.api.libs.json.Reads._
+import play.api.libs.functional.syntax._
 
-import scala.concurrent.duration.DurationInt
+import scala.concurrent.duration._
 
 /**
   * Play json serializers
@@ -36,8 +36,7 @@ object FacebookJsonSerializers {
     (__ \ "expires_in").read[Int] and
     (__ \ "token_type").read[String]
   ) { (tokenValueRaw, tokenExpiresIn, oauthTokenType) =>
-    FacebookAccessToken(
-      TokenValue(tokenValueRaw),UserAccessToken(oauthTokenType, tokenExpiresIn.seconds))
+    FacebookAccessToken(TokenValue(tokenValueRaw), UserAccessToken(oauthTokenType, tokenExpiresIn.seconds))
   }
 
   implicit val facebookPagingReads: Reads[FacebookPaging] = Json.reads[FacebookPaging]
