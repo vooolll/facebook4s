@@ -4,7 +4,7 @@ import base._
 import domain.oauth._
 import io.circe._
 import io.circe.parser._
-import cats.syntax.either._
+import cats.syntax.option._
 import scala.concurrent.duration._
 
 class FacebookAccessTokenCompatSpec extends SyncSpec with JsonSerializationSupport {
@@ -16,12 +16,12 @@ class FacebookAccessTokenCompatSpec extends SyncSpec with JsonSerializationSuppo
   "FacebookAccessToken" should {
     s"be compatible with $userAccessTokenPath" in {
       val decoded = decodeJson[FacebookAccessToken](userAccessTokenPath)(decodeUserAccessToken)
-      decoded shouldBe TestEntities.userAccessToken.asRight
+      decoded shouldBe TestEntities.userAccessToken
     }
 
     s"be compatible with $appAccessTokenPath" in {
       val decoded = decodeJson[FacebookAccessToken](appAccessTokenPath)(decodeAppAccessToken)
-      decoded shouldBe TestEntities.appAccessToken.asRight
+      decoded shouldBe TestEntities.appAccessToken
     }
   }
 
@@ -30,7 +30,7 @@ class FacebookAccessTokenCompatSpec extends SyncSpec with JsonSerializationSuppo
 trait JsonSerializationSupport {
   import client.ClientProbe._
 
-  def decodeJson[T](path: String)(implicit d: Decoder[T]) = parse(readFile(path)).right.get.as[T]
+  def decodeJson[T](path: String)(implicit d: Decoder[T]) = parse(readFile(path)).flatMap(json => json.as[T]).right.get
 }
 
 object TestEntities {
@@ -39,4 +39,6 @@ object TestEntities {
 
   val appAccessToken = FacebookAccessToken(
     TokenValue("1234567891011121|A6BCDEFiGASDFdB1_Zviht7lzxc"), AppAccessToken("bearer"))
+
+  val clientCode = FacebookClientCode("test-test-test-test", "machine id".some)
 }

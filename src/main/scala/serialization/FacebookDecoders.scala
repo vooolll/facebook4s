@@ -1,6 +1,6 @@
 package serialization
 
-import domain.oauth.{AppAccessToken, FacebookAccessToken, TokenValue, UserAccessToken}
+import domain.oauth._
 import io.circe.{Decoder, HCursor}
 import io.circe.Decoder._
 
@@ -19,6 +19,9 @@ object FacebookDecoders {
       } yield FacebookAccessToken(tokenValue, UserAccessToken(tokenType, expiresIn.seconds))
     }
   }
+
+  implicit val decodeClientCode: Decoder[FacebookClientCode] =
+    Decoder.forProduct2("code", "machine_id")(FacebookClientCode.apply)
 
   implicit val decodeAppAccessToken: Decoder[FacebookAccessToken] = new Decoder[FacebookAccessToken] {
     override def apply(c: HCursor) = {
