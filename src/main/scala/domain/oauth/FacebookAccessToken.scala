@@ -15,10 +15,6 @@ sealed trait FacebookTokenType
   */
 final case class TokenValue(value: String)
 
-object TokenValue {
-  def fromRaw(raw: String) = TokenValue(raw.split("\\|").last)
-}
-
 abstract class FixedSizeValue(length: Int, msg: String = "") {
   require(value.length == length, msg)
   def value: String

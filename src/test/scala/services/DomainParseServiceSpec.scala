@@ -2,14 +2,12 @@ package services
 
 import client.ApplicationResources
 import client.FacebookClient.loginErrorFE
-import serialization.FacebookJsonSerializers._
 import org.scalatest.concurrent.Eventually
 import org.scalatest.mockito.MockitoSugar
-import org.scalatest.{AsyncWordSpec, Matchers}
 import org.scalatest.time.{Millis, Span}
+import org.scalatest.{AsyncWordSpec, Matchers}
+import serialization.FacebookDecoders._
 import services.DomainParseService.AppResources
-
-import scala.concurrent.Future
 
 class DomainParseServiceSpec  extends AsyncWordSpec with Matchers with MockitoSugar with Eventually
   with ApplicationResources {
@@ -24,7 +22,7 @@ class DomainParseServiceSpec  extends AsyncWordSpec with Matchers with MockitoSu
       val resources = AppResources(system, mat, ec)
 
       val domainEntity = domainService.send(
-        uriService.appTokenUri)(facebookAppAccessTokenReads, facebookLoginErrorReads)(loginErrorFE)(resources)
+        uriService.appTokenUri)(decodeAppAccessToken, decodeOauthError)(loginErrorFE)(resources)
       domainEntity flatMap { _ =>
         resources.system.whenTerminated.map(_ => succeed)
       }

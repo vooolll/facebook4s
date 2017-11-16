@@ -1,7 +1,6 @@
 package serialization
 
 import java.time._
-import java.time.format._
 import domain.feed._
 import domain.oauth._
 import io.circe._
@@ -58,6 +57,5 @@ object FacebookDecoders {
       paging <- c.downField("paging").as[FacebookPaging]
     } yield FacebookFeed(posts, paging)
   }
-
 
 }

@@ -11,6 +11,7 @@ import cats.implicits._
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport
 import de.heikoseeberger.akkahttpplayjson.PlayJsonSupport
 import domain.oauth.HasFacebookError
+import io.circe.Decoder
 import services.DomainParseService.AppResources
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -19,9 +20,10 @@ import scala.concurrent.{ExecutionContext, Future}
   * Transforms http domain to facebook domain
   * @param asyncRequest service for async requests
   */
-class DomainParseService(asyncRequest: AsyncRequestService) extends PlayJsonSupport {
+class DomainParseService(asyncRequest: AsyncRequestService) extends FailFastCirceSupport {
 
-  def sendOrFail[T, E <: HasFacebookError](uri: URLBuilder)(successReads: Reads[T], failReads: Reads[E])
+  def sendOrFail[T, E <: HasFacebookError](uri: URLBuilder)
+    (successReads: Decoder[T], failReads: Decoder[E])
     (errorFormatter: String => Future[Either[E, T]])(resources: AppResources) = {
     implicit val AppResources(system, mat, ec) = resources
 
@@ -29,7 +31,7 @@ class DomainParseService(asyncRequest: AsyncRequestService) extends PlayJsonSupp
   }
 
   def send[T, E](uri: URLBuilder)
-    (successReads: Reads[T], failReads: Reads[E])
+    (successReads: Decoder[T], failReads: Decoder[E])
     (errorFormatter: String => Future[Either[E, T]])(resources: AppResources): Future[Either[E, T]] = {
     implicit val AppResources(system, mat, ec) = resources
 
@@ -42,8 +44,8 @@ class DomainParseService(asyncRequest: AsyncRequestService) extends PlayJsonSupp
   }
 
   def parseResponse[E, T](response: HttpResponse)(errorFormatter: String => Future[Either[E, T]])
-    (implicit reads: Reads[T], reads1: Reads[E],
-      mat: ActorMaterializer, ec: ExecutionContext): Future[Either[E, T]] = {
+    (implicit reads: Decoder[T], reads1: Decoder[E],
+     mat: ActorMaterializer, ec: ExecutionContext): Future[Either[E, T]] = {
     def parseFE(httpEntity: HttpEntity): Future[Either[E, T]] = Unmarshal[HttpEntity](
       httpEntity.withContentType(ContentTypes.`application/json`)).to[T] map(_.asRight) recoverWith {
       case e => errorFormatter(e.getLocalizedMessage)
@@ -71,7 +73,7 @@ class DomainParseService(asyncRequest: AsyncRequestService) extends PlayJsonSupp
   }
 
   private def sendAndParseTo[T, E](uri: URLBuilder)
-    (successReads: Reads[T], failReads: Reads[E])
+    (successReads: Decoder[T], failReads: Decoder[E])
     (errorFormatter: String => Future[Either[E, T]])
     (implicit system: ActorSystem, mat: ActorMaterializer, ec: ExecutionContext) = {
 

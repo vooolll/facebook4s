@@ -78,9 +78,7 @@ libraryDependencies ++= {
   Seq(
     "com.typesafe.akka"              %% "akka-actor"          % akkaV,
     "com.typesafe.akka"              %% "akka-http"           % akkaHttpV,
-    "com.typesafe.play"              %% "play-json"           % playV,
     "com.typesafe.scala-logging"     %% "scala-logging"       % scalaLoggingV,
-    "de.heikoseeberger"              %% "akka-http-play-json" % akkaJsonSupportV,
     "de.heikoseeberger"              %% "akka-http-circe"     % akkaJsonSupportV,
     "org.f100ded.scala-url-builder"  %% "scala-url-builder"   % uriBuilderV,
     "io.circe"                       %% "circe-core"          % circeV,
