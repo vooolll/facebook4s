@@ -159,7 +159,7 @@ object FacebookClient {
   type AccessToken = FacebookAccessToken
   type TokenError = FacebookOauthError
   type ClientCode = FacebookClientCode
-  type UserFeed = FacebookUserFeed
+  type UserFeed = FacebookFeed
   type UserId = FacebookUserId
   type Permissions = FacebookUserPermission
   type ResponseType = FacebookOauthResponseType

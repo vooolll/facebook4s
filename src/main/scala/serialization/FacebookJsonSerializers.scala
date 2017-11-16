@@ -57,10 +57,10 @@ object FacebookJsonSerializers {
       (JsPath \ "created_time").read[Instant](facebookInstant)
     )(FacebookSimplePost.apply _)
 
-  implicit val facebookFeedReads: Reads[FacebookUserFeed] = (
+  implicit val facebookFeedReads: Reads[FacebookFeed] = (
     (JsPath \ "data").read[List[FacebookSimplePost]] and
       (JsPath \ "paging").read[FacebookPaging]
-    )(FacebookUserFeed.apply _)
+    )(FacebookFeed.apply _)
 
   implicit val facebookAppIdReads =  __.read[String].map(FacebookAppId)
   implicit val facebookUserIdReads = __.read[String].map(FacebookUserId)

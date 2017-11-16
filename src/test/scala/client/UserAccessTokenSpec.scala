@@ -5,7 +5,7 @@ import org.scalatest.Matchers
 
 import scala.concurrent.duration.DurationInt
 
-class UserAccessTokenSupport extends FacebookClientSupport {
+class UserAccessTokenSpec extends FacebookClientSupport {
 
   "Facebook Graph Api" should {
     "return user access token" in { c =>
@@ -17,7 +17,7 @@ class UserAccessTokenSupport extends FacebookClientSupport {
     }
 
     "return error in wrong code" in { c =>
-      c.mockSendError(resourcePath = "testdata/user_access_token_wrong_code.json")
+      c.mockSendError(resourcePath = "testdata/oauth_error.json")
       recoverToSucceededIf[RuntimeException] {
         c.userAccessToken("code")
       }

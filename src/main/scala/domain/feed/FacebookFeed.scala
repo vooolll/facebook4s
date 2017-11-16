@@ -5,7 +5,7 @@ import java.time.Instant
 import cats.syntax.option._
 import play.api.libs.json.JsObject
 
-final case class FacebookUserFeed(data: List[FacebookSimplePost], paging: FacebookPaging)
+final case class FacebookFeed(posts: List[FacebookSimplePost], paging: FacebookPaging)
 
 final case class FacebookAdminCreator(id: Int, name: String)
 
