@@ -5,10 +5,14 @@ import java.time.format._
 
 import domain._
 import domain.feed._
-import domain.oauth._
+import domain.oauth.{AppAccessToken, _}
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
 import play.api.libs.json._
+import play.api.libs.json.{Json => PlayJson}
+
+
+
 
 import scala.concurrent.duration._
 
@@ -16,6 +20,7 @@ import scala.concurrent.duration._
   * Play json serializers
   */
 object FacebookJsonSerializers {
+
 
   implicit val facebookTokenTypeReads: Reads[AppAccessToken] = __.read[String].map(AppAccessToken)
 
@@ -39,7 +44,7 @@ object FacebookJsonSerializers {
     FacebookAccessToken(TokenValue(tokenValueRaw), UserAccessToken(oauthTokenType, tokenExpiresIn.seconds))
   }
 
-  implicit val facebookPagingReads: Reads[FacebookPaging] = Json.reads[FacebookPaging]
+  implicit val facebookPagingReads: Reads[FacebookPaging] = PlayJson.reads[FacebookPaging]
 
   val facebookInstant: Reads[Instant] = Reads[Instant] {
     case JsString(any) => JsSuccess(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ").parse(any, Instant.from _))
@@ -60,7 +65,7 @@ object FacebookJsonSerializers {
   implicit val facebookAppIdReads =  __.read[String].map(FacebookAppId)
   implicit val facebookUserIdReads = __.read[String].map(FacebookUserId)
 
-  implicit val facebookErrorReads = Json.reads[FacebookError]
-  implicit val facebookLoginErrorReads = Json.reads[FacebookOauthError]
+  implicit val facebookErrorReads = PlayJson.reads[FacebookError]
+  implicit val facebookLoginErrorReads = PlayJson.reads[FacebookOauthError]
 
 }

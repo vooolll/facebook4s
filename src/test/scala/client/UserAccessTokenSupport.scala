@@ -5,7 +5,7 @@ import org.scalatest.Matchers
 
 import scala.concurrent.duration.DurationInt
 
-class UserAccessTokenSpec extends FacebookClientSpec {
+class UserAccessTokenSupport extends FacebookClientSupport {
 
   "Facebook Graph Api" should {
     "return user access token" in { c =>

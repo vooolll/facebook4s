@@ -69,24 +69,28 @@ libraryDependencies ++= {
   val typesafeV = "1.3.1"
   val mockitoV = "1.8.5"
   val catsV = "1.0.0-MF"
-  val scalaLogging = "3.7.2"
-  val akkaPlayJsonSupport = "1.18.0"
-  val logbackClassic = "1.2.3"
-  val uriBuilder = "0.9.0"
+  val scalaLoggingV = "3.7.2"
+  val akkaJsonSupportV = "1.18.0"
+  val logbackClassicV = "1.2.3"
+  val uriBuilderV = "0.9.0"
+  val circeV = "0.8.0"
 
   Seq(
-    "org.typelevel"                  %% "cats-core"           % catsV,
     "com.typesafe.akka"              %% "akka-actor"          % akkaV,
     "com.typesafe.akka"              %% "akka-http"           % akkaHttpV,
     "com.typesafe.play"              %% "play-json"           % playV,
-    "com.typesafe.scala-logging"     %% "scala-logging"       % scalaLogging,
-    "de.heikoseeberger"              %% "akka-http-play-json" % akkaPlayJsonSupport,
-    "org.f100ded.scala-url-builder"  %% "scala-url-builder"   % uriBuilder,
+    "com.typesafe.scala-logging"     %% "scala-logging"       % scalaLoggingV,
+    "de.heikoseeberger"              %% "akka-http-play-json" % akkaJsonSupportV,
+    "de.heikoseeberger"              %% "akka-http-circe"     % akkaJsonSupportV,
+    "org.f100ded.scala-url-builder"  %% "scala-url-builder"   % uriBuilderV,
+    "io.circe"                       %% "circe-core"          % circeV,
+    "io.circe"                       %% "circe-generic"       % circeV,
+    "io.circe"                       %% "circe-parser"        % circeV,
     "org.scalatest"                  %% "scalatest"           % scalaTestV % "test",
 
-    "ch.qos.logback"                 %  "logback-classic"      % logbackClassic,
-    "org.mockito"                    %  "mockito-core"         % mockitoV % "test",
-    "com.typesafe"                   %  "config"               % typesafeV
+    "ch.qos.logback"                 %  "logback-classic"     % logbackClassicV,
+    "org.mockito"                    %  "mockito-core"        % mockitoV % "test",
+    "com.typesafe"                   %  "config"              % typesafeV
   )
 }
 

@@ -16,7 +16,7 @@ import scala.concurrent.Future
 import scala.io.Source
 
 
-trait FacebookClientSpec extends fixture.AsyncWordSpec with Matchers {
+trait FacebookClientSupport extends fixture.AsyncWordSpec with Matchers {
 
   type FixtureParam = ClientProbe with FacebookClient
 
@@ -27,6 +27,7 @@ trait FacebookClientSpec extends fixture.AsyncWordSpec with Matchers {
 }
 
 trait ClientProbe extends FacebookInternals with MockitoSugar {
+  import ClientProbe._
   val facebookServices = mock[FacebookInternals]
 
   val mockAsyncRequestService = mock[AsyncRequestService]
@@ -42,7 +43,7 @@ trait ClientProbe extends FacebookInternals with MockitoSugar {
         HttpResponse(
           entity = HttpEntity(
             contentType = ContentTypes.`application/json`,
-            string      = Source.fromResource(resourcePath).mkString)
+            string      = readFile(resourcePath))
         )
       )
     )
@@ -56,7 +57,7 @@ trait ClientProbe extends FacebookInternals with MockitoSugar {
           status = StatusCodes.BadRequest,
           entity = HttpEntity(
             contentType = ContentTypes.`application/json`,
-            string      = Source.fromResource(resourcePath).mkString)
+            string      = readFile(resourcePath))
         )
       )
     )
@@ -67,4 +68,6 @@ trait ClientProbe extends FacebookInternals with MockitoSugar {
 
 object ClientProbe {
   def apply() = new FacebookClient(clientId, appSecret) with ClientProbe
+
+  def readFile(resourcePath: String) = Source.fromResource(resourcePath).mkString
 }

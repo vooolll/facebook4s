@@ -9,7 +9,7 @@ import cats.syntax.option._
 
 import scala.concurrent.duration.DurationInt
 
-class FeedSpec extends FacebookClientSpec {
+class FeedSupport extends FacebookClientSupport {
 
   val feed = FacebookUserFeed(
     List(
