@@ -6,10 +6,8 @@ import akka.http.scaladsl.model._
 import akka.http.scaladsl.unmarshalling.Unmarshal
 import akka.stream.ActorMaterializer
 import org.f100ded.scalaurlbuilder.URLBuilder
-import play.api.libs.json.Reads
 import cats.implicits._
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport
-import de.heikoseeberger.akkahttpplayjson.PlayJsonSupport
 import domain.oauth.HasFacebookError
 import io.circe.Decoder
 import services.DomainParseService.AppResources

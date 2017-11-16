@@ -3,7 +3,6 @@ package client
 import cats.syntax.either._
 import config.FacebookConfig._
 import org.f100ded.scalaurlbuilder._
-import play.api.libs.json._
 import domain._
 import domain.feed._
 import domain.oauth._

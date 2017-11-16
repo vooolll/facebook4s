@@ -3,7 +3,7 @@ package domain.feed
 import java.time.Instant
 
 import cats.syntax.option._
-import play.api.libs.json.JsObject
+import io.circe.JsonObject
 
 final case class FacebookFeed(posts: List[FacebookSimplePost], paging: FacebookPaging)
 
@@ -81,7 +81,7 @@ final case class FacebookPost(
   to                    : Option[FacebookProfile] = none,
   postType              : Option[FacebookPostType] = none,
   updatedTime           : Option[Instant] = none,
-  withTags              : Option[JsObject] = none)
+  withTags              : Option[JsonObject] = none)
 
 
 final case class FacebookPaging(

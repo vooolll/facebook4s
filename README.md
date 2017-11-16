@@ -11,7 +11,6 @@ SBT 0.13.x
 
 
 ### Installation
-[Link to a header]
 Add the following line to your sbt dependencies: 
 ```scala
 "com.github.vooolll" %% "facebook4s" % "0.1.5"
