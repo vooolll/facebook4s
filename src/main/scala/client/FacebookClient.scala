@@ -2,12 +2,10 @@ package client
 
 import cats.syntax.either._
 import config.FacebookConfig._
-import org.f100ded.scalaurlbuilder._
 import domain._
 import domain.feed._
 import domain.oauth._
 import domain.permission.FacebookPermissions._
-import io.circe.Decoder
 import services._
 
 import scala.concurrent._
@@ -66,13 +64,13 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
   /**
     * @return Either future value of facebook app access token or FacebookOauthError
     */
-  def appAccessTokenEither(): AsyncAccessTokenResult = sendRequest(appTokenUri)(decodeAppAccessToken)
+  def appAccessTokenResult(): AsyncAccessTokenResult = sendRequest(appTokenUri)(decodeAppAccessToken)
 
   /**
     * @param longLivedTokenValue long lived user access token value
     * @return Either future value of facebook client code or FacebookOauthError
     */
-  def clientCodeEither(longLivedTokenValue: String): AsyncClientCodeResult = {
+  def clientCodeResult(longLivedTokenValue: String): AsyncClientCodeResult = {
     sendRequest(accessTokenCodeUri(longLivedTokenValue))(decodeClientCode)
   }
 
@@ -81,14 +79,14 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
     * @param machineId optional value that helps to identify specified client
     * @return Either  future long lived user access token or FacebookOauthError
     */
-  def userAccessTokenEither(code: String, machineId: Option[String]): AsyncAccessTokenResult =
+  def userAccessTokenResult(code: String, machineId: Option[String]): AsyncAccessTokenResult =
     sendRequest(userTokenUri(code, machineId))(decodeUserAccessToken)
 
   /**
     * @param shortLivedTokenValue short lived user access token
     * @return Either future long lived user access token or FacebookOauthError
     */
-  def extendUserAccessTokenEither(shortLivedTokenValue: String): AsyncAccessTokenResult =
+  def extendUserAccessTokenResult(shortLivedTokenValue: String): AsyncAccessTokenResult =
     sendRequest(longLivedTokenUri(shortLivedTokenValue))(decodeUserAccessToken)
 
   /**
@@ -96,7 +94,7 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
     * @param accessToken Facebook user access token with "user_posts" permission
     * @return Facebook user feed
     */
-  def feedEither(userId: UserId, accessToken: AccessToken): AsyncUserFeed =
+  def feedResult(userId: UserId, accessToken: AccessToken): AsyncUserFeed =
     sendRequest(userFeedUri(accessToken, userId))(decodeFeed)
 
   /**
@@ -111,14 +109,6 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
               responseType : ResponseType = FacebookCode,
               state        : Option[String] = None): String =
     uriService.authUrl(permissions, responseType, state).toString()
-
-  private def sendRequest[A](uri: URLBuilder)(reads: Decoder[A]) = {
-    domainParseService.send(uri)(reads, decodeOauthError)(loginErrorFE)(appResources)
-  }
-
-  private def sendRequestOrFail[A](uri: URLBuilder)(reads: Decoder[A]) = {
-    domainParseService.sendOrFail(uri)(reads, decodeOauthError)(loginErrorFE)(appResources)
-  }
 
 }
 
