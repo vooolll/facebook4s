@@ -3,6 +3,7 @@ package domain.feed
 import java.time.Instant
 
 import cats.syntax.option._
+import domain.profile.FacebookApplication
 import io.circe.JsonObject
 
 final case class FacebookFeed(posts: List[FacebookSimplePost], paging: FacebookPaging)
@@ -49,7 +50,7 @@ final case class FacebookPost(
   story                 : String,
   createdTime           : Instant,
   adminCreator          : Option[FacebookAdminCreator] = none,
-  application           : Option[FacebookApp] = none,
+  application           : Option[FacebookApplication] = none,
   callToAction          : Map[String, String] = Map.empty,
   caption               : Option[String] = none,
   description           : Option[String] = none,

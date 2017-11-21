@@ -1,12 +1,14 @@
 package serialization
 
 import java.time._
+
 import domain.feed._
 import domain.oauth._
 import io.circe._
 import io.circe.Decoder._
 import cats.syntax.either._
 import config.FacebookConstants._
+import domain.profile.FacebookApplication
 
 import scala.concurrent.duration._
 
@@ -43,6 +45,9 @@ object FacebookDecoders {
   implicit val decodeInstant: Decoder[Instant] = decodeString.emap { str =>
     Either.catchNonFatal(dateFormat.parse(str, Instant.from(_))).leftMap(t => "Instant")
   }
+
+  implicit val decodeApplication: Decoder[FacebookApplication] =
+    Decoder.forProduct3("id", "link", "name")(FacebookApplication)
 
   implicit val decodePost: Decoder[FacebookSimplePost] =
     Decoder.forProduct3("id", "story", "created_time")(FacebookSimplePost)
