@@ -1,7 +1,7 @@
 package services
 
 import client.ApplicationResources
-import client.FacebookClient.loginErrorFE
+import client.FacebookClient.loginError
 import org.scalatest.concurrent.Eventually
 import org.scalatest.mockito.MockitoSugar
 import org.scalatest.time.{Millis, Span}
@@ -22,7 +22,7 @@ class DomainParseServiceSpec  extends AsyncWordSpec with Matchers with MockitoSu
       val resources = AppResources(system, mat, ec)
 
       val domainEntity = domainService.send(
-        uriService.appTokenUri)(decodeAppAccessToken, decodeOauthError)(loginErrorFE)(resources)
+        uriService.appTokenUri)(decodeAppAccessToken, decodeOauthError)(loginError)(resources)
       domainEntity flatMap { _ =>
         resources.system.whenTerminated.map(_ => succeed)
       }

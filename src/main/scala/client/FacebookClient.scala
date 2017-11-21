@@ -164,7 +164,7 @@ object FacebookClient {
     * @param message error message
     * @return Future FacebookOauthError
     */
-  def loginErrorFE(message: String) = Future.successful(FacebookOauthError(FacebookError(message)).asLeft)
+  def loginError(message: String) = Future.successful(FacebookOauthError(FacebookError(message)).asLeft)
 
   type AccessToken = FacebookAccessToken
   type Application = FacebookApplication

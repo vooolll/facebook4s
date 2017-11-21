@@ -7,7 +7,7 @@ import akka.http.scaladsl.unmarshalling.Unmarshal
 import akka.stream.ActorMaterializer
 import org.f100ded.scalaurlbuilder.URLBuilder
 import cats.implicits._
-import client.FacebookClient.loginErrorFE
+import client.FacebookClient.loginError
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport
 import domain.oauth.HasFacebookError
 import io.circe.Decoder
