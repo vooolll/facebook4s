@@ -6,6 +6,7 @@ import domain._
 import domain.feed._
 import domain.oauth._
 import domain.permission.FacebookPermissions._
+import domain.profile.FacebookApplication
 import services._
 
 import scala.concurrent._
@@ -57,9 +58,20 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
     * @param userId Facebook user id
     * @param accessToken User access token
     * @return Facebook user feed
+    *         @throws scala.RuntimeException if facebook responds with bad request
     */
   def feed(userId: UserId, accessToken: AccessToken): Future[UserFeed] =
     sendRequestOrFail(userFeedUri(accessToken, userId))(decodeFeed)
+
+
+  /**
+    * @param applicationId Facebook application(client) id
+    * @param accessToken Facebook user access token
+    * @return Facebook application details
+    *         @throws scala.RuntimeException if facebook responds with bad request
+    */
+  def application(applicationId: String, accessToken: AccessToken): Future[Application] =
+    sendRequestOrFail(applicationUri(accessToken, applicationId))(decodeApplication)
 
   /**
     * @return Either future value of facebook app access token or FacebookOauthError
@@ -94,8 +106,16 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
     * @param accessToken Facebook user access token with "user_posts" permission
     * @return Facebook user feed
     */
-  def feedResult(userId: UserId, accessToken: AccessToken): AsyncUserFeed =
+  def feedResult(userId: UserId, accessToken: AccessToken): AsyncUserFeedResult =
     sendRequest(userFeedUri(accessToken, userId))(decodeFeed)
+
+  /**
+    * @param applicationId Facebook application(client) id
+    * @param accessToken Facebook user access token
+    * @return Facebook application details
+    */
+  def applicationResult(applicationId: String, accessToken: AccessToken): AsyncApplicationResult =
+    sendRequest(applicationUri(accessToken, applicationId))(decodeApplication)
 
   /**
     *
@@ -147,16 +167,17 @@ object FacebookClient {
   def loginErrorFE(message: String) = Future.successful(FacebookOauthError(FacebookError(message)).asLeft)
 
   type AccessToken = FacebookAccessToken
-  type TokenError = FacebookOauthError
+  type Application = FacebookApplication
+  type ApiError = FacebookOauthError
   type ClientCode = FacebookClientCode
   type UserFeed = FacebookFeed
   type UserId = FacebookUserId
   type Permissions = FacebookUserPermission
   type ResponseType = FacebookOauthResponseType
 
-  type AsyncUserFeed = Future[Either[TokenError, UserFeed]]
-  type AsyncAccessTokenResult = Future[Either[TokenError, AccessToken]]
-  type AsyncClientCodeResult = Future[Either[TokenError, ClientCode]]
-  type FacebookAccessTokenResult = Either[TokenError, AccessToken]
+  type AsyncUserFeedResult = Future[Either[ApiError, UserFeed]]
+  type AsyncAccessTokenResult = Future[Either[ApiError, AccessToken]]
+  type AsyncClientCodeResult = Future[Either[ApiError, ClientCode]]
+  type AsyncApplicationResult = Future[Either[ApiError, Application]]
 }
 

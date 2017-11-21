@@ -1,10 +1,9 @@
 package client
 
+import base.AsyncSpec
 import domain.oauth._
-import org.scalatest.mockito.MockitoSugar
-import org.scalatest.{AsyncWordSpec, Matchers}
 
-class AppAccessTokenSpec extends AsyncWordSpec with Matchers with MockitoSugar with FacebookClientFixture {
+class AppAccessTokenSpec extends AsyncSpec with FacebookClientFixture {
 
   "Facebook Graph Api" should {
     "return access token and token type" in {

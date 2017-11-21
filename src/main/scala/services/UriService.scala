@@ -42,6 +42,9 @@ class UriService(clientId: FacebookClientId, appSecret: FacebookAppSecret) {
     oauthTokenBuilder.withQueryParameters(params:_*)
   }
 
+  def withAccessToken(accessToken: FacebookAccessToken) =
+    graphHostBuilder.withQueryParameters("access_token" -> accessToken.show)
+
   def longLivedTokenUri(shortLeavingTokenValue: String) = oauthTokenBuilder.withQueryParameters(
     "grant_type"        -> "fb_exchange_token",
     "fb_exchange_token" -> shortLeavingTokenValue)
@@ -51,11 +54,13 @@ class UriService(clientId: FacebookClientId, appSecret: FacebookAppSecret) {
     "redirect_uri" -> redirectUri.show)
 
   def userFeedUri(accessToken: FacebookAccessToken, userId: FacebookUserId = FacebookUserId("me")) =
-    graphHostBuilder.withPathSegments(userId.show).withPathSegments(feedUri)
-      .withQueryParameters("access_token" -> accessToken.show)
+    withAccessToken(accessToken).withPathSegments(userId.show)
+
+  def applicationUri(accessToken: FacebookAccessToken, applicationId: String) =
+    withAccessToken(accessToken).withFragment(applicationId)
 
   def postUri(postId: String, accessToken: FacebookAccessToken) =
-    graphHostBuilder.withPathSegments(postId).withQueryParameters("access_token" -> accessToken.show)
+    withAccessToken(accessToken).withPathSegments(postId)
 
   def authUrl(permissions: Seq[FacebookUserPermission],
               responseType: FacebookOauthResponseType = FacebookCode,
