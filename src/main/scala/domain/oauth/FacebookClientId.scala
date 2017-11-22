@@ -2,7 +2,9 @@ package domain.oauth
 
 import FacebookClientId._
 
-trait FacebookApplicationId
+trait FacebookApplicationId {
+  val value: String
+}
 
 /**
   * Facebook client id, it is also called app id
@@ -19,5 +21,5 @@ final case class FacebookAppId(value: String) extends FixedSizeValue(length, mes
 object FacebookClientId {
   val length = 16
 
-  val message = "Wrong facebook client id length"
+  val message = "Wrong facebook app id (client id) length"
 }

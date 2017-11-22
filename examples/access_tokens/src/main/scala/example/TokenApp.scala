@@ -1,7 +1,7 @@
 package example
 
 import client.FacebookClient
-import domain.oauth.FacebookCode
+import domain.oauth.{FacebookCode, FacebookToken}
 import domain.permission.FacebookPermissions.FacebookUserPosts
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -13,7 +13,7 @@ object TokenApp extends App {
 
   //getting request urls
   val authUriToGetCode = facebookClient.authUrl(Seq(FacebookUserPosts))
-  val authUriToGetToken = facebookClient.authUrl(Seq(FacebookUserPosts), FacebookCode)
+  val authUriToGetToken = facebookClient.authUrl(Seq(FacebookUserPosts), responseType = FacebookToken)
 
   println(authUriToGetCode)
   println(authUriToGetToken)

@@ -13,7 +13,7 @@ SBT 0.13.x
 ### Installation
 Add the following line to your sbt dependencies: 
 ```scala
-"com.github.vooolll" %% "facebook4s" % "0.1.6"
+"com.github.vooolll" %% "facebook4s" % "0.1.8"
 ```
 
 Note: make sure that you have in your `build.sbt`
@@ -160,6 +160,102 @@ facebookClient.appAccessToken() onComplete {
 }
 ```
 
+
+#### Feed api
+```scala
+  import domain.feed._
+  import domain.profile._
+  import domain.oauth._
+  import client.FacebookClient
+  import scala.concurrent.ExecutionContext.Implicits.global
+  
+  val facebookClient = FacebookClient()
+  
+  val facebookAccessToken: FacebookAccessToken = ??? // your token
+  // Feed
+  facebookClient.feed(FacebookUserId("499283963749541"), facebookAccessToken) map(feed =>
+    println(feed)
+//  prints:
+//  FacebookFeed(
+//    List(
+//      FacebookSimplePost("499313270413277_504668796544391", "Valeryi Baibossynov updated his profile picture.",
+//        toInstant("2017-10-01T13:43:05+0000")),
+//      FacebookSimplePost("499313270413277_139299253081349",
+//        "Valeryi Baibossynov added a life event from May 2, 1993: Born on May 2, 1993.",
+//        toInstant("1993-05-02T07:00:00+0000"))
+//    ),
+//    FacebookPaging("https://graph.facebook.com1", "https://graph.facebook.com"))
+  )
+  
+  // or you can use raw string
+  
+  facebookClient.feed(FacebookUserId("499283963749541"), "your user access token") map(feed =>
+      println(feed))
+``` 
+
+
+
+#### User api
+```scala
+facebookClient.userProfile(FacebookUserId("499283963749541"), facebookAccessToken) map(user =>
+    println(user) //FacebookUser(FacebookUserId(499283963749541),Valeryi Baibossynov)
+)
+```
+
+```scala
+
+//raw string value supported as well
+facebookClient.userProfile(FacebookUserId("499283963749541"), "your user access token") map(user =>
+    println(user) //FacebookUser(FacebookUserId(499283963749541),Valeryi Baibossynov)
+)
+```
+
+#### Application api
+
+```scala
+  facebookClient.application(FacebookConfig.clientId, facebookAccessToken) map(application =>
+    println("Application: " + application)) //Application: FacebookApplication(FacebookAppId(1969406143275709),https://www.facebook.com/games/?app_id=1969406143275709,testing_app)
+ 
+
+  //or
+  facebookClient.application(FacebookAppId("1969406143275709"), facebookAccessToken) map(application =>
+    println("Application: " + application) //Application: FacebookApplication(FacebookAppId(1969406143275709),https://www.facebook.com/games/?app_id=1969406143275709,testing_app)
+    )
+
+```
+
+Note: in terms of facebook4s there is no difference between `client_id` and `application_id`. 
+
+#### Chaining futures
+
+You can compose facebook4s calls as expected:
+
+```scala
+  for {
+    app  <- facebookClient.application(FacebookConfig.clientId, facebookAccessToken)
+    user <- facebookClient.userProfile(userId, facebookAccessToken)
+    feed <- facebookClient.feed(userId, facebookAccessToken)
+  } {
+    println(user)
+    println(feed)
+    println(app)
+  }
+```
+
+
+#### Either based api
+In case you want to use `Either` based api you can use Result suffixed methods, for example if `facebookClient.userProfile`
+return `Future[FacebookUser]`, then `facebookClient.userProfileResult` returns `Future[Either[FacebookOauthError, FacebookUser]]`
+
+Example:
+```scala
+facebookClient.userProfileResult(userId, facebookAccessToken) map {
+  case Right(user) => println("Success: " + user)
+  case Left(error) => println("Failure: " + error)
+}
+```
+
+
 ### Api references
 * [FacebookClient][2]
 * [FacebookAccessToken][3]
@@ -169,7 +265,6 @@ facebookClient.appAccessToken() onComplete {
 * [FacebookClientCode][6]
 * [FacebookRedirectUri][7]
 * [FacebookAppSecret][8]
-* [FacebookVersion][9]
 * [FacebookOauthError][12]
 
 ### License
@@ -188,7 +283,6 @@ Facebook4s is released under the [Apache 2 License][5].
 [6]: https://vooolll.github.io/facebook4s/domain/oauth/FacebookClientCode.html
 [7]: https://vooolll.github.io/facebook4s/domain/oauth/FacebookRedirectUri.html
 [8]: https://vooolll.github.io/facebook4s/domain/oauth/FacebookAppSecret.html
-[9]: https://vooolll.github.io/facebook4s/domain/oauth/FacebookVersion.html
 [10]: https://vooolll.github.io/facebook4s/domain/oauth/AppAccessToken.html
 [11]: https://vooolll.github.io/facebook4s/domain/oauth/UserAccessToken.html
 [12]: https://vooolll.github.io/facebook4s/api/FacebookOauthError.html

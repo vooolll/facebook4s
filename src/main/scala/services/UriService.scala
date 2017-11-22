@@ -55,8 +55,8 @@ class UriService(clientId: FacebookClientId, appSecret: FacebookAppSecret) {
   def userFeedUri(accessToken: FacebookAccessToken, userId: FacebookUserId = FacebookUserId("me")) =
     withAccessToken(accessToken).withPathSegments(userId.show).withPathSegments(feedUri)
 
-  def applicationUri(accessToken: FacebookAccessToken, applicationId: String) =
-    withAccessToken(accessToken).withPathSegments(applicationId)
+  def applicationUri(accessToken: FacebookAccessToken, applicationId: FacebookApplicationId) =
+    withAccessToken(accessToken).withPathSegments(applicationId.show)
 
   def postUri(postId: String, accessToken: FacebookAccessToken) =
     withAccessToken(accessToken).withPathSegments(postId)

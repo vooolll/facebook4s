@@ -19,4 +19,5 @@ object FacebookShowOps {
   implicit val showFacebookUserId = Show.show[FacebookUserId](_.value)
   implicit val showFacebookResponseType = Show.show[FacebookOauthResponseType](_.value)
   implicit val showFacebookPermissions = Show.show[FacebookUserPermission](_.value)
+  implicit val showFacebookApplicationId = Show.show[FacebookApplicationId](_.value)
 }

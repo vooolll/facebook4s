@@ -16,6 +16,9 @@ object TestEntities {
   val userId = FacebookUserId("499313270413277")
   val user = FacebookUser(userId, "Valeryi Baibossynov")
 
+  val appId = FacebookAppId("1969406143275709")
+  val facebookClientId = FacebookClientId("1969406143275709")
+
   val userAccessToken = FacebookAccessToken(
     TokenValue("token"), UserAccessToken("bearer", 5107587.seconds))
 
