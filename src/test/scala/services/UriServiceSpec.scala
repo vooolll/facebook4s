@@ -2,12 +2,11 @@ package services
 
 import cats.implicits._
 import config.FacebookConfig._
-import domain.oauth.{FacebookAccessToken, FacebookToken, TokenValue, UserAccessToken}
+import domain.oauth.FacebookToken
 import domain.permission.FacebookPermissions.FacebookUserPosts
 import org.scalatest.{Matchers, WordSpec}
+import serialization.compatibility.TestEntities._
 import syntax.FacebookShowOps._
-
-import scala.concurrent.duration.DurationInt
 
 class UriServiceSpec extends WordSpec with Matchers {
 
@@ -23,9 +22,14 @@ class UriServiceSpec extends WordSpec with Matchers {
     }
 
     "return post uri" in {
-      s.postUri("postId", FacebookAccessToken(
-        TokenValue("token"), UserAccessToken("", 1000.seconds))).toString() shouldBe "https://graph.facebook.com" +
+      s.postUri("postId", userAccessToken).toString() shouldBe "https://graph.facebook.com" +
         "/v2.10/postId?access_token=token"
+    }
+
+
+    "return feed uri" in {
+      s.userFeedUri(userAccessToken).toString() shouldBe "https://graph.facebook.com" +
+        "/v2.10/me/feed?access_token=token"
     }
 
     "return auth uri" in {

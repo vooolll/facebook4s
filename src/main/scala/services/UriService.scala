@@ -4,12 +4,11 @@ import cats.implicits._
 import config.FacebookConfig.{appSecret, clientId, redirectUri, version}
 import config.FacebookConstants
 import config.FacebookConstants._
-import syntax.FacebookShowOps._
 import domain.oauth._
 import domain.permission.FacebookPermissions.FacebookUserPermission
 import domain.profile.FacebookUserId
 import org.f100ded.scalaurlbuilder.URLBuilder
-
+import syntax.FacebookShowOps._
 /**
   * Service that constructs uri to facebook api
   * @param clientId client id(application id)
@@ -54,10 +53,10 @@ class UriService(clientId: FacebookClientId, appSecret: FacebookAppSecret) {
     "redirect_uri" -> redirectUri.show)
 
   def userFeedUri(accessToken: FacebookAccessToken, userId: FacebookUserId = FacebookUserId("me")) =
-    withAccessToken(accessToken).withPathSegments(userId.show).withFragment(feedUri)
+    withAccessToken(accessToken).withPathSegments(userId.show).withPathSegments(feedUri)
 
   def applicationUri(accessToken: FacebookAccessToken, applicationId: String) =
-    withAccessToken(accessToken).withFragment(applicationId)
+    withAccessToken(accessToken).withPathSegments(applicationId)
 
   def postUri(postId: String, accessToken: FacebookAccessToken) =
     withAccessToken(accessToken).withPathSegments(postId)

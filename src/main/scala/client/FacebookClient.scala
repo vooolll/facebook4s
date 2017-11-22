@@ -78,7 +78,7 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
     * @return Facebook user profile
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
-  def user(userId: UserId, accessToken: AccessToken): Future[User] =
+  def userProfile(userId: UserId, accessToken: AccessToken): Future[User] =
     sendRequestOrFail(userUri(accessToken, userId))(decodeUser)
 
   /**
@@ -97,7 +97,7 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
   /**
     * @param code client code
     * @param machineId optional value that helps to identify specified client
-    * @return Either  future long lived user access token or FacebookOauthError
+    * @return Either future long lived user access token or FacebookOauthError
     */
   def userAccessTokenResult(code: String, machineId: Option[String]): AsyncAccessTokenResult =
     sendRequest(userTokenUri(code, machineId))(decodeUserAccessToken)
@@ -112,7 +112,7 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
   /**
     * @param userId Facebook user id
     * @param accessToken Facebook user access token with "user_posts" permission
-    * @return Facebook user feed
+    * @return Either facebook user feed or error FacebookOauthError
     */
   def feedResult(userId: UserId, accessToken: AccessToken): AsyncUserFeedResult =
     sendRequest(userFeedUri(accessToken, userId))(decodeFeed)
@@ -120,10 +120,19 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
   /**
     * @param applicationId Facebook application(client) id
     * @param accessToken Facebook user access token
-    * @return Facebook application details
+    * @return Either facebook application details or error FacebookOauthError
     */
   def applicationResult(applicationId: String, accessToken: AccessToken): AsyncApplicationResult =
     sendRequest(applicationUri(accessToken, applicationId))(decodeApplication)
+
+
+  /**
+    * @param userId FacebookUserId
+    * @param accessToken Facebook user access token
+    * @return Facebook user profile or error FacebookOauthError
+    */
+  def userProfileResult(userId: UserId, accessToken: AccessToken): AsyncUserResult =
+    sendRequest(userUri(accessToken, userId))(decodeUser)
 
   /**
     *
@@ -165,8 +174,7 @@ object FacebookClient {
     * @return FacebookClient created from application id and application secret from type safe config or
     *         OS environmental variables
     */
-  def apply(): FacebookClient =
-    new FacebookClient(clientId, appSecret)
+  def apply(): FacebookClient = new FacebookClient(clientId, appSecret)
 
   /**
     * @param message error message
@@ -188,5 +196,6 @@ object FacebookClient {
   type AsyncAccessTokenResult = Future[Either[ApiError, AccessToken]]
   type AsyncClientCodeResult = Future[Either[ApiError, ClientCode]]
   type AsyncApplicationResult = Future[Either[ApiError, Application]]
+  type AsyncUserResult = Future[Either[ApiError, User]]
 }
 
