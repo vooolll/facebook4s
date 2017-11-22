@@ -15,7 +15,7 @@ object UserProfileApp extends App {
   println(facebookClient.authUrl(Seq(FacebookUserPosts), responseType = FacebookToken))
 
   val userId = FacebookUserId("499283963749541")
-  val tokenStringValue = "EAAbZCKhmWor0BAIF1MTXpG4Hguulxs85zT9CUlHv8qtD9gEkMijxtQLwsrEKXmiWKsKXDFmzmZB92FkcADNZBBJsNgvh7yEFg474rtePgOAvZBdwS0kaPZCUfplnhPWWJrCZCvU2OUWA9gcvCOaKiZCBtE54lZAfaeVwEHJ34jfQcUhcQ6Y1ZBSAKil5ZAV2V6C3mEeg3JqXc9xgZDZD"
+  val tokenStringValue = "token"
 
 
   //Profile
