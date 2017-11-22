@@ -1,3 +1,8 @@
 package domain.profile
 
-final case class FacebookApplication(id: String, link: String, name: String)
+import domain.oauth.FacebookApplicationId
+
+final case class FacebookApplication(
+  id   : FacebookApplicationId,
+  link : String,
+  name : String) extends FacebookProfile

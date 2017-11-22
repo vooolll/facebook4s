@@ -8,7 +8,7 @@ import io.circe._
 import io.circe.Decoder._
 import cats.syntax.either._
 import config.FacebookConstants._
-import domain.profile.FacebookApplication
+import domain.profile.{FacebookApplication, FacebookUser, FacebookUserId}
 
 import scala.concurrent.duration._
 
@@ -46,8 +46,24 @@ object FacebookDecoders {
     Either.catchNonFatal(dateFormat.parse(str, Instant.from(_))).leftMap(t => "Instant")
   }
 
-  implicit val decodeApplication: Decoder[FacebookApplication] =
-    Decoder.forProduct3("id", "link", "name")(FacebookApplication)
+  implicit val decodeUserId: Decoder[FacebookUserId] = decodeString.map(FacebookUserId)
+  implicit val decodeAppId: Decoder[FacebookAppId] = decodeString.map(FacebookAppId)
+  implicit val decodeClientId: Decoder[FacebookClientId] = decodeString.map(FacebookClientId.apply)
+
+  implicit val decodeUser: Decoder[FacebookUser] = new Decoder[FacebookUser] {
+    override def apply(c: HCursor) = for {
+      id <- c.downField("id").as[FacebookUserId]
+      name  <- c.downField("name").as[String]
+    } yield FacebookUser(id, name)
+  }
+
+  implicit val decodeApplication: Decoder[FacebookApplication] = new Decoder[FacebookApplication] {
+    override def apply(c: HCursor) = for {
+      id     <- c.downField("id").as[FacebookAppId]
+      link   <- c.downField("link").as[String]
+      name   <- c.downField("name").as[String]
+    } yield FacebookApplication(id, link, name)
+  }
 
   implicit val decodePost: Decoder[FacebookSimplePost] =
     Decoder.forProduct3("id", "story", "created_time")(FacebookSimplePost)

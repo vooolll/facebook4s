@@ -2,11 +2,10 @@ package client
 
 import cats.syntax.either._
 import config.FacebookConfig._
-import domain._
 import domain.feed._
 import domain.oauth._
 import domain.permission.FacebookPermissions._
-import domain.profile.FacebookApplication
+import domain.profile._
 import services._
 
 import scala.concurrent._
@@ -72,6 +71,15 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
     */
   def application(applicationId: String, accessToken: AccessToken): Future[Application] =
     sendRequestOrFail(applicationUri(accessToken, applicationId))(decodeApplication)
+
+  /**
+    * @param userId Facebook user id
+    * @param accessToken Facebook user access token
+    * @return Facebook user profile
+    *         @throws scala.RuntimeException if facebook responds with bad request
+    */
+  def user(userId: UserId, accessToken: AccessToken): Future[User] =
+    sendRequestOrFail(userUri(accessToken, userId))(decodeUser)
 
   /**
     * @return Either future value of facebook app access token or FacebookOauthError
@@ -172,6 +180,7 @@ object FacebookClient {
   type ClientCode = FacebookClientCode
   type UserFeed = FacebookFeed
   type UserId = FacebookUserId
+  type User = FacebookUser
   type Permissions = FacebookUserPermission
   type ResponseType = FacebookOauthResponseType
 

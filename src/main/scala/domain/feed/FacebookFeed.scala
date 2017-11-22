@@ -3,7 +3,7 @@ package domain.feed
 import java.time.Instant
 
 import cats.syntax.option._
-import domain.profile.FacebookApplication
+import domain.profile.{FacebookApplication, FacebookProfile, FacebookTagProfile}
 import io.circe.JsonObject
 
 final case class FacebookFeed(posts: List[FacebookSimplePost], paging: FacebookPaging)

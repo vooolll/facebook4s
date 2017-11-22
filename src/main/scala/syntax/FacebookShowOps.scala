@@ -1,9 +1,10 @@
 package syntax
 
 import cats.Show
-import domain.{FacebookUserId, FacebookVersion}
+import domain.FacebookVersion
 import domain.oauth._
 import domain.permission.FacebookPermissions.FacebookUserPermission
+import domain.profile.FacebookUserId
 
 /**
   * Cats show implementation for domain

@@ -7,11 +7,15 @@ import config.FacebookConstants
 import domain.feed.{FacebookFeed, FacebookPaging, FacebookSimplePost}
 import domain.oauth._
 import FacebookConstants._
-import domain.profile.FacebookApplication
+import domain.profile.{FacebookApplication, FacebookUser, FacebookUserId}
 
 import scala.concurrent.duration._
 
 object TestEntities {
+
+  val userId = FacebookUserId("499313270413277")
+  val user = FacebookUser(userId, "Valeryi Baibossynov")
+
   val userAccessToken = FacebookAccessToken(
     TokenValue("test token"), UserAccessToken("bearer", 5107587.seconds))
 
@@ -19,7 +23,7 @@ object TestEntities {
     TokenValue("1234567891011121|A6BCDEFiGASDFdB1_Zviht7lzxc"), AppAccessToken("bearer"))
 
   val clientCode = FacebookClientCode("test-test-test-test", "machine id".some)
-  val application = FacebookApplication("1969406143275709", "https://www.facebook.com/games/?app_id=1969406143275709",
+  val application = FacebookApplication(FacebookAppId("1969406143275709"), "https://www.facebook.com/games/?app_id=1969406143275709",
     "testing_app")
 
   val facebookOauthError = FacebookOauthError(FacebookError("Invalid verification code format."))

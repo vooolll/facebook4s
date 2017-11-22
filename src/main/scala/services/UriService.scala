@@ -4,10 +4,10 @@ import cats.implicits._
 import config.FacebookConfig.{appSecret, clientId, redirectUri, version}
 import config.FacebookConstants
 import config.FacebookConstants._
-import domain.FacebookUserId
 import syntax.FacebookShowOps._
 import domain.oauth._
 import domain.permission.FacebookPermissions.FacebookUserPermission
+import domain.profile.FacebookUserId
 import org.f100ded.scalaurlbuilder.URLBuilder
 
 /**
@@ -54,7 +54,7 @@ class UriService(clientId: FacebookClientId, appSecret: FacebookAppSecret) {
     "redirect_uri" -> redirectUri.show)
 
   def userFeedUri(accessToken: FacebookAccessToken, userId: FacebookUserId = FacebookUserId("me")) =
-    withAccessToken(accessToken).withPathSegments(userId.show)
+    withAccessToken(accessToken).withPathSegments(userId.show).withFragment(feedUri)
 
   def applicationUri(accessToken: FacebookAccessToken, applicationId: String) =
     withAccessToken(accessToken).withFragment(applicationId)
@@ -72,6 +72,9 @@ class UriService(clientId: FacebookClientId, appSecret: FacebookAppSecret) {
     ) ++ scope(permissions) ++ state.map("state" -> _)
     baseHostBuilder.withPathSegments(FacebookConstants.authUri).withQueryParameters(params:_*)
   }
+
+  def userUri(accessToken: FacebookAccessToken, userId: FacebookUserId = FacebookUserId("me")) =
+    withAccessToken(accessToken).withPathSegments(userId.show)
 
   private def scope(permissions: Seq[FacebookUserPermission]) =
     if (permissions.nonEmpty) Some("scope" -> commaSeparated(permissions)) else None

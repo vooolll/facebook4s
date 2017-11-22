@@ -6,7 +6,7 @@ import serialization.FacebookDecoders._
 
 class FacebookApplicationCompatSpec extends SyncSpec with JsonSerializationSupport {
 
-  val applicationPath = "testdata/application.json"
+  val applicationPath = "testdata/basic_application.json"
 
   "FacebookApplication" should {
     s"be compatible with $applicationPath" in {
