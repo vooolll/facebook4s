@@ -1,6 +1,5 @@
 package client
 
-import cats.syntax.either._
 import config.FacebookConfig._
 import domain.feed._
 import domain.oauth._
@@ -224,12 +223,6 @@ object FacebookClient {
     *         OS environmental variables
     */
   def apply(): FacebookClient = new FacebookClient(clientId, appSecret)
-
-  /**
-    * @param message error message
-    * @return Future FacebookOauthError
-    */
-  def loginError(message: String) = Future.successful(FacebookOauthError(FacebookError(message)).asLeft)
 
   /**
     * @param value token sting value

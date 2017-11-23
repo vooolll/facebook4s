@@ -5,13 +5,11 @@ import akka.http.scaladsl.Http
 import akka.http.scaladsl.model._
 import akka.http.scaladsl.unmarshalling.Unmarshal
 import akka.stream.ActorMaterializer
-import org.f100ded.scalaurlbuilder.URLBuilder
 import cats.implicits._
-import client.FacebookClient.loginError
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport
 import domain.oauth.HasFacebookError
 import io.circe.Decoder
-import serialization.FacebookDecoders.decodeOauthError
+import org.f100ded.scalaurlbuilder.URLBuilder
 import services.DomainParseService.AppResources
 
 import scala.concurrent.{ExecutionContext, Future}
