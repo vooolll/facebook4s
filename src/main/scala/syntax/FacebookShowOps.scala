@@ -3,7 +3,7 @@ package syntax
 import cats.Show
 import domain.FacebookVersion
 import domain.oauth._
-import domain.permission.FacebookPermissions.FacebookUserPermission
+import domain.permission.FacebookPermissions.FacebookPermission
 import domain.profile.FacebookUserId
 
 /**
@@ -18,6 +18,6 @@ object FacebookShowOps {
   implicit val showFacebookRedirectUri = Show.show[FacebookRedirectUri](_.uri)
   implicit val showFacebookUserId = Show.show[FacebookUserId](_.value)
   implicit val showFacebookResponseType = Show.show[FacebookOauthResponseType](_.value)
-  implicit val showFacebookPermissions = Show.show[FacebookUserPermission](_.value)
+  implicit val showFacebookPermissions = Show.show[FacebookPermission](_.value)
   implicit val showFacebookApplicationId = Show.show[FacebookApplicationId](_.value)
 }

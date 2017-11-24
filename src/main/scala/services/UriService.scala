@@ -5,7 +5,7 @@ import config.FacebookConfig.{appSecret, clientId, redirectUri, version}
 import config.FacebookConstants
 import config.FacebookConstants._
 import domain.oauth._
-import domain.permission.FacebookPermissions.FacebookUserPermission
+import domain.permission.FacebookPermissions.FacebookPermission
 import domain.profile.FacebookUserId
 import org.f100ded.scalaurlbuilder.URLBuilder
 import syntax.FacebookShowOps._
@@ -61,7 +61,7 @@ class UriService(clientId: FacebookClientId, appSecret: FacebookAppSecret) {
   def postUri(postId: String, accessToken: FacebookAccessToken) =
     withAccessToken(accessToken).withPathSegments(postId)
 
-  def authUrl(permissions: Seq[FacebookUserPermission],
+  def authUrl(permissions: Seq[FacebookPermission],
               responseType: FacebookOauthResponseType = FacebookCode,
               state: Option[String] = None) = {
     val params = Seq(
@@ -75,10 +75,10 @@ class UriService(clientId: FacebookClientId, appSecret: FacebookAppSecret) {
   def userUri(accessToken: FacebookAccessToken, userId: FacebookUserId = FacebookUserId("me")) =
     withAccessToken(accessToken).withPathSegments(userId.show)
 
-  private def scope(permissions: Seq[FacebookUserPermission]) =
+  private def scope(permissions: Seq[FacebookPermission]) =
     if (permissions.nonEmpty) Some("scope" -> commaSeparated(permissions)) else None
 
-  private def commaSeparated(permissions: Seq[FacebookUserPermission]) =
+  private def commaSeparated(permissions: Seq[FacebookPermission]) =
     permissions.map(_.show).mkString(",")
 }
 

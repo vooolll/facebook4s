@@ -237,7 +237,7 @@ object FacebookClient {
   type UserFeed = FacebookFeed
   type UserId = FacebookUserId
   type User = FacebookUser
-  type Permissions = FacebookUserPermission
+  type Permissions = FacebookPermission
   type ResponseType = FacebookOauthResponseType
   type ApplicationId = FacebookApplicationId
 

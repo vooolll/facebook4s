@@ -1,10 +1,10 @@
 package client
 
-import domain.permission.FacebookPermissions.{FacebookUserPermission, FacebookUserPosts}
+import domain.permission.FacebookPermissions.{FacebookPermission, FacebookUserPosts}
 import services.UriService
 
 class AuthUriSpec extends FacebookClientSupport {
-  val emptyPermissions = Seq.empty[FacebookUserPermission]
+  val emptyPermissions = Seq.empty[FacebookPermission]
   val permissions = Seq(FacebookUserPosts)
   "Facebook Graph Api" should {
     "obtain client code by long lived token" in { c =>

@@ -1,6 +1,6 @@
 package domain.oauth
 
-import domain.permission.FacebookPermissions.FacebookUserPermission
+import domain.permission.FacebookPermissions.FacebookPermission
 
 import scala.concurrent.duration.FiniteDuration
 import scala.concurrent.duration._
