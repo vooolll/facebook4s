@@ -79,7 +79,7 @@ class UriService(clientId: FacebookClientId, appSecret: FacebookAppSecret) {
       .withPathSegments(userId.show).withQueryParameters(Seq() ++ many("fields", attributes):_*)
 
   private def many(key: String, permissions: Seq[HasStringValue]) =
-    if (permissions.nonEmpty) Some(key -> commaSeparated(permissions)) else None
+    if (permissions.nonEmpty) key -> commaSeparated(permissions) some else none
 
   private def commaSeparated(permissions: Seq[HasStringValue]) = permissions.map(_.show).mkString(",")
 

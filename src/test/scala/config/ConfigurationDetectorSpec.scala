@@ -3,6 +3,7 @@ package config
 import com.typesafe.config.{Config, ConfigException}
 import org.scalatest.mockito.MockitoSugar
 import org.scalatest.{Matchers, WordSpec}
+import cats.implicits._
 
 class ConfigurationDetectorSpec extends WordSpec with Matchers with MockitoSugar {
 
@@ -45,7 +46,7 @@ class ConfigurationDetectorSpec extends WordSpec with Matchers with MockitoSugar
   }
 
   trait ConfigFromEnv extends ConfigurationDetector {
-    override def environmentVariable(name: String) = Some(testEnvVarValue)
+    override def environmentVariable(name: String) = testEnvVarValue.some
   }
 
   trait NoConfigFromFile extends ConfigurationDetector {

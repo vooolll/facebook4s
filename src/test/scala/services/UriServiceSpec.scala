@@ -43,7 +43,7 @@ class UriServiceSpec extends WordSpec with Matchers {
       s.authUrl(
         permissions  = Seq(FacebookUserPosts),
         responseType = FacebookToken,
-        state = Some("asd")).toString() shouldBe s"https://facebook.com/v2.10/dialog/oauth" +
+        state        = "asd".some).toString() shouldBe s"https://facebook.com/v2.10/dialog/oauth" +
         s"?client_id=${clientId.show}" +
         s"&redirect_uri=http%3A%2F%2Flocalhost%3A9000%2Fredirect" +
         s"&response_type=${FacebookToken.value}" +
