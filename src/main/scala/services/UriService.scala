@@ -6,7 +6,7 @@ import config.FacebookConstants
 import config.FacebookConstants._
 import domain.oauth._
 import domain.permission.FacebookPermissions.FacebookPermission
-import domain.profile.FacebookUserId
+import domain.profile.{FacebookUserAttribute, FacebookUserId}
 import org.f100ded.scalaurlbuilder.URLBuilder
 import syntax.FacebookShowOps._
 /**
@@ -68,18 +68,21 @@ class UriService(clientId: FacebookClientId, appSecret: FacebookAppSecret) {
       "client_id"     -> clientId.show,
       "redirect_uri"  -> redirectUri.show,
       "response_type" -> responseType.show
-    ) ++ scope(permissions) ++ state.map("state" -> _)
+    ) ++ many("scope", permissions) ++ state.map("state" -> _)
     baseHostBuilder.withPathSegments(FacebookConstants.authUri).withQueryParameters(params:_*)
   }
 
-  def userUri(accessToken: FacebookAccessToken, userId: FacebookUserId = FacebookUserId("me")) =
-    withAccessToken(accessToken).withPathSegments(userId.show)
+  def userUri(accessToken: FacebookAccessToken,
+    userId: FacebookUserId = FacebookUserId("me"),
+    attributes: Seq[FacebookUserAttribute]) =
+    withAccessToken(accessToken)
+      .withPathSegments(userId.show).withQueryParameters(Seq() ++ many("fields", attributes):_*)
 
-  private def scope(permissions: Seq[FacebookPermission]) =
-    if (permissions.nonEmpty) Some("scope" -> commaSeparated(permissions)) else None
+  private def many(key: String, permissions: Seq[HasStringValue]) =
+    if (permissions.nonEmpty) Some(key -> commaSeparated(permissions)) else None
 
-  private def commaSeparated(permissions: Seq[FacebookPermission]) =
-    permissions.map(_.show).mkString(",")
+  private def commaSeparated(permissions: Seq[HasStringValue]) = permissions.map(_.show).mkString(",")
+
 }
 
 object UriService {

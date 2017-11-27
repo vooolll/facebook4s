@@ -56,7 +56,7 @@ object FacebookDecoders {
   implicit val decodeUser: Decoder[FacebookUser] = new Decoder[FacebookUser] {
     override def apply(c: HCursor) = for {
       id      <- c.get[FacebookUserId]("id")
-      name    <- c.get[String]("name")
+      name    <- c.get[Option[String]]("name")
       picture <- c.downField("picture").get[Option[FacebookUserPicture]]("data")
     } yield FacebookUser(id, name, picture)
   }

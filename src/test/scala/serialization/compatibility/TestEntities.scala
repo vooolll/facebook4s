@@ -16,7 +16,7 @@ object TestEntities {
   val userId = FacebookUserId("499313270413277")
 
   val userPicture = FacebookUserPicture(50, isSilhouette = false, "image url", 50)
-  val user = FacebookUser(userId, "Valeryi Baibossynov", userPicture.some)
+  val user = FacebookUser(userId, Some("Valeryi Baibossynov"), userPicture.some)
 
   val appId = FacebookAppId("1969406143275709")
   val facebookClientId = FacebookClientId("1969406143275709")

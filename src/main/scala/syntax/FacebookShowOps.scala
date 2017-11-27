@@ -5,6 +5,7 @@ import domain.FacebookVersion
 import domain.oauth._
 import domain.permission.FacebookPermissions.FacebookPermission
 import domain.profile.FacebookUserId
+import services.HasStringValue
 
 /**
   * Cats show implementation for domain
@@ -20,4 +21,5 @@ object FacebookShowOps {
   implicit val showFacebookResponseType = Show.show[FacebookOauthResponseType](_.value)
   implicit val showFacebookPermissions = Show.show[FacebookPermission](_.value)
   implicit val showFacebookApplicationId = Show.show[FacebookApplicationId](_.value)
+  implicit val showHasStringValue = Show.show[HasStringValue](_.value)
 }

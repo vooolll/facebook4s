@@ -19,6 +19,7 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
 
   import client.FacebookClient._
   import serialization.FacebookDecoders._
+  import FacebookUserAttribute._
   import uriService._
 
   /**
@@ -91,11 +92,33 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
   /**
     * @param userId Facebook user id
     * @param accessToken Facebook user access token
+    * @param attributes FacebookUserAttribute
+    * @return Facebook user profile
+    *         @throws scala.RuntimeException if facebook responds with bad request
+    */
+  def userProfile(userId: UserId, accessToken: AccessToken, attributes: Seq[Attributes]): Future[User] =
+    sendRequestOrFail(userUri(accessToken, userId, attributes))(decodeUser)
+
+
+  /**
+    * @param userId Facebook user id
+    * @param accessToken Facebook user access token
     * @return Facebook user profile
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
   def userProfile(userId: UserId, accessToken: AccessToken): Future[User] =
-    sendRequestOrFail(userUri(accessToken, userId))(decodeUser)
+    userProfile(userId, accessToken, defaultAttributeValues)
+
+
+  /**
+    * @param userId Facebook user id
+    * @param accessTokenValue Facebook user access token string value
+    * @param attributes FacebookUserAttribute
+    * @return Facebook user profile
+    *         @throws scala.RuntimeException if facebook responds with bad request
+    */
+  def userProfile(userId: UserId, accessTokenValue: String, attributes: Seq[Attributes]): Future[User] =
+    sendRequestOrFail(userUri(accessToken(accessTokenValue), userId, attributes))(decodeUser)
 
   /**
     * @param userId Facebook user id
@@ -104,7 +127,7 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
   def userProfile(userId: UserId, accessTokenValue: String): Future[User] =
-    sendRequestOrFail(userUri(accessToken(accessTokenValue), userId))(decodeUser)
+    userProfile(userId, accessTokenValue, defaultAttributeValues)
 
   /**
     * @return Either future value of facebook app access token or FacebookOauthError
@@ -169,10 +192,29 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
   /**
     * @param userId FacebookUserId
     * @param accessToken Facebook user access token
+    * @param attributes FacebookUserAttribute
+    * @return Facebook user profile or error FacebookOauthError
+    */
+  def userProfileResult(userId: UserId, accessToken: AccessToken, attributes: Seq[Attributes]): AsyncUserResult =
+    sendRequest(userUri(accessToken, userId, attributes))(decodeUser)
+
+  /**
+    * @param userId FacebookUserId
+    * @param accessToken Facebook user access token
     * @return Facebook user profile or error FacebookOauthError
     */
   def userProfileResult(userId: UserId, accessToken: AccessToken): AsyncUserResult =
-    sendRequest(userUri(accessToken, userId))(decodeUser)
+    userProfileResult(userId, accessToken, defaultAttributeValues)
+
+  /**
+    * @param userId FacebookUserId
+    * @param accessTokenValue Facebook user access token string value
+    * @param attributes FacebookUserAttribute
+    * @return Facebook user profile or error FacebookOauthError
+    */
+  def userProfileResult(userId: UserId, accessTokenValue: String,
+                        attributes: Seq[Attributes]): AsyncUserResult =
+    sendRequest(userUri(accessToken(accessTokenValue), userId, attributes))(decodeUser)
 
   /**
     * @param userId FacebookUserId
@@ -180,7 +222,7 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
     * @return Facebook user profile or error FacebookOauthError
     */
   def userProfileResult(userId: UserId, accessTokenValue: String): AsyncUserResult =
-    sendRequest(userUri(accessToken(accessTokenValue), userId))(decodeUser)
+    userProfileResult(userId, accessTokenValue, defaultAttributeValues)
 
   /**
     *
@@ -240,6 +282,7 @@ object FacebookClient {
   type Permissions = FacebookPermission
   type ResponseType = FacebookOauthResponseType
   type ApplicationId = FacebookApplicationId
+  type Attributes = FacebookUserAttribute
 
   type AsyncUserFeedResult = Future[Either[ApiError, UserFeed]]
   type AsyncAccessTokenResult = Future[Either[ApiError, AccessToken]]

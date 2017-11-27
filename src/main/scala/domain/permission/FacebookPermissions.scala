@@ -1,11 +1,13 @@
 package domain.permission
 
+import services.HasStringValue
+
 object FacebookPermissions {
 
   /**
     * Trait that represents facebook permission - https://developers.facebook.com/docs/facebook-login/permissions/
     */
-  sealed trait FacebookPermission {
+  sealed trait FacebookPermission extends HasStringValue{
     val value: String
   }
 

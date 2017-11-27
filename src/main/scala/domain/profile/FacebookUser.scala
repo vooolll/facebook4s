@@ -12,7 +12,7 @@ final case class FacebookUserId(value: String)
   */
 case class FacebookUser(
   id      : FacebookUserId,
-  name    : String,
+  name    : Option[String],
   picture : Option[FacebookUserPicture]) extends FacebookProfile
 
 /**

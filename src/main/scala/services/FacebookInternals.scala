@@ -43,3 +43,7 @@ abstract class FacebookInternals {
     AppResources(system, mat, ec)
   }
 }
+
+trait HasStringValue{
+  def value: String
+}
