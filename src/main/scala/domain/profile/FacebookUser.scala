@@ -1,5 +1,7 @@
 package domain.profile
 
+import java.util.Locale
+
 /**
   * @param value Facebook user id
   */
@@ -13,7 +15,8 @@ final case class FacebookUserId(value: String)
 case class FacebookUser(
   id      : FacebookUserId,
   name    : Option[String],
-  picture : Option[FacebookUserPicture]) extends FacebookProfile
+  picture : Option[FacebookUserPicture],
+  locale  : Option[Locale]) extends FacebookProfile
 
 /**
   * @param height image height

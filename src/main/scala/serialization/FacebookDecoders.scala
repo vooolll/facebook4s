@@ -1,6 +1,7 @@
 package serialization
 
 import java.time._
+import java.util.Locale
 
 import domain.feed._
 import domain.oauth._
@@ -9,6 +10,7 @@ import io.circe.Decoder._
 import cats.syntax.either._
 import config.FacebookConstants._
 import domain.profile.{FacebookApplication, FacebookUser, FacebookUserId, FacebookUserPicture}
+import org.apache.commons.lang3.LocaleUtils
 
 import scala.concurrent.duration._
 
@@ -53,12 +55,15 @@ object FacebookDecoders {
   implicit val decodeUserPicture: Decoder[FacebookUserPicture] =
     Decoder.forProduct4("height", "is_silhouette", "url", "width")(FacebookUserPicture)
 
+  implicit val decodeLocale: Decoder[Locale] = decodeString.map(LocaleUtils.toLocale)
+
   implicit val decodeUser: Decoder[FacebookUser] = new Decoder[FacebookUser] {
     override def apply(c: HCursor) = for {
       id      <- c.get[FacebookUserId]("id")
       name    <- c.get[Option[String]]("name")
       picture <- c.downField("picture").get[Option[FacebookUserPicture]]("data")
-    } yield FacebookUser(id, name, picture)
+      locale  <- c.get[Option[Locale]]("locale")
+    } yield FacebookUser(id, name, picture, locale)
   }
 
   implicit val decodeApplication: Decoder[FacebookApplication] = new Decoder[FacebookApplication] {

@@ -74,6 +74,7 @@ libraryDependencies ++= {
   val logbackClassicV = "1.2.3"
   val uriBuilderV = "0.9.0"
   val circeV = "0.8.0"
+  val commonsLang = "3.7"
 
   Seq(
     "com.typesafe.akka"              %% "akka-actor"          % akkaV,
@@ -86,6 +87,7 @@ libraryDependencies ++= {
     "io.circe"                       %% "circe-parser"        % circeV,
     "org.scalatest"                  %% "scalatest"           % scalaTestV % "test",
 
+    "org.apache.commons"             %  "commons-lang3"       % commonsLang,
     "ch.qos.logback"                 %  "logback-classic"     % logbackClassicV,
     "org.mockito"                    %  "mockito-core"        % mockitoV % "test",
     "com.typesafe"                   %  "config"              % typesafeV

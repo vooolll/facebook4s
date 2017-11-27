@@ -8,6 +8,7 @@ import domain.feed.{FacebookFeed, FacebookPaging, FacebookSimplePost}
 import domain.oauth._
 import FacebookConstants._
 import domain.profile.{FacebookApplication, FacebookUser, FacebookUserId, FacebookUserPicture}
+import org.apache.commons.lang3.LocaleUtils
 
 import scala.concurrent.duration._
 
@@ -16,7 +17,7 @@ object TestEntities {
   val userId = FacebookUserId("499313270413277")
 
   val userPicture = FacebookUserPicture(50, isSilhouette = false, "image url", 50)
-  val user = FacebookUser(userId, "Valeryi Baibossynov".some, userPicture.some)
+  val user = FacebookUser(userId, "Valeryi Baibossynov".some, userPicture.some, LocaleUtils.toLocale("en_US").some)
 
   val appId = FacebookAppId("1969406143275709")
   val facebookClientId = FacebookClientId("1969406143275709")
