@@ -8,7 +8,7 @@ import io.circe._
 import io.circe.Decoder._
 import cats.syntax.either._
 import config.FacebookConstants._
-import domain.profile.{FacebookApplication, FacebookUser, FacebookUserId}
+import domain.profile.{FacebookApplication, FacebookUser, FacebookUserId, FacebookUserPicture}
 
 import scala.concurrent.duration._
 
@@ -18,9 +18,9 @@ object FacebookDecoders {
 
   implicit val decodeUserAccessToken: Decoder[FacebookAccessToken] = new Decoder[FacebookAccessToken] {
     override def apply(c: HCursor) = for {
-      tokenValue <- c.downField("access_token").as[TokenValue]
-      expiresIn  <- c.downField("expires_in").as[Int]
-      tokenType  <- c.downField("token_type").as[String]
+      tokenValue <- c.get[TokenValue]("access_token")
+      expiresIn  <- c.get[Int]("expires_in")
+      tokenType  <- c.get[String]("token_type")
     } yield FacebookAccessToken(tokenValue, UserAccessToken(tokenType, expiresIn.seconds))
   }
 
@@ -29,8 +29,8 @@ object FacebookDecoders {
 
   implicit val decodeAppAccessToken: Decoder[FacebookAccessToken] = new Decoder[FacebookAccessToken] {
     override def apply(c: HCursor) = for {
-      tokenValue <- c.downField("access_token").as[TokenValue]
-      tokenType  <- c.downField("token_type").as[String]
+      tokenValue <- c.get[TokenValue]("access_token")
+      tokenType  <- c.get[String]("token_type")
     } yield FacebookAccessToken(tokenValue, AppAccessToken(tokenType))
   }
 
@@ -50,18 +50,22 @@ object FacebookDecoders {
   implicit val decodeAppId: Decoder[FacebookAppId] = decodeString.map(FacebookAppId)
   implicit val decodeClientId: Decoder[FacebookClientId] = decodeString.map(FacebookClientId.apply)
 
+  implicit val decodeUserPicture: Decoder[FacebookUserPicture] =
+    Decoder.forProduct4("height", "is_silhouette", "url", "width")(FacebookUserPicture)
+
   implicit val decodeUser: Decoder[FacebookUser] = new Decoder[FacebookUser] {
     override def apply(c: HCursor) = for {
-      id <- c.downField("id").as[FacebookUserId]
-      name  <- c.downField("name").as[String]
-    } yield FacebookUser(id, name)
+      id      <- c.get[FacebookUserId]("id")
+      name    <- c.get[String]("name")
+      picture <- c.downField("picture").get[Option[FacebookUserPicture]]("data")
+    } yield FacebookUser(id, name, picture)
   }
 
   implicit val decodeApplication: Decoder[FacebookApplication] = new Decoder[FacebookApplication] {
     override def apply(c: HCursor) = for {
-      id     <- c.downField("id").as[FacebookAppId]
-      link   <- c.downField("link").as[String]
-      name   <- c.downField("name").as[String]
+      id     <- c.get[FacebookAppId]("id")
+      link   <- c.get[String]("link")
+      name   <- c.get[String]("name")
     } yield FacebookApplication(id, link, name)
   }
 
@@ -74,8 +78,8 @@ object FacebookDecoders {
 
   implicit val decodeFeed: Decoder[FacebookFeed] = new Decoder[FacebookFeed] {
     override def apply(c: HCursor) = for {
-      posts  <- c.downField("data").as[List[FacebookSimplePost]]
-      paging <- c.downField("paging").as[FacebookPaging]
+      posts  <- c.get[List[FacebookSimplePost]]("data")
+      paging <- c.get[FacebookPaging]("paging")
     } yield FacebookFeed(posts, paging)
   }
 
