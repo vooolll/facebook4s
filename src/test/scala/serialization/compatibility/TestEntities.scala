@@ -17,7 +17,14 @@ object TestEntities {
   val userId = FacebookUserId("499313270413277")
 
   val userPicture = FacebookUserPicture(50, isSilhouette = false, "image url", 50)
-  val user = FacebookUser(userId, "Valeryi Baibossynov".some, userPicture.some, LocaleUtils.toLocale("en_US").some)
+  val user = FacebookUser(
+    id        = userId,
+    name      = "Valeryi Baibossynov".some,
+    lastName  = "Baibossynov".some,
+    firstName = "Valeryi".some,
+    verified  = true.some,
+    link      = "https://www.facebook.com/app_scoped_user_id/499313270413277/".some,
+    picture   = userPicture.some, locale = LocaleUtils.toLocale("en_US").some)
 
   val appId = FacebookAppId("1969406143275709")
   val facebookClientId = FacebookClientId("1969406143275709")

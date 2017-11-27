@@ -11,12 +11,17 @@ final case class FacebookUserId(value: String)
   * @param id facebook user id - numeric string
   * @param name facebook user first name
   * @param picture optional picture
+  * @param locale user locale
   */
 case class FacebookUser(
-  id      : FacebookUserId,
-  name    : Option[String],
-  picture : Option[FacebookUserPicture],
-  locale  : Option[Locale]) extends FacebookProfile
+  id        : FacebookUserId,
+  name      : Option[String],
+  picture   : Option[FacebookUserPicture],
+  firstName : Option[String],
+  lastName  : Option[String],
+  link      : Option[String],
+  verified  : Option[Boolean],
+  locale    : Option[Locale]) extends FacebookProfile
 
 /**
   * @param height image height
