@@ -8,9 +8,7 @@ version := "0.1.9-SNAPSHOT"
 
 scalaVersion := "2.12.1"
 
-resolvers ++= Seq(
-  "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/"
-)
+resolvers += Resolver.sonatypeRepo("releases")
 
 publishMavenStyle := true
 
