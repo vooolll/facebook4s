@@ -8,10 +8,14 @@ import java.util.Locale
 final case class FacebookUserId(value: String)
 
 /**
-  * @param id facebook user id - numeric string
-  * @param name facebook user first name
+  * @param id id - numeric string
+  * @param name optional name
   * @param picture optional picture
-  * @param locale user locale
+  * @param locale optional locale
+  * @param firstName optional first name
+  * @param lastName optional last name
+  * @param link optional link
+  * @param verified optional verified status flag
   */
 case class FacebookUser(
   id        : FacebookUserId,
