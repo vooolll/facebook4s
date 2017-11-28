@@ -3,7 +3,7 @@ package client
 import config.FacebookConfig._
 import domain.feed._
 import domain.oauth._
-import domain.permission.FacebookPermissions._
+import domain.permission._
 import domain.profile._
 import services._
 
@@ -279,7 +279,7 @@ object FacebookClient {
   type UserFeed = FacebookFeed
   type UserId = FacebookUserId
   type User = FacebookUser
-  type Permissions = FacebookPermission
+  type Permissions = FacebookPermissions.FacebookPermission
   type ResponseType = FacebookOauthResponseType
   type ApplicationId = FacebookApplicationId
   type Attributes = FacebookUserAttribute
