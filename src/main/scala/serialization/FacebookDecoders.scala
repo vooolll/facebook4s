@@ -9,14 +9,20 @@ import io.circe._
 import io.circe.Decoder._
 import cats.syntax.either._
 import config.FacebookConstants._
-import domain.profile.{FacebookApplication, FacebookUser, FacebookUserId, FacebookUserPicture}
-import org.apache.commons.lang3.LocaleUtils
+import domain.profile._
+import org.apache.commons.lang3._
 
 import scala.concurrent.duration._
 
 object FacebookDecoders {
   implicit val decodeTokenType: Decoder[AppAccessToken] = decodeString.map(AppAccessToken)
   implicit val decodeTokenValue: Decoder[TokenValue] = decodeString.map(TokenValue.apply)
+  implicit val decodeGender: Decoder[Gender] = decodeString.map {
+    case "male"   => Gender.Male
+    case "female" => Gender.Female
+  }
+
+  implicit val decodeZoneOffset: Decoder[ZoneOffset] = decodeInt.map(ZoneOffset.ofHours)
 
   implicit val decodeUserAccessToken: Decoder[FacebookAccessToken] = new Decoder[FacebookAccessToken] {
     override def apply(c: HCursor) = for {
@@ -28,6 +34,12 @@ object FacebookDecoders {
 
   implicit val decodeClientCode: Decoder[FacebookClientCode] =
     Decoder.forProduct2("code", "machine_id")(FacebookClientCode.apply)
+
+  implicit val decodeAgeRange: Decoder[AgeRange] =
+    Decoder.forProduct2("min", "max")(AgeRange)
+
+  implicit val decodeCover: Decoder[Cover] =
+    Decoder.forProduct4("id", "offset_x", "offset_y", "source")(Cover)
 
   implicit val decodeAppAccessToken: Decoder[FacebookAccessToken] = new Decoder[FacebookAccessToken] {
     override def apply(c: HCursor) = for {
@@ -67,7 +79,14 @@ object FacebookDecoders {
       link      <- c.get[Option[String]]("link")
       picture   <- c.downField("picture").get[Option[FacebookUserPicture]]("data")
       locale    <- c.get[Option[Locale]]("locale")
-    } yield FacebookUser(id, name, picture, firstName, lastName, link, verified, locale)
+      timezone  <- c.get[Option[ZoneOffset]]("timezone")
+      gender    <- c.get[Option[Gender]]("gender")
+      ageRange  <- c.get[Option[AgeRange]]("age_range")
+      cover     <- c.get[Option[Cover]]("cover")
+      updatedTime <- c.get[Option[Instant]]("updated_time")
+    } yield FacebookUser(
+      id, name, picture, firstName, lastName, link, verified, locale, timezone, gender, ageRange,
+      cover, updatedTime)
   }
 
   implicit val decodeApplication: Decoder[FacebookApplication] = new Decoder[FacebookApplication] {

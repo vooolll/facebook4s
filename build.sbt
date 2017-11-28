@@ -4,7 +4,7 @@ sonatypeSettings
 
 name := "facebook4s"
 
-version := "0.1.9-SNAPSHOT"
+version := "0.1.9"
 
 scalaVersion := "2.12.1"
 

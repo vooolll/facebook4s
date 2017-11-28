@@ -1,13 +1,13 @@
 package serialization.compatibility
 
-import java.time.Instant
+import java.time._
 
 import cats.syntax.option._
 import config.FacebookConstants
 import domain.feed.{FacebookFeed, FacebookPaging, FacebookSimplePost}
 import domain.oauth._
 import FacebookConstants._
-import domain.profile.{FacebookApplication, FacebookUser, FacebookUserId, FacebookUserPicture}
+import domain.profile._
 import org.apache.commons.lang3.LocaleUtils
 
 import scala.concurrent.duration._
@@ -18,13 +18,19 @@ object TestEntities {
 
   val userPicture = FacebookUserPicture(50, isSilhouette = false, "image url", 50)
   val user = FacebookUser(
-    id        = userId,
-    name      = "Valeryi Baibossynov".some,
-    lastName  = "Baibossynov".some,
-    firstName = "Valeryi".some,
-    verified  = true.some,
-    link      = "https://www.facebook.com/app_scoped_user_id/499313270413277/".some,
-    picture   = userPicture.some, locale = LocaleUtils.toLocale("en_US").some)
+    id          = userId,
+    name        = "Valeryi Baibossynov".some,
+    lastName    = "Baibossynov".some,
+    firstName   = "Valeryi".some,
+    verified    = true.some,
+    link        = "https://www.facebook.com/app_scoped_user_id/499313270413277/".some,
+    picture     = userPicture.some,
+    locale      = LocaleUtils.toLocale("en_US").some,
+    timezone    = ZoneOffset.ofHours(2).some,
+    gender      = Gender.Male.some,
+    ageRange    = AgeRange(21, None).some,
+    cover       = Cover("527696177574986", 0, 0, "link").some,
+    updatedTime = Some(toInstant("2017-11-11T00:10:08+0000")))
 
   val appId = FacebookAppId("1969406143275709")
   val facebookClientId = FacebookClientId("1969406143275709")

@@ -163,18 +163,18 @@ facebookClient.appAccessToken() onComplete {
 
 #### Feed api
 ```scala
-  import domain.feed._
-  import domain.profile._
-  import domain.oauth._
-  import client.FacebookClient
-  import scala.concurrent.ExecutionContext.Implicits.global
+import domain.feed._
+import domain.profile._
+import domain.oauth._
+import client.FacebookClient
+import scala.concurrent.ExecutionContext.Implicits.global
   
-  val facebookClient = FacebookClient()
+val facebookClient = FacebookClient()
   
-  val facebookAccessToken: FacebookAccessToken = ??? // your token
-  // Feed
-  facebookClient.feed(FacebookUserId("499283963749541"), facebookAccessToken) map(feed =>
-    println(feed)
+val facebookAccessToken: FacebookAccessToken = ??? // your token
+// Feed
+facebookClient.feed(FacebookUserId("499283963749541"), facebookAccessToken) map(feed =>
+  println(feed)
 //  prints:
 //  FacebookFeed(
 //    List(
@@ -185,12 +185,12 @@ facebookClient.appAccessToken() onComplete {
 //        toInstant("1993-05-02T07:00:00+0000"))
 //    ),
 //    FacebookPaging("https://graph.facebook.com1", "https://graph.facebook.com"))
-  )
+)
   
   // or you can use raw string
   
-  facebookClient.feed(FacebookUserId("499283963749541"), "your user access token") map(feed =>
-      println(feed))
+facebookClient.feed(FacebookUserId("499283963749541"), "your user access token") map(feed =>
+  println(feed))
 ``` 
 
 
@@ -198,7 +198,10 @@ facebookClient.appAccessToken() onComplete {
 #### User api
 ```scala
 facebookClient.userProfile(FacebookUserId("499283963749541"), facebookAccessToken) map(user =>
-    println(user) //FacebookUser(FacebookUserId(499283963749541),Valeryi Baibossynov)
+    println(user) //FacebookUser(FacebookUserId(499283963749541),Some(Valeryi Baibossynov),
+                  // Some(FacebookUserPicture(50.0,false,https://scontent.xx.fbcdn.net/v/t1.0-1/p50x50/22728655_513792128965391_443796664145972604_n.jpg?oh=96ab05455244b5f7062d2a194e30aa8e&oe=5A88C8AD,50.0)),
+                  // Some(Valeryi),Some(Baibossynov),Some(https://www.facebook.com/app_scoped_user_id/499283963749541/),Some(true),Some(en_US),Some(+02:00),Some(Male),Some(AgeRange(21,None)),
+                  // Some(Cover(527696177574986,0.0,0.0,https://scontent.xx.fbcdn.net/v/t1.0-9/s720x720/23905322_527696177574986_8012137948429389386_n.jpg?oh=dc4f829792fa00613db226d992140957&oe=5AA288B0)),Some(2017-11-11T00:10:08Z))
 )
 ```
 
@@ -206,21 +209,24 @@ facebookClient.userProfile(FacebookUserId("499283963749541"), facebookAccessToke
 
 //raw string value supported as well
 facebookClient.userProfile(FacebookUserId("499283963749541"), "your user access token") map(user =>
-    println(user) //FacebookUser(FacebookUserId(499283963749541),Valeryi Baibossynov)
+  println(user) //FacebookUser(FacebookUserId(499283963749541),Some(Valeryi Baibossynov),
+                // Some(FacebookUserPicture(50.0,false,https://scontent.xx.fbcdn.net/v/t1.0-1/p50x50/22728655_513792128965391_443796664145972604_n.jpg?oh=96ab05455244b5f7062d2a194e30aa8e&oe=5A88C8AD,50.0)),
+                // Some(Valeryi),Some(Baibossynov),Some(https://www.facebook.com/app_scoped_user_id/499283963749541/),Some(true),Some(en_US),Some(+02:00),Some(Male),Some(AgeRange(21,None)),
+                // Some(Cover(527696177574986,0.0,0.0,https://scontent.xx.fbcdn.net/v/t1.0-9/s720x720/23905322_527696177574986_8012137948429389386_n.jpg?oh=dc4f829792fa00613db226d992140957&oe=5AA288B0)),Some(2017-11-11T00:10:08Z))
 )
 ```
 
 #### Application api
 
 ```scala
-  facebookClient.application(FacebookConfig.clientId, facebookAccessToken) map(application =>
-    println("Application: " + application)) //Application: FacebookApplication(FacebookAppId(1969406143275709),https://www.facebook.com/games/?app_id=1969406143275709,testing_app)
+facebookClient.application(FacebookConfig.clientId, facebookAccessToken) map(application =>
+  println("Application: " + application)) //Application: FacebookApplication(FacebookAppId(1969406143275709),https://www.facebook.com/games/?app_id=1969406143275709,testing_app)
  
 
-  //or
-  facebookClient.application(FacebookAppId("1969406143275709"), facebookAccessToken) map(application =>
-    println("Application: " + application) //Application: FacebookApplication(FacebookAppId(1969406143275709),https://www.facebook.com/games/?app_id=1969406143275709,testing_app)
-    )
+//or
+facebookClient.application(FacebookAppId("1969406143275709"), facebookAccessToken) map(application =>
+  println("Application: " + application) //Application: FacebookApplication(FacebookAppId(1969406143275709),https://www.facebook.com/games/?app_id=1969406143275709,testing_app)
+)
 
 ```
 
@@ -231,15 +237,15 @@ Note: in terms of facebook4s there is no difference between `client_id` and `app
 You can compose facebook4s calls as expected:
 
 ```scala
-  for {
-    app  <- facebookClient.application(FacebookConfig.clientId, facebookAccessToken)
-    user <- facebookClient.userProfile(userId, facebookAccessToken)
-    feed <- facebookClient.feed(userId, facebookAccessToken)
-  } {
-    println(user)
-    println(feed)
-    println(app)
-  }
+for {
+  app  <- facebookClient.application(FacebookConfig.clientId, facebookAccessToken)
+  user <- facebookClient.userProfile(userId, facebookAccessToken)
+  feed <- facebookClient.feed(userId, facebookAccessToken)
+} {
+  println(user)
+  println(feed)
+  println(app)
+}
 ```
 
 
