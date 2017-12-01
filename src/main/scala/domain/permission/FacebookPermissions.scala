@@ -72,7 +72,6 @@ object FacebookPermissions {
     }
   }
 
-
 }
 
 

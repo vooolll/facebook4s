@@ -9,6 +9,7 @@ import io.circe._
 import io.circe.Decoder._
 import cats.syntax.either._
 import config.FacebookConstants._
+import domain.posts.FacebookPost
 import domain.profile._
 import org.apache.commons.lang3._
 
@@ -97,8 +98,8 @@ object FacebookDecoders {
     } yield FacebookApplication(id, link, name)
   }
 
-  implicit val decodePost: Decoder[FacebookSimplePost] =
-    Decoder.forProduct3("id", "story", "created_time")(FacebookSimplePost)
+  implicit val decodePost: Decoder[FacebookPost] =
+    Decoder.forProduct3("id", "story", "created_time")(FacebookPost)
 
   implicit val decodePaging: Decoder[FacebookPaging] =
     Decoder.forProduct2("next", "previous")(FacebookPaging)
@@ -106,7 +107,7 @@ object FacebookDecoders {
 
   implicit val decodeFeed: Decoder[FacebookFeed] = new Decoder[FacebookFeed] {
     override def apply(c: HCursor) = for {
-      posts  <- c.get[List[FacebookSimplePost]]("data")
+      posts  <- c.get[List[FacebookPost]]("data")
       paging <- c.get[FacebookPaging]("paging")
     } yield FacebookFeed(posts, paging)
   }

@@ -4,9 +4,10 @@ import java.time._
 
 import cats.syntax.option._
 import config.FacebookConstants
-import domain.feed.{FacebookFeed, FacebookPaging, FacebookSimplePost}
+import domain.feed.{FacebookFeed, FacebookPaging}
 import domain.oauth._
 import FacebookConstants._
+import domain.posts.FacebookPost
 import domain.profile._
 import org.apache.commons.lang3.LocaleUtils
 
@@ -49,9 +50,9 @@ object TestEntities {
 
   val feed = FacebookFeed(
     List(
-      FacebookSimplePost("499313270413277_504668796544391", "Valeryi Baibossynov updated his profile picture.",
+      FacebookPost("499313270413277_504668796544391", "Valeryi Baibossynov updated his profile picture.",
         toInstant("2017-10-01T13:43:05+0000")),
-      FacebookSimplePost("499313270413277_139299253081349",
+      FacebookPost("499313270413277_139299253081349",
         "Valeryi Baibossynov added a life event from May 2, 1993: Born on May 2, 1993.",
         toInstant("1993-05-02T07:00:00+0000"))
     ),
