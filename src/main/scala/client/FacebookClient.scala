@@ -4,6 +4,7 @@ import config.FacebookConfig._
 import domain.feed._
 import domain.oauth._
 import domain.permission.FacebookPermissions._
+import domain.posts._
 import domain.profile._
 import services._
 
@@ -20,6 +21,7 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
   import client.FacebookClient._
   import serialization.FacebookDecoders._
   import FacebookUserAttribute._
+  import FacebookPostAttributes._
   import uriService._
 
   /**
@@ -56,11 +58,31 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
   /**
     * @param userId Facebook user id
     * @param accessToken User access token
+    * @param fields Sequence of facebook post attributes
+    * @return Facebook user feed
+    *         @throws scala.RuntimeException if facebook responds with bad request
+    */
+  def feed(userId: UserId, accessToken: AccessToken, fields: Seq[FacebookPostAttribute]): Future[UserFeed] =
+    sendRequestOrFail(userFeedUri(accessToken, userId, fields))(decodeFeed)
+
+  /**
+    * @param userId Facebook user id
+    * @param accessToken User access token
     * @return Facebook user feed
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
   def feed(userId: UserId, accessToken: AccessToken): Future[UserFeed] =
-    sendRequestOrFail(userFeedUri(accessToken, userId))(decodeFeed)
+    feed(userId, accessToken, defaultPostAttributeValues)
+
+  /**
+    * @param userId Facebook user id
+    * @param accessTokenValue Facebook user access token string value
+    * @param fields Sequence of facebook post attributes
+    * @return Facebook user feed
+    *         @throws scala.RuntimeException if facebook responds with bad request
+    */
+  def feed(userId: UserId, accessTokenValue: String, fields: Seq[FacebookPostAttribute]): Future[UserFeed] =
+    sendRequestOrFail(userFeedUri(accessToken(accessTokenValue), userId, fields))(decodeFeed)
 
   /**
     * @param userId Facebook user id
@@ -69,7 +91,7 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
   def feed(userId: UserId, accessTokenValue: String): Future[UserFeed] =
-    sendRequestOrFail(userFeedUri(accessToken(accessTokenValue), userId))(decodeFeed)
+    feed(userId, accessTokenValue, defaultPostAttributeValues)
 
   /**
     * @param applicationId Facebook application(client) id
@@ -92,7 +114,7 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
   /**
     * @param userId Facebook user id
     * @param accessToken Facebook user access token
-    * @param attributes FacebookUserAttribute
+    * @param attributes Sequence of FacebookUserAttribute
     * @return Facebook user profile
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
@@ -113,7 +135,7 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
   /**
     * @param userId Facebook user id
     * @param accessTokenValue Facebook user access token string value
-    * @param attributes FacebookUserAttribute
+    * @param attributes Sequence of FacebookUserAttribute
     * @return Facebook user profile
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
@@ -160,10 +182,29 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
   /**
     * @param userId Facebook user id
     * @param accessToken Facebook user access token with "user_posts" permission
+    * @param fields Sequence of facebook post attributes
+    * @return Either facebook user feed or error FacebookOauthError
+    */
+  def feedResult(userId: UserId, accessToken: AccessToken, fields: Seq[FacebookPostAttribute]): AsyncUserFeedResult =
+    sendRequest(userFeedUri(accessToken, userId, fields))(decodeFeed)
+
+
+  /**
+    * @param userId Facebook user id
+    * @param accessToken Facebook user access token with "user_posts" permission
     * @return Either facebook user feed or error FacebookOauthError
     */
   def feedResult(userId: UserId, accessToken: AccessToken): AsyncUserFeedResult =
-    sendRequest(userFeedUri(accessToken, userId))(decodeFeed)
+    feedResult(userId, accessToken, defaultPostAttributeValues)
+
+  /**
+    * @param userId Facebook user id
+    * @param accessTokenValue Facebook user access token with "user_posts" permission
+    * @param fields Sequence of facebook post attributes
+    * @return Either facebook user feed or error FacebookOauthError
+    */
+  def feedResult(userId: UserId, accessTokenValue: String, fields: Seq[FacebookPostAttribute]): AsyncUserFeedResult =
+    sendRequest(userFeedUri(accessToken(accessTokenValue), userId, fields))(decodeFeed)
 
   /**
     * @param userId Facebook user id
@@ -171,7 +212,7 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
     * @return Either facebook user feed or error FacebookOauthError
     */
   def feedResult(userId: UserId, accessTokenValue: String): AsyncUserFeedResult =
-    sendRequest(userFeedUri(accessToken(accessTokenValue), userId))(decodeFeed)
+    feedResult(userId, accessTokenValue, defaultPostAttributeValues)
 
   /**
     * @param applicationId Facebook application(client) id
@@ -192,7 +233,7 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
   /**
     * @param userId FacebookUserId
     * @param accessToken Facebook user access token
-    * @param attributes FacebookUserAttribute
+    * @param attributes Sequence of FacebookUserAttribute
     * @return Facebook user profile or error FacebookOauthError
     */
   def userProfileResult(userId: UserId, accessToken: AccessToken, attributes: Seq[Attributes]): AsyncUserResult =
@@ -209,7 +250,7 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
   /**
     * @param userId FacebookUserId
     * @param accessTokenValue Facebook user access token string value
-    * @param attributes FacebookUserAttribute
+    * @param attributes Sequence of FacebookUserAttribute
     * @return Facebook user profile or error FacebookOauthError
     */
   def userProfileResult(userId: UserId, accessTokenValue: String,

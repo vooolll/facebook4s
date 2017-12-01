@@ -4,6 +4,8 @@ import cats.implicits._
 import config.FacebookConfig._
 import domain.oauth.FacebookToken
 import domain.permission.FacebookPermissions.FacebookUserPosts
+import domain.posts.FacebookPostAttributes
+import domain.profile.FacebookUserId
 import org.scalatest.{Matchers, WordSpec}
 import serialization.compatibility.TestEntities._
 import syntax.FacebookShowOps._
@@ -28,8 +30,12 @@ class UriServiceSpec extends WordSpec with Matchers {
 
 
     "return feed uri" in {
-      s.userFeedUri(userAccessToken).toString() shouldBe "https://graph.facebook.com" +
-        "/v2.10/me/feed?access_token=token"
+
+      s.userFeedUri(
+        userAccessToken,
+        FacebookUserId("me"),
+        FacebookPostAttributes.defaultPostAttributeValues).toString() shouldBe "https://graph.facebook.com" +
+        "/v2.10/me/feed?access_token=token&fields=id%2Cstory%2Ccreated_time"
     }
 
     "return auth uri" in {
