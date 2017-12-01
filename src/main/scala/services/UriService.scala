@@ -6,6 +6,7 @@ import config.FacebookConstants
 import config.FacebookConstants._
 import domain.oauth._
 import domain.permission.FacebookPermissions.FacebookPermission
+import domain.posts.FacebookPostAttributes.FacebookPostAttribute
 import domain.profile.{FacebookUserAttribute, FacebookUserId}
 import org.f100ded.scalaurlbuilder.URLBuilder
 import syntax.FacebookShowOps._
@@ -52,8 +53,10 @@ class UriService(clientId: FacebookClientId, appSecret: FacebookAppSecret) {
     "access_token" -> longLeavingTokenValue,
     "redirect_uri" -> redirectUri.show)
 
-  def userFeedUri(accessToken: FacebookAccessToken, userId: FacebookUserId = FacebookUserId("me")) =
-    withAccessToken(accessToken).withPathSegments(userId.show).withPathSegments(feedUri)
+  def userFeedUri(accessToken : FacebookAccessToken,
+                  userId      : FacebookUserId = FacebookUserId("me"),
+                  attributes  : Seq[FacebookPostAttribute]) =
+    manyParams(withAccessToken(accessToken).withPathSegments(userId.show).withPathSegments(feedUri), attributes)
 
   def applicationUri(accessToken: FacebookAccessToken, applicationId: FacebookApplicationId) =
     withAccessToken(accessToken).withPathSegments(applicationId.show)
@@ -72,14 +75,16 @@ class UriService(clientId: FacebookClientId, appSecret: FacebookAppSecret) {
     baseHostBuilder.withPathSegments(FacebookConstants.authUri).withQueryParameters(params:_*)
   }
 
-  def userUri(accessToken: FacebookAccessToken,
-    userId: FacebookUserId = FacebookUserId("me"),
-    attributes: Seq[FacebookUserAttribute]) =
-    withAccessToken(accessToken)
-      .withPathSegments(userId.show).withQueryParameters(Seq() ++ many("fields", attributes):_*)
+  def userUri(accessToken : FacebookAccessToken,
+              userId      : FacebookUserId = FacebookUserId("me"),
+              attributes  : Seq[FacebookUserAttribute]) =
+    manyParams(withAccessToken(accessToken).withPathSegments(userId.show), attributes)
 
-  private def many(key: String, permissions: Seq[HasStringValue]) =
-    if (permissions.nonEmpty) key -> commaSeparated(permissions) some else none
+  private def manyParams(url: URLBuilder, attr: Seq[HasStringValue]) =
+    url.withQueryParameters(Seq() ++ many("fields", attr):_*)
+
+  private def many(key: String, attr: Seq[HasStringValue]) =
+    if (attr.nonEmpty) key -> commaSeparated(attr) some else none
 
   private def commaSeparated(permissions: Seq[HasStringValue]) = permissions.map(_.show).mkString(",")
 
