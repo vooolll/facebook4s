@@ -7,7 +7,7 @@ import config.FacebookConstants
 import domain.feed.{FacebookFeed, FacebookPaging}
 import domain.oauth._
 import FacebookConstants._
-import domain.posts.FacebookPost
+import domain.posts.{FacebookPost, FacebookPostId}
 import domain.profile._
 import org.apache.commons.lang3.LocaleUtils
 
@@ -16,6 +16,11 @@ import scala.concurrent.duration._
 object TestEntities {
 
   val userId = FacebookUserId("499313270413277")
+
+  val postId = FacebookPostId("499313270413277_504668796544391")
+
+  val post = FacebookPost(FacebookPostId("499313270413277_504668796544391"), "Valeryi Baibossynov updated his profile picture.",
+    toInstant("2017-10-01T13:43:05+0000"))
 
   val userPicture = FacebookUserPicture(50, isSilhouette = false, "image url", 50)
   val user = FacebookUser(
@@ -50,9 +55,9 @@ object TestEntities {
 
   val feed = FacebookFeed(
     List(
-      FacebookPost("499313270413277_504668796544391", "Valeryi Baibossynov updated his profile picture.",
+      FacebookPost(FacebookPostId("499313270413277_504668796544391"), "Valeryi Baibossynov updated his profile picture.",
         toInstant("2017-10-01T13:43:05+0000")),
-      FacebookPost("499313270413277_139299253081349",
+      FacebookPost(FacebookPostId("499313270413277_139299253081349"),
         "Valeryi Baibossynov added a life event from May 2, 1993: Born on May 2, 1993.",
         toInstant("1993-05-02T07:00:00+0000"))
     ),

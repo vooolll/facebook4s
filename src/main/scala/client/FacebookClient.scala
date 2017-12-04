@@ -93,6 +93,28 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
   def feed(userId: UserId, accessTokenValue: String): Future[UserFeed] =
     feed(userId, accessTokenValue, defaultPostAttributeValues)
 
+
+  /**
+    * @param postId Id of facebook post alpha numeric
+    * @param accessToken Facebook access token
+    * @param fields Sequence of facebook post attributes
+    * @return Facebook post details
+    *         @throws scala.RuntimeException if facebook responds with bad request
+    */
+  def post(postId: PostId, accessToken: AccessToken, fields: Seq[FacebookPostAttribute]): Future[Post] = {
+    sendRequestOrFail(postUri(postId, accessToken, fields))(decodePost)
+  }
+
+  /**
+    * @param postId Id of facebook post alpha numeric
+    * @param accessToken Facebook access token
+    * @return Facebook post details
+    *         @throws scala.RuntimeException if facebook responds with bad request
+    */
+  def post(postId: PostId, accessToken: AccessToken): Future[Post] = {
+    sendRequestOrFail(postUri(postId, accessToken, defaultPostAttributeValues))(decodePost)
+  }
+
   /**
     * @param applicationId Facebook application(client) id
     * @param accessToken Facebook user access token
@@ -214,6 +236,26 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
   def feedResult(userId: UserId, accessTokenValue: String): AsyncUserFeedResult =
     feedResult(userId, accessTokenValue, defaultPostAttributeValues)
 
+
+  /**
+    * @param postId Id of facebook post alpha numeric
+    * @param accessToken Facebook access token
+    * @param fields Sequence of facebook post attributes
+    * @return Either facebook post details or error FacebookOauthError
+    */
+  def postResult(postId: PostId, accessToken: AccessToken, fields: Seq[FacebookPostAttribute]): AsyncPostResult = {
+    sendRequest(postUri(postId, accessToken, fields))(decodePost)
+  }
+
+  /**
+    * @param postId Id of facebook post alpha numeric
+    * @param accessToken Facebook access token
+    * @return Either facebook post details or error FacebookOauthError
+    */
+  def postResult(postId: PostId, accessToken: AccessToken): AsyncPostResult = {
+    sendRequest(postUri(postId, accessToken, defaultPostAttributeValues))(decodePost)
+  }
+
   /**
     * @param applicationId Facebook application(client) id
     * @param accessToken Facebook user access token
@@ -324,11 +366,14 @@ object FacebookClient {
   type ResponseType = FacebookOauthResponseType
   type ApplicationId = FacebookApplicationId
   type Attributes = FacebookUserAttribute
+  type PostId = FacebookPostId
+  type Post = FacebookPost
 
   type AsyncUserFeedResult = Future[Either[ApiError, UserFeed]]
   type AsyncAccessTokenResult = Future[Either[ApiError, AccessToken]]
   type AsyncClientCodeResult = Future[Either[ApiError, ClientCode]]
   type AsyncApplicationResult = Future[Either[ApiError, Application]]
   type AsyncUserResult = Future[Either[ApiError, User]]
+  type AsyncPostResult = Future[Either[ApiError, Post]]
 }
 

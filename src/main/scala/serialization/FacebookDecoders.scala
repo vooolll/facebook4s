@@ -9,7 +9,7 @@ import io.circe._
 import io.circe.Decoder._
 import cats.syntax.either._
 import config.FacebookConstants._
-import domain.posts.FacebookPost
+import domain.posts.{FacebookPost, FacebookPostId}
 import domain.profile._
 import org.apache.commons.lang3._
 
@@ -18,6 +18,7 @@ import scala.concurrent.duration._
 object FacebookDecoders {
   implicit val decodeTokenType: Decoder[AppAccessToken] = decodeString.map(AppAccessToken)
   implicit val decodeTokenValue: Decoder[TokenValue] = decodeString.map(TokenValue.apply)
+  implicit val decodePostId: Decoder[FacebookPostId] = decodeString.map(FacebookPostId.apply)
   implicit val decodeGender: Decoder[Gender] = decodeString.map {
     case "male"   => Gender.Male
     case "female" => Gender.Female
@@ -98,8 +99,13 @@ object FacebookDecoders {
     } yield FacebookApplication(id, link, name)
   }
 
-  implicit val decodePost: Decoder[FacebookPost] =
-    Decoder.forProduct3("id", "story", "created_time")(FacebookPost)
+  implicit val decodePost: Decoder[FacebookPost] = new Decoder[FacebookPost] {
+    override def apply(c: HCursor) = for {
+      id          <- c.get[FacebookPostId]("id")
+      name        <- c.get[String]("story")
+      createdTime <- c.get[Instant]("created_time")
+    } yield FacebookPost(id, name, createdTime)
+  }
 
   implicit val decodePaging: Decoder[FacebookPaging] =
     Decoder.forProduct2("next", "previous")(FacebookPaging)

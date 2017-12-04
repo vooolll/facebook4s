@@ -7,6 +7,7 @@ import config.FacebookConstants._
 import domain.oauth._
 import domain.permission.FacebookPermissions.FacebookPermission
 import domain.posts.FacebookPostAttributes.FacebookPostAttribute
+import domain.posts.FacebookPostId
 import domain.profile.{FacebookUserAttribute, FacebookUserId}
 import org.f100ded.scalaurlbuilder.URLBuilder
 import syntax.FacebookShowOps._
@@ -61,8 +62,8 @@ class UriService(clientId: FacebookClientId, appSecret: FacebookAppSecret) {
   def applicationUri(accessToken: FacebookAccessToken, applicationId: FacebookApplicationId) =
     withAccessToken(accessToken).withPathSegments(applicationId.show)
 
-  def postUri(postId: String, accessToken: FacebookAccessToken) =
-    withAccessToken(accessToken).withPathSegments(postId)
+  def postUri(postId: FacebookPostId, accessToken: FacebookAccessToken, attributes: Seq[FacebookPostAttribute]) =
+    withAccessToken(accessToken).withPathSegments(postId.show)
 
   def authUrl(permissions: Seq[FacebookPermission],
               responseType: FacebookOauthResponseType = FacebookCode,

@@ -4,7 +4,7 @@ import cats.implicits._
 import config.FacebookConfig._
 import domain.oauth.FacebookToken
 import domain.permission.FacebookPermissions.FacebookUserPosts
-import domain.posts.FacebookPostAttributes
+import domain.posts.{FacebookPostAttributes, FacebookPostId}
 import domain.profile.FacebookUserId
 import org.scalatest.{Matchers, WordSpec}
 import serialization.compatibility.TestEntities._
@@ -24,7 +24,7 @@ class UriServiceSpec extends WordSpec with Matchers {
     }
 
     "return post uri" in {
-      s.postUri("postId", userAccessToken).toString() shouldBe "https://graph.facebook.com" +
+      s.postUri(FacebookPostId("postId"), userAccessToken, Nil).toString() shouldBe "https://graph.facebook.com" +
         "/v2.10/postId?access_token=token"
     }
 
