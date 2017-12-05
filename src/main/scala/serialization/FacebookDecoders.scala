@@ -102,9 +102,12 @@ object FacebookDecoders {
   implicit val decodePost: Decoder[FacebookPost] = new Decoder[FacebookPost] {
     override def apply(c: HCursor) = for {
       id          <- c.get[FacebookPostId]("id")
-      name        <- c.get[String]("story")
-      createdTime <- c.get[Instant]("created_time")
-    } yield FacebookPost(id, name, createdTime)
+      name        <- c.get[Option[String]]("story")
+      createdTime <- c.get[Option[Instant]]("created_time")
+      objectId    <- c.get[Option[String]]("object_id")
+      picture     <- c.get[Option[String]]("picture")
+      from        <- c.get[Option[FacebookProfile]]("from")
+    } yield FacebookPost(id, name, createdTime, objectId, picture, from)
   }
 
   implicit val decodePaging: Decoder[FacebookPaging] =
