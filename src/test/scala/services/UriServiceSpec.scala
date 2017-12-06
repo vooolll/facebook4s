@@ -35,7 +35,7 @@ class UriServiceSpec extends WordSpec with Matchers {
         userAccessToken,
         FacebookUserId("me"),
         FacebookPostAttributes.defaultPostAttributeValues).toString() shouldBe "https://graph.facebook.com" +
-        "/v2.10/me/feed?access_token=token&fields=id%2Cstory%2Ccreated_time"
+        "/v2.10/me/feed?access_token=token&fields=id%2Cstory%2Ccreated_time%2Cobject_id%2Cpicture%2Cfrom"
     }
 
     "return auth uri" in {
