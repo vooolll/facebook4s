@@ -19,8 +19,14 @@ object TestEntities {
 
   val postId = FacebookPostId("499313270413277_504668796544391")
 
-  val post = FacebookPost(FacebookPostId("499313270413277_504668796544391"), "Valeryi Baibossynov updated his profile picture.",
-    toInstant("2017-10-01T13:43:05+0000"))
+  val post = FacebookPost(
+    id = FacebookPostId("499313270413277_504668796544391"),
+    story = "Valeryi Baibossynov updated his profile picture.".some,
+    createdTime = Some(toInstant("2017-10-01T13:43:05+0000")),
+    objectId = "513792128965391".some,
+    picture = "picture link".some,
+    from = FacebookProfileId("499313270413277").some
+  )
 
   val userPicture = FacebookUserPicture(50, isSilhouette = false, "image url", 50)
   val user = FacebookUser(
@@ -55,11 +61,12 @@ object TestEntities {
 
   val feed = FacebookFeed(
     List(
-      FacebookPost(FacebookPostId("499313270413277_504668796544391"), "Valeryi Baibossynov updated his profile picture.",
-        toInstant("2017-10-01T13:43:05+0000")),
+      FacebookPost(FacebookPostId("499313270413277_504668796544391"), "Valeryi Baibossynov updated his profile picture.".some,
+        Some(toInstant("2017-10-01T13:43:05+0000")), None, None, None),
+
       FacebookPost(FacebookPostId("499313270413277_139299253081349"),
-        "Valeryi Baibossynov added a life event from May 2, 1993: Born on May 2, 1993.",
-        toInstant("1993-05-02T07:00:00+0000"))
+        "Valeryi Baibossynov added a life event from May 2, 1993: Born on May 2, 1993.".some,
+        Some(toInstant("1993-05-02T07:00:00+0000")), None, None, None)
     ),
     FacebookPaging("https://graph.facebook.com1".some, "https://graph.facebook.com".some))
 
