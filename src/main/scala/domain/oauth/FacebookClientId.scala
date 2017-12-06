@@ -1,6 +1,7 @@
 package domain.oauth
 
 import FacebookClientId._
+import domain.profile.FacebookProfileId
 
 trait FacebookApplicationId {
   val value: String
@@ -16,7 +17,8 @@ final case class FacebookClientId(value: String) extends FixedSizeValue(length, 
   * Facebook app id, it is also called client id
   * @param value facebook application id(fixed size value - 16)
   */
-final case class FacebookAppId(value: String) extends FixedSizeValue(length, message) with FacebookApplicationId
+final case class FacebookAppId(value: String) extends FixedSizeValue(length, message)
+  with FacebookApplicationId
 
 object FacebookClientId {
   val length = 16

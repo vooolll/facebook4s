@@ -2,7 +2,7 @@ package domain.posts
 
 import java.time.Instant
 
-import domain.profile.FacebookProfile
+import domain.profile.FacebookProfileId
 
 final case class FacebookPostId(value: String)
 
@@ -12,4 +12,4 @@ final case class FacebookPost(
   createdTime : Option[Instant],
   objectId    : Option[String],
   picture     : Option[String],
-  from        : Option[FacebookProfile])
+  from        : Option[FacebookProfileId])

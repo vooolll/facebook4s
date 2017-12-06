@@ -24,6 +24,8 @@ object FacebookDecoders {
     case "female" => Gender.Female
   }
 
+  implicit val decodeProfileId: Decoder[FacebookProfileId] = decodeString.map(FacebookProfileId)
+
   implicit val decodeZoneOffset: Decoder[ZoneOffset] = decodeInt.map(ZoneOffset.ofHours)
 
   implicit val decodeUserAccessToken: Decoder[FacebookAccessToken] = new Decoder[FacebookAccessToken] {
@@ -106,7 +108,7 @@ object FacebookDecoders {
       createdTime <- c.get[Option[Instant]]("created_time")
       objectId    <- c.get[Option[String]]("object_id")
       picture     <- c.get[Option[String]]("picture")
-      from        <- c.get[Option[FacebookProfile]]("from")
+      from        <- c.downField("from").get[Option[FacebookProfileId]]("id")
     } yield FacebookPost(id, name, createdTime, objectId, picture, from)
   }
 

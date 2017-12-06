@@ -4,7 +4,7 @@ import services.HasStringValue
 
 object FacebookPostAttributes {
 
-  val defaultPostAttributeValues = Seq(Id, Story, CreatedTime)
+  val defaultPostAttributeValues = Seq(Id, Story, CreatedTime, ObjectId, Picture, From)
 
   trait FacebookPostAttribute extends HasStringValue
 
@@ -20,4 +20,15 @@ object FacebookPostAttributes {
     override def value = "created_time"
   }
 
+  case object ObjectId extends FacebookPostAttribute {
+    override def value = "object_id"
+  }
+
+  case object Picture extends FacebookPostAttribute {
+    override def value = "picture"
+  }
+
+  case object From extends FacebookPostAttribute {
+    override def value = "from"
+  }
 }
