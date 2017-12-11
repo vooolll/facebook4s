@@ -13,7 +13,7 @@ SBT 0.13.x
 ### Installation
 Add the following line to your sbt dependencies: 
 ```scala
-"com.github.vooolll" %% "facebook4s" % "0.1.9"
+"com.github.vooolll" %% "facebook4s" % "0.2.0"
 ```
 
 Note: make sure that you have in your `build.sbt`
@@ -162,6 +162,7 @@ facebookClient.appAccessToken() onComplete {
 
 
 #### Feed api
+
 ```scala
 import domain.feed._
 import domain.profile._
@@ -193,12 +194,27 @@ facebookClient.feed(FacebookUserId("499283963749541"), "your user access token")
   println(feed))
 ``` 
 
+#### Post api
+
+Supported fields - `id`, `story`, `created_time`, `object_id`, `picture`, `from`
+
+
+```scala
+facebookClient.post(FacebookPostId("499313270413277_527696260908311"), facebookAccessToken).map { post =>
+  println("Post: " + post)
+}
+```
 
 
 #### User api
+
+Supported fields - `id`, `name`, `picture`, `locale`, `first_name`, `last_name`, `verified`, `link`, `timezone`, `gender`,
+    `age_range`, `cover`, `updated_time`
+    
+    
 ```scala
 facebookClient.userProfile(FacebookUserId("499283963749541"), facebookAccessToken) map(user =>
-    println(user) //FacebookUser(FacebookUserId(499283963749541),Some(Valeryi Baibossynov),
+  println(user) //FacebookUser(FacebookUserId(499283963749541),Some(Valeryi Baibossynov),
                   // Some(FacebookUserPicture(50.0,false,https://scontent.xx.fbcdn.net/v/t1.0-1/p50x50/22728655_513792128965391_443796664145972604_n.jpg?oh=96ab05455244b5f7062d2a194e30aa8e&oe=5A88C8AD,50.0)),
                   // Some(Valeryi),Some(Baibossynov),Some(https://www.facebook.com/app_scoped_user_id/499283963749541/),Some(true),Some(en_US),Some(+02:00),Some(Male),Some(AgeRange(21,None)),
                   // Some(Cover(527696177574986,0.0,0.0,https://scontent.xx.fbcdn.net/v/t1.0-9/s720x720/23905322_527696177574986_8012137948429389386_n.jpg?oh=dc4f829792fa00613db226d992140957&oe=5AA288B0)),Some(2017-11-11T00:10:08Z))
@@ -227,7 +243,6 @@ facebookClient.application(FacebookConfig.clientId, facebookAccessToken) map(app
 facebookClient.application(FacebookAppId("1969406143275709"), facebookAccessToken) map(application =>
   println("Application: " + application) //Application: FacebookApplication(FacebookAppId(1969406143275709),https://www.facebook.com/games/?app_id=1969406143275709,testing_app)
 )
-
 ```
 
 Note: in terms of facebook4s there is no difference between `client_id` and `application_id`. 

@@ -63,7 +63,7 @@ class UriService(clientId: FacebookClientId, appSecret: FacebookAppSecret) {
     withAccessToken(accessToken).withPathSegments(applicationId.show)
 
   def postUri(postId: FacebookPostId, accessToken: FacebookAccessToken, attributes: Seq[FacebookPostAttribute]) =
-    withAccessToken(accessToken).withPathSegments(postId.show)
+    manyParams(withAccessToken(accessToken).withPathSegments(postId.show), attributes)
 
   def authUrl(permissions: Seq[FacebookPermission],
               responseType: FacebookOauthResponseType = FacebookCode,
