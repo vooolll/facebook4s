@@ -5,10 +5,8 @@ facebook4s
 
 Prerequisites
 -------------
-Scala 2.12.x
-
-SBT 0.13.x
-
+* Scala 2.12.x
+* SBT 0.13.x
 
 ### Installation
 Add the following line to your sbt dependencies: 
@@ -21,8 +19,12 @@ Note: make sure that you have in your `build.sbt`
 resolvers += Resolver.sonatypeRepo("releases")
 ```
 
-### Usage
+### Useful links
+* [Examples](https://github.com/vooolll/facebook4s/tree/master/examples)
+* [Documentation (Scaladoc)](https://www.javadoc.io/doc/com.github.vooolll/facebook4s_2.12/0.2.0)
 
+
+### User guide
 #### Configuration
 Add your `client id`(`application id`) and `application secret` to your environment variables:
 ```bash
