@@ -3,7 +3,7 @@ package client
 import domain.permission.FacebookPermissions.{FacebookPermission, FacebookUserPosts}
 import services.UriService
 
-class AuthUriSpec extends FacebookClientSupport {
+class AuthUriSpec extends FacebookClientStubSupport {
   val emptyPermissions = Seq.empty[FacebookPermission]
   val permissions = Seq(FacebookUserPosts)
   "Facebook Graph Api" should {

@@ -16,12 +16,22 @@ import scala.concurrent.Future
 import scala.io.Source
 
 
-trait FacebookClientSupport extends fixture.AsyncWordSpec with Matchers {
+trait FacebookClientStubSupport extends fixture.AsyncWordSpec with Matchers {
 
   type FixtureParam = ClientProbe with FacebookClient
 
   def withFixture(test: OneArgAsyncTest): FutureOutcome = {
     withFixture(test.toNoArgAsyncTest(ClientProbe()))
+  }
+
+}
+
+trait FacebookClientSupport extends fixture.AsyncWordSpec with Matchers {
+
+  type FixtureParam = FacebookClient
+
+  def withFixture(test: OneArgAsyncTest): FutureOutcome = {
+    withFixture(test.toNoArgAsyncTest(FacebookClient()))
   }
 
 }

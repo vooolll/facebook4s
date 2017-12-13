@@ -2,7 +2,7 @@ package client
 
 import serialization.compatibility.TestEntities._
 
-class FeedSpec extends FacebookClientSupport {
+class FeedSpec extends FacebookClientStubSupport {
 
   "Facebook Graph Api" should {
     "return feed" in { c =>

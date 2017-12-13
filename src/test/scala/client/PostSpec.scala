@@ -3,7 +3,7 @@ package client
 import serialization.compatibility.TestEntities.{userAccessToken, postId, post}
 import cats.implicits._
 
-class PostSpec extends FacebookClientSupport {
+class PostSpec extends FacebookClientStubSupport {
 
   "Facebook Graph Api" should {
     "return posts" in { c =>
