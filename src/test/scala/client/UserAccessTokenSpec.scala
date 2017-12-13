@@ -5,7 +5,7 @@ import serialization.compatibility.TestEntities._
 
 import scala.concurrent.duration.DurationInt
 
-class UserAccessTokenSpec extends FacebookClientSupport {
+class UserAccessTokenSpec extends FacebookClientStubSupport {
 
   "Facebook Graph Api" should {
     "return user access token" in { c =>

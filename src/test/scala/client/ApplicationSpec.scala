@@ -3,7 +3,7 @@ package client
 import cats.syntax.either._
 import serialization.compatibility.TestEntities._
 
-class ApplicationSpec extends FacebookClientSupport {
+class ApplicationSpec extends FacebookClientStubSupport {
 
   "Facebook Graph Api" should {
     "get application by id" in { c =>
