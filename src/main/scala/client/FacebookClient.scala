@@ -82,7 +82,7 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
   def feed(userId: UserId, accessTokenValue: String, fields: Seq[FacebookPostAttribute]): Future[UserFeed] =
-    sendRequestOrFail(userFeedUri(accessToken(accessTokenValue), userId, fields))(decodeFeed)
+    feed(userId, accessToken(accessTokenValue), fields)
 
   /**
     * @param userId Facebook user id
@@ -131,7 +131,7 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
   def application(applicationId: ApplicationId, accessTokenValue: String): Future[Application] =
-    sendRequestOrFail(applicationUri(accessToken(accessTokenValue), applicationId))(decodeApplication)
+    application(applicationId, accessToken(accessTokenValue))
 
   /**
     * @param userId Facebook user id
@@ -162,7 +162,7 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
   def userProfile(userId: UserId, accessTokenValue: String, attributes: Seq[Attributes]): Future[User] =
-    sendRequestOrFail(userUri(accessToken(accessTokenValue), userId, attributes))(decodeUser)
+    userProfile(userId, accessToken(accessTokenValue), attributes)
 
   /**
     * @param userId Facebook user id
@@ -226,7 +226,7 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
     * @return Either facebook user feed or error FacebookOauthError
     */
   def feedResult(userId: UserId, accessTokenValue: String, fields: Seq[FacebookPostAttribute]): AsyncUserFeedResult =
-    sendRequest(userFeedUri(accessToken(accessTokenValue), userId, fields))(decodeFeed)
+    feedResult(userId, accessToken(accessTokenValue), fields)
 
   /**
     * @param userId Facebook user id
@@ -270,7 +270,7 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
     * @return Either facebook application details or error FacebookOauthError
     */
   def applicationResult(applicationId: ApplicationId, accessTokenValue: String): AsyncApplicationResult =
-    sendRequest(applicationUri(accessToken(accessTokenValue), applicationId))(decodeApplication)
+    applicationResult(applicationId, accessToken(accessTokenValue))
 
   /**
     * @param userId FacebookUserId
@@ -297,7 +297,7 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
     */
   def userProfileResult(userId: UserId, accessTokenValue: String,
                         attributes: Seq[Attributes]): AsyncUserResult =
-    sendRequest(userUri(accessToken(accessTokenValue), userId, attributes))(decodeUser)
+    userProfileResult(userId, accessToken(accessTokenValue), attributes)
 
   /**
     * @param userId FacebookUserId

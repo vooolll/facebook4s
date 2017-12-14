@@ -18,6 +18,8 @@ object TestConfiguration extends ConfigurationDetector {
     tokenType  = UserAccessToken("bearer", 60.days)
   )
 
+  val userTokenRaw = userAccessToken.tokenValue.value
+
   def tokenValueOf(envStr: String, typesafeStr: String) =
     TokenValue(envVarOrConfig(envStr, typesafeStr))
 }
