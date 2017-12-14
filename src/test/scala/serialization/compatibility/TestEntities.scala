@@ -7,6 +7,7 @@ import config.FacebookConstants
 import domain.feed.{FacebookFeed, FacebookPaging}
 import domain.oauth._
 import FacebookConstants._
+import domain.likes.{FacebookLike, FacebookLikeId}
 import domain.posts.{FacebookPost, FacebookPostId}
 import domain.profile._
 import org.apache.commons.lang3.LocaleUtils
@@ -69,6 +70,9 @@ object TestEntities {
         Some(toInstant("1993-05-02T07:00:00+0000")), None, None, None)
     ),
     FacebookPaging("https://graph.facebook.com1".some, "https://graph.facebook.com".some))
+
+
+  val like = FacebookLike(FacebookLikeId("215080582368050"), "Яна Чиркова")
 
 
   def toInstant(string: String) = dateFormat.parse(string, Instant.from(_))

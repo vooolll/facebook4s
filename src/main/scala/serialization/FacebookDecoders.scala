@@ -9,6 +9,7 @@ import io.circe._
 import io.circe.Decoder._
 import cats.syntax.either._
 import config.FacebookConstants._
+import domain.likes.{FacebookLike, FacebookLikeId}
 import domain.posts.{FacebookPost, FacebookPostId}
 import domain.profile._
 import org.apache.commons.lang3._
@@ -19,6 +20,7 @@ object FacebookDecoders {
   implicit val decodeTokenType: Decoder[AppAccessToken] = decodeString.map(AppAccessToken)
   implicit val decodeTokenValue: Decoder[TokenValue] = decodeString.map(TokenValue.apply)
   implicit val decodePostId: Decoder[FacebookPostId] = decodeString.map(FacebookPostId.apply)
+  implicit val decodeLikeId: Decoder[FacebookLikeId] = decodeString.map(FacebookLikeId.apply)
   implicit val decodeGender: Decoder[Gender] = decodeString.map {
     case "male"   => Gender.Male
     case "female" => Gender.Female
@@ -121,6 +123,13 @@ object FacebookDecoders {
       posts  <- c.get[List[FacebookPost]]("data")
       paging <- c.get[FacebookPaging]("paging")
     } yield FacebookFeed(posts, paging)
+  }
+
+  implicit val decodeLike: Decoder[FacebookLike] = new Decoder[FacebookLike] {
+    override def apply(c: HCursor) = for {
+      id   <- c.get[FacebookLikeId]("id")
+      name <- c.get[String]("name")
+    } yield FacebookLike(id, name)
   }
 
 }
