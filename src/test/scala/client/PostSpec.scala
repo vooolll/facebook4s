@@ -1,6 +1,5 @@
 package client
 
-import client._
 import cats.implicits._
 import config.TestConfiguration._
 import domain.posts.{FacebookPost, FacebookPostId}

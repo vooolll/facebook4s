@@ -2,10 +2,9 @@ package client
 
 import java.time.ZoneOffset
 
-import client._
+import cats.implicits._
 import config.TestConfiguration._
 import domain.profile._
-import cats.implicits._
 import org.apache.commons.lang3.LocaleUtils
 import serialization.compatibility.TestEntities.toInstant
 
