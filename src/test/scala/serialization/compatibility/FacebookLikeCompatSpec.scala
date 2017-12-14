@@ -9,7 +9,7 @@ class FacebookLikeCompatSpec extends SyncSpec with JsonSerializationSupport {
 
   val likePath = "testdata/like.json"
 
-  "FacebookFeed" should {
+  "FacebookLike" should {
     s"be compatible with $likePath" in {
       decodeJson[FacebookLike](likePath) shouldBe like
     }

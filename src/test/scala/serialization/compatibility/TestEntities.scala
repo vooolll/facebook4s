@@ -7,7 +7,7 @@ import config.FacebookConstants
 import domain.feed.{FacebookFeed, FacebookPaging}
 import domain.oauth._
 import FacebookConstants._
-import domain.likes.{FacebookLike, FacebookLikeId}
+import domain.likes.{FacebookLike, FacebookLikeId, FacebookLikesPaging}
 import domain.posts.{FacebookPost, FacebookPostId}
 import domain.profile._
 import org.apache.commons.lang3.LocaleUtils
@@ -72,8 +72,8 @@ object TestEntities {
     FacebookPaging("https://graph.facebook.com1".some, "https://graph.facebook.com".some))
 
 
-  val like = FacebookLike(FacebookLikeId("215080582368050"), "Яна Чиркова")
-
+  val like = FacebookLike(FacebookLikeId("215080582368050"), "Яна Чиркова".some)
+  val likesPaging = FacebookLikesPaging("MTkzMDAwNzk1MDU5NTAzOAZDZD".some, "MjE1MDgwNTgyMzY4MDUw".some)
 
   def toInstant(string: String) = dateFormat.parse(string, Instant.from(_))
 
