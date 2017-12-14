@@ -5,7 +5,7 @@ import config.TestConfiguration._
 import domain.oauth.{FacebookAppId, FacebookClientId}
 import domain.profile.FacebookApplication
 
-class ApplicationSpec extends FacebookClientStubSupport {
+class ApplicationSpec extends FacebookClientSupport {
 
   val appId = FacebookAppId("1969406143275709")
   val clientId = FacebookClientId("1969406143275709")

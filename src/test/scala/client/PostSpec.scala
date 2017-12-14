@@ -6,7 +6,7 @@ import domain.posts.{FacebookPost, FacebookPostId}
 import domain.profile.FacebookProfileId
 import serialization.compatibility.TestEntities.toInstant
 
-class PostSpec extends FacebookClientStubSupport {
+class PostSpec extends FacebookClientSupport {
 
   val realPostId = FacebookPostId("499283963749541_527696260908311")
 
