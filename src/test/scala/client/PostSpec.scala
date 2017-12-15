@@ -4,7 +4,7 @@ import cats.implicits._
 import config.TestConfiguration._
 import domain.posts.{FacebookPost, FacebookPostId}
 import domain.profile.FacebookProfileId
-import serialization.compatibility.TestEntities.toInstant
+import serialization.compatibility.toInstant
 
 class PostSpec extends FacebookClientSupport {
 

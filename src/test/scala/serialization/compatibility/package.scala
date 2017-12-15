@@ -1,20 +1,19 @@
-package serialization.compatibility
+package serialization
 
-import java.time._
+import java.time.{Instant, ZoneOffset}
 
-import cats.syntax.option._
-import config.FacebookConstants
+import config.FacebookConstants.dateFormat
 import domain.feed.{FacebookFeed, FacebookPaging}
-import domain.oauth._
-import FacebookConstants._
 import domain.likes.{FacebookLike, FacebookLikeId, FacebookLikes, FacebookLikesPaging}
+import domain.oauth._
 import domain.posts.{FacebookPost, FacebookPostId}
 import domain.profile._
 import org.apache.commons.lang3.LocaleUtils
+import cats.implicits._
 
 import scala.concurrent.duration._
 
-object TestEntities {
+package object compatibility {
 
   val userId = FacebookUserId("499313270413277")
 
