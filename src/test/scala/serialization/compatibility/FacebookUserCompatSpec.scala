@@ -3,7 +3,6 @@ package serialization.compatibility
 import base.SyncSpec
 import domain.profile.FacebookUser
 import serialization.FacebookDecoders._
-import TestEntities._
 
 class FacebookUserCompatSpec extends SyncSpec with JsonSerializationSupport {
 

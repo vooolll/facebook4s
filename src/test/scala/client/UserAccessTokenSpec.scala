@@ -1,9 +1,9 @@
 package client
 
 import domain.oauth.UserAccessToken
-import serialization.compatibility.TestEntities._
 
 import scala.concurrent.duration.DurationInt
+import serialization.compatibility._
 
 class UserAccessTokenSpec extends FacebookClientStubSupport {
 

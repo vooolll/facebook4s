@@ -1,6 +1,6 @@
 package client
 
-import serialization.compatibility.TestEntities._
+import serialization.compatibility._
 
 class ClientCodeSpec extends FacebookClientStubSupport {
   "Facebook Graph Api" should {

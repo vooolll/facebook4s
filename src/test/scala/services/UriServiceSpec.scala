@@ -7,8 +7,8 @@ import domain.permission.FacebookPermissions.FacebookUserPosts
 import domain.posts.{FacebookPostAttributes, FacebookPostId}
 import domain.profile.FacebookUserId
 import org.scalatest.{Matchers, WordSpec}
-import serialization.compatibility.TestEntities._
 import syntax.FacebookShowOps._
+import serialization.compatibility._
 
 class UriServiceSpec extends WordSpec with Matchers {
 

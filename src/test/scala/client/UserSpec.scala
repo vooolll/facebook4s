@@ -6,7 +6,7 @@ import cats.implicits._
 import config.TestConfiguration._
 import domain.profile._
 import org.apache.commons.lang3.LocaleUtils
-import serialization.compatibility.TestEntities.toInstant
+import serialization.compatibility._
 
 class UserSpec extends FacebookClientSupport {
   val realUser = FacebookUser(
