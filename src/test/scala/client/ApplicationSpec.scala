@@ -7,11 +7,9 @@ import domain.profile.FacebookApplication
 
 class ApplicationSpec extends FacebookClientSupport {
 
-  val appId = FacebookAppId("1969406143275709")
-  val clientId = FacebookClientId("1969406143275709")
-  val application = FacebookApplication(FacebookAppId("1969406143275709"),
-    "https://www.facebook.com/games/?app_id=1969406143275709",
-    "testing_app")
+  val appId = FacebookAppId("1970529913214515")
+  val clientId = FacebookClientId(appId.value)
+  val application = FacebookApplication(appId, "http://localhost:9000/redirect", "testing_app")
 
   "Facebook Graph Api" should {
     "get application by id" in { c =>

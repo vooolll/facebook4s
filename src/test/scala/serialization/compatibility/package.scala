@@ -73,9 +73,7 @@ package object compatibility {
 
   val like = FacebookLike(FacebookLikeId("215080582368050"), "Яна Чиркова".some)
   val likesPaging = FacebookLikesPaging("MTkzMDAwNzk1MDU5NTAzOAZDZD".some, "MjE1MDgwNTgyMzY4MDUw".some)
-  val likes = FacebookLikes(
-    List(FacebookLike(FacebookLikeId("215080582368050"), "Яна Чиркова".some)),
-    FacebookLikesPaging("MTkzMDAwNzk1MDU5NTAzOAZDZD".some, "MjE1MDgwNTgyMzY4MDUw".some))
+  val likes = FacebookLikes(List(like), likesPaging)
 
   def toInstant(string: String) = dateFormat.parse(string, Instant.from(_))
 
