@@ -1,10 +1,10 @@
-package client
+package client.feed
 
-import domain.likes.{FacebookLike, FacebookLikes, FacebookLikesPaging}
 import cats.implicits._
-import domain.posts.FacebookPostId
-import domain.profile.FacebookUserId
+import client.FacebookClientSupport
 import config.TestConfiguration._
+import domain.likes.{FacebookLike, FacebookLikes, FacebookLikesPaging}
+import domain.profile.FacebookUserId
 
 class LikeSpec extends FacebookClientSupport {
 
@@ -14,7 +14,7 @@ class LikeSpec extends FacebookClientSupport {
 
   "Facebook Graph Api" should {
     "return likes of post" in { c =>
-      c.likes(FacebookPostId("117656352360395_117607245698639"), userTokenRaw) map (_ shouldBe likes)
+      c.likes(postId, userTokenRaw) map (_ shouldBe likes)
     }
   }
 }
