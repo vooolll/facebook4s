@@ -20,7 +20,6 @@ object FacebookDecoders {
   implicit val decodeTokenType: Decoder[AppAccessToken] = decodeString.map(AppAccessToken)
   implicit val decodeTokenValue: Decoder[TokenValue] = decodeString.map(TokenValue.apply)
   implicit val decodePostId: Decoder[FacebookPostId] = decodeString.map(FacebookPostId.apply)
-  implicit val decodeLikeId: Decoder[FacebookLikeId] = decodeString.map(FacebookLikeId.apply)
   implicit val decodeGender: Decoder[Gender] = decodeString.map {
     case "male"   => Gender.Male
     case "female" => Gender.Female
@@ -127,7 +126,7 @@ object FacebookDecoders {
 
   implicit val decodeLike: Decoder[FacebookLike] = new Decoder[FacebookLike] {
     override def apply(c: HCursor) = for {
-      id   <- c.get[FacebookLikeId]("id")
+      id   <- c.get[FacebookUserId]("id")
       name <- c.get[Option[String]]("name")
     } yield FacebookLike(id, name)
   }

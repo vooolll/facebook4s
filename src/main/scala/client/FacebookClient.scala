@@ -2,6 +2,7 @@ package client
 
 import config.FacebookConfig._
 import domain.feed._
+import domain.likes.FacebookLikes
 import domain.oauth._
 import domain.permission.FacebookPermissions._
 import domain.posts._
@@ -114,6 +115,8 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
   def post(postId: PostId, accessToken: AccessToken): Future[Post] = {
     sendRequestOrFail(postUri(postId, accessToken, defaultPostAttributeValues))(decodePost)
   }
+
+  def likes(postId: PostId, accessToken: String): Future[Likes] = ???
 
   /**
     * @param applicationId Facebook application(client) id
@@ -368,6 +371,7 @@ object FacebookClient {
   type Attributes = FacebookUserAttribute
   type PostId = FacebookPostId
   type Post = FacebookPost
+  type Likes = FacebookLikes
 
   type AsyncUserFeedResult = Future[Either[ApiError, UserFeed]]
   type AsyncAccessTokenResult = Future[Either[ApiError, AccessToken]]
