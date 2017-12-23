@@ -1,20 +1,17 @@
 package client
 
+import domain.feed.{FacebookFeed, FacebookPaging}
 import domain.posts.{FacebookPost, FacebookPostId}
 import domain.profile.{FacebookProfileId, FacebookUserId}
 import serialization.compatibility.toInstant
-import config.TestConfiguration._
-import domain.feed.{FacebookFeed, FacebookPaging}
-import cats.implicits._
 
-class FeedSpec extends FacebookClientSupport {
-
-  val realPostId = FacebookPostId("117656352360395_120118735447490")
+package object feed {
+  val postId = FacebookPostId("117656352360395_120118735447490")
 
   val userId = FacebookUserId("117656352360395")
 
-  val realPost = FacebookPost(
-    realPostId,
+  val post = FacebookPost(
+    postId,
     Some("Bob Willins updated her cover photo."),
     Some(toInstant("2017-12-19T14:08:44+0000")),
     Some("120118675447496"),
@@ -43,15 +40,5 @@ class FeedSpec extends FacebookClientSupport {
       "limit=25&__paging_token=enc_AdCES1F18OvZCu2nFAIVLb6KtNttBdZBFYY0pu41aoKx8Ef8M76cxG9p7HsOfs4H17MJ2JXwvy3bkAk1" +
       "2gUmcAp7vAP2ojten38tv7oUYlk7ModAZDZD&__previous=1"))
 
-  val feed = FacebookFeed(List(realPost, realPost1), paging)
-
-  "Facebook Graph Api" should {
-    "return feed" in { c =>
-      c.feed(userId, userTokenRaw) map(_ shouldBe feed)
-    }
-
-    "return feed result" in { c =>
-      c.feedResult(userId, userTokenRaw) map(_ shouldBe feed.asRight)
-    }
-  }
+  val feed = FacebookFeed(List(post, realPost1), paging)
 }

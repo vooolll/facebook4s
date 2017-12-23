@@ -30,7 +30,6 @@ class UriServiceSpec extends WordSpec with Matchers {
 
 
     "return feed uri" in {
-
       s.userFeedUri(
         userAccessToken,
         FacebookUserId("me"),
@@ -56,6 +55,17 @@ class UriServiceSpec extends WordSpec with Matchers {
         s"&scope=${FacebookUserPosts.value}" +
         s"&state=asd"
     }
+
+    "return likes uri" in {
+      s.likesUri(FacebookPostId("postId"), userAccessToken).toString() shouldBe "https://graph.facebook.com" +
+        "/v2.10/postId/likes?access_token=token&summary=false"
+    }
+
+    "return likes uri with summary" in {
+      s.likesUri(FacebookPostId("postId"), userAccessToken, summary = true).toString() shouldBe "https://graph." +
+        "facebook.com/v2.10/postId/likes?access_token=token&summary=true"
+    }
+
   }
 
 }

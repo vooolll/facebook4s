@@ -27,8 +27,7 @@ class UserSpec extends FacebookClientSupport {
     }
 
     "return user profile result" in { c =>
-      c.userProfileResult(realUserId, userTokenRaw) map (
-        _ shouldBe realUser.asRight)
+      c.userProfileResult(realUserId, userTokenRaw) map (_ shouldBe realUser.asRight)
     }
   }
 }

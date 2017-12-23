@@ -1,6 +1,4 @@
-import SonatypeKeys._
 
-sonatypeSettings
 
 name := "facebook4s"
 
