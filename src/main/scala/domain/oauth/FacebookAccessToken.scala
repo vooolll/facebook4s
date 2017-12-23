@@ -16,11 +16,6 @@ sealed trait FacebookTokenType
   */
 final case class TokenValue(value: String)
 
-abstract class FixedSizeValue(length: Int, msg: String = "") {
-  require(value.length == length, msg)
-  def value: String
-}
-
 /**
   * Application access token - https://developers.facebook.com/docs/facebook-login/access-tokens/#apptokens
   * @param oauthTokenType A token_type from oauth(https://tools.ietf.org/html/rfc6749) often has value "bearer"

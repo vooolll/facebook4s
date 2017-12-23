@@ -1,8 +1,6 @@
-
-
 name := "facebook4s"
 
-version := "0.2.0"
+version := "0.2.1"
 
 scalaVersion := "2.12.1"
 
@@ -59,12 +57,10 @@ pomExtra :=
 
 libraryDependencies ++= {
   val akkaV = "2.4.19"
-  val playV = "2.6.3"
   val akkaHttpV = "10.0.9"
   val scalaTestV = "3.0.1"
   val typesafeV = "1.3.1"
   val mockitoV = "1.8.5"
-  val catsV = "1.0.0-MF"
   val scalaLoggingV = "3.7.2"
   val akkaJsonSupportV = "1.18.0"
   val logbackClassicV = "1.2.3"
