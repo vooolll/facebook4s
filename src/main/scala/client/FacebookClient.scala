@@ -132,7 +132,8 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
     * @return Facebook likes
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
-  def likes(postId: PostId, accessToken: AccessToken): Future[Likes] = ???
+  def likes(postId: PostId, accessToken: AccessToken): Future[Likes] =
+    sendRequestOrFail(likesUri(postId, accessToken))(decodeLikes)
 
   /**
     * @param applicationId Facebook application(client) id
@@ -288,7 +289,8 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
     * @param accessToken User access token
     * @return Either facebook post details or error FacebookOauthError
     */
-  def likesResult(postId: PostId, accessToken: AccessToken): AsyncLikesResult = ???
+  def likesResult(postId: PostId, accessToken: AccessToken): AsyncLikesResult =
+    sendRequest(likesUri(postId, accessToken))(decodeLikes)
 
   /**
     * @param applicationId Facebook application(client) id
@@ -410,6 +412,6 @@ object FacebookClient {
   type AsyncApplicationResult = Future[Either[ApiError, Application]]
   type AsyncUserResult = Future[Either[ApiError, User]]
   type AsyncPostResult = Future[Either[ApiError, Post]]
-  type AsyncLikesResult = Future[Either[ApiError, Post]]
+  type AsyncLikesResult = Future[Either[ApiError, Likes]]
 }
 
