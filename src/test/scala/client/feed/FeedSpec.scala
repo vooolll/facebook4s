@@ -3,10 +3,6 @@ package client.feed
 import cats.implicits._
 import client.FacebookClientSupport
 import config.TestConfiguration._
-import domain.feed.{FacebookFeed, FacebookPaging}
-import domain.posts.{FacebookPost, FacebookPostId}
-import domain.profile.{FacebookProfileId, FacebookUserId}
-import serialization.compatibility.toInstant
 
 class FeedSpec extends FacebookClientSupport {
 

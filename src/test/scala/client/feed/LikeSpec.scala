@@ -14,7 +14,11 @@ class LikeSpec extends FacebookClientSupport {
 
   "Facebook Graph Api" should {
     "return likes of post" in { c =>
-      c.likes(postId, userTokenRaw) map (_ shouldBe likes)
+      c.likes(postId, userAccessToken) map (_ shouldBe likes)
+    }
+
+    "return likes of post result" in { c =>
+      c.likesResult(postId, userTokenRaw) map (_ shouldBe likes.asRight)
     }
   }
 }

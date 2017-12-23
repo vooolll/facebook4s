@@ -116,7 +116,23 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
     sendRequestOrFail(postUri(postId, accessToken, defaultPostAttributeValues))(decodePost)
   }
 
-  def likes(postId: PostId, accessToken: String): Future[Likes] = ???
+  /**
+    * @param postId Facebook post id
+    * @param accessTokenValue User access token value
+    * @return Facebook likes
+    *         @throws scala.RuntimeException if facebook responds with bad request
+    */
+  def likes(postId: PostId, accessTokenValue: String): Future[Likes] =
+    likes(postId, accessToken(accessTokenValue))
+
+
+  /**
+    * @param postId Facebook post id
+    * @param accessToken User access token
+    * @return Facebook likes
+    *         @throws scala.RuntimeException if facebook responds with bad request
+    */
+  def likes(postId: PostId, accessToken: AccessToken): Future[Likes] = ???
 
   /**
     * @param applicationId Facebook application(client) id
@@ -260,6 +276,21 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
   }
 
   /**
+    * @param postId Id of facebook post alpha numeric
+    * @param accessTokenValue User access token value
+    * @return Either facebook post details or error FacebookOauthError
+    */
+  def likesResult(postId: PostId, accessTokenValue: String): AsyncLikesResult =
+    likesResult(postId, accessToken(accessTokenValue))
+
+  /**
+    * @param postId Id of facebook post alpha numeric
+    * @param accessToken User access token
+    * @return Either facebook post details or error FacebookOauthError
+    */
+  def likesResult(postId: PostId, accessToken: AccessToken): AsyncLikesResult = ???
+
+  /**
     * @param applicationId Facebook application(client) id
     * @param accessToken Facebook user access token
     * @return Either facebook application details or error FacebookOauthError
@@ -379,5 +410,6 @@ object FacebookClient {
   type AsyncApplicationResult = Future[Either[ApiError, Application]]
   type AsyncUserResult = Future[Either[ApiError, User]]
   type AsyncPostResult = Future[Either[ApiError, Post]]
+  type AsyncLikesResult = Future[Either[ApiError, Post]]
 }
 
