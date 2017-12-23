@@ -123,8 +123,28 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
   def likes(postId: PostId, accessTokenValue: String): Future[Likes] =
-    likes(postId, accessToken(accessTokenValue))
+    likes(postId, accessToken(accessTokenValue), summary = false)
 
+  /**
+    * @param postId Facebook post id
+    * @param accessTokenValue User access token value
+    * @param summary Boolean flag, retrieve summary or not
+    * @return Facebook likes
+    *         @throws scala.RuntimeException if facebook responds with bad request
+    */
+  def likes(postId: PostId, accessTokenValue: String, summary: Boolean): Future[Likes] =
+    likes(postId, accessToken(accessTokenValue), summary)
+
+
+  /**
+    * @param postId Facebook post id
+    * @param accessToken User access token
+    * @param summary Boolean flag, retrieve summary or not
+    * @return Facebook likes
+    *         @throws scala.RuntimeException if facebook responds with bad request
+    */
+  def likes(postId: PostId, accessToken: AccessToken, summary: Boolean): Future[Likes] =
+    sendRequestOrFail(likesUri(postId, accessToken, summary))(decodeLikes)
 
   /**
     * @param postId Facebook post id
@@ -133,7 +153,7 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
   def likes(postId: PostId, accessToken: AccessToken): Future[Likes] =
-    sendRequestOrFail(likesUri(postId, accessToken))(decodeLikes)
+    likes(postId, accessToken, summary = false)
 
   /**
     * @param applicationId Facebook application(client) id
@@ -279,10 +299,28 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
   /**
     * @param postId Id of facebook post alpha numeric
     * @param accessTokenValue User access token value
+    * @param summary Boolean flag, retrieve summary or not
+    * @return Either facebook post details or error FacebookOauthError
+    */
+  def likesResult(postId: PostId, accessTokenValue: String, summary: Boolean): AsyncLikesResult =
+    likesResult(postId, accessToken(accessTokenValue), summary)
+
+  /**
+    * @param postId Id of facebook post alpha numeric
+    * @param accessTokenValue User access token value
     * @return Either facebook post details or error FacebookOauthError
     */
   def likesResult(postId: PostId, accessTokenValue: String): AsyncLikesResult =
-    likesResult(postId, accessToken(accessTokenValue))
+    likesResult(postId, accessToken(accessTokenValue), summary = false)
+
+  /**
+    * @param postId Id of facebook post alpha numeric
+    * @param accessToken User access token
+    * @param summary Boolean flag, retrieve summary or not
+    * @return Either facebook post details or error FacebookOauthError
+    */
+  def likesResult(postId: PostId, accessToken: AccessToken, summary: Boolean): AsyncLikesResult =
+    sendRequest(likesUri(postId, accessToken, summary))(decodeLikes)
 
   /**
     * @param postId Id of facebook post alpha numeric
@@ -290,7 +328,7 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
     * @return Either facebook post details or error FacebookOauthError
     */
   def likesResult(postId: PostId, accessToken: AccessToken): AsyncLikesResult =
-    sendRequest(likesUri(postId, accessToken))(decodeLikes)
+    likesResult(postId, accessToken, summary = false)
 
   /**
     * @param applicationId Facebook application(client) id
@@ -414,4 +452,3 @@ object FacebookClient {
   type AsyncPostResult = Future[Either[ApiError, Post]]
   type AsyncLikesResult = Future[Either[ApiError, Likes]]
 }
-

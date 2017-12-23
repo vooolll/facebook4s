@@ -124,6 +124,14 @@ object FacebookDecoders {
     } yield FacebookFeed(posts, paging)
   }
 
+  implicit val decodeLikesSummary: Decoder[FacebookLikesSummary] = new Decoder[FacebookLikesSummary] {
+    override def apply(c: HCursor) = for {
+      totalCount <- c.get[Int]("total_count")
+      canLike    <- c.get[Boolean]("can_like")
+      hasLikes   <- c.get[Boolean]("has_liked")
+    } yield FacebookLikesSummary(totalCount, canLike, hasLikes)
+  }
+
   implicit val decodeLike: Decoder[FacebookLike] = new Decoder[FacebookLike] {
     override def apply(c: HCursor) = for {
       id   <- c.get[FacebookUserId]("id")
@@ -141,9 +149,10 @@ object FacebookDecoders {
 
   implicit val decodeLikes: Decoder[FacebookLikes] = new Decoder[FacebookLikes] {
     override def apply(c: HCursor) = for {
-      likes  <- c.get[List[FacebookLike]]("data")
-      paging <- c.get[FacebookLikesPaging]("paging")
-    } yield FacebookLikes(likes, paging)
+      likes   <- c.get[List[FacebookLike]]("data")
+      paging  <- c.get[FacebookLikesPaging]("paging")
+      summary <- c.get[Option[FacebookLikesSummary]]("summary")
+    } yield FacebookLikes(likes, paging, summary)
   }
 
 }

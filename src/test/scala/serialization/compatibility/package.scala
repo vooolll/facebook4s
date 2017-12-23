@@ -4,7 +4,7 @@ import java.time.{Instant, ZoneOffset}
 
 import config.FacebookConstants.dateFormat
 import domain.feed.{FacebookFeed, FacebookPaging}
-import domain.likes.{FacebookLike, FacebookLikes, FacebookLikesPaging}
+import domain.likes.{FacebookLike, FacebookLikes, FacebookLikesPaging, FacebookLikesSummary}
 import domain.oauth._
 import domain.posts.{FacebookPost, FacebookPostId}
 import domain.profile._
@@ -70,6 +70,8 @@ package object compatibility {
     ),
     FacebookPaging("https://graph.facebook.com1".some, "https://graph.facebook.com".some))
 
+
+  val likesSummary = FacebookLikesSummary(totalCount = 1, canLike = true, hasLikes = true)
 
   val like = FacebookLike(FacebookUserId("215080582368050"), "Яна Чиркова".some)
   val likesPaging = FacebookLikesPaging("MTkzMDAwNzk1MDU5NTAzOAZDZD".some, "MjE1MDgwNTgyMzY4MDUw".some)

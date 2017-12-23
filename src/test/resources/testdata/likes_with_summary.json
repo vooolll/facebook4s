@@ -1,0 +1,20 @@
+{
+  "data": [
+    {
+      "id": "215080582368050",
+      "name": "Яна Чиркова"
+    }
+  ],
+  "paging": {
+    "cursors": {
+      "before": "MTkzMDAwNzk1MDU5NTAzOAZDZD",
+      "after": "MjE1MDgwNTgyMzY4MDUw"
+    }
+  },
+  "summary": {
+    "total_count": 1,
+    "can_like": true,
+    "has_liked": true
+  }
+}
+
