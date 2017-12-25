@@ -73,7 +73,7 @@ package object compatibility {
 
   val likesSummary = FacebookLikesSummary(totalCount = 1, canLike = true, hasLikes = true)
 
-  val like = FacebookLike(FacebookUserId("215080582368050"), "Яна Чиркова".some)
+  val like = FacebookLike(FacebookUserId("215080582368050"), "Iana Baibossynova".some)
   val likesPaging = FacebookLikesPaging("MTkzMDAwNzk1MDU5NTAzOAZDZD".some, "MjE1MDgwNTgyMzY4MDUw".some)
   val likes = FacebookLikes(List(like), likesPaging)
 

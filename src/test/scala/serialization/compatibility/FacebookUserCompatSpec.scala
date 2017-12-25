@@ -10,7 +10,7 @@ class FacebookUserCompatSpec extends SyncSpec with JsonSerializationSupport {
 
   "FacebookUser" should {
     s"be compatible with $userPath" in {
-      decodeJson[FacebookUser](userPath) shouldBe user
+      decodeJson[FacebookUser](userPath) map(_ shouldBe user)
     }
   }
 

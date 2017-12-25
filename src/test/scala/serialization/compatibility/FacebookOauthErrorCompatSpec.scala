@@ -10,7 +10,7 @@ class FacebookOauthErrorCompatSpec extends SyncSpec with JsonSerializationSuppor
 
   "FacebookOauthError" should {
     s"be compatible with $wrongCodePath" in {
-      decodeJson[FacebookOauthError](wrongCodePath) shouldBe facebookOauthError
+      decodeJson[FacebookOauthError](wrongCodePath) map(_ shouldBe facebookOauthError)
     }
   }
 
