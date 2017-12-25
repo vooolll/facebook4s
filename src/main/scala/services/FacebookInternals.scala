@@ -31,7 +31,7 @@ abstract class FacebookInternals {
     domainParseService.send(uri)(reads, decodeOauthError)(facebookError)(appResources)
   }
 
-  def sendRequestOrFail[A](uri: URLBuilder)(reads: Decoder[A]) = {
+  def sendRequestOrFail[A](uri: URLBuilder)(implicit reads: Decoder[A]) = {
     domainParseService.sendOrFail(uri)(reads, decodeOauthError)(facebookError)(appResources)
   }
 
