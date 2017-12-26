@@ -1,6 +1,7 @@
 facebook4s
 =========
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/0c7d5adedcba4774988ad1fe3e075558)](https://www.codacy.com/app/baibossynov-valery/facebook4s?utm_source=github.com&utm_medium=referral&utm_content=vooolll/facebook4s&utm_campaign=badger)
 [![Build Status](https://travis-ci.org/vooolll/facebook4s.svg?branch=master)](https://travis-ci.org/vooolll/facebook4s) [![codecov.io](http://codecov.io/github/vooolll/facebook4s/coverage.svg?branch=master)](http://codecov.io/github/vooolll/facebook4s?branch=master) [![License](http://img.shields.io/:license-Apache%202-red.svg)](http://www.apache.org/licenses/LICENSE-2.0.txt) [![Join the chat at https://gitter.im/facebook4s](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/facebook4s/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Prerequisites
