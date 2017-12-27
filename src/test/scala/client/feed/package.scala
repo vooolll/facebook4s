@@ -16,7 +16,7 @@ package object feed {
     Some(toInstant("2017-12-19T14:08:44+0000")),
     Some("120118675447496"),
     Some("https://scontent.xx.fbcdn.net/v/t1.0-0/s130x130/25398995_120118675447496_5830741756468130361_n.jpg?" +
-      "oh=63adaf511c1129c82283d1ddc4244448&oe=5ACE1813"),
+      "oh=228e16427d30b161eb4e248d2ad7f133&oe=5AF5A513"),
     Some(FacebookProfileId("117656352360395")))
 
   val realPost1 = FacebookPost(
