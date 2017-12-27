@@ -208,6 +208,15 @@ facebookClient.post(FacebookPostId("499313270413277_527696260908311"), facebookA
 }
 ```
 
+### Like api
+Supported `like` fields - `id`, `name`
+Supported `summary`(optional) fields - `total_count`, `can_like`, `has_liked`
+```scala
+facebookClient.likes(FacebookPostId("499313270413277_527696260908311"), facebookAccessToken, summary = true).map { like =>
+  println("Like: " + like)
+}
+```
+
 
 #### User api
 
