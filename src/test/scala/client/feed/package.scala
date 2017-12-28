@@ -42,12 +42,11 @@ package object feed {
 
 
   implicit class FacebookPostWithoutLinks(post: FacebookPost) {
-    def withoutQueryParams = post.copy(picture = post.picture.map(deleteQueryParams))
+    def withoutQueryParams = post.copy(picture = post.picture.map(_.takeWhile(_ != '?')))
   }
 
   implicit class FacebookFeedWithoutLinks(feed: FacebookFeed) {
     def postsWithoutQueryParams = feed.copy(posts = feed.posts.map(_.withoutQueryParams))
   }
 
-  private def deleteQueryParams(string: String): String = string.takeWhile(_ != '?')
 }
