@@ -8,11 +8,11 @@ class PostSpec extends FacebookClientSupport {
 
   "Facebook Graph Api" should {
     "return posts" in { c =>
-      c.post(postId, userAccessToken) map(_ shouldBe post)
+      c.post(postId, userAccessToken) map(_.withoutQueryParams shouldBe post)
     }
 
     "return posts result" in { c =>
-      c.postResult(postId, userAccessToken) map(_ shouldBe post.asRight)
+      c.postResult(postId, userAccessToken) map(p => p.map(_.withoutQueryParams) shouldBe post.asRight)
     }
   }
 

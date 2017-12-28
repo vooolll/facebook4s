@@ -15,8 +15,7 @@ package object feed {
     Some("Bob Willins updated her cover photo."),
     Some(toInstant("2017-12-19T14:08:44+0000")),
     Some("120118675447496"),
-    Some("https://scontent.xx.fbcdn.net/v/t1.0-0/s130x130/25398995_120118675447496_5830741756468130361_n.jpg?" +
-      "oh=228e16427d30b161eb4e248d2ad7f133&oe=5AF5A513"),
+    Some("https://scontent.xx.fbcdn.net/v/t1.0-0/s130x130/25398995_120118675447496_5830741756468130361_n.jpg"),
     Some(FacebookProfileId("117656352360395")))
 
   val realPost1 = FacebookPost(
@@ -24,8 +23,7 @@ package object feed {
     Some("Bob Willins updated her profile picture."),
     Some(toInstant("2017-12-18T11:30:10+0000")),
     Some("117607225698641"),
-    Some("https://scontent.xx.fbcdn.net/v/t1.0-0/s130x130/25396081_117607225698641_6348338142026249400_n.jpg?" +
-      "oh=d92eb6df1c795c436a600cd8ac8759ec&oe=5ACD0782"),
+    Some("https://scontent.xx.fbcdn.net/v/t1.0-0/s130x130/25396081_117607225698641_6348338142026249400_n.jpg"),
     Some(FacebookProfileId("117656352360395")))
 
   val paging = FacebookPaging(
@@ -41,4 +39,15 @@ package object feed {
       "2gUmcAp7vAP2ojten38tv7oUYlk7ModAZDZD&__previous=1"))
 
   val feed = FacebookFeed(List(post, realPost1), paging)
+
+
+  implicit class FacebookPostWithoutLinks(post: FacebookPost) {
+    def withoutQueryParams = post.copy(picture = post.picture.map(deleteQueryParams))
+  }
+
+  implicit class FacebookFeedWithoutLinks(feed: FacebookFeed) {
+    def postsWithoutQueryParams = feed.copy(posts = feed.posts.map(_.withoutQueryParams))
+  }
+
+  private def deleteQueryParams(string: String): String = string.takeWhile(_ != '?')
 }
