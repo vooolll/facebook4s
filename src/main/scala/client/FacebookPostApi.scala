@@ -14,7 +14,7 @@ trait FacebookPostApi extends FacebookInternals {
   type AsyncPostResult = Future[Either[ApiError, Post]]
 
 
-  import serialization.FacebookDecoders._
+  import serialization.FacebookDecoders.decodePost
   import uriService._
 
   /**
@@ -25,7 +25,7 @@ trait FacebookPostApi extends FacebookInternals {
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
   def post(postId: PostId, accessToken: AccessToken, fields: Seq[FacebookPostAttribute]): Future[Post] =
-    sendRequestOrFail(postUri(postId, accessToken, fields))(decodePost)
+    sendRequestOrFail(postUri(postId, accessToken, fields))
 
   /**
     * @param postId Id of facebook post alpha numeric
@@ -43,7 +43,7 @@ trait FacebookPostApi extends FacebookInternals {
     * @return Either facebook post details or error FacebookOauthError
     */
   def postResult(postId: PostId, accessToken: AccessToken,fields: Seq[FacebookPostAttribute]): AsyncPostResult =
-    sendRequest(postUri(postId, accessToken, fields))(decodePost)
+    sendRequest(postUri(postId, accessToken, fields))
 
   /**
     * @param postId Id of facebook post alpha numeric

@@ -9,7 +9,7 @@ import scala.concurrent.Future
 
 trait FacebookLikeApi extends FacebookInternals {
 
-  import serialization.FacebookDecoders._
+  import serialization.FacebookDecoders.decodeLikes
   import uriService._
 
   type Likes = FacebookLikes
@@ -42,7 +42,7 @@ trait FacebookLikeApi extends FacebookInternals {
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
   def likes(postId: FacebookPostId, accessToken: AccessToken, summary: Boolean): Future[Likes] =
-    sendRequestOrFail(likesUri(postId, accessToken, summary))(decodeLikes)
+    sendRequestOrFail(likesUri(postId, accessToken, summary))
 
   /**
     * @param postId Facebook post id
@@ -77,7 +77,7 @@ trait FacebookLikeApi extends FacebookInternals {
     * @return Either facebook post details or error FacebookOauthError
     */
   def likesResult(postId: FacebookPostId, accessToken: AccessToken, summary: Boolean): AsyncLikesResult =
-    sendRequest(likesUri(postId, accessToken, summary))(decodeLikes)
+    sendRequest(likesUri(postId, accessToken, summary))
 
   /**
     * @param postId Id of facebook post alpha numeric

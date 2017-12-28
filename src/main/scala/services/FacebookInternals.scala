@@ -27,7 +27,7 @@ abstract class FacebookInternals {
   def facebookError(message: String) = Future.successful(FacebookOauthError(FacebookError(message)).asLeft)
 
 
-  def sendRequest[A](uri: URLBuilder)(reads: Decoder[A]) = {
+  def sendRequest[A](uri: URLBuilder)(implicit reads: Decoder[A]) = {
     domainParseService.send(uri)(reads, decodeOauthError)(facebookError)(appResources)
   }
 

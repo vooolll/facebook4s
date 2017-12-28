@@ -14,7 +14,7 @@ trait FacebookFeedApi extends FacebookInternals {
   type UserId = FacebookUserId
   type AsyncUserFeedResult = Future[Either[ApiError, UserFeed]]
 
-  import serialization.FacebookDecoders._
+  import serialization.FacebookDecoders.decodeFeed
   import uriService._
 
   /**
@@ -25,7 +25,7 @@ trait FacebookFeedApi extends FacebookInternals {
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
   def feed(userId: UserId, accessToken: AccessToken, fields: Seq[FacebookPostAttribute]): Future[UserFeed] =
-    sendRequestOrFail(userFeedUri(accessToken, userId, fields))(decodeFeed)
+    sendRequestOrFail(userFeedUri(accessToken, userId, fields))
 
   /**
     * @param userId Facebook user id
@@ -62,7 +62,7 @@ trait FacebookFeedApi extends FacebookInternals {
     * @return Either facebook user feed or error FacebookOauthError
     */
   def feedResult(userId: UserId, accessToken: AccessToken, fields: Seq[FacebookPostAttribute]): AsyncUserFeedResult =
-    sendRequest(userFeedUri(accessToken, userId, fields))(decodeFeed)
+    sendRequest(userFeedUri(accessToken, userId, fields))
 
   /**
     * @param userId Facebook user id

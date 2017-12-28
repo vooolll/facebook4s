@@ -7,7 +7,7 @@ import scala.concurrent.Future
 
 trait FacebookApplicationApi extends FacebookInternals {
 
-  import serialization.FacebookDecoders._
+  import serialization.FacebookDecoders.decodeApplication
   import uriService._
 
   /**
@@ -17,7 +17,7 @@ trait FacebookApplicationApi extends FacebookInternals {
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
   def application(applicationId: ApplicationId, accessToken: AccessToken): Future[Application] =
-    sendRequestOrFail(applicationUri(accessToken, applicationId))(decodeApplication)
+    sendRequestOrFail(applicationUri(accessToken, applicationId))
 
   /**
     * @param applicationId Facebook application(client) id
@@ -34,7 +34,7 @@ trait FacebookApplicationApi extends FacebookInternals {
     * @return Either facebook application details or error FacebookOauthError
     */
   def applicationResult(applicationId: ApplicationId, accessToken: AccessToken): AsyncApplicationResult =
-    sendRequest(applicationUri(accessToken, applicationId))(decodeApplication)
+    sendRequest(applicationUri(accessToken, applicationId))
 
   /**
     * @param applicationId Facebook application(client) id

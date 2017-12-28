@@ -12,7 +12,7 @@ trait FacebookUserProfileApi extends FacebookInternals {
   type User = FacebookUser
   type AsyncUserResult = Future[Either[ApiError, User]]
 
-  import serialization.FacebookDecoders._
+  import serialization.FacebookDecoders.decodeUser
   import uriService._
 
   /**
@@ -23,7 +23,7 @@ trait FacebookUserProfileApi extends FacebookInternals {
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
   def userProfile(userId: FacebookUserId, accessToken: AccessToken, attributes: Seq[Attributes]): Future[User] =
-    sendRequestOrFail(userUri(accessToken, userId, attributes))(decodeUser)
+    sendRequestOrFail(userUri(accessToken, userId, attributes))
 
 
   /**
@@ -62,7 +62,7 @@ trait FacebookUserProfileApi extends FacebookInternals {
     * @return Facebook user profile or error FacebookOauthError
     */
   def userProfileResult(userId: FacebookUserId, accessToken: AccessToken, attributes: Seq[Attributes]): AsyncUserResult =
-    sendRequest(userUri(accessToken, userId, attributes))(decodeUser)
+    sendRequest(userUri(accessToken, userId, attributes))
 
   /**
     * @param userId FacebookUserId
