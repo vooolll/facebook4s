@@ -7,7 +7,7 @@ import io.circe.Decoder
 import org.f100ded.scalaurlbuilder.URLBuilder
 import serialization.FacebookDecoders.decodeOauthError
 import cats.syntax.either._
-import services.DomainParseService.AppResources
+import services.DomainParseService.{AppResources, FacebookAppResources}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -34,12 +34,7 @@ abstract class FacebookInternals {
     domainParseService.sendOrFail(uri)(reads, decodeOauthError)(facebookError)(appResources)
   }
 
-  def appResources = new AppResources {
-    override implicit val actorSystem: ActorSystem = ActorSystem()
-    override implicit val executionContext: ExecutionContext = actorSystem.dispatcher
-    override implicit val materializer: ActorMaterializer = ActorMaterializer()
-  }
-
+  def appResources = new FacebookAppResources()
 }
 
 trait HasStringValue{

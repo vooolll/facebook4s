@@ -1,18 +1,18 @@
 package services
 
 import akka.http.scaladsl.model.StatusCodes
-import client.ApplicationResources
-import org.scalatest.concurrent.Eventually
-import org.scalatest.mockito.MockitoSugar
-import org.scalatest.{AsyncWordSpec, Matchers}
+import base.AsyncSpec
+import services.DomainParseService.FacebookAppResources
 
-class AsyncRequestServiceSpec extends AsyncWordSpec with Matchers with MockitoSugar with Eventually
-  with ApplicationResources {
-
+class AsyncRequestServiceSpec extends AsyncSpec {
+  val appResources = new FacebookAppResources()
   val asyncRequestService = new AsyncRequestService()
+
+  import appResources._
+  implicit val ec = executionContext
 
   val uriService = UriService()
   "Should send request" in {
-    asyncRequestService.sendRequest(uriService.appTokenUri)(system,mat).map(_.status shouldBe StatusCodes.OK)
+    asyncRequestService.sendRequest(uriService.appTokenUri)(actorSystem, materializer).map(_.status shouldBe StatusCodes.OK)
   }
 }
