@@ -1,15 +1,13 @@
 package services
 
-import akka.actor.ActorSystem
-import akka.stream.ActorMaterializer
+import cats.syntax.either._
 import domain.oauth.{FacebookAppSecret, FacebookClientId, FacebookError, FacebookOauthError}
 import io.circe.Decoder
 import org.f100ded.scalaurlbuilder.URLBuilder
 import serialization.FacebookDecoders.decodeOauthError
-import cats.syntax.either._
-import services.DomainParseService.{AppResources, FacebookAppResources}
+import services.DomainParseService.FacebookAppResources
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 abstract class FacebookInternals {
   val clientId: FacebookClientId
@@ -19,6 +17,8 @@ abstract class FacebookInternals {
 
   val uriService = UriService(clientId, appSecret)
 
+  import domainParseService._
+
   /**
     * @param message error message
     * @return Future FacebookOauthError
@@ -27,11 +27,11 @@ abstract class FacebookInternals {
 
 
   def sendRequest[A](uri: URLBuilder)(implicit reads: Decoder[A]) = {
-    domainParseService.send(uri)(reads, decodeOauthError)(facebookError)(appResources)
+    send(uri)(reads, decodeOauthError)(facebookError)(appResources)
   }
 
   def sendRequestOrFail[A](uri: URLBuilder)(implicit reads: Decoder[A]) = {
-    domainParseService.sendOrFail(uri)(reads, decodeOauthError)(facebookError)(appResources)
+    sendOrFail(uri)(reads, decodeOauthError)(facebookError)(appResources)
   }
 
   def appResources = new FacebookAppResources()
