@@ -20,30 +20,31 @@ import scala.concurrent.{ExecutionContext, Future}
   */
 class DomainParseService(asyncRequest: AsyncRequestService) extends FailFastCirceSupport {
 
-  def sendOrFail[T, E <: HasFacebookError](uri: URLBuilder)
-    (successReads: Decoder[T], failReads: Decoder[E])
-    (errorFormatter: String => Future[Either[E, T]])(resources: AppResources) = {
-    import resources._
+  def sendOrFail[T, E <: HasFacebookError](uri: URLBuilder)(successReads: Decoder[T], failReads: Decoder[E])
+    (errorFormatter: String => Future[Either[E, T]])(implicit appResources: AppResources) = {
+    import appResources.executionContext
 
     shutdownActorSystem(sendAndParseTo(uri)(successReads, failReads)(errorFormatter) map valueOrException)
   }
 
   def send[T, E](uri: URLBuilder)
     (successReads: Decoder[T], failReads: Decoder[E])
-    (errorFormatter: String => Future[Either[E, T]])(resources: AppResources): Future[Either[E, T]] = {
-    import resources._
+    (errorFormatter: String => Future[Either[E, T]])(implicit resources: AppResources): Future[Either[E, T]] = {
 
     shutdownActorSystem(sendAndParseTo(uri)(successReads, failReads)(errorFormatter))
   }
 
-  def shutdownActorSystem[T](f: Future[T])(implicit system: ActorSystem) = {
-    f.onComplete(_ => system.terminate())(system.dispatcher)
+  def shutdownActorSystem[T](f: Future[T])(implicit appResources: AppResources) = {
+    import appResources._
+    f.onComplete(_ => actorSystem.terminate())(actorSystem.dispatcher)
     f
   }
 
   def parseResponse[E, T](response: HttpResponse)(errorFormatter: String => Future[Either[E, T]])
-    (implicit reads: Decoder[T], reads1: Decoder[E],
-     mat: ActorMaterializer, ec: ExecutionContext): Future[Either[E, T]] = {
+    (implicit reads: Decoder[T], reads1: Decoder[E], appResources: AppResources): Future[Either[E, T]] = {
+
+    import appResources._
+
     def parseFE(httpEntity: HttpEntity): Future[Either[E, T]] = Unmarshal[HttpEntity](
       httpEntity.withContentType(ContentTypes.`application/json`)).to[T] map(_.asRight) recoverWith {
       case e => errorFormatter(e.getLocalizedMessage)
@@ -73,16 +74,13 @@ class DomainParseService(asyncRequest: AsyncRequestService) extends FailFastCirc
   private def sendAndParseTo[T, E](uri: URLBuilder)
     (successReads: Decoder[T], failReads: Decoder[E])
     (errorFormatter: String => Future[Either[E, T]])
-    (implicit system: ActorSystem, mat: ActorMaterializer, ec: ExecutionContext) = {
+    (implicit appResources: AppResources) = {
+    import appResources._
 
-    val entity = for {
-      response <- asyncRequest.sendRequest(uri)(system, mat)
-      entity <- parseResponse[E, T](response)(errorFormatter)(successReads, failReads, mat, ec)
+    for {
+      response <- asyncRequest.sendRequest(uri)(appResources)
+      entity <- parseResponse[E, T](response)(errorFormatter)(successReads, failReads, appResources)
     } yield entity
-
-    entity.onComplete(_ => system.terminate())
-
-    entity
   }
 }
 
@@ -90,9 +88,9 @@ class DomainParseService(asyncRequest: AsyncRequestService) extends FailFastCirc
   * Service that provides async requests to api, via akk http
   */
 class AsyncRequestService() {
-  def sendRequest(url: URLBuilder)
-    (actorSystem: ActorSystem, mat: ActorMaterializer): Future[HttpResponse] = {
-    Http(actorSystem).singleRequest(HttpRequest(uri = url.toString()))(mat)
+  def sendRequest(url: URLBuilder)(implicit appResources: AppResources): Future[HttpResponse] = {
+    import appResources._
+    Http().singleRequest(HttpRequest(uri = url.toString()))(materializer)
   }
 }
 
