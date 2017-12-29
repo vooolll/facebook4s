@@ -22,14 +22,18 @@ class DomainParseServiceSpec  extends AsyncWordSpec with Matchers with MockitoSu
 
   "DomainParseService" should {
     "terminate actor system after parsing" in {
-      val resources = AppResources(system, mat, ec)
+      def resources: AppResources = new AppResources {
+        override implicit val actorSystem = system
+        override implicit val materializer = mat
+        override implicit val executionContext = ec
+      }
 
       def error(string: String) = Future.successful(FacebookOauthError(FacebookError(string)).asLeft)
 
-      val domainEntity = domainService.send(
-        uriService.appTokenUri)(decodeAppAccessToken, decodeOauthError)(error)(resources)
+      val domainEntity = domainService.send(uriService.appTokenUri)(
+        decodeAppAccessToken, decodeOauthError)(error)(resources)
       domainEntity flatMap { _ =>
-        resources.system.whenTerminated.map(_ => succeed)
+        resources.actorSystem.whenTerminated.map(_ => succeed)
       }
     }
   }

@@ -23,7 +23,7 @@ class DomainParseService(asyncRequest: AsyncRequestService) extends FailFastCirc
   def sendOrFail[T, E <: HasFacebookError](uri: URLBuilder)
     (successReads: Decoder[T], failReads: Decoder[E])
     (errorFormatter: String => Future[Either[E, T]])(resources: AppResources) = {
-    implicit val AppResources(system, mat, ec) = resources
+    import resources._
 
     shutdownActorSystem(sendAndParseTo(uri)(successReads, failReads)(errorFormatter) map valueOrException)
   }
@@ -31,7 +31,7 @@ class DomainParseService(asyncRequest: AsyncRequestService) extends FailFastCirc
   def send[T, E](uri: URLBuilder)
     (successReads: Decoder[T], failReads: Decoder[E])
     (errorFormatter: String => Future[Either[E, T]])(resources: AppResources): Future[Either[E, T]] = {
-    implicit val AppResources(system, mat, ec) = resources
+    import resources._
 
     shutdownActorSystem(sendAndParseTo(uri)(successReads, failReads)(errorFormatter))
   }
@@ -103,5 +103,9 @@ object DomainParseService {
   def apply() = new DomainParseService(new AsyncRequestService())
   def apply(asyncService: AsyncRequestService) = new DomainParseService(asyncService)
 
-  case class AppResources(system: ActorSystem, mat: ActorMaterializer, ec: ExecutionContext)
+  trait AppResources {
+    implicit val actorSystem: ActorSystem
+    implicit val materializer: ActorMaterializer
+    implicit val executionContext: ExecutionContext
+  }
 }
