@@ -23,7 +23,7 @@ abstract class FacebookInternals {
     domainParing.httpResponseToDomain(uri)(decoders(reads), FacebookAppResources())
   }
 
-  private def decoders[A](reads: Decoder[A]) = Decoders()(reads, decodeOauthError)
+  private[this] def decoders[A](reads: Decoder[A]) = Decoders()(reads, decodeOauthError)
 }
 
 trait HasStringValue{

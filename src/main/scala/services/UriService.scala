@@ -85,13 +85,13 @@ class UriService(clientId: FacebookClientId, appSecret: FacebookAppSecret) {
               attributes  : Seq[FacebookUserAttribute]) =
     manyParams(withAccessToken(accessToken).withPathSegments(userId.show), attributes)
 
-  private def manyParams(url: URLBuilder, attr: Seq[HasStringValue]) =
+  private[this] def manyParams(url: URLBuilder, attr: Seq[HasStringValue]) =
     url.withQueryParameters(Seq() ++ many("fields", attr):_*)
 
-  private def many(key: String, attr: Seq[HasStringValue]) =
+  private[this] def many(key: String, attr: Seq[HasStringValue]) =
     if (attr.nonEmpty) key -> commaSeparated(attr) some else none
 
-  private def commaSeparated(permissions: Seq[HasStringValue]) = permissions.map(_.show).mkString(",")
+  private[this] def commaSeparated(permissions: Seq[HasStringValue]) = permissions.map(_.show).mkString(",")
 
 }
 
