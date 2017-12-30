@@ -50,7 +50,7 @@ object FacebookClient {
     * @param value token sting value
     * @return FacebookAccessToken
     */
-  def accessToken(value: String) = FacebookAccessToken(TokenValue(value), UserAccessToken.NotSpecified)
+  def accessToken(value: String) = FacebookAccessToken(TokenValue(value), UserAccessToken.notSpecified)
 
   type AccessToken = FacebookAccessToken
   type Application = FacebookApplication

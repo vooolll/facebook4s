@@ -30,7 +30,7 @@ final case class UserAccessToken(
   expiresIn      : FiniteDuration) extends FacebookTokenType
 
 object UserAccessToken {
-  def NotSpecified = UserAccessToken("bearer", 0.seconds)
+  val notSpecified = UserAccessToken("bearer", 0.seconds)
 }
 
 /**
