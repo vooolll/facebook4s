@@ -16,3 +16,7 @@ class FacebookAppResources extends AppResources {
   override implicit val executionContext: ExecutionContext = actorSystem.dispatcher
   override implicit val materializer: ActorMaterializer = ActorMaterializer()
 }
+
+object FacebookAppResources {
+  def apply(): FacebookAppResources = new FacebookAppResources()
+}

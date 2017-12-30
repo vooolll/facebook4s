@@ -74,7 +74,7 @@ class DomainParsing(asyncRequest: AsyncRequestService) extends FailFastCirceSupp
 
 object DomainParsing {
   def apply(asyncRequest: AsyncRequestService): DomainParsing = new DomainParsing(asyncRequest)
-  def apply(): DomainParsing = new DomainParsing(new AsyncRequestService)
+  def apply(): DomainParsing = new DomainParsing(AsyncRequestService())
 }
 
 case class Decoders[A, B <: HasFacebookError](implicit val success: Decoder[A], failure: Decoder[B])

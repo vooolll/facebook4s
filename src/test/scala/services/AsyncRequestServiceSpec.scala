@@ -4,8 +4,8 @@ import akka.http.scaladsl.model.StatusCodes
 import base.AsyncSpec
 
 class AsyncRequestServiceSpec extends AsyncSpec {
-  implicit val appResources = new FacebookAppResources()
-  val asyncRequestService = new AsyncRequestService()
+  implicit val appResources = FacebookAppResources()
+  val asyncRequestService = AsyncRequestService()
   
   implicit val ec = executionContext
 

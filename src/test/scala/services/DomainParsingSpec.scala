@@ -11,7 +11,7 @@ class DomainParsingSpec  extends AsyncWordSpec with Matchers with MockitoSugar {
 
   "DomainParseService" should {
     "terminate actor system after parsing" in {
-      val resources: AppResources = new FacebookAppResources()
+      val resources: AppResources = FacebookAppResources()
 
       val domainEntity = domainService.httpResponseToDomainResult(uriService.appTokenUri)(
         Decoders()(decodeAppAccessToken, decodeOauthError), resources)

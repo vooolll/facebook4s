@@ -14,9 +14,8 @@ class AsyncRequestService() {
     import appResources._
     Http().singleRequest(HttpRequest(uri = url.toString()))(materializer)
   }
+}
 
-  def sendRequest(url: String)(implicit appResources: AppResources): Future[HttpResponse] = {
-    import appResources._
-    Http().singleRequest(HttpRequest(uri = url))(materializer)
-  }
+object AsyncRequestService {
+  def apply(): AsyncRequestService = new AsyncRequestService()
 }
