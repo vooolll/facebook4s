@@ -1,37 +1,24 @@
 package services
 
-import cats.syntax.either._
-import domain.oauth.{FacebookAppSecret, FacebookClientId, FacebookError, FacebookOauthError}
+import domain.oauth.{FacebookAppSecret, FacebookClientId}
 import io.circe.Decoder
 import org.f100ded.scalaurlbuilder.URLBuilder
 import serialization.FacebookDecoders.decodeOauthError
-import services.DomainParseService.FacebookAppResources
-
-import scala.concurrent.Future
 
 abstract class FacebookInternals {
   val clientId: FacebookClientId
   val appSecret: FacebookAppSecret
 
-  val domainParseService = DomainParseService()
+  val domainParing = new DomainParsing(new AsyncRequestService())
 
   val uriService = UriService(clientId, appSecret)
 
-  import domainParseService._
-
-  /**
-    * @param message error message
-    * @return Future FacebookOauthError
-    */
-  def facebookError(message: String) = Future.successful(FacebookOauthError(FacebookError(message)).asLeft)
-
-
   def sendRequest[A](uri: URLBuilder)(implicit reads: Decoder[A]) = {
-    send(uri)(reads, decodeOauthError)(facebookError)(appResources)
+    domainParing.httpResponseToDomainResult(uri)(Decoders()(reads, decodeOauthError), appResources)
   }
 
   def sendRequestOrFail[A](uri: URLBuilder)(implicit reads: Decoder[A]) = {
-    sendOrFail(uri)(reads, decodeOauthError)(facebookError)(appResources)
+    domainParing.httpResponseToDomain(uri)(reads, appResources)
   }
 
   def appResources = new FacebookAppResources()

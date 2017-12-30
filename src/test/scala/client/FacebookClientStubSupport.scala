@@ -6,12 +6,11 @@ import akka.stream.ActorMaterializer
 import config.FacebookConfig.{appSecret, clientId}
 import org.f100ded.scalaurlbuilder.URLBuilder
 import org.mockito.Matchers.anyObject
-import org.mockito.{Matchers => M}
 import org.mockito.Mockito._
+import org.mockito.{Matchers => M}
 import org.scalatest._
 import org.scalatest.mockito.MockitoSugar
-import services.DomainParseService.AppResources
-import services.{AsyncRequestService, DomainParseService, FacebookInternals}
+import services.{AppResources, AsyncRequestService, DomainParsing, FacebookInternals}
 
 import scala.concurrent.Future
 import scala.io.Source
@@ -74,7 +73,7 @@ trait ClientProbe extends FacebookInternals with MockitoSugar {
     )
   }
 
-  override val domainParseService = new DomainParseService(mockAsyncRequestService)
+  override val domainParing = new DomainParsing(mockAsyncRequestService)
 }
 
 object ClientProbe {

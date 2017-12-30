@@ -2,7 +2,6 @@ package services
 
 import akka.http.scaladsl.model.StatusCodes
 import base.AsyncSpec
-import services.DomainParseService.FacebookAppResources
 
 class AsyncRequestServiceSpec extends AsyncSpec {
   implicit val appResources = new FacebookAppResources()
