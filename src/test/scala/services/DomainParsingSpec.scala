@@ -6,7 +6,7 @@ import serialization.FacebookDecoders._
 
 class DomainParsingSpec  extends AsyncWordSpec with Matchers with MockitoSugar {
 
-  val domainService = new DomainParsing(new AsyncRequestService())
+  val domainService = DomainParsing()
   val uriService = UriService()
 
   "DomainParseService" should {

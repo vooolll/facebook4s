@@ -7,7 +7,6 @@ import config.FacebookConfig.{appSecret, clientId}
 import org.f100ded.scalaurlbuilder.URLBuilder
 import org.mockito.Matchers.anyObject
 import org.mockito.Mockito._
-import org.mockito.{Matchers => M}
 import org.scalatest._
 import org.scalatest.mockito.MockitoSugar
 import services.{AppResources, AsyncRequestService, DomainParsing, FacebookInternals}
@@ -73,7 +72,7 @@ trait ClientProbe extends FacebookInternals with MockitoSugar {
     )
   }
 
-  override val domainParing = new DomainParsing(mockAsyncRequestService)
+  override val domainParing = DomainParsing(mockAsyncRequestService)
 }
 
 object ClientProbe {
