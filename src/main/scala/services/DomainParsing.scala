@@ -14,7 +14,8 @@ class DomainParsing(asyncRequest: AsyncRequestService) extends FailFastCirceSupp
 
   def httpResponseToDomain[A, B <: HasFacebookError](url: URLBuilder)
     (implicit entityDecoder: Decoders[A, B], appResources: AppResources): Future[A] = {
-    shutdownActorSystem(responseToDomain(url))
+    import appResources.executionContext
+    shutdownActorSystem(responseToDomainResult(url) map valueOrException)
   }
 
   def httpResponseToDomainResult[A, B <: HasFacebookError](url: URLBuilder)
@@ -31,16 +32,7 @@ class DomainParsing(asyncRequest: AsyncRequestService) extends FailFastCirceSupp
     } yield domain
   }
 
-  def responseToDomain[A, B <: HasFacebookError](url: URLBuilder)
-    (implicit entityDecoder: Decoders[A, B], appResources: AppResources): Future[A] = {
-    import appResources._
-    for {
-      httpResponse <- asyncRequest.sendRequest(url)
-      domain       <- parseResult(responseEntityResult(httpResponse))
-    } yield valueOrException(domain)
-  }
-
-  def valueOrException[A, B <: HasFacebookError](result: Either[B, A]): A = result match {
+  private def valueOrException[A, B <: HasFacebookError](result: Either[B, A]): A = result match {
     case Right(value) => value
     case Left(error)  => throw new RuntimeException(error.error.message)
   }
