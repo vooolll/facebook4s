@@ -23,7 +23,7 @@ class DomainParsing(asyncRequest: AsyncRequestService) extends FailFastCirceSupp
     shutdownActorSystem(responseToDomainResult(url))
   }
 
-  def responseToDomainResult[A, B <: HasFacebookError](url: URLBuilder)
+  private[this] def responseToDomainResult[A, B <: HasFacebookError](url: URLBuilder)
     (implicit entityDecoder: Decoders[A, B], appResources: AppResources): Future[Either[B, A]] = {
     import appResources._
     for {
@@ -32,12 +32,12 @@ class DomainParsing(asyncRequest: AsyncRequestService) extends FailFastCirceSupp
     } yield domain
   }
 
-  private def valueOrException[A, B <: HasFacebookError](result: Either[B, A]): A = result match {
+  private[this] def valueOrException[A, B <: HasFacebookError](result: Either[B, A]): A = result match {
     case Right(value) => value
     case Left(error)  => throw new RuntimeException(error.error.message)
   }
 
-  private def responseEntityResult(response: HttpResponse): Either[HttpEntity, HttpEntity] = {
+  private[this] def responseEntityResult(response: HttpResponse): Either[HttpEntity, HttpEntity] = {
     response.status match {
       case StatusCodes.OK                  => response.entity.asRight
       case StatusCodes.BadRequest          => response.entity.asLeft
@@ -46,7 +46,7 @@ class DomainParsing(asyncRequest: AsyncRequestService) extends FailFastCirceSupp
     }
   }
 
-  private def parse[A](httpEntity: HttpEntity)
+  private[this] def parse[A](httpEntity: HttpEntity)
     (implicit decoder: Decoder[A], appResources: AppResources): Future[A] = {
     import appResources._
     Unmarshal[HttpEntity](httpEntity.withContentType(ContentTypes.`application/json`)).to[A].recover{
@@ -54,7 +54,7 @@ class DomainParsing(asyncRequest: AsyncRequestService) extends FailFastCirceSupp
     }
   }
 
-  private def parseResult[A, B <: HasFacebookError](httpEntityResult: Either[HttpEntity, HttpEntity])
+  private[this] def parseResult[A, B <: HasFacebookError](httpEntityResult: Either[HttpEntity, HttpEntity])
     (implicit decoders: Decoders[A, B], appResources: AppResources): Future[Either[B, A]] = {
     import appResources._
     import decoders._
@@ -65,7 +65,7 @@ class DomainParsing(asyncRequest: AsyncRequestService) extends FailFastCirceSupp
     }
   }
 
-  private def shutdownActorSystem[A](f: Future[A])(implicit appResources: AppResources) = {
+  private[this] def shutdownActorSystem[A](f: Future[A])(implicit appResources: AppResources) = {
     import appResources._
     f.onComplete(_ => actorSystem.terminate())
     f
