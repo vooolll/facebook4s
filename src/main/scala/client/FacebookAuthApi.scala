@@ -50,9 +50,8 @@ trait FacebookAuthApi extends FacebookInternals {
     * @param longLivedTokenValue long lived user access token value
     * @return Either future value of facebook client code or FacebookOauthError
     */
-  def clientCodeResult(longLivedTokenValue: String): AsyncClientCodeResult = {
+  def clientCodeResult(longLivedTokenValue: String): AsyncClientCodeResult =
     sendRequest(accessTokenCodeUri(longLivedTokenValue))(decodeClientCode)
-  }
 
   /**
     * @param code client code

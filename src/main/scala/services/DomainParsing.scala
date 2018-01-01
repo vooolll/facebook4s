@@ -49,7 +49,7 @@ class DomainParsing(asyncRequest: AsyncRequest) extends FailFastCirceSupport {
   private[this] def parse[A](httpEntity: HttpEntity)
     (implicit decoder: Decoder[A], appResources: AppResources): Future[A] = {
     import appResources._
-    Unmarshal[HttpEntity](httpEntity.withContentType(ContentTypes.`application/json`)).to[A].recover{
+    Unmarshal[HttpEntity](httpEntity.withContentType(ContentTypes.`application/json`)).to[A].recover {
       case e => throw new RuntimeException(e.getLocalizedMessage)
     }
   }
