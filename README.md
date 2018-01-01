@@ -289,7 +289,6 @@ facebookClient.userProfileResult(userId, facebookAccessToken) map {
 }
 ```
 
-
 ### Api references
 * [FacebookClient][2]
 * [FacebookAccessToken][3]
@@ -300,6 +299,12 @@ facebookClient.userProfileResult(userId, facebookAccessToken) map {
 * [FacebookRedirectUri][7]
 * [FacebookAppSecret][8]
 * [FacebookOauthError][12]
+
+### Release process
+* Update build sbt with new version
+* Enter sbt shell
+* Run publishSigned
+* Run sonatypeRelease
 
 ### License
 
