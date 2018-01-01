@@ -4,6 +4,7 @@ import cats.implicits._
 import config.FacebookConfig.{redirectUri, version}
 import config.FacebookConstants
 import config.FacebookConstants._
+import domain.HasStringValue
 import domain.oauth._
 import domain.permission.FacebookPermissions.FacebookPermission
 import domain.posts.FacebookPostAttributes.FacebookPostAttribute

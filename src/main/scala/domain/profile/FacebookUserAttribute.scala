@@ -1,6 +1,6 @@
 package domain.profile
 
-import services.HasStringValue
+import domain.HasStringValue
 
 object FacebookUserAttribute {
   val defaultAttributeValues = Seq(

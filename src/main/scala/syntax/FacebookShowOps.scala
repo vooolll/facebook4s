@@ -1,12 +1,11 @@
 package syntax
 
 import cats.Show
-import domain.FacebookVersion
+import domain.{FacebookVersion, HasStringValue}
 import domain.oauth._
 import domain.permission.FacebookPermissions.FacebookPermission
 import domain.posts.FacebookPostId
 import domain.profile.FacebookUserId
-import services.HasStringValue
 
 /**
   * Cats show implementation for domain

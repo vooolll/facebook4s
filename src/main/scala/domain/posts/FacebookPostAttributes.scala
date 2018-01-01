@@ -1,6 +1,6 @@
 package domain.posts
 
-import services.HasStringValue
+import domain.HasStringValue
 
 object FacebookPostAttributes {
 

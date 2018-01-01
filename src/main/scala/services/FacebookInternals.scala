@@ -19,7 +19,3 @@ abstract class FacebookInternals extends FacebookUrls {
 
   private[this] def decoders[A](reads: Decoder[A]) = Decoders()(reads, decodeOauthError)
 }
-
-trait HasStringValue {
-  def value: String
-}

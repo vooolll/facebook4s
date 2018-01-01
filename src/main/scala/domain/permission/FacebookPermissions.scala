@@ -1,6 +1,6 @@
 package domain.permission
 
-import services.HasStringValue
+import domain.HasStringValue
 
 object FacebookPermissions {
 
