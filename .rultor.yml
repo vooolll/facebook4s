@@ -1,0 +1,9 @@
+architect:
+- vooolll
+docker:
+  image: hseeberger/scala-sbt
+merge:
+  script: |-
+    sbt clean test
+  commanders:
+  - vooolll
