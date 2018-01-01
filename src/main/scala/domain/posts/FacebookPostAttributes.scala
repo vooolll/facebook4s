@@ -1,12 +1,12 @@
 package domain.posts
 
-import domain.HasStringValue
+import domain.Attribute
 
 object FacebookPostAttributes {
 
   val defaultPostAttributeValues = Seq(Id, Story, CreatedTime, ObjectId, Picture, From)
 
-  trait FacebookPostAttribute extends HasStringValue
+  trait FacebookPostAttribute extends Attribute
 
   case object Id extends FacebookPostAttribute {
     override def value = "id"

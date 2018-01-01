@@ -4,7 +4,7 @@ import cats.implicits._
 import config.FacebookConfig.{redirectUri, version}
 import config.FacebookConstants
 import config.FacebookConstants._
-import domain.HasStringValue
+import domain.Attribute
 import domain.oauth._
 import domain.permission.FacebookPermissions.FacebookPermission
 import domain.posts.FacebookPostAttributes.FacebookPostAttribute
@@ -85,12 +85,12 @@ trait FacebookUrls {
               attributes  : Seq[FacebookUserAttribute]) =
     manyParams(withAccessToken(accessToken).withPathSegments(userId.show), attributes)
 
-  private[this] def manyParams(url: URLBuilder, attr: Seq[HasStringValue]) =
+  private[this] def manyParams(url: URLBuilder, attr: Seq[Attribute]) =
     url.withQueryParameters(Seq() ++ many("fields", attr):_*)
 
-  private[this] def many(key: String, attr: Seq[HasStringValue]) =
+  private[this] def many(key: String, attr: Seq[Attribute]) =
     if (attr.nonEmpty) key -> commaSeparated(attr) some else none
 
-  private[this] def commaSeparated(permissions: Seq[HasStringValue]) = permissions.map(_.show).mkString(",")
+  private[this] def commaSeparated(permissions: Seq[Attribute]) = permissions.map(_.show).mkString(",")
 
 }

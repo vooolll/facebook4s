@@ -1,5 +1,5 @@
 package domain
 
-trait HasStringValue {
+trait Attribute {
   def value: String
 }
