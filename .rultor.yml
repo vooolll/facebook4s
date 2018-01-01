@@ -4,6 +4,6 @@ docker:
   image: hseeberger/scala-sbt
 merge:
   script: |-
-    sbt clean test
+    sbt clean compile
   commanders:
   - vooolll
