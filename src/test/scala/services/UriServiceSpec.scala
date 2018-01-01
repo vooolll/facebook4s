@@ -1,5 +1,6 @@
 package services
 
+import base.TestUrls
 import cats.implicits._
 import config.FacebookConfig._
 import domain.oauth.FacebookToken
@@ -12,11 +13,9 @@ import serialization.compatibility._
 
 class UriServiceSpec extends WordSpec with Matchers {
 
-  val s = UriService()
-
   "UriService" should {
     "return url to obtain log lived uri" in {
-      s.longLivedTokenUri("test").toString() shouldBe "https://graph.facebook.com/v2.10/oauth/access_token" +
+      TestUrls.longLivedTokenUri("test").toString() shouldBe "https://graph.facebook.com/v2.10/oauth/access_token" +
         s"?client_id=${clientId.show}" +
         s"&client_secret=${appSecret.show}" +
         s"&grant_type=fb_exchange_token" +
@@ -24,13 +23,13 @@ class UriServiceSpec extends WordSpec with Matchers {
     }
 
     "return post uri" in {
-      s.postUri(FacebookPostId("postId"), userAccessToken, Nil).toString() shouldBe "https://graph.facebook.com" +
+      TestUrls.postUri(FacebookPostId("postId"), userAccessToken, Nil).toString() shouldBe "https://graph.facebook.com" +
         "/v2.10/postId?access_token=token"
     }
 
 
     "return feed uri" in {
-      s.userFeedUri(
+      TestUrls.userFeedUri(
         userAccessToken,
         FacebookUserId("me"),
         FacebookPostAttributes.defaultPostAttributeValues).toString() shouldBe "https://graph.facebook.com" +
@@ -38,14 +37,14 @@ class UriServiceSpec extends WordSpec with Matchers {
     }
 
     "return auth uri" in {
-      s.authUrl(Seq.empty).toString() shouldBe s"https://facebook.com/v2.10/dialog/oauth" +
+      TestUrls.buildAuthUrl(Seq.empty).toString() shouldBe s"https://facebook.com/v2.10/dialog/oauth" +
         s"?client_id=${clientId.show}" +
         s"&redirect_uri=http%3A%2F%2Flocalhost%3A9000%2Fredirect" +
         s"&response_type=code"
     }
 
     "return auth uri with state, response_type and permissions" in {
-      s.authUrl(
+      TestUrls.buildAuthUrl(
         permissions  = Seq(FacebookUserPosts),
         responseType = FacebookToken,
         state        = "asd".some).toString() shouldBe s"https://facebook.com/v2.10/dialog/oauth" +
@@ -57,12 +56,12 @@ class UriServiceSpec extends WordSpec with Matchers {
     }
 
     "return likes uri" in {
-      s.likesUri(FacebookPostId("postId"), userAccessToken).toString() shouldBe "https://graph.facebook.com" +
+      TestUrls.likesUri(FacebookPostId("postId"), userAccessToken).toString() shouldBe "https://graph.facebook.com" +
         "/v2.10/postId/likes?access_token=token&summary=false"
     }
 
     "return likes uri with summary" in {
-      s.likesUri(FacebookPostId("postId"), userAccessToken, summary = true).toString() shouldBe "https://graph." +
+      TestUrls.likesUri(FacebookPostId("postId"), userAccessToken, summary = true).toString() shouldBe "https://graph." +
         "facebook.com/v2.10/postId/likes?access_token=token&summary=true"
     }
 

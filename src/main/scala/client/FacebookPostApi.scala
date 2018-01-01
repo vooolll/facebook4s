@@ -15,7 +15,6 @@ trait FacebookPostApi extends FacebookInternals {
 
 
   import serialization.FacebookDecoders.decodePost
-  import uriService._
 
   /**
     * @param postId Id of facebook post alpha numeric

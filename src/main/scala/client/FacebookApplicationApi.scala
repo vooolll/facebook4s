@@ -8,7 +8,6 @@ import scala.concurrent.Future
 trait FacebookApplicationApi extends FacebookInternals {
 
   import serialization.FacebookDecoders.decodeApplication
-  import uriService._
 
   /**
     * @param applicationId Facebook application(client) id

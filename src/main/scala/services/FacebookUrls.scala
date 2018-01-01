@@ -1,7 +1,7 @@
 package services
 
 import cats.implicits._
-import config.FacebookConfig.{appSecret, clientId, redirectUri, version}
+import config.FacebookConfig.{redirectUri, version}
 import config.FacebookConstants
 import config.FacebookConstants._
 import domain.oauth._
@@ -11,29 +11,28 @@ import domain.posts.FacebookPostId
 import domain.profile.{FacebookUserAttribute, FacebookUserId}
 import org.f100ded.scalaurlbuilder.URLBuilder
 import syntax.FacebookShowOps._
-/**
-  * Service that constructs uri to facebook api
-  * @param clientId client id(application id)
-  * @param appSecret application secret
-  */
-class UriService(clientId: FacebookClientId, appSecret: FacebookAppSecret) {
 
-  val graphHostBuilder = URLBuilder(base = graphHost).withPathSegments(version.show)
-  val baseHostBuilder = URLBuilder(base = baseHost).withPathSegments(version.show)
+trait FacebookUrls {
 
-  val oauthTokenBuilder = graphHostBuilder
+  val clientId: FacebookClientId
+  val appSecret: FacebookAppSecret
+
+  lazy val graphHostBuilder = URLBuilder(base = graphHost).withPathSegments(version.show)
+  lazy val baseHostBuilder = URLBuilder(base = baseHost).withPathSegments(version.show)
+
+  lazy val oauthTokenBuilder = graphHostBuilder
     .withPathSegments(oauthAccessTokenUri)
     .withQueryParameters(
       "client_id"     -> clientId.show,
       "client_secret" -> appSecret.show)
 
-  val oauthCodeBuilder = graphHostBuilder
+  lazy val oauthCodeBuilder = graphHostBuilder
     .withPathSegments(oauthClientCodeUri)
     .withQueryParameters(
       "client_id"     -> clientId.show,
       "client_secret" -> appSecret.show)
 
-  val appTokenUri = oauthTokenBuilder.withQueryParameters("grant_type" -> "client_credentials")
+  lazy val appTokenUri = oauthTokenBuilder.withQueryParameters("grant_type" -> "client_credentials")
 
   def userTokenUri(code: String, machineId: Option[String]) = {
     val mid = machineId.map("machine_id" -> _)
@@ -69,9 +68,9 @@ class UriService(clientId: FacebookClientId, appSecret: FacebookAppSecret) {
     withAccessToken(accessToken).withPathSegments(postId.show)
       .withPathSegments(likeUri).withQueryParameters("summary" -> summary.toString)
 
-  def authUrl(permissions: Seq[FacebookPermission],
-              responseType: FacebookOauthResponseType = FacebookCode,
-              state: Option[String] = None) = {
+  def buildAuthUrl(permissions: Seq[FacebookPermission],
+                   responseType: FacebookOauthResponseType = FacebookCode,
+                   state: Option[String] = None) = {
     val params = Seq(
       "client_id"     -> clientId.show,
       "redirect_uri"  -> redirectUri.show,
@@ -93,10 +92,4 @@ class UriService(clientId: FacebookClientId, appSecret: FacebookAppSecret) {
 
   private[this] def commaSeparated(permissions: Seq[HasStringValue]) = permissions.map(_.show).mkString(",")
 
-}
-
-object UriService {
-  def apply() = new UriService(clientId, appSecret)
-
-  def apply(clientId: FacebookClientId, appSecret: FacebookAppSecret) = new UriService(clientId, appSecret)
 }

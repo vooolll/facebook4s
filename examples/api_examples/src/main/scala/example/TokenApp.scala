@@ -12,8 +12,8 @@ object TokenApp extends App {
   val facebookClient = FacebookClient()
 
   //getting request urls
-  val authUriToGetCode = facebookClient.authUrl(Seq(FacebookUserPosts))
-  val authUriToGetToken = facebookClient.authUrl(Seq(FacebookUserPosts), responseType = FacebookToken)
+  val authUriToGetCode = facebookClient.buildAuthUrl(Seq(FacebookUserPosts))
+  val authUriToGetToken = facebookClient.buildAuthUrl(Seq(FacebookUserPosts), responseType = FacebookToken)
 
   println(authUriToGetCode)
   println(authUriToGetToken)

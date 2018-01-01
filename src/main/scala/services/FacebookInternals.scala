@@ -1,19 +1,12 @@
 package services
 
-import domain.oauth.{FacebookAppSecret, FacebookClientId}
 import io.circe.Decoder
 import org.f100ded.scalaurlbuilder.URLBuilder
 import serialization.FacebookDecoders.decodeOauthError
 
-abstract class FacebookInternals {
-
-  val clientId: FacebookClientId
-
-  val appSecret: FacebookAppSecret
+abstract class FacebookInternals extends FacebookUrls {
 
   val domainParing = DomainParsing()
-
-  val uriService = UriService(clientId, appSecret)
 
   def sendRequest[A](uri: URLBuilder)(implicit reads: Decoder[A]) = {
     domainParing.httpResponseToDomainResult(uri)(decoders(reads), FacebookAppResources())

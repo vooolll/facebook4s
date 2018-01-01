@@ -13,7 +13,7 @@ object UserProfileApp extends App {
   val facebookClient = FacebookClient()
 
   //getting request urls
-  println(facebookClient.authUrl(Seq(FacebookUserPosts), responseType = FacebookToken))
+  println(facebookClient.buildAuthUrl(Seq(FacebookUserPosts), responseType = FacebookToken))
 
   val userId = FacebookUserId("499283963749541")
   val tokenStringValue = "token"

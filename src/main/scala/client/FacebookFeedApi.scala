@@ -15,7 +15,6 @@ trait FacebookFeedApi extends FacebookInternals {
   type AsyncUserFeedResult = Future[Either[ApiError, UserFeed]]
 
   import serialization.FacebookDecoders.decodeFeed
-  import uriService._
 
   /**
     * @param userId Facebook user id

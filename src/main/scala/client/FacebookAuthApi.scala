@@ -9,7 +9,6 @@ trait FacebookAuthApi extends FacebookInternals {
 
   import client.FacebookClient._
   import serialization.FacebookDecoders._
-  import uriService._
 
   /**
     * @return future application access token
@@ -79,8 +78,8 @@ trait FacebookAuthApi extends FacebookInternals {
     * @return url that can be used by user of your app log in facebook
     */
   def authUrl(permissions  : Seq[Permissions],
-              responseType : ResponseType = FacebookCode,
-              state        : Option[String] = None): String =
-    uriService.authUrl(permissions, responseType, state).toString()
+                   responseType : ResponseType = FacebookCode,
+                   state        : Option[String] = None): String =
+    buildAuthUrl(permissions, responseType, state).toString()
 
 }

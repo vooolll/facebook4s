@@ -10,7 +10,6 @@ import scala.concurrent.Future
 trait FacebookLikeApi extends FacebookInternals {
 
   import serialization.FacebookDecoders.decodeLikes
-  import uriService._
 
   type Likes = FacebookLikes
   type AsyncLikesResult = Future[Either[ApiError, Likes]]

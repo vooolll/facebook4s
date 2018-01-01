@@ -13,7 +13,6 @@ trait FacebookUserProfileApi extends FacebookInternals {
   type AsyncUserResult = Future[Either[ApiError, User]]
 
   import serialization.FacebookDecoders.decodeUser
-  import uriService._
 
   /**
     * @param userId Facebook user id
