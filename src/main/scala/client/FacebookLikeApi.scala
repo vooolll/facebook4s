@@ -11,9 +11,6 @@ trait FacebookLikeApi extends FacebookInternals {
 
   import serialization.FacebookDecoders.decodeLikes
 
-  type Likes = FacebookLikes
-  type AsyncLikesResult = Future[Either[ApiError, Likes]]
-
   /**
     * @param postId Facebook post id
     * @param accessTokenValue User access token value

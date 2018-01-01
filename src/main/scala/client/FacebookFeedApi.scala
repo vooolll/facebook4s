@@ -10,10 +10,6 @@ import scala.concurrent.Future
 
 trait FacebookFeedApi extends FacebookInternals {
 
-  type UserFeed = FacebookFeed
-  type UserId = FacebookUserId
-  type AsyncUserFeedResult = Future[Either[ApiError, UserFeed]]
-
   import serialization.FacebookDecoders.decodeFeed
 
   /**

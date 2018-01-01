@@ -2,17 +2,11 @@ package client
 
 import client.FacebookClient._
 import domain.posts.FacebookPostAttributes._
-import domain.posts._
 import services.FacebookInternals
 
 import scala.concurrent.Future
 
 trait FacebookPostApi extends FacebookInternals {
-
-  type PostId = FacebookPostId
-  type Post = FacebookPost
-  type AsyncPostResult = Future[Either[ApiError, Post]]
-
 
   import serialization.FacebookDecoders.decodePost
 

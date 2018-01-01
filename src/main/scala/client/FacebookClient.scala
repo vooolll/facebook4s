@@ -1,8 +1,11 @@
 package client
 
 import config.FacebookConfig._
+import domain.feed.FacebookFeed
+import domain.likes.FacebookLikes
 import domain.oauth._
 import domain.permission.FacebookPermissions._
+import domain.posts.{FacebookPost, FacebookPostId}
 import domain.profile._
 
 import scala.concurrent._
@@ -60,7 +63,17 @@ object FacebookClient {
   type ResponseType = FacebookOauthResponseType
   type ApplicationId = FacebookApplicationId
   type Attributes = FacebookUserAttribute
+  type User = FacebookUser
+  type UserId = FacebookUserId
+  type Post = FacebookPost
+  type PostId = FacebookPostId
+  type Likes = FacebookLikes
+  type UserFeed = FacebookFeed
 
+  type AsyncUserFeedResult = Future[Either[ApiError, UserFeed]]
+  type AsyncPostResult = Future[Either[ApiError, Post]]
+  type AsyncUserResult = Future[Either[ApiError, User]]
+  type AsyncLikesResult = Future[Either[ApiError, Likes]]
   type AsyncAccessTokenResult = Future[Either[ApiError, AccessToken]]
   type AsyncClientCodeResult = Future[Either[ApiError, ClientCode]]
   type AsyncApplicationResult = Future[Either[ApiError, Application]]
