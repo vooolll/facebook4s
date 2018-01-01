@@ -1,0 +1,9 @@
+architect:
+- vooolll
+install:
+- sudo apt-get install -y sbt
+merge:
+  script: |-
+    sbt clean test
+  commanders:
+  - vooolll
