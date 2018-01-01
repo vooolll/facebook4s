@@ -10,24 +10,24 @@ import org.f100ded.scalaurlbuilder.URLBuilder
 
 import scala.concurrent.Future
 
-class DomainParsing(asyncRequest: AsyncRequestService) extends FailFastCirceSupport {
+class DomainParsing(asyncRequest: AsyncRequest) extends FailFastCirceSupport {
 
-  def httpResponseToDomain[A, B <: HasFacebookError](url: URLBuilder)
+  def asDomain[A, B <: HasFacebookError](url: URLBuilder)
     (implicit entityDecoder: Decoders[A, B], appResources: AppResources): Future[A] = {
     import appResources.executionContext
-    shutdownActorSystem(responseToDomainResult(url) map valueOrException)
+    shutdownActorSystem(responseAsDomainResult(url) map valueOrException)
   }
 
-  def httpResponseToDomainResult[A, B <: HasFacebookError](url: URLBuilder)
+  def asDomainResult[A, B <: HasFacebookError](url: URLBuilder)
     (implicit entityDecoder: Decoders[A, B], appResources: AppResources): Future[Either[B, A]] = {
-    shutdownActorSystem(responseToDomainResult(url))
+    shutdownActorSystem(responseAsDomainResult(url))
   }
 
-  private[this] def responseToDomainResult[A, B <: HasFacebookError](url: URLBuilder)
+  private[this] def responseAsDomainResult[A, B <: HasFacebookError](url: URLBuilder)
     (implicit entityDecoder: Decoders[A, B], appResources: AppResources): Future[Either[B, A]] = {
     import appResources._
     for {
-      httpResponse <- asyncRequest.sendRequest(url)
+      httpResponse <- asyncRequest(url)
       domain       <- parseResult(responseEntityResult(httpResponse))
     } yield domain
   }
@@ -73,8 +73,8 @@ class DomainParsing(asyncRequest: AsyncRequestService) extends FailFastCirceSupp
 }
 
 object DomainParsing {
-  def apply(asyncRequest: AsyncRequestService): DomainParsing = new DomainParsing(asyncRequest)
-  def apply(): DomainParsing = new DomainParsing(AsyncRequestService())
+  def apply(asyncRequest: AsyncRequest): DomainParsing = new DomainParsing(asyncRequest)
+  def apply(): DomainParsing = new DomainParsing(AsyncRequest())
 }
 
 case class Decoders[A, B <: HasFacebookError](implicit val success: Decoder[A], failure: Decoder[B])

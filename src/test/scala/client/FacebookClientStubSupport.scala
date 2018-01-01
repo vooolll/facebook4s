@@ -9,7 +9,7 @@ import org.mockito.Matchers.anyObject
 import org.mockito.Mockito._
 import org.scalatest._
 import org.scalatest.mockito.MockitoSugar
-import services.{AppResources, AsyncRequestService, DomainParsing, FacebookInternals}
+import services.{AppResources, AsyncRequest, DomainParsing, FacebookInternals}
 
 import scala.concurrent.Future
 import scala.io.Source
@@ -39,14 +39,14 @@ trait ClientProbe extends FacebookInternals with MockitoSugar {
   import ClientProbe._
   val facebookServices = mock[FacebookInternals]
 
-  val mockAsyncRequestService = mock[AsyncRequestService]
+  val mockAsyncRequestService = mock[AsyncRequest]
 
   implicit lazy val system = ActorSystem()
   implicit lazy val mat = ActorMaterializer()
   implicit lazy val ec = system.dispatcher
 
   def mockSendWithResource(resourcePath: String) = {
-    when(mockAsyncRequestService.sendRequest(anyObject[URLBuilder])(
+    when(mockAsyncRequestService.apply(anyObject[URLBuilder])(
       anyObject[AppResources])).thenReturn(
       Future.successful(
         HttpResponse(
@@ -59,7 +59,7 @@ trait ClientProbe extends FacebookInternals with MockitoSugar {
   }
 
   def mockSendError(resourcePath: String) = {
-    when(mockAsyncRequestService.sendRequest(anyObject[URLBuilder])(
+    when(mockAsyncRequestService.apply(anyObject[URLBuilder])(
       anyObject[AppResources])).thenReturn(
       Future.successful(
         HttpResponse(
