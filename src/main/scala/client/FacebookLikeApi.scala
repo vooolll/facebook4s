@@ -1,7 +1,6 @@
 package client
 
 import client.FacebookClient._
-import domain.likes.FacebookLikes
 import domain.posts.FacebookPostId
 import services.FacebookInternals
 
