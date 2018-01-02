@@ -1,5 +1,6 @@
 package client
 
+import base.FacebookClientStubSupport
 import domain.oauth.UserAccessToken
 
 import scala.concurrent.duration.DurationInt

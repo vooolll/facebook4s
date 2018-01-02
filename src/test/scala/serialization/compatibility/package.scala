@@ -3,13 +3,15 @@ package serialization
 import java.time.{Instant, ZoneOffset}
 
 import config.FacebookConstants.dateFormat
-import domain.feed.{FacebookFeed, FacebookPaging}
-import domain.likes.{FacebookLike, FacebookLikes, FacebookLikesPaging, FacebookLikesSummary}
+import domain.feed.{FacebookFeed, FacebookFeedPaging}
+import domain.likes.{FacebookLike, FacebookLikes, FacebookLikesSummary, FacebookPaging}
 import domain.oauth._
 import domain.posts.{FacebookPost, FacebookPostId}
 import domain.profile._
 import org.apache.commons.lang3.LocaleUtils
 import cats.implicits._
+import domain.FacebookOrder
+import domain.comments._
 
 import scala.concurrent.duration._
 
@@ -68,14 +70,33 @@ package object compatibility {
         "Valeryi Baibossynov added a life event from May 2, 1993: Born on May 2, 1993.".some,
         Some(toInstant("1993-05-02T07:00:00+0000")), None, None, None)
     ),
-    FacebookPaging("https://graph.facebook.com1".some, "https://graph.facebook.com".some))
+    FacebookFeedPaging("https://graph.facebook.com1".some, "https://graph.facebook.com".some))
 
 
-  val likesSummary = FacebookLikesSummary(totalCount = 1, canLike = true, hasLikes = true)
+  val likesSummary = FacebookLikesSummary(totalCount = 1, canLike = true.some, hasLikes = true.some)
 
   val like = FacebookLike(FacebookUserId("215080582368050"), "Iana Baibossynova".some)
-  val likesPaging = FacebookLikesPaging("MTkzMDAwNzk1MDU5NTAzOAZDZD".some, "MjE1MDgwNTgyMzY4MDUw".some)
+
+  val likesPaging = FacebookPaging("MTkzMDAwNzk1MDU5NTAzOAZDZD".some, "MjE1MDgwNTgyMzY4MDUw".some)
+
   val likes = FacebookLikes(List(like), likesPaging)
+
+  val comment = FacebookComment(
+    id = FacebookCommentId("120118675447496_128078554651508"),
+    message = "Super comment".some,
+    createdTime = Some(toInstant("2017-12-25T10:23:54+0000")),
+    from = FacebookProfileId("117661112359919").some)
+
+  val commentPaging = FacebookPaging(
+    "WTI5dGJXVnVkRjlqZAFhKemIzSTZANVEk0TURjNE5UVTBOalV4TlRBNE9qRTFNVFF4T1RjME16UT0ZD".some,
+    "WTI5dGJXVnVkRjlqZAFhKemIzSTZANVEk0TURjNE5UVTBOalV4TlRBNE9qRTFNVFF4T1RjME16UT0ZD".some)
+
+  val comments = FacebookComments(List(comment), commentPaging.some)
+
+  val commentSummary = FacebookCommentSummary(
+    order = FacebookOrder.Chronological,
+    totalCount = 1,
+    canComment = true.some)
 
   def toInstant(string: String) = dateFormat.parse(string, Instant.from(_))
 

@@ -4,7 +4,7 @@ import cats.implicits._
 import config.FacebookConfig.{redirectUri, version}
 import config.FacebookConstants
 import config.FacebookConstants._
-import domain.Attribute
+import domain.FacebookAttribute
 import domain.oauth._
 import domain.permission.FacebookPermissions.FacebookPermission
 import domain.posts.FacebookPostAttributes.FacebookPostAttribute
@@ -66,11 +66,13 @@ trait FacebookUrls {
     manyParams(withAccessToken(accessToken).withPathSegments(postId.show), attributes)
 
   def likesUri(postId: FacebookPostId, accessToken: FacebookAccessToken, summary: Boolean = false) =
-    withAccessToken(accessToken).withPathSegments(postId.show)
-      .withPathSegments(likeUri).withQueryParameters("summary" -> summary.toString)
+    withSummary(edge(likeUri, postUri(postId, accessToken, Nil)), summary)
+
+  def commentsUri(postId: FacebookPostId, accessToken: FacebookAccessToken, summary: Boolean = false) =
+    withSummary(edge(commentUri, postUri(postId, accessToken, Nil)), summary)
 
   def buildAuthUrl(permissions: Seq[FacebookPermission],
-                   responseType: FacebookOauthResponseType = FacebookCode,
+                   responseType: FacebookAttribute = FacebookCode,
                    state: Option[String] = None) = {
     val params = Seq(
       "client_id"     -> clientId.show,
@@ -85,12 +87,18 @@ trait FacebookUrls {
               attributes  : Seq[FacebookUserAttribute]) =
     manyParams(withAccessToken(accessToken).withPathSegments(userId.show), attributes)
 
-  private[this] def manyParams(url: URLBuilder, attr: Seq[Attribute]) =
+  private[this] def manyParams(url: URLBuilder, attr: Seq[FacebookAttribute]) =
     url.withQueryParameters(Seq() ++ many("fields", attr):_*)
 
-  private[this] def many(key: String, attr: Seq[Attribute]) =
+  private[this] def edge(edge: String, uriBuilder: URLBuilder) =
+    uriBuilder.withPathSegments(edge)
+
+  private[this] def withSummary(uriBuilder: URLBuilder, summary: Boolean) =
+    uriBuilder.withQueryParameters("summary" -> summary.toString)
+
+  private[this] def many(key: String, attr: Seq[FacebookAttribute]) =
     if (attr.nonEmpty) key -> commaSeparated(attr) some else none
 
-  private[this] def commaSeparated(permissions: Seq[Attribute]) = permissions.map(_.show).mkString(",")
+  private[this] def commaSeparated(permissions: Seq[FacebookAttribute]) = permissions.map(_.show).mkString(",")
 
 }

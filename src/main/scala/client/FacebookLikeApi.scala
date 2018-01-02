@@ -16,7 +16,7 @@ trait FacebookLikeApi extends FacebookInternals {
     * @return Facebook likes
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
-  def likes(postId: FacebookPostId, accessTokenValue: String): Future[Likes] =
+  def likes(postId: PostId, accessTokenValue: String): Future[Likes] =
     likes(postId, accessToken(accessTokenValue), summary = false)
 
   /**
@@ -26,7 +26,7 @@ trait FacebookLikeApi extends FacebookInternals {
     * @return Facebook likes
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
-  def likes(postId: FacebookPostId, accessTokenValue: String, summary: Boolean): Future[Likes] =
+  def likes(postId: PostId, accessTokenValue: String, summary: Boolean): Future[Likes] =
     likes(postId, accessToken(accessTokenValue), summary)
 
   /**
@@ -36,7 +36,7 @@ trait FacebookLikeApi extends FacebookInternals {
     * @return Facebook likes
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
-  def likes(postId: FacebookPostId, accessToken: AccessToken, summary: Boolean): Future[Likes] =
+  def likes(postId: PostId, accessToken: AccessToken, summary: Boolean): Future[Likes] =
     sendRequestOrFail(likesUri(postId, accessToken, summary))
 
   /**
@@ -45,41 +45,41 @@ trait FacebookLikeApi extends FacebookInternals {
     * @return Facebook likes
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
-  def likes(postId: FacebookPostId, accessToken: AccessToken): Future[Likes] =
+  def likes(postId: PostId, accessToken: AccessToken): Future[Likes] =
     likes(postId, accessToken, summary = false)
 
   /**
     * @param postId Id of facebook post alpha numeric
     * @param accessTokenValue User access token value
     * @param summary Boolean flag, retrieve summary or not
-    * @return Either facebook post details or error FacebookOauthError
+    * @return Either facebook post likes or error FacebookOauthError
     */
-  def likesResult(postId: FacebookPostId, accessTokenValue: String, summary: Boolean): AsyncLikesResult =
+  def likesResult(postId: PostId, accessTokenValue: String, summary: Boolean): AsyncLikesResult =
     likesResult(postId, accessToken(accessTokenValue), summary)
 
   /**
     * @param postId Id of facebook post alpha numeric
     * @param accessTokenValue User access token value
-    * @return Either facebook post details or error FacebookOauthError
+    * @return Either facebook post likes or error FacebookOauthError
     */
-  def likesResult(postId: FacebookPostId, accessTokenValue: String): AsyncLikesResult =
+  def likesResult(postId: PostId, accessTokenValue: String): AsyncLikesResult =
     likesResult(postId, accessToken(accessTokenValue), summary = false)
 
   /**
     * @param postId Id of facebook post alpha numeric
     * @param accessToken User access token
     * @param summary Boolean flag, retrieve summary or not
-    * @return Either facebook post details or error FacebookOauthError
+    * @return Either facebook post likes or error FacebookOauthError
     */
-  def likesResult(postId: FacebookPostId, accessToken: AccessToken, summary: Boolean): AsyncLikesResult =
+  def likesResult(postId: PostId, accessToken: AccessToken, summary: Boolean): AsyncLikesResult =
     sendRequest(likesUri(postId, accessToken, summary))
 
   /**
     * @param postId Id of facebook post alpha numeric
     * @param accessToken User access token
-    * @return Either facebook post details or error FacebookOauthError
+    * @return Either facebook post likes or error FacebookOauthError
     */
-  def likesResult(postId: FacebookPostId, accessToken: AccessToken): AsyncLikesResult =
+  def likesResult(postId: PostId, accessToken: AccessToken): AsyncLikesResult =
     likesResult(postId, accessToken, summary = false)
 
 }

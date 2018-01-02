@@ -1,6 +1,7 @@
 package client
 
 import config.FacebookConfig._
+import domain.comments.FacebookComments
 import domain.feed.FacebookFeed
 import domain.likes.FacebookLikes
 import domain.oauth._
@@ -21,6 +22,7 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
   with FacebookLikeApi
   with FacebookApplicationApi
   with FacebookUserProfileApi
+  with FacebookCommentApi
 
 /**
   * Facebook client constructors and helper types
@@ -69,11 +71,13 @@ object FacebookClient {
   type PostId = FacebookPostId
   type Likes = FacebookLikes
   type UserFeed = FacebookFeed
+  type Comments = FacebookComments
 
   type AsyncUserFeedResult = Future[Either[ApiError, UserFeed]]
   type AsyncPostResult = Future[Either[ApiError, Post]]
   type AsyncUserResult = Future[Either[ApiError, User]]
   type AsyncLikesResult = Future[Either[ApiError, Likes]]
+  type AsyncCommentsResult = Future[Either[ApiError, Comments]]
   type AsyncAccessTokenResult = Future[Either[ApiError, AccessToken]]
   type AsyncClientCodeResult = Future[Either[ApiError, ClientCode]]
   type AsyncApplicationResult = Future[Either[ApiError, Application]]

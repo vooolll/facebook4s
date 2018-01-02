@@ -1,7 +1,8 @@
 package client
 
+import base.FacebookClientSupport
 import cats.syntax.either._
-import config.TestConfiguration._
+import base.TestConfiguration._
 import domain.oauth.{FacebookAppId, FacebookClientId}
 import domain.profile.FacebookApplication
 

@@ -4,7 +4,7 @@ import base._
 import domain.feed._
 import serialization.FacebookDecoders._
 
-class FacebookFeedCompatSpec extends SyncSpec with JsonSerializationSupport {
+class FeedCompatSpec extends SyncSpec with JsonSerializationSupport {
 
   val feedPath = "testdata/me_feed.json"
 

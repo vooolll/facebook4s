@@ -1,7 +1,7 @@
 package profiling
 
 import client.FacebookClient
-import config.TestConfiguration._
+import base.TestConfiguration._
 import _root_.config.FacebookConfig._
 import domain.posts.FacebookPostId
 import domain.profile.FacebookUserId

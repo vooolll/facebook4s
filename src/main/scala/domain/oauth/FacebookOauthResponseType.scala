@@ -1,9 +1,11 @@
 package domain.oauth
 
+import domain.FacebookAttribute
+
 /**
   * Trait that represents response type
   */
-trait FacebookOauthResponseType {
+trait FacebookOauthResponseType extends FacebookAttribute {
   val value: String
 }
 

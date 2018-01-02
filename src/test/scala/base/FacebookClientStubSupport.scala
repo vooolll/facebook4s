@@ -1,8 +1,9 @@
-package client
+package base
 
 import akka.actor.ActorSystem
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpResponse, StatusCodes}
 import akka.stream.ActorMaterializer
+import client.FacebookClient
 import config.FacebookConfig.{appSecret, clientId}
 import org.f100ded.scalaurlbuilder.URLBuilder
 import org.mockito.Matchers.anyObject
@@ -21,16 +22,6 @@ trait FacebookClientStubSupport extends fixture.AsyncWordSpec with Matchers {
 
   def withFixture(test: OneArgAsyncTest): FutureOutcome = {
     withFixture(test.toNoArgAsyncTest(ClientProbe()))
-  }
-
-}
-
-trait FacebookClientSupport extends fixture.AsyncWordSpec with Matchers {
-
-  type FixtureParam = FacebookClient
-
-  def withFixture(test: OneArgAsyncTest): FutureOutcome = {
-    withFixture(test.toNoArgAsyncTest(FacebookClient()))
   }
 
 }

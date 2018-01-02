@@ -1,6 +1,6 @@
 package client
 
-import base.TestUrls
+import base.{FacebookClientStubSupport, TestUrls}
 import domain.permission.FacebookPermissions.{FacebookPermission, FacebookUserPosts}
 
 class AuthUriSpec extends FacebookClientStubSupport {

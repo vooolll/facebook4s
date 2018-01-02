@@ -1,10 +1,10 @@
 package serialization.compatibility
 
-import base.SyncSpec
+import base.{JsonSerializationSupport, SyncSpec}
 import domain.oauth.FacebookClientCode
 import serialization.FacebookDecoders._
 
-class FacebookClientCodeCompatSpec extends SyncSpec with JsonSerializationSupport {
+class ClientCodeCompatSpec extends SyncSpec with JsonSerializationSupport {
 
   val clientCodePath = "testdata/client_code.json"
 

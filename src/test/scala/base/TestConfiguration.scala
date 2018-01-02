@@ -1,6 +1,7 @@
-package config
+package base
 
 import com.typesafe.config.ConfigFactory
+import config.ConfigurationDetector
 import domain.oauth.{AppAccessToken, FacebookAccessToken, TokenValue, UserAccessToken}
 
 import scala.concurrent.duration._

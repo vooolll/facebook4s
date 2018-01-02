@@ -1,8 +1,8 @@
 package client.feed
 
+import base.FacebookClientSupport
 import cats.implicits._
-import client.FacebookClientSupport
-import config.TestConfiguration._
+import base.TestConfiguration._
 
 class PostSpec extends FacebookClientSupport {
 

@@ -1,10 +1,10 @@
 package serialization.compatibility
 
-import base.SyncSpec
+import base.{JsonSerializationSupport, SyncSpec}
 import domain.profile.FacebookApplication
 import serialization.FacebookDecoders._
 
-class FacebookApplicationCompatSpec extends SyncSpec with JsonSerializationSupport {
+class ApplicationCompatSpec extends SyncSpec with JsonSerializationSupport {
 
   val applicationPath = "testdata/basic_application.json"
 

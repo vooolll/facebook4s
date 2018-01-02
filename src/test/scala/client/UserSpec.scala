@@ -2,8 +2,9 @@ package client
 
 import java.time.ZoneOffset
 
+import base.FacebookClientSupport
 import cats.implicits._
-import config.TestConfiguration._
+import base.TestConfiguration._
 import domain.profile._
 import org.apache.commons.lang3.LocaleUtils
 import serialization.compatibility._

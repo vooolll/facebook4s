@@ -1,5 +1,5 @@
 package domain
 
-trait Attribute {
+trait FacebookAttribute {
   def value: String
 }

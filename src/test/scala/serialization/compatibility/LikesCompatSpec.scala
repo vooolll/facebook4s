@@ -1,11 +1,11 @@
 package serialization.compatibility
 
-import base.SyncSpec
+import base.{JsonSerializationSupport, SyncSpec}
 import domain.likes._
 import serialization.FacebookDecoders._
 import cats.implicits._
 
-class FacebookLikesCompatSpec extends SyncSpec with JsonSerializationSupport {
+class LikesCompatSpec extends SyncSpec with JsonSerializationSupport {
 
   val likesPath = "testdata/likes.json"
   val likePath = "testdata/like.json"
@@ -23,7 +23,7 @@ class FacebookLikesCompatSpec extends SyncSpec with JsonSerializationSupport {
     }
 
     s"be compatible with $likesPagingPath" in {
-      decodeJson[FacebookLikesPaging](likesPagingPath) map(_ shouldBe likesPaging)
+      decodeJson[FacebookPaging](likesPagingPath) map(_ shouldBe likesPaging)
     }
 
     s"be compatible with $likesSummaryPath" in {

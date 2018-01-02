@@ -1,5 +1,6 @@
 package client
 
+import base.FacebookClientStubSupport
 import serialization.compatibility._
 
 class ClientCodeSpec extends FacebookClientStubSupport {

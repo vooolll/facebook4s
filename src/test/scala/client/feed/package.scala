@@ -1,6 +1,6 @@
 package client
 
-import domain.feed.{FacebookFeed, FacebookPaging}
+import domain.feed.{FacebookFeed, FacebookFeedPaging}
 import domain.posts.{FacebookPost, FacebookPostId}
 import domain.profile.{FacebookProfileId, FacebookUserId}
 import serialization.compatibility.toInstant
@@ -26,7 +26,7 @@ package object feed {
     Some("https://scontent.xx.fbcdn.net/v/t1.0-0/s130x130/25396081_117607225698641_6348338142026249400_n.jpg"),
     Some(FacebookProfileId("117656352360395")))
 
-  val paging = FacebookPaging(
+  val paging = FacebookFeedPaging(
     Some("https://graph.facebook.com/v2.11/117656352360395/feed?fields=id,story,created_time,object_id,picture,from" +
       "&access_token=EAAcAL79ZCFjMBAGMIwVasYODBBZAXi2QQmMR3R6DTBYYfAcpkftWBXGlQiFHmvZAPFd5M444mnAiwqzvS1ooziExJp9rq" +
       "zI3FFhtdzbopZCVDKObgh6ewfmDErB7PtSyGbSI1q6SEp2eQcMwq7B4rh7ZAtzxHZAhCDCDbjPV6psCwZA1I4Wcb5x&limit=25&until=15" +

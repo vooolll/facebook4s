@@ -1,17 +1,17 @@
 package client.feed
 
+import base.FacebookClientSupport
 import cats.implicits._
-import client.FacebookClientSupport
-import config.TestConfiguration._
-import domain.likes.{FacebookLike, FacebookLikes, FacebookLikesPaging, FacebookLikesSummary}
+import base.TestConfiguration._
+import domain.likes.{FacebookLike, FacebookLikes, FacebookPaging, FacebookLikesSummary}
 import domain.profile.FacebookUserId
 
 class LikeSpec extends FacebookClientSupport {
 
   val like = FacebookLike(FacebookUserId("117656352360395"), "Bob Willins".some)
-  val likePaging = FacebookLikesPaging("MTE3NjU2MzUyMzYwMzk1".some, "MTE3NjU2MzUyMzYwMzk1".some)
+  val likePaging = FacebookPaging("MTE3NjU2MzUyMzYwMzk1".some, "MTE3NjU2MzUyMzYwMzk1".some)
   val likes = FacebookLikes(List(like), likePaging)
-  val likesSummary = FacebookLikesSummary(totalCount = 1, canLike = true, hasLikes = true)
+  val likesSummary = FacebookLikesSummary(totalCount = 1, canLike = true.some, hasLikes = true.some)
 
   val likesWithSummary = likes.copy(summary = likesSummary.some)
 

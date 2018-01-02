@@ -1,6 +1,6 @@
 package domain.profile
 
-import domain.Attribute
+import domain.FacebookAttribute
 
 object FacebookUserAttribute {
   val defaultAttributeValues = Seq(
@@ -60,6 +60,6 @@ object FacebookUserAttribute {
   }
 }
 
-trait FacebookUserAttribute extends Attribute {
+trait FacebookUserAttribute extends FacebookAttribute {
   def value: String
 }

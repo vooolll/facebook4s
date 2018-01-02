@@ -4,7 +4,7 @@ import base._
 import domain.oauth._
 import serialization.FacebookDecoders._
 
-class FacebookAccessTokenCompatSpec extends SyncSpec with JsonSerializationSupport {
+class AccessTokenCompatSpec extends SyncSpec with JsonSerializationSupport {
 
   val userAccessTokenPath = "testdata/user_access_token.json"
   val appAccessTokenPath = "testdata/app_access_token.json"

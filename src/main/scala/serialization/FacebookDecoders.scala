@@ -9,6 +9,8 @@ import io.circe._
 import io.circe.Decoder._
 import cats.syntax.either._
 import config.FacebookConstants._
+import domain._
+import domain.comments._
 import domain.likes._
 import domain.posts._
 import domain.profile._
@@ -113,22 +115,22 @@ object FacebookDecoders {
     } yield FacebookPost(id, name, createdTime, objectId, picture, from)
   }
 
-  implicit val decodePaging: Decoder[FacebookPaging] =
-    Decoder.forProduct2("next", "previous")(FacebookPaging)
+  implicit val decodeFeedPaging: Decoder[FacebookFeedPaging] =
+    Decoder.forProduct2("next", "previous")(FacebookFeedPaging)
 
 
   implicit val decodeFeed: Decoder[FacebookFeed] = new Decoder[FacebookFeed] {
     override def apply(c: HCursor) = for {
       posts  <- c.get[List[FacebookPost]]("data")
-      paging <- c.get[FacebookPaging]("paging")
+      paging <- c.get[FacebookFeedPaging]("paging")
     } yield FacebookFeed(posts, paging)
   }
 
   implicit val decodeLikesSummary: Decoder[FacebookLikesSummary] = new Decoder[FacebookLikesSummary] {
     override def apply(c: HCursor) = for {
       totalCount <- c.get[Int]("total_count")
-      canLike    <- c.get[Boolean]("can_like")
-      hasLikes   <- c.get[Boolean]("has_liked")
+      canLike    <- c.get[Option[Boolean]]("can_like")
+      hasLikes   <- c.get[Option[Boolean]]("has_liked")
     } yield FacebookLikesSummary(totalCount, canLike, hasLikes)
   }
 
@@ -139,20 +141,53 @@ object FacebookDecoders {
     } yield FacebookLike(id, name)
   }
 
-  implicit val decodeLikesPaging: Decoder[FacebookLikesPaging] = new Decoder[FacebookLikesPaging] {
+  implicit val decodePaging: Decoder[FacebookPaging] = new Decoder[FacebookPaging] {
     override def apply(c: HCursor) = for {
       before <- c.downField("cursors").get[Option[String]]("before")
       after  <- c.downField("cursors").get[Option[String]]("after")
-    } yield FacebookLikesPaging(before, after)
+    } yield FacebookPaging(before, after)
   }
 
 
   implicit val decodeLikes: Decoder[FacebookLikes] = new Decoder[FacebookLikes] {
     override def apply(c: HCursor) = for {
       likes   <- c.get[List[FacebookLike]]("data")
-      paging  <- c.get[FacebookLikesPaging]("paging")
+      paging  <- c.get[FacebookPaging]("paging")
       summary <- c.get[Option[FacebookLikesSummary]]("summary")
     } yield FacebookLikes(likes, paging, summary)
+  }
+
+  implicit val decodeCommentId: Decoder[FacebookCommentId] = decodeString.map(FacebookCommentId)
+
+  implicit val decodeComment: Decoder[FacebookComment] = new Decoder[FacebookComment] {
+    override def apply(c: HCursor) = for {
+      id          <- c.get[FacebookCommentId]("id")
+      message     <- c.get[Option[String]]("message")
+      from        <- c.downField("from").get[Option[FacebookProfileId]]("id")
+      createdTime <- c.get[Option[Instant]]("created_time")
+    } yield FacebookComment(id, message, createdTime, from)
+  }
+
+  implicit val decodeOrder: Decoder[FacebookOrder] = decodeString map {
+    case "ranked"                => FacebookOrder.Ranked
+    case "chronological"         => FacebookOrder.Chronological
+    case "reverse_chronological" => FacebookOrder.ReverseChronological
+  }
+
+  implicit val decodeCommentSummary: Decoder[FacebookCommentSummary] = new Decoder[FacebookCommentSummary] {
+    override def apply(c: HCursor) = for {
+      order      <- c.get[FacebookOrder]("order")
+      totalCount <- c.get[Int]("total_count")
+      canComment <- c.get[Option[Boolean]]("can_comment")
+    } yield FacebookCommentSummary(order, totalCount, canComment)
+  }
+
+  implicit val decodeComments: Decoder[FacebookComments] = new Decoder[FacebookComments] {
+    override def apply(c: HCursor) = for {
+      comments <- c.get[List[FacebookComment]]("data")
+      paging   <- c.get[Option[FacebookPaging]]("paging")
+      summary  <- c.get[Option[FacebookCommentSummary]]("summary")
+    } yield FacebookComments(comments, paging, summary)
   }
 
 }

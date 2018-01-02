@@ -1,13 +1,13 @@
 package domain.permission
 
-import domain.Attribute
+import domain.FacebookAttribute
 
 object FacebookPermissions {
 
   /**
     * Trait that represents facebook permission - https://developers.facebook.com/docs/facebook-login/permissions/
     */
-  sealed trait FacebookPermission extends Attribute {
+  sealed trait FacebookPermission extends FacebookAttribute {
     val value: String
   }
 
