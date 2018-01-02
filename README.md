@@ -213,8 +213,18 @@ Supported `like` fields - `id`, `name`
 
 Supported `summary`(optional) fields - `total_count`, `can_like`, `has_liked`
 ```scala
-facebookClient.likes(FacebookPostId("499313270413277_527696260908311"), facebookAccessToken, summary = true).map { like =>
-  println("Like: " + like)
+facebookClient.likes(FacebookPostId("499313270413277_527696260908311"), facebookAccessToken, summary = true).map { likes =>
+  println("Like: " + likes)
+}
+```
+
+#### Post api
+Supported `comment` fields - `id`, `from`, `created_time`, `message`
+
+Supported `summary`(optional) fields - `total_count`, `order`, `can_comment`
+```scala
+facebookClient.comments(FacebookPostId("499313270413277_527696260908311"), facebookAccessToken, summary = true).map { comments =>
+  println("Like: " + comments)
 }
 ```
 
