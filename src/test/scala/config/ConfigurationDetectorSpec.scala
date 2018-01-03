@@ -28,6 +28,12 @@ class ConfigurationDetectorSpec extends WordSpec with Matchers with MockitoSugar
         an[RuntimeException] shouldBe thrownBy(envVarOrConfig(variableName, configName))
       }
     }
+
+    "return option none if no config" in {
+      new Scope with NoEnvVariable with NoConfigFromFile {
+        envVarOrConfigOptional(variableName, configName) shouldBe None
+      }
+    }
   }
 
   abstract class Scope {
