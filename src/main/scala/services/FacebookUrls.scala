@@ -38,7 +38,7 @@ trait FacebookUrls {
   def userTokenUri(code: String, machineId: Option[String]) = {
     val mid = machineId.map("machine_id" -> _)
     val params = Seq(
-      "redirect_uri"  -> redirectUri.show,
+      "redirect_uri"  -> redirect().show,
       "code"          -> code) ++ mid
     oauthTokenBuilder.withQueryParameters(params:_*)
   }
@@ -52,7 +52,7 @@ trait FacebookUrls {
 
   def accessTokenCodeUri(longLeavingTokenValue: String) = oauthCodeBuilder.withQueryParameters(
     "access_token" -> longLeavingTokenValue,
-    "redirect_uri" -> redirectUri.show)
+    "redirect_uri" -> redirect().show)
 
   def userFeedUri(accessToken : FacebookAccessToken,
                   userId      : FacebookUserId = FacebookUserId("me"),
@@ -76,7 +76,7 @@ trait FacebookUrls {
                    state: Option[String] = None) = {
     val params = Seq(
       "client_id"     -> clientId.show,
-      "redirect_uri"  -> redirectUri.show,
+      "redirect_uri"  -> redirect().show,
       "response_type" -> responseType.show
     ) ++ many("scope", permissions) ++ state.map("state" -> _)
     baseHostBuilder.withPathSegments(FacebookConstants.authUri).withQueryParameters(params:_*)
@@ -96,7 +96,11 @@ trait FacebookUrls {
   private[this] def withSummary(uriBuilder: URLBuilder, summary: Boolean) =
     uriBuilder.withQueryParameters("summary" -> summary.toString)
 
-  private[this] def many(key: String, attr: Seq[FacebookAttribute]) =
+  private[this] def redirect() = {
+    redirectUri getOrElse(throw new RuntimeException("redirect uri is not set"))
+  }
+
+  private[this] def many(key: String, attr: Seq[Attribute]) =
     if (attr.nonEmpty) key -> commaSeparated(attr) some else none
 
   private[this] def commaSeparated(permissions: Seq[FacebookAttribute]) = permissions.map(_.show).mkString(",")

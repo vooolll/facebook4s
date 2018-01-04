@@ -18,7 +18,7 @@ object FacebookConfig extends ConfigurationDetector with LazyLogging {
 
   val version = FacebookVersion("2.10")
   val clientId = FacebookClientId(envVarOrConfig("FACEBOOK_CLIENT_ID", "facebook.clientId"))
-  val redirectUri = FacebookRedirectUri(envVarOrConfig("FACEBOOK_REDIRECT_URI", "facebook.redirectUri"))
+  val redirectUri = envVarOrConfigOptional("FACEBOOK_REDIRECT_URI", "facebook.redirectUri").map(FacebookRedirectUri)
   val appSecret = FacebookAppSecret(envVarOrConfig("FACEBOOK_APP_SECRET", "facebook.appSecret"))
 
   logger.info(s"Client id - $clientId, redirect uri - $redirectUri")
@@ -49,6 +49,11 @@ trait ConfigurationDetector {
         throw new RuntimeException(msg)
     }
   }
+
+  def envVarOrConfigOptional(envVar: String, configName: String): Option[String] = {
+    Try(environmentVariable(envVar) getOrElse configuration(configName)).toOption
+  }
+
 
   /**
     * @param name OS environment variable key
