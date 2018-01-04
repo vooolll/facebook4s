@@ -12,7 +12,7 @@ Prerequisites
 ### Installation
 Add the following line to your sbt dependencies: 
 ```scala
-"com.github.vooolll" %% "facebook4s" % "0.2.1"
+"com.github.vooolll" %% "facebook4s" % "0.2.2"
 ```
 
 Note: make sure that you have in your `build.sbt`
@@ -224,7 +224,7 @@ Supported `comment` fields - `id`, `from`, `created_time`, `message`
 Supported `summary`(optional) fields - `total_count`, `order`, `can_comment`
 ```scala
 facebookClient.comments(FacebookPostId("499313270413277_527696260908311"), facebookAccessToken, summary = true).map { comments =>
-  println("Like: " + comments)
+  println("Comments: " + comments)
 }
 ```
 

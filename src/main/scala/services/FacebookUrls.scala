@@ -100,7 +100,7 @@ trait FacebookUrls {
     redirectUri getOrElse(throw new RuntimeException("redirect uri is not set"))
   }
 
-  private[this] def many(key: String, attr: Seq[Attribute]) =
+  private[this] def many(key: String, attr: Seq[FacebookAttribute]) =
     if (attr.nonEmpty) key -> commaSeparated(attr) some else none
 
   private[this] def commaSeparated(permissions: Seq[FacebookAttribute]) = permissions.map(_.show).mkString(",")
