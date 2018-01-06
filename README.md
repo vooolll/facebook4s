@@ -22,7 +22,7 @@ resolvers += Resolver.sonatypeRepo("releases")
 
 ### Useful links
 * [Examples](https://github.com/vooolll/facebook4s/tree/master/examples)
-* [Documentation (Scaladoc)](https://www.javadoc.io/doc/com.github.vooolll/facebook4s_2.12/0.2.0)
+* [Documentation (Scaladoc)](https://www.javadoc.io/doc/com.github.vooolll/facebook4s_2.12/)
 
 
 ### User guide
@@ -299,39 +299,15 @@ facebookClient.userProfileResult(userId, facebookAccessToken) map {
 }
 ```
 
-### Api references
-* [FacebookClient][2]
-* [FacebookAccessToken][3]
-* [AppAccessToken][10]
-* [UserAccessToken][11]
-* [FacebookClientId][4]
-* [FacebookClientCode][6]
-* [FacebookRedirectUri][7]
-* [FacebookAppSecret][8]
-* [FacebookOauthError][12]
-
 ### Release process
-* Update build sbt with new version
-* Enter sbt shell
-* Run publishSigned
-* Run sonatypeRelease
+* Update `build.sbt` with new version
+* Enter `sbt` shell
+* Run `publishSigned`
+* Run `sonatypeRelease`
 
 ### License
 
 Facebook4s is released under the [Apache 2 License][5].
 
-### Credits
 
-### Authors
-
-[1]: https://developers.facebook.com/docs/facebook-login/access-tokens/expiration-and-extension
-[2]: https://vooolll.github.io/facebook4s/api/FacebookClient.html
-[3]: https://vooolll.github.io/facebook4s/domain/oauth/FacebookAccessToken.html
-[4]: https://vooolll.github.io/facebook4s/domain/oauth/FacebookClientId.html
 [5]: http://www.apache.org/licenses/LICENSE-2.0.txt
-[6]: https://vooolll.github.io/facebook4s/domain/oauth/FacebookClientCode.html
-[7]: https://vooolll.github.io/facebook4s/domain/oauth/FacebookRedirectUri.html
-[8]: https://vooolll.github.io/facebook4s/domain/oauth/FacebookAppSecret.html
-[10]: https://vooolll.github.io/facebook4s/domain/oauth/AppAccessToken.html
-[11]: https://vooolll.github.io/facebook4s/domain/oauth/UserAccessToken.html
-[12]: https://vooolll.github.io/facebook4s/api/FacebookOauthError.html
