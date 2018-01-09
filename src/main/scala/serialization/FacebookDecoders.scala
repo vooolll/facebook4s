@@ -12,9 +12,11 @@ import config.FacebookConstants._
 import domain._
 import domain.comments._
 import domain.likes._
+import domain.oauth.FacebookError.FacebookErrorType
 import domain.posts._
 import domain.profile._
 import org.apache.commons.lang3._
+import FacebookErrorCodeDecoders._
 
 import scala.concurrent.duration._
 
@@ -55,11 +57,16 @@ object FacebookDecoders {
     } yield FacebookAccessToken(tokenValue, AppAccessToken(tokenType))
   }
 
-  implicit val decodeError: Decoder[FacebookError] = Decoder.forProduct1("message")(FacebookError)
+  implicit val decodeError: Decoder[FacebookError] = new Decoder[FacebookError] {
+    override def apply(c: HCursor) = for {
+      message   <- c.get[String]("message")
+      errorType <- c.get[FacebookErrorType]("code")
+    } yield FacebookError(message, errorType)
+  }
 
   implicit val decodeOauthError: Decoder[FacebookOauthError] = new Decoder[FacebookOauthError]{
     def apply(c: HCursor): Result[FacebookOauthError] = for {
-      error <- c.downField("error").as[FacebookError]
+      error <- c.get[FacebookError]("error")
     } yield FacebookOauthError(error)
   }
 
