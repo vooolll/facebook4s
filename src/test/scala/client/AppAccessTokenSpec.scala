@@ -19,7 +19,7 @@ class AppAccessTokenSpec extends AsyncSpec with FacebookClientFixture {
       facebookWrongClientSecret.appAccessTokenResult() map {
         case Right(_) => fail("right unexpected in wrong secret")
         case Left(facebookLoginError) => facebookLoginError shouldBe FacebookOauthError(
-          FacebookError("Error validating client secret."))
+          FacebookError("Error validating client secret.", FacebookError.Unknown))
       }
     }
 
@@ -27,7 +27,7 @@ class AppAccessTokenSpec extends AsyncSpec with FacebookClientFixture {
       facebookWrongClientIdAndSecret.appAccessTokenResult() map {
         case Right(_) => fail("right unexpected in wrong secret")
         case Left(facebookLoginError) => facebookLoginError shouldBe FacebookOauthError(
-          FacebookError("Invalid Client ID"))
+          FacebookError("Invalid Client ID", FacebookError.InvalidApiKey))
       }
     }
 

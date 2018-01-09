@@ -2,7 +2,7 @@ package client
 
 import domain.feed.{FacebookFeed, FacebookFeedPaging}
 import domain.posts.{FacebookPost, FacebookPostId}
-import domain.profile.{FacebookProfileId, FacebookUserId}
+import domain.profile.{FacebookProfileId, FacebookUser, FacebookUserId}
 import serialization.compatibility.toInstant
 
 package object feed {
@@ -41,12 +41,19 @@ package object feed {
   val feed = FacebookFeed(List(post, realPost1), paging)
 
 
-  implicit class FacebookPostWithoutLinks(post: FacebookPost) {
-    def withoutQueryParams = post.copy(picture = post.picture.map(_.takeWhile(_ != '?')))
+  implicit class FacebookPostWithoutQuery(post: FacebookPost) {
+    def withoutQueryParams = post.copy(picture = post.picture.map(withoutQuery))
   }
 
-  implicit class FacebookFeedWithoutLinks(feed: FacebookFeed) {
-    def postsWithoutQueryParams = feed.copy(posts = feed.posts.map(_.withoutQueryParams))
+  implicit class FacebookFeedWithoutQuery(feed: FacebookFeed) {
+    def pictureWithoutQueryParams = feed.copy(posts = feed.posts.map(_.withoutQueryParams))
   }
+
+  implicit class FacebookUserWithoutQuery(user: FacebookUser) {
+    def withoutQueryParams = user.copy(cover = user.cover.map(cover =>
+      cover.copy(source = withoutQuery(cover.source))))
+  }
+
+  private[this] def withoutQuery(s: String) = s.takeWhile(_ != '?')
 
 }

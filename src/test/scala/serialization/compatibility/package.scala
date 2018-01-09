@@ -59,7 +59,8 @@ package object compatibility {
   val application = FacebookApplication(FacebookAppId("1969406143275709"), "https://www.facebook.com/games/?app_id=1969406143275709",
     "testing_app")
 
-  val facebookOauthError = FacebookOauthError(FacebookError("Invalid verification code format."))
+  val facebookOauthError = FacebookOauthError(FacebookError("Invalid verification code format.",
+    FacebookError.InvalidVerificationCodeFormat))
 
   val feed = FacebookFeed(
     List(

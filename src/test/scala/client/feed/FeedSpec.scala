@@ -8,11 +8,11 @@ class FeedSpec extends FacebookClientSupport {
 
   "Facebook Graph Api" should {
     "return feed" in { c =>
-      c.feed(userId, userTokenRaw) map(_.postsWithoutQueryParams shouldBe feed)
+      c.feed(userId, userTokenRaw) map(_.pictureWithoutQueryParams shouldBe feed)
     }
 
     "return feed result" in { c =>
-      c.feedResult(userId, userTokenRaw) map(f => f.map(_.postsWithoutQueryParams) shouldBe feed.asRight)
+      c.feedResult(userId, userTokenRaw) map(f => f.map(_.pictureWithoutQueryParams) shouldBe feed.asRight)
     }
   }
 }
