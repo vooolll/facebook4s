@@ -4,7 +4,7 @@ version := "0.2.3-M1"
 
 scalaVersion := "2.12.1"
 
-resolvers += Resolver.sonatypeRepo("snapshots")
+resolvers += Resolver.sonatypeRepo("releases")
 
 publishMavenStyle := true
 
