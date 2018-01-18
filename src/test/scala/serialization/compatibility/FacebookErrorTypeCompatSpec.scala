@@ -11,7 +11,7 @@ import serialization.FacebookDecoders._
 
 class FacebookErrorTypeCompatSpec extends SyncSpec with JsonSerializationSupport {
 
-  val codes = Set(101, 102, 1, 2, 4, 17, 10, 190, 341, 368, 506, 1609005, 100, 200)
+  val codes = FacebookError.values.map(_.code)
 
   case class TestObject(message: String, code: Int)
 

@@ -3,6 +3,7 @@ package services
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpResponse, StatusCodes}
 import akka.http.scaladsl.unmarshalling.Unmarshal
 import cats.implicits._
+import com.typesafe.scalalogging.LazyLogging
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport
 import domain.oauth.HasFacebookError
 import io.circe.Decoder
@@ -10,7 +11,7 @@ import org.f100ded.scalaurlbuilder.URLBuilder
 
 import scala.concurrent.Future
 
-class DomainParsing(asyncRequest: AsyncRequest) extends FailFastCirceSupport {
+class DomainParsing(asyncRequest: AsyncRequest) extends FailFastCirceSupport with LazyLogging {
 
   def asDomain[A, B <: HasFacebookError](url: URLBuilder)
     (implicit entityDecoder: Decoders[A, B], appResources: AppResources): Future[A] = {
@@ -41,8 +42,12 @@ class DomainParsing(asyncRequest: AsyncRequest) extends FailFastCirceSupport {
     response.status match {
       case StatusCodes.OK                  => response.entity.asRight
       case StatusCodes.BadRequest          => response.entity.asLeft
-      case StatusCodes.InternalServerError => throw new RuntimeException("Internal server error")
-      case _                               => throw new RuntimeException("Unknown exception")
+      case StatusCodes.InternalServerError =>
+        logger.warn("internal server error")
+        throw new RuntimeException("Internal server error")
+      case _                               =>
+        logger.warn("unknown status code")
+        response.entity.asLeft
     }
   }
 

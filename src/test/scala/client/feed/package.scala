@@ -50,8 +50,10 @@ package object feed {
   }
 
   implicit class FacebookUserWithoutQuery(user: FacebookUser) {
-    def withoutQueryParams = user.copy(cover = user.cover.map(cover =>
-      cover.copy(source = withoutQuery(cover.source))))
+    def withoutQueryParams = {
+      user.copy(cover = user.cover.map(cover => cover.copy(source = withoutQuery(cover.source))),
+        picture = user.picture.map(pic => pic.copy(url = withoutQuery(pic.url))))
+    }
   }
 
   private[this] def withoutQuery(s: String) = s.takeWhile(_ != '?')
