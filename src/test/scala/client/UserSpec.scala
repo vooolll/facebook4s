@@ -6,6 +6,7 @@ import feed._
 import base.FacebookClientSupport
 import cats.implicits._
 import base.TestConfiguration._
+import domain.oauth.FacebookError
 import domain.profile._
 import org.apache.commons.lang3.LocaleUtils
 import serialization.compatibility._
@@ -30,6 +31,20 @@ class UserSpec extends FacebookClientSupport {
 
     "return user profile result" in { c =>
       c.userProfileResult(realUserId, userTokenRaw) map (_.map(_.withoutQueryParams) shouldBe realUser.asRight)
+    }
+
+    "return error SpecifiedObjectNotFound" in { c =>
+      c.userProfileResult(realUserId.copy(value = "asd"), userTokenRaw) map {
+        case Right(_) => fail("bad request expected")
+        case Left(e)  => e.error.errorType shouldBe FacebookError.SpecifiedObjectNotFound
+      }
+    }
+
+    "return error InvalidVerificationCodeFormat" in { c =>
+      c.userProfileResult(realUserId.copy(value = "777661112359912"), userTokenRaw) map {
+        case Right(_) => fail("bad request expected")
+        case Left(e)  => e.error.errorType shouldBe FacebookError.InvalidVerificationCodeFormat
+      }
     }
   }
 }
