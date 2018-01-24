@@ -288,7 +288,7 @@ for {
 
 
 #### Either based api
-In case you want to use `Either` based api you can use Result suffixed methods, for example if `facebookClient.userProfile`
+In case you want to use `Result`(`Either`) based api you can use Result suffixed methods, for example if `facebookClient.userProfile`
 return `Future[FacebookUser]`, then `facebookClient.userProfileResult` returns `Future[Either[FacebookOauthError, FacebookUser]]`
 
 Example:
@@ -298,6 +298,17 @@ facebookClient.userProfileResult(userId, facebookAccessToken) map {
   case Left(error) => println("Failure: " + error)
 }
 ```
+
+#### Error support in `Result` api
+
+List of supported `errorType`'s of `FacebookError` 
+```scala
+Set(InvalidApiKey, Session, Unknown, ServiceDown, TooManyCalls, UserTooManyCalls, PermissionDenied,
+    AccessTokenHasExpired, ApplicationLimitReached, Blocked, DuplicatePost,
+    ErrorPostingLink, PermissionNotGrantedOrRemoved, InvalidVerificationCodeFormat, SpecifiedObjectNotFound)
+```
+
+The list is not full, feel free to contribute by adding new error types.
 
 ### Release process
 * Update `build.sbt` with new version
