@@ -17,6 +17,7 @@ import domain.posts._
 import domain.profile._
 import org.apache.commons.lang3._
 import FacebookErrorCodeDecoders._
+import domain.albums.FacebookAlbum
 import domain.albums.image.FacebookImage
 
 import scala.concurrent.duration._
@@ -205,5 +206,14 @@ object FacebookDecoders {
       width  <- c.get[Double]("width")
     } yield FacebookImage(height, source, width)
   }
+
+  implicit val decodeFacebookAlbum: Decoder[FacebookAlbum] = new Decoder[FacebookAlbum] {
+    override def apply(c: HCursor) = for {
+      id          <- c.get[String]("id")
+      name        <- c.get[String]("name")
+      createdTime <- c.get[Instant]("created_time")
+    } yield FacebookAlbum(id, name, createdTime)
+  }
+
 
 }

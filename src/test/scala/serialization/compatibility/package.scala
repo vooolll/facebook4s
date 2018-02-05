@@ -11,6 +11,7 @@ import domain.profile._
 import org.apache.commons.lang3.LocaleUtils
 import cats.implicits._
 import domain.FacebookOrder
+import domain.albums.FacebookAlbum
 import domain.albums.image.FacebookImage
 import domain.comments._
 
@@ -103,6 +104,8 @@ package object compatibility {
   val facebookImage = FacebookImage(225,
     "https://scontent.xx.fbcdn.net/v/t1.0-0/p75x225/25396081_117607225698641_6348338142026249400_n.jpg",
     450)
+
+  val facebookAlbum = FacebookAlbum("117607235698640", "Profile Pictures", toInstant("2017-12-18T11:30:10+0000"))
 
   def toInstant(string: String) = dateFormat.parse(string, Instant.from(_))
 
