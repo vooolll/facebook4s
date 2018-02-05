@@ -1,6 +1,6 @@
 name := "facebook4s"
 
-version := "0.2.2-M1"
+version := "0.2.4-M1"
 
 scalaVersion := "2.12.1"
 
