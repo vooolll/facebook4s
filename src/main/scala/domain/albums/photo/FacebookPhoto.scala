@@ -5,8 +5,10 @@ import java.time.Instant
 import domain.albums.FacebookAlbum
 import domain.albums.image.FacebookImage
 
-case class FacebookPhoto(
-  id          : String,
+final case class FacebookPhotoId(value: String)
+
+final case class FacebookPhoto(
+  id          : FacebookPhotoId,
   createdTime : Option[Instant],
-  images      : Seq[FacebookImage],
+  images      : List[FacebookImage],
   album       : Option[FacebookAlbum])

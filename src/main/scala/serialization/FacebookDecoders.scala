@@ -17,9 +17,9 @@ import domain.posts._
 import domain.profile._
 import org.apache.commons.lang3._
 import FacebookErrorCodeDecoders._
-import domain.albums.FacebookAlbum
+import domain.albums.{FacebookAlbum, FacebookAlbumId}
 import domain.albums.image.FacebookImage
-import domain.albums.photo.FacebookPhoto
+import domain.albums.photo.{FacebookPhoto, FacebookPhotoId}
 
 import scala.concurrent.duration._
 
@@ -200,7 +200,7 @@ object FacebookDecoders {
     } yield FacebookComments(comments, paging, summary)
   }
 
-  implicit val decodeFacebookImage: Decoder[FacebookImage] = new Decoder[FacebookImage] {
+  implicit val decodeImage: Decoder[FacebookImage] = new Decoder[FacebookImage] {
     override def apply(c: HCursor) = for {
       height <- c.get[Double]("height")
       source <- c.get[String]("source")
@@ -208,17 +208,21 @@ object FacebookDecoders {
     } yield FacebookImage(height, source, width)
   }
 
-  implicit val decodeFacebookAlbum: Decoder[FacebookAlbum] = new Decoder[FacebookAlbum] {
+  implicit val decodeAlbumId: Decoder[FacebookAlbumId] = decodeString.map(FacebookAlbumId)
+
+  implicit val decodeAlbum: Decoder[FacebookAlbum] = new Decoder[FacebookAlbum] {
     override def apply(c: HCursor) = for {
-      id          <- c.get[String]("id")
+      id          <- c.get[FacebookAlbumId]("id")
       name        <- c.get[String]("name")
       createdTime <- c.get[Instant]("created_time")
     } yield FacebookAlbum(id, name, createdTime)
   }
 
-  implicit val decodeFacebookPhoto: Decoder[FacebookPhoto] = new Decoder[FacebookPhoto] {
+  implicit val decodePhotoId: Decoder[FacebookPhotoId] = decodeString.map(FacebookPhotoId)
+
+  implicit val decodePhoto: Decoder[FacebookPhoto] = new Decoder[FacebookPhoto] {
     override def apply(c: HCursor) = for {
-      id          <- c.get[String]("id")
+      id          <- c.get[FacebookPhotoId]("id")
       createdTime <- c.get[Option[Instant]]("created_time")
       images      <- c.get[List[FacebookImage]]("images")
       album       <- c.get[Option[FacebookAlbum]]("album")

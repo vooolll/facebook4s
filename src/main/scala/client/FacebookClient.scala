@@ -23,6 +23,7 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
   with FacebookApplicationApi
   with FacebookUserProfileApi
   with FacebookCommentApi
+  with FacebookPhotoApi
 
 /**
   * Facebook client constructors and helper types
