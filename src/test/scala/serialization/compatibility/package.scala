@@ -11,6 +11,7 @@ import domain.profile._
 import org.apache.commons.lang3.LocaleUtils
 import cats.implicits._
 import domain.FacebookOrder
+import domain.albums.image.FacebookImage
 import domain.comments._
 
 import scala.concurrent.duration._
@@ -98,6 +99,10 @@ package object compatibility {
     order = FacebookOrder.Chronological,
     totalCount = 1,
     canComment = true.some)
+
+  val facebookImage = FacebookImage(225,
+    "https://scontent.xx.fbcdn.net/v/t1.0-0/p75x225/25396081_117607225698641_6348338142026249400_n.jpg",
+    450)
 
   def toInstant(string: String) = dateFormat.parse(string, Instant.from(_))
 
