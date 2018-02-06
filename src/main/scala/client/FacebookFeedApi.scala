@@ -19,7 +19,7 @@ trait FacebookFeedApi extends FacebookInternals {
     * @return Facebook user feed
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
-  def feed(userId: UserId, accessToken: AccessToken, fields: Seq[FacebookPostAttribute]): Future[UserFeed] =
+  def feed(userId: UserId, accessToken: AccessToken, fields: Seq[PostAttribute]): Future[UserFeed] =
     sendRequestOrFail(userFeedUri(accessToken, userId, fields))
 
   /**
@@ -38,7 +38,7 @@ trait FacebookFeedApi extends FacebookInternals {
     * @return Facebook user feed
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
-  def feed(userId: UserId, accessTokenValue: String, fields: Seq[FacebookPostAttribute]): Future[UserFeed] =
+  def feed(userId: UserId, accessTokenValue: String, fields: Seq[PostAttribute]): Future[UserFeed] =
     feed(userId, accessToken(accessTokenValue), fields)
 
   /**
@@ -56,7 +56,7 @@ trait FacebookFeedApi extends FacebookInternals {
     * @param fields Sequence of facebook post attributes
     * @return Either facebook user feed or error FacebookOauthError
     */
-  def feedResult(userId: UserId, accessToken: AccessToken, fields: Seq[FacebookPostAttribute]): AsyncUserFeedResult =
+  def feedResult(userId: UserId, accessToken: AccessToken, fields: Seq[PostAttribute]): AsyncUserFeedResult =
     sendRequest(userFeedUri(accessToken, userId, fields))
 
   /**
@@ -73,7 +73,7 @@ trait FacebookFeedApi extends FacebookInternals {
     * @param fields Sequence of facebook post attributes
     * @return Either facebook user feed or error FacebookOauthError
     */
-  def feedResult(userId: UserId, accessTokenValue: String, fields: Seq[FacebookPostAttribute]): AsyncUserFeedResult =
+  def feedResult(userId: UserId, accessTokenValue: String, fields: Seq[PostAttribute]): AsyncUserFeedResult =
     feedResult(userId, accessToken(accessTokenValue), fields)
 
   /**

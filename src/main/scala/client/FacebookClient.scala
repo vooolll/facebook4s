@@ -8,6 +8,7 @@ import domain.feed.FacebookFeed
 import domain.likes.FacebookLikes
 import domain.oauth._
 import domain.permission.FacebookPermissions._
+import domain.posts.FacebookPostAttributes.FacebookPostAttribute
 import domain.posts.{FacebookPost, FacebookPostId}
 import domain.profile._
 
@@ -67,7 +68,6 @@ object FacebookClient {
   type Permissions = FacebookPermission
   type ResponseType = FacebookOauthResponseType
   type ApplicationId = FacebookApplicationId
-  type Attributes = FacebookUserAttribute
   type User = FacebookUser
   type UserId = FacebookUserId
   type Post = FacebookPost
@@ -75,6 +75,8 @@ object FacebookClient {
   type Likes = FacebookLikes
   type UserFeed = FacebookFeed
   type Comments = FacebookComments
+  type PhotoId = FacebookPhotoId
+  type Photo = FacebookPhoto
 
   type AsyncUserFeedResult = Future[Either[ApiError, UserFeed]]
   type AsyncPostResult = Future[Either[ApiError, Post]]
@@ -84,9 +86,9 @@ object FacebookClient {
   type AsyncAccessTokenResult = Future[Either[ApiError, AccessToken]]
   type AsyncClientCodeResult = Future[Either[ApiError, ClientCode]]
   type AsyncApplicationResult = Future[Either[ApiError, Application]]
-
-  type PhotoId = FacebookPhotoId
-  type Photo = FacebookPhoto
   type AsyncPhotoResult = Future[Either[FacebookOauthError, Photo]]
+
   type PhotoAttribute = FacebookPhotoAttribute
+  type PostAttribute = FacebookPostAttribute
+  type UserAttributes = FacebookUserAttribute
 }

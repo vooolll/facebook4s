@@ -17,7 +17,7 @@ trait FacebookPostApi extends FacebookInternals {
     * @return Facebook post details
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
-  def post(postId: PostId, accessToken: AccessToken, fields: Seq[FacebookPostAttribute]): Future[Post] =
+  def post(postId: PostId, accessToken: AccessToken, fields: Seq[PostAttribute]): Future[Post] =
     sendRequestOrFail(postUri(postId, accessToken, fields))
 
   /**
@@ -35,7 +35,7 @@ trait FacebookPostApi extends FacebookInternals {
     * @param fields Sequence of facebook post attributes
     * @return Either facebook post details or error FacebookOauthError
     */
-  def postResult(postId: PostId, accessToken: AccessToken,fields: Seq[FacebookPostAttribute]): AsyncPostResult =
+  def postResult(postId: PostId, accessToken: AccessToken,fields: Seq[PostAttribute]): AsyncPostResult =
     sendRequest(postUri(postId, accessToken, fields))
 
   /**
