@@ -86,7 +86,7 @@ object FacebookClient {
   type AsyncAccessTokenResult = Future[Either[ApiError, AccessToken]]
   type AsyncClientCodeResult = Future[Either[ApiError, ClientCode]]
   type AsyncApplicationResult = Future[Either[ApiError, Application]]
-  type AsyncPhotoResult = Future[Either[FacebookOauthError, Photo]]
+  type AsyncPhotoResult = Future[Either[ApiError, Photo]]
 
   type PhotoAttribute = FacebookPhotoAttribute
   type PostAttribute = FacebookPostAttribute

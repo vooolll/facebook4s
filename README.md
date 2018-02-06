@@ -255,6 +255,19 @@ facebookClient.userProfile(FacebookUserId("499283963749541"), "your user access 
 )
 ```
 
+#### Photo api
+
+Supported fields - `id`, `created_time`, `images`, `album`
+
+```scala
+
+facebookClient.photo(FacebookPhotoId("some photo id"), facebookAccessToken).map { photo =>
+  println("Photo: " + photo)
+}
+```
+
+
+
 #### Application api
 
 ```scala
