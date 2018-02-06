@@ -1,7 +1,8 @@
 package syntax
 
 import cats.Show
-import domain.{FacebookVersion, FacebookAttribute}
+import domain.albums.photo.FacebookPhotoId
+import domain.{FacebookAttribute, FacebookVersion}
 import domain.oauth._
 import domain.permission.FacebookPermissions.FacebookPermission
 import domain.posts.FacebookPostId
@@ -22,4 +23,5 @@ object FacebookShowOps {
   implicit val showFacebookApplicationId = Show.show[FacebookApplicationId](_.value)
   implicit val showHasStringValue = Show.show[FacebookAttribute](_.value)
   implicit val showFacebookPostId = Show.show[FacebookPostId](_.value)
+  implicit val showFacebookPhotoId = Show.show[FacebookPhotoId](_.value)
 }

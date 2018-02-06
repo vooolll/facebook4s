@@ -1,18 +1,18 @@
-package client
+package client.album
 
 import base.FacebookClientSupport
 import base.TestConfiguration.userTokenRaw
-import domain.albums.{FacebookAlbum, FacebookAlbumId}
+import cats.implicits._
 import domain.albums.image.FacebookImage
 import domain.albums.photo.{FacebookPhoto, FacebookPhotoId}
+import domain.albums.{FacebookAlbum, FacebookAlbumId}
 import serialization.compatibility._
-import cats.implicits._
 
 class PhotoSpec extends FacebookClientSupport {
 
   val photoId = FacebookPhotoId("120118675447496")
 
-  val source = "https://scontent.xx.fbcdn.net/v/t1.0-9/25398995_120118675447496_5830741756468130361_n.jpg"
+  val source = "25398995_120118675447496_5830741756468130361_n.jpg"
 
   val album = FacebookAlbum(FacebookAlbumId("120118722114158"), "Cover Photos", toInstant("2017-12-19T14:08:44+0000"))
   val photo = FacebookPhoto(
@@ -25,11 +25,11 @@ class PhotoSpec extends FacebookClientSupport {
 
   "Facebook Graph Api" should {
     "return user profile" in { c =>
-      c.photo(photoId, userTokenRaw) map (_ shouldBe photo)
+      c.photo(photoId, userTokenRaw) map (_.uriWithoutQueryParams shouldBe photo)
     }
 
     "return user profile result" in { c =>
-      c.photoResult(photoId, userTokenRaw) map (_ shouldBe photo.asRight)
+      c.photoResult(photoId, userTokenRaw) map (_.map(_.uriWithoutQueryParams) shouldBe photo.asRight)
     }
   }
 }

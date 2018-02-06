@@ -5,6 +5,8 @@ import config.FacebookConfig.{redirectUri, version}
 import config.FacebookConstants
 import config.FacebookConstants._
 import domain.FacebookAttribute
+import domain.albums.photo.FacebookPhotoAttributes.FacebookPhotoAttribute
+import domain.albums.photo.FacebookPhotoId
 import domain.oauth._
 import domain.permission.FacebookPermissions.FacebookPermission
 import domain.posts.FacebookPostAttributes.FacebookPostAttribute
@@ -64,6 +66,9 @@ trait FacebookUrls {
 
   def postUri(postId: FacebookPostId, accessToken: FacebookAccessToken, attributes: Seq[FacebookPostAttribute]) =
     manyParams(withAccessToken(accessToken).withPathSegments(postId.show), attributes)
+
+  def photoUri(photoId: FacebookPhotoId, accessToken: FacebookAccessToken, attributes: Seq[FacebookPhotoAttribute]) =
+    manyParams(withAccessToken(accessToken).withPathSegments(photoId.show), attributes)
 
   def likesUri(postId: FacebookPostId, accessToken: FacebookAccessToken, summary: Boolean = false) =
     withSummary(edge(likeUri, postUri(postId, accessToken, Nil)), summary)
