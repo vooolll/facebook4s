@@ -1,6 +1,8 @@
 package client
 
 import config.FacebookConfig._
+import domain.albums.photo.FacebookPhotoAttributes.FacebookPhotoAttribute
+import domain.albums.photo.{FacebookPhoto, FacebookPhotoId}
 import domain.comments.FacebookComments
 import domain.feed.FacebookFeed
 import domain.likes.FacebookLikes
@@ -82,4 +84,9 @@ object FacebookClient {
   type AsyncAccessTokenResult = Future[Either[ApiError, AccessToken]]
   type AsyncClientCodeResult = Future[Either[ApiError, ClientCode]]
   type AsyncApplicationResult = Future[Either[ApiError, Application]]
+
+  type PhotoId = FacebookPhotoId
+  type Photo = FacebookPhoto
+  type AsyncPhotoResult = Future[Either[FacebookOauthError, Photo]]
+  type PhotoAttribute = FacebookPhotoAttribute
 }

@@ -1,9 +1,7 @@
 package client
 
-import client.FacebookClient.{AccessToken, accessToken}
+import client.FacebookClient.{AccessToken, accessToken, _}
 import domain.albums.photo.FacebookPhotoAttributes._
-import domain.albums.photo.{FacebookPhoto, FacebookPhotoId}
-import domain.oauth.FacebookOauthError
 import services.FacebookInternals
 
 import scala.concurrent.Future
@@ -19,9 +17,9 @@ trait FacebookPhotoApi extends FacebookInternals {
     * @return future FacebookPhoto
     */
   def photo(
-    photoId     : FacebookPhotoId,
+    photoId     : PhotoId,
     accessToken : AccessToken,
-    fields      : Seq[FacebookPhotoAttribute]): Future[FacebookPhoto] =
+    fields      : Seq[PhotoAttribute]): Future[Photo] =
     sendRequestOrFail(photoUri(photoId, accessToken, fields))
 
   /**
@@ -30,8 +28,8 @@ trait FacebookPhotoApi extends FacebookInternals {
     * @return future FacebookPhoto
     */
   def photo(
-      photoId     : FacebookPhotoId,
-      accessToken : AccessToken): Future[FacebookPhoto] =
+      photoId     : PhotoId,
+      accessToken : AccessToken): Future[Photo] =
     photo(photoId, accessToken, defaultPhotoAttributeValues)
 
   /**
@@ -41,9 +39,9 @@ trait FacebookPhotoApi extends FacebookInternals {
     * @return FacebookPhoto
     */
   def photo(
-    photoId          : FacebookPhotoId,
+    photoId          : PhotoId,
     accessTokenValue : String,
-    fields           : Seq[FacebookPhotoAttribute]): Future[FacebookPhoto] =
+    fields           : Seq[PhotoAttribute]): Future[Photo] =
     photo(photoId, accessToken(accessTokenValue), fields)
 
   /**
@@ -52,8 +50,8 @@ trait FacebookPhotoApi extends FacebookInternals {
     * @return FacebookPhoto
     */
   def photo(
-    photoId          : FacebookPhotoId,
-    accessTokenValue : String): Future[FacebookPhoto] =
+    photoId          : PhotoId,
+    accessTokenValue : String): Future[Photo] =
     photo(photoId, accessTokenValue, defaultPhotoAttributeValues)
 
   /**
@@ -63,9 +61,9 @@ trait FacebookPhotoApi extends FacebookInternals {
     * @return future either FacebookPhoto or FacebookOauthError
     */
   def photoResult(
-    photoId     : FacebookPhotoId,
+    photoId     : PhotoId,
     accessToken : AccessToken,
-    fields      : Seq[FacebookPhotoAttribute]): Future[Either[FacebookOauthError, FacebookPhoto]] =
+    fields      : Seq[PhotoAttribute]): AsyncPhotoResult =
     sendRequest(photoUri(photoId, accessToken, fields))
 
   /**
@@ -74,8 +72,8 @@ trait FacebookPhotoApi extends FacebookInternals {
     * @return future either FacebookPhoto or FacebookOauthError
     */
   def photoResult(
-      photoId     : FacebookPhotoId,
-      accessToken : AccessToken): Future[Either[FacebookOauthError, FacebookPhoto]] =
+      photoId     : PhotoId,
+      accessToken : AccessToken): AsyncPhotoResult =
     photoResult(photoId, accessToken, defaultPhotoAttributeValues)
 
   /**
@@ -85,9 +83,9 @@ trait FacebookPhotoApi extends FacebookInternals {
     * @return future either FacebookPhoto or FacebookOauthError
     */
   def photoResult(
-    photoId          : FacebookPhotoId,
+    photoId          : PhotoId,
     accessTokenValue : String,
-    fields           : Seq[FacebookPhotoAttribute]): Future[Either[FacebookOauthError, FacebookPhoto]] =
+    fields           : Seq[PhotoAttribute]): AsyncPhotoResult =
     photoResult(photoId, accessToken(accessTokenValue), fields)
 
   /**
@@ -96,7 +94,7 @@ trait FacebookPhotoApi extends FacebookInternals {
     * @return future either FacebookPhoto or FacebookOauthError
     */
   def photoResult(
-    photoId          : FacebookPhotoId,
-    accessTokenValue : String): Future[Either[FacebookOauthError, FacebookPhoto]] =
+    photoId          : PhotoId,
+    accessTokenValue : String): AsyncPhotoResult =
     photoResult(photoId, accessTokenValue, defaultPhotoAttributeValues)
 }
