@@ -3,7 +3,7 @@ package client
 import base.FacebookClientSupport
 import cats.syntax.either._
 import base.TestConfiguration._
-import domain.oauth.{FacebookAppId, FacebookClientId}
+import domain.oauth.{FacebookAppId, FacebookClientId, FacebookError}
 import domain.profile.FacebookApplication
 
 class ApplicationSpec extends FacebookClientSupport {
@@ -19,6 +19,13 @@ class ApplicationSpec extends FacebookClientSupport {
 
     "get application result by id" in { c =>
       c.applicationResult(clientId, userTokenRaw) map(_ shouldBe application.asRight)
+    }
+
+    "return error InvalidVerificationCodeFormat" in { c =>
+      c.applicationResult(clientId.copy("wrong id"), userTokenRaw) map {
+        case Right(_) => fail("bad request expected")
+        case Left(e)  => e.error.errorType shouldBe FacebookError.SpecifiedObjectNotFound
+      }
     }
   }
 }

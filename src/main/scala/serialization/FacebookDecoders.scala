@@ -21,6 +21,7 @@ import domain.albums.{FacebookAlbum, FacebookAlbumId}
 import domain.albums.image.FacebookImage
 import domain.albums.photo.{FacebookPhoto, FacebookPhotoId}
 
+
 import scala.concurrent.duration._
 
 object FacebookDecoders {

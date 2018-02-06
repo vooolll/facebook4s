@@ -12,7 +12,7 @@ Prerequisites
 ### Installation
 Add the following line to your sbt dependencies: 
 ```scala
-"com.github.vooolll" %% "facebook4s" % "0.2.2"
+"com.github.vooolll" %% "facebook4s" % "0.2.3"
 ```
 
 Note: make sure that you have in your `build.sbt`
@@ -301,7 +301,7 @@ for {
 
 
 #### Either based api
-In case you want to use `Either` based api you can use Result suffixed methods, for example if `facebookClient.userProfile`
+In case you want to use `Result`(`Either`) based api you can use Result suffixed methods, for example if `facebookClient.userProfile`
 return `Future[FacebookUser]`, then `facebookClient.userProfileResult` returns `Future[Either[FacebookOauthError, FacebookUser]]`
 
 Example:
@@ -311,6 +311,17 @@ facebookClient.userProfileResult(userId, facebookAccessToken) map {
   case Left(error) => println("Failure: " + error)
 }
 ```
+
+#### Error support in `Result` api
+
+List of supported `errorType`'s of `FacebookError` 
+```scala
+Set(InvalidApiKey, Session, Unknown, ServiceDown, TooManyCalls, UserTooManyCalls, PermissionDenied,
+    AccessTokenHasExpired, ApplicationLimitReached, Blocked, DuplicatePost,
+    ErrorPostingLink, PermissionNotGrantedOrRemoved, InvalidVerificationCodeFormat, SpecifiedObjectNotFound)
+```
+
+The list is not full, feel free to contribute by adding new error types.
 
 ### Release process
 * Update `build.sbt` with new version

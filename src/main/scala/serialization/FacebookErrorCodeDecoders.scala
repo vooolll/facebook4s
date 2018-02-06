@@ -1,25 +1,31 @@
 package serialization
 
+import com.typesafe.scalalogging.LazyLogging
 import domain.oauth.FacebookError.FacebookErrorType
 import domain.oauth._
 import io.circe._
 import io.circe.Decoder._
+import FacebookError._
 
-object FacebookErrorCodeDecoders {
+object FacebookErrorCodeDecoders extends LazyLogging {
   implicit val decodeErrorType: Decoder[FacebookErrorType] = decodeInt map {
-    case 102     => FacebookError.Session
-    case 1       => FacebookError.Unknown
-    case 2       => FacebookError.ServiceDown
-    case 4       => FacebookError.TooManyCalls
-    case 17      => FacebookError.UserTooManyCalls
-    case 10      => FacebookError.PermissionDenied
-    case 190     => FacebookError.AccessTokenHasExpired
-    case 341     => FacebookError.ApplicationLimitReached
-    case 368     => FacebookError.TemporarilyBlockedForPoliciesViolations
-    case 506     => FacebookError.DuplicatePost
-    case 1609005 => FacebookError.ErrorPostingLink
-    case value if value >= 200 && value <= 299 => FacebookError.PermissionNotGrantedOrRemoved
-    case 100     => FacebookError.InvalidVerificationCodeFormat
-    case _       => FacebookError.Facebook4SInternalError
+    case InvalidApiKey.code                    => InvalidApiKey
+    case Session.code                          => Session
+    case Unknown.code                          => Unknown
+    case ServiceDown.code                      => ServiceDown
+    case TooManyCalls.code                     => TooManyCalls
+    case UserTooManyCalls.code                 => FacebookError.UserTooManyCalls
+    case PermissionDenied.code                 => PermissionDenied
+    case AccessTokenHasExpired.code            => AccessTokenHasExpired
+    case ApplicationLimitReached.code          => ApplicationLimitReached
+    case Blocked.code                          => Blocked
+    case DuplicatePost.code                    => DuplicatePost
+    case ErrorPostingLink.code                 => ErrorPostingLink
+    case value if value >= 200 && value <= 299 => PermissionNotGrantedOrRemoved
+    case InvalidVerificationCodeFormat.code    => InvalidVerificationCodeFormat
+    case SpecifiedObjectNotFound.code          => SpecifiedObjectNotFound
+    case e       =>
+      logger.warn("Unknown code : " + e)
+      FacebookError.Facebook4SUnsupportedError
   }
 }
