@@ -14,13 +14,15 @@ class FacebookErrorTypeCompatSpec extends SyncSpec with JsonSerializationSupport
   val codes = FacebookError.values.map(_.code)
 
   case class TestObject(message: String, code: Int)
+  case class TestFacebookError(error: TestObject)
 
-  implicit val decoder: Encoder[TestObject] = deriveEncoder[TestObject]
+  implicit val decodeObject: Encoder[TestObject] = deriveEncoder[TestObject]
+  implicit val decoderTestError: Encoder[TestFacebookError] = deriveEncoder[TestFacebookError]
 
   "FacebookErrorType" should {
     "be compatible with all facebook codes" in {
       codes.map { code =>
-        decodeStringJson(TestObject("any", code).asJson.toString())(decodeError)
+        decodeStringJson(TestFacebookError(TestObject("any", code)).asJson.toString())(decodeError)
       } shouldBe FacebookError.values.map(t => FacebookError("any", t).asRight)
     }
   }

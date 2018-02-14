@@ -63,7 +63,7 @@ object FacebookClient {
 
   type AccessToken = FacebookAccessToken
   type Application = FacebookApplication
-  type ApiError = FacebookOauthError
+  type ApiError = FacebookError
   type ClientCode = FacebookClientCode
   type Permissions = FacebookPermission
   type ResponseType = FacebookOauthResponseType

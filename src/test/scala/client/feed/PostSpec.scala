@@ -19,14 +19,14 @@ class PostSpec extends FacebookClientSupport {
     "return error SpecifiedObjectNotFound" in { c =>
       c.postResult(postId.copy(value = "wrong id"), userAccessToken).map {
         case Right(_) => fail("should return error")
-        case Left(e) => e.error.errorType shouldBe FacebookError.SpecifiedObjectNotFound
+        case Left(e) => e.errorType shouldBe FacebookError.SpecifiedObjectNotFound
       }
     }
 
     "return error specified InvalidVerificationCodeFormat" in { c =>
       c.postResult(postId.copy(value = "wrong"), userAccessToken).map {
         case Right(_) => fail("should return error")
-        case Left(e) => e.error.errorType shouldBe FacebookError.InvalidVerificationCodeFormat
+        case Left(e) => e.errorType shouldBe FacebookError.InvalidVerificationCodeFormat
       }
     }
   }

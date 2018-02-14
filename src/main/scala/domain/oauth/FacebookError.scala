@@ -2,13 +2,6 @@ package domain.oauth
 
 import domain.oauth.FacebookError.FacebookErrorType
 
-/**
-  * Oauth error
-  *
-  * @param error facebook error message
-  */
-case class FacebookOauthError(error: FacebookError) extends HasFacebookError
-
 
 object FacebookError {
 
@@ -88,10 +81,3 @@ object FacebookError {
   * @param message Facebook error message
   */
 case class FacebookError(message: String,  errorType: FacebookErrorType)
-
-/**
-  * Base trait for errors
-  */
-trait HasFacebookError {
-  val error: FacebookError
-}

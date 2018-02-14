@@ -36,14 +36,14 @@ class UserSpec extends FacebookClientSupport {
     "return error SpecifiedObjectNotFound" in { c =>
       c.userProfileResult(realUserId.copy(value = "asd"), userTokenRaw) map {
         case Right(_) => fail("bad request expected")
-        case Left(e)  => e.error.errorType shouldBe FacebookError.SpecifiedObjectNotFound
+        case Left(e)  => e.errorType shouldBe FacebookError.SpecifiedObjectNotFound
       }
     }
 
     "return error InvalidVerificationCodeFormat" in { c =>
       c.userProfileResult(realUserId.copy(value = "777661112359912"), userTokenRaw) map {
         case Right(_) => fail("bad request expected")
-        case Left(e)  => e.error.errorType shouldBe FacebookError.InvalidVerificationCodeFormat
+        case Left(e)  => e.errorType shouldBe FacebookError.InvalidVerificationCodeFormat
       }
     }
   }

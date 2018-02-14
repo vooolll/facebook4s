@@ -24,7 +24,7 @@ class ApplicationSpec extends FacebookClientSupport {
     "return error InvalidVerificationCodeFormat" in { c =>
       c.applicationResult(clientId.copy("wrong id"), userTokenRaw) map {
         case Right(_) => fail("bad request expected")
-        case Left(e)  => e.error.errorType shouldBe FacebookError.SpecifiedObjectNotFound
+        case Left(e)  => e.errorType shouldBe FacebookError.SpecifiedObjectNotFound
       }
     }
   }

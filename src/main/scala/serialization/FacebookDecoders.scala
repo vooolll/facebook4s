@@ -63,15 +63,9 @@ object FacebookDecoders {
 
   implicit val decodeError: Decoder[FacebookError] = new Decoder[FacebookError] {
     override def apply(c: HCursor) = for {
-      message   <- c.get[String]("message")
-      errorType <- c.get[FacebookErrorType]("code")
+      message   <- c.downField("error").get[String]("message")
+      errorType <- c.downField("error").get[FacebookErrorType]("code")
     } yield FacebookError(message, errorType)
-  }
-
-  implicit val decodeOauthError: Decoder[FacebookOauthError] = new Decoder[FacebookOauthError]{
-    def apply(c: HCursor): Result[FacebookOauthError] = for {
-      error <- c.get[FacebookError]("error")
-    } yield FacebookOauthError(error)
   }
 
   implicit val decodeInstant: Decoder[Instant] = decodeString.emap { str =>

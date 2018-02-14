@@ -13,7 +13,7 @@ class DomainParsingSpec  extends AsyncWordSpec with Matchers with MockitoSugar {
       val resources: AppResources = FacebookAppResources()
 
       val domainEntity = domainService.asDomainResult(TestUrls.appTokenUri)(
-        Decoders()(decodeAppAccessToken, decodeOauthError), resources)
+        Decoders()(decodeAppAccessToken, decodeError), resources)
       domainEntity flatMap { _ =>
         resources.actorSystem.whenTerminated.map(_ => succeed)
       }
