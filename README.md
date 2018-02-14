@@ -302,7 +302,7 @@ for {
 
 #### Either based api
 In case you want to use `Result`(`Either`) based api you can use Result suffixed methods, for example if `facebookClient.userProfile`
-return `Future[FacebookUser]`, then `facebookClient.userProfileResult` returns `Future[Either[FacebookOauthError, FacebookUser]]`
+return `Future[FacebookUser]`, then `facebookClient.userProfileResult` returns `Future[Either[FacebookError, FacebookUser]]`
 
 Example:
 ```scala

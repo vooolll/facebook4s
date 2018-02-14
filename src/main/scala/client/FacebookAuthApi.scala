@@ -42,13 +42,13 @@ trait FacebookAuthApi extends FacebookInternals {
     sendRequestOrFail(longLivedTokenUri(shortLivedTokenValue))(decodeUserAccessToken)
 
   /**
-    * @return Either future value of facebook app access token or FacebookOauthError
+    * @return Either future value of facebook app access token or FacebookError
     */
   def appAccessTokenResult(): AsyncAccessTokenResult = sendRequest(appTokenUri)(decodeAppAccessToken)
 
   /**
     * @param longLivedTokenValue long lived user access token value
-    * @return Either future value of facebook client code or FacebookOauthError
+    * @return Either future value of facebook client code or FacebookError
     */
   def clientCodeResult(longLivedTokenValue: String): AsyncClientCodeResult =
     sendRequest(accessTokenCodeUri(longLivedTokenValue))(decodeClientCode)
@@ -56,14 +56,14 @@ trait FacebookAuthApi extends FacebookInternals {
   /**
     * @param code client code
     * @param machineId optional value that helps to identify specified client
-    * @return Either future long lived user access token or FacebookOauthError
+    * @return Either future long lived user access token or FacebookError
     */
   def userAccessTokenResult(code: String, machineId: Option[String]): AsyncAccessTokenResult =
     sendRequest(userTokenUri(code, machineId))(decodeUserAccessToken)
 
   /**
     * @param shortLivedTokenValue short lived user access token
-    * @return Either future long lived user access token or FacebookOauthError
+    * @return Either future long lived user access token or FacebookError
     */
   def extendUserAccessTokenResult(shortLivedTokenValue: String): AsyncAccessTokenResult =
     sendRequest(longLivedTokenUri(shortLivedTokenValue))(decodeUserAccessToken)

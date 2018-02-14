@@ -54,7 +54,7 @@ trait FacebookFeedApi extends FacebookInternals {
     * @param userId Facebook user id
     * @param accessToken Facebook user access token with "user_posts" permission
     * @param fields Sequence of facebook post attributes
-    * @return Either facebook user feed or error FacebookOauthError
+    * @return Either facebook user feed or error FacebookError
     */
   def feedResult(userId: UserId, accessToken: AccessToken, fields: Seq[PostAttribute]): AsyncUserFeedResult =
     sendRequest(userFeedUri(accessToken, userId, fields))
@@ -62,7 +62,7 @@ trait FacebookFeedApi extends FacebookInternals {
   /**
     * @param userId Facebook user id
     * @param accessToken Facebook user access token with "user_posts" permission
-    * @return Either facebook user feed or error FacebookOauthError
+    * @return Either facebook user feed or error FacebookError
     */
   def feedResult(userId: UserId, accessToken: AccessToken): AsyncUserFeedResult =
     feedResult(userId, accessToken, defaultPostAttributeValues)
@@ -71,7 +71,7 @@ trait FacebookFeedApi extends FacebookInternals {
     * @param userId Facebook user id
     * @param accessTokenValue Facebook user access token with "user_posts" permission
     * @param fields Sequence of facebook post attributes
-    * @return Either facebook user feed or error FacebookOauthError
+    * @return Either facebook user feed or error FacebookError
     */
   def feedResult(userId: UserId, accessTokenValue: String, fields: Seq[PostAttribute]): AsyncUserFeedResult =
     feedResult(userId, accessToken(accessTokenValue), fields)
@@ -79,7 +79,7 @@ trait FacebookFeedApi extends FacebookInternals {
   /**
     * @param userId Facebook user id
     * @param accessTokenValue Facebook user access token with "user_posts" permission
-    * @return Either facebook user feed or error FacebookOauthError
+    * @return Either facebook user feed or error FacebookError
     */
   def feedResult(userId: UserId, accessTokenValue: String): AsyncUserFeedResult =
     feedResult(userId, accessTokenValue, defaultPostAttributeValues)

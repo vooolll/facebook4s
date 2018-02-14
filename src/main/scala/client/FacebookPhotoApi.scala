@@ -58,7 +58,7 @@ trait FacebookPhotoApi extends FacebookInternals {
     * @param photoId Id of facebook photo
     * @param accessToken User access token
     * @param fields Sequence of facebook photo attributes
-    * @return future either FacebookPhoto or FacebookOauthError
+    * @return future either FacebookPhoto or FacebookError
     */
   def photoResult(
     photoId     : PhotoId,
@@ -69,7 +69,7 @@ trait FacebookPhotoApi extends FacebookInternals {
   /**
     * @param photoId Id of facebook photo
     * @param accessToken User access token
-    * @return future either FacebookPhoto or FacebookOauthError
+    * @return future either FacebookPhoto or FacebookError
     */
   def photoResult(
       photoId     : PhotoId,
@@ -80,7 +80,7 @@ trait FacebookPhotoApi extends FacebookInternals {
     * @param photoId Id of facebook photo
     * @param accessTokenValue String representation of user access token
     * @param fields Sequence of facebook photo attributes
-    * @return future either FacebookPhoto or FacebookOauthError
+    * @return future either FacebookPhoto or FacebookError
     */
   def photoResult(
     photoId          : PhotoId,
@@ -91,7 +91,7 @@ trait FacebookPhotoApi extends FacebookInternals {
   /**
     * @param photoId Id of facebook photo
     * @param accessTokenValue String representation of user access token
-    * @return future either FacebookPhoto or FacebookOauthError
+    * @return future either FacebookPhoto or FacebookError
     */
   def photoResult(
     photoId          : PhotoId,
