@@ -1,12 +1,11 @@
 package serialization.compatibility
 
 import base.{JsonSerializationSupport, SyncSpec}
+import cats.implicits._
 import domain.oauth.FacebookError
 import io.circe.Encoder
 import io.circe.generic.semiauto._
 import io.circe.syntax._
-import io.circe.parser.parse
-import cats.implicits._
 import serialization.FacebookDecoders._
 
 class FacebookErrorTypeCompatSpec extends SyncSpec with JsonSerializationSupport {
@@ -22,8 +21,9 @@ class FacebookErrorTypeCompatSpec extends SyncSpec with JsonSerializationSupport
   "FacebookErrorType" should {
     "be compatible with all facebook codes" in {
       codes.map { code =>
-        decodeStringJson(TestFacebookError(TestObject("any", code)).asJson.toString())(decodeError)
-      } shouldBe FacebookError.values.map(t => FacebookError("any", t).asRight)
+        decodeStringJson(TestFacebookError(TestObject("any", code)).asJson.toString())(decodeError).getOrElse(
+          fail("decode error"))
+      } shouldBe FacebookError.values.map(t => FacebookError("any", t))
     }
   }
 
