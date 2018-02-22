@@ -70,6 +70,14 @@ object FacebookPermissions {
     final case object ReligionPolitics extends FacebookPermission {
       override val value = "user_religion_politics"
     }
+
+    final case object UserPhotos extends FacebookPermission {
+      override val value = "user_photos"
+    }
+
+    final case object UserVideos extends FacebookPermission {
+      override val value = "user_videos"
+    }
   }
 
 }
