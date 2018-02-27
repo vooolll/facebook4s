@@ -1,5 +1,6 @@
 package serialization
 
+import java.net.URL
 import java.time._
 import java.util.Locale
 
@@ -21,7 +22,6 @@ import domain.albums.{FacebookAlbum, FacebookAlbumId}
 import domain.albums.image.FacebookImage
 import domain.albums.photo.{FacebookPhoto, FacebookPhotoId}
 
-
 import scala.concurrent.duration._
 
 object FacebookDecoders {
@@ -32,6 +32,8 @@ object FacebookDecoders {
     case "male"   => Gender.Male
     case "female" => Gender.Female
   }
+
+  implicit val decodeUrl: Decoder[URL] = decodeString.map(s => new URL(s))
 
   implicit val decodeProfileId: Decoder[FacebookProfileId] = decodeString.map(FacebookProfileId)
 
@@ -198,7 +200,7 @@ object FacebookDecoders {
   implicit val decodeImage: Decoder[FacebookImage] = new Decoder[FacebookImage] {
     override def apply(c: HCursor) = for {
       height <- c.get[Double]("height")
-      source <- c.get[String]("source")
+      source <- c.get[URL]("source")
       width  <- c.get[Double]("width")
     } yield FacebookImage(height, source, width)
   }

@@ -1,5 +1,7 @@
 package client.album
 
+import java.net.URL
+
 import base.FacebookClientSupport
 import base.TestConfiguration.userTokenRaw
 import cats.implicits._
@@ -10,9 +12,11 @@ import serialization.compatibility._
 
 class PhotoSpec extends FacebookClientSupport {
 
+  case class FacebookSimpleImage(height: Double, source: URL, width: Double)
+
   val photoId = FacebookPhotoId("120118675447496")
 
-  val source = "25398995_120118675447496_5830741756468130361_n.jpg"
+  val source = new URL("http://25398995_120118675447496_5830741756468130361_n.jpg")
 
   val album = FacebookAlbum(FacebookAlbumId("120118722114158"), "Cover Photos", toInstant("2017-12-19T14:08:44+0000"))
   val photo = FacebookPhoto(

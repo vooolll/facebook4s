@@ -1,5 +1,6 @@
 package serialization
 
+import java.net.URL
 import java.time.{Instant, ZoneOffset}
 
 import config.FacebookConstants.dateFormat
@@ -103,7 +104,7 @@ package object compatibility {
     canComment = true.some)
 
   val facebookImage = FacebookImage(225,
-    "https://scontent.xx.fbcdn.net/v/t1.0-0/p75x225/25396081_117607225698641_6348338142026249400_n.jpg",
+    new URL("https://scontent.xx.fbcdn.net/v/t1.0-0/p75x225/25396081_117607225698641_6348338142026249400_n.jpg"),
     450)
 
   val facebookAlbum = FacebookAlbum(FacebookAlbumId("117607235698640"), "Profile Pictures", toInstant("2017-12-18T11:30:10+0000"))
