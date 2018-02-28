@@ -58,7 +58,6 @@ package object feed {
     }
   }
 
-  private[this] def withoutQuery(s: String) = s.takeWhile(_ != '?')
   private[this] def withoutQuery(s: URL) = new URL(s.toString.takeWhile(_ != '?'))
 
 }

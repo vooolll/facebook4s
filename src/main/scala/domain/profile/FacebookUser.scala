@@ -1,5 +1,6 @@
 package domain.profile
 
+import java.net.URL
 import java.time.{Instant, ZoneOffset}
 import java.util.Locale
 
@@ -29,7 +30,7 @@ case class FacebookUser(
   picture     : Option[FacebookUserPicture],
   firstName   : Option[String],
   lastName    : Option[String],
-  link        : Option[String],
+  link        : Option[URL],
   verified    : Option[Boolean],
   locale      : Option[Locale],
   timezone    : Option[ZoneOffset],
@@ -47,7 +48,7 @@ case class FacebookUser(
 case class FacebookUserPicture(
   height       : Double,
   isSilhouette : Boolean,
-  url          : String,
+  url          : URL,
   wight        : Double)
 
 /**
@@ -60,7 +61,7 @@ case class Cover(
   id      : String,
   offsetX : Double,
   offsetY : Double,
-  source  : String
+  source  : URL
 )
 
 /**

@@ -1,5 +1,7 @@
 package client
 
+import java.net.URL
+
 import base.FacebookClientSupport
 import cats.syntax.either._
 import base.TestConfiguration._
@@ -10,7 +12,7 @@ class ApplicationSpec extends FacebookClientSupport {
 
   val appId = FacebookAppId("1970529913214515")
   val clientId = FacebookClientId(appId.value)
-  val application = FacebookApplication(appId, "http://localhost:9000/redirect", "testing_app")
+  val application = FacebookApplication(appId, new URL("http://localhost:9000/redirect"), "testing_app")
 
   "Facebook Graph Api" should {
     "get application by id" in { c =>

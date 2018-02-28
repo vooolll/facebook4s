@@ -11,6 +11,6 @@ final case class FacebookPost(
   id          : FacebookPostId,
   story       : Option[String],
   createdTime : Option[Instant],
-  objectId    : Option[String],
+  objectId    : Option[String], // TODO: change type to MediaObjectId
   picture     : Option[URL],
   from        : Option[FacebookProfileId])
