@@ -4,7 +4,7 @@ import java.net.URL
 
 import domain.feed.{FacebookFeed, FacebookFeedPaging}
 import domain.posts.{FacebookPost, FacebookPostId}
-import domain.profile.{FacebookProfileId, FacebookUser, FacebookUserId}
+import domain.profile._
 import serialization.compatibility.toInstant
 
 package object feed {
@@ -53,11 +53,14 @@ package object feed {
 
   implicit class FacebookUserWithoutQuery(user: FacebookUser) {
     def withoutQueryParams = {
-      user.copy(cover = user.cover.map(cover => cover.copy(source = withoutQuery(cover.source))),
-        picture = user.picture.map(pic => pic.copy(url = withoutQuery(pic.url))))
+      user.copy(cover = user.cover.map(cover => withoutCoverQuery(cover)),
+        picture = user.picture.map(withoutPictureQuery))
     }
   }
 
-  private[this] def withoutQuery(s: URL) = new URL(s.toString.takeWhile(_ != '?'))
+  private[this] def withoutCoverQuery(cover: Cover) = cover.copy(source = withoutQuery(cover.source))
+  private[this] def withoutPictureQuery(pic: FacebookUserPicture) = pic.copy(url = withoutQuery(pic.url))
+
+  private[this] def withoutQuery(u: URL) = new URL(u.toString.takeWhile(_ != '?'))
 
 }
