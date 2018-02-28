@@ -12,8 +12,6 @@ import serialization.compatibility._
 
 class PhotoSpec extends FacebookClientSupport {
 
-  case class FacebookSimpleImage(height: Double, source: URL, width: Double)
-
   val photoId = FacebookPhotoId("120118675447496")
 
   val source = new URL("http://25398995_120118675447496_5830741756468130361_n.jpg")

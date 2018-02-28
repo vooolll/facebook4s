@@ -12,7 +12,7 @@ package object album {
       image.copy(source = new URL(onlyResource(image).fold("CAN'T SPLIT")(e => "http://" + e)))))
   }
 
-  private def onlyResource(image: FacebookImage) = {
+  private[this] def onlyResource(image: FacebookImage) = {
     image.source.toString.takeWhile(_ != '?').split("/").lastOption
   }
 }
