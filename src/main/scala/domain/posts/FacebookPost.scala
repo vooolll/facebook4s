@@ -1,5 +1,6 @@
 package domain.posts
 
+import java.net.URL
 import java.time.Instant
 
 import domain.profile.FacebookProfileId
@@ -11,5 +12,5 @@ final case class FacebookPost(
   story       : Option[String],
   createdTime : Option[Instant],
   objectId    : Option[String],
-  picture     : Option[String],
+  picture     : Option[URL],
   from        : Option[FacebookProfileId])

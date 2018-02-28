@@ -1,5 +1,7 @@
 package client
 
+import java.net.URL
+
 import domain.feed.{FacebookFeed, FacebookFeedPaging}
 import domain.posts.{FacebookPost, FacebookPostId}
 import domain.profile.{FacebookProfileId, FacebookUser, FacebookUserId}
@@ -15,7 +17,7 @@ package object feed {
     Some("Bob Willins updated her cover photo."),
     Some(toInstant("2017-12-19T14:08:44+0000")),
     Some("120118675447496"),
-    Some("https://scontent.xx.fbcdn.net/v/t1.0-0/s130x130/25398995_120118675447496_5830741756468130361_n.jpg"),
+    Some(new URL("https://scontent.xx.fbcdn.net/v/t1.0-0/s130x130/25398995_120118675447496_5830741756468130361_n.jpg")),
     Some(FacebookProfileId("117656352360395")))
 
   val realPost1 = FacebookPost(
@@ -23,7 +25,7 @@ package object feed {
     Some("Bob Willins updated her profile picture."),
     Some(toInstant("2017-12-18T11:30:10+0000")),
     Some("117607225698641"),
-    Some("https://scontent.xx.fbcdn.net/v/t1.0-0/s130x130/25396081_117607225698641_6348338142026249400_n.jpg"),
+    Some(new URL("https://scontent.xx.fbcdn.net/v/t1.0-0/s130x130/25396081_117607225698641_6348338142026249400_n.jpg")),
     Some(FacebookProfileId("117656352360395")))
 
   val paging = FacebookFeedPaging(
@@ -57,5 +59,6 @@ package object feed {
   }
 
   private[this] def withoutQuery(s: String) = s.takeWhile(_ != '?')
+  private[this] def withoutQuery(s: URL) = new URL(s.toString.takeWhile(_ != '?'))
 
 }

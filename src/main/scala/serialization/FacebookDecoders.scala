@@ -117,7 +117,7 @@ object FacebookDecoders {
       name        <- c.get[Option[String]]("story")
       createdTime <- c.get[Option[Instant]]("created_time")
       objectId    <- c.get[Option[String]]("object_id")
-      picture     <- c.get[Option[String]]("picture")
+      picture     <- c.get[Option[URL]]("picture")
       from        <- c.downField("from").get[Option[FacebookProfileId]]("id")
     } yield FacebookPost(id, name, createdTime, objectId, picture, from)
   }

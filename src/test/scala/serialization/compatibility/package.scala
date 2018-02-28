@@ -30,7 +30,7 @@ package object compatibility {
     story = "Valeryi Baibossynov updated his profile picture.".some,
     createdTime = Some(toInstant("2017-10-01T13:43:05+0000")),
     objectId = "513792128965391".some,
-    picture = "picture link".some,
+    picture = new URL("http://example.com").some,
     from = FacebookProfileId("499313270413277").some
   )
 
