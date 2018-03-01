@@ -170,7 +170,8 @@ object FacebookDecoders {
       message     <- c.get[Option[String]]("message")
       from        <- c.downField("from").get[Option[FacebookProfileId]]("id")
       createdTime <- c.get[Option[Instant]]("created_time")
-    } yield FacebookComment(id, message, createdTime, from)
+      parent      <- c.get[Option[FacebookCommentId]]("parent")
+    } yield FacebookComment(id, message, createdTime, from, parent)
   }
 
   implicit val decodeOrder: Decoder[FacebookOrder] = decodeString map {
