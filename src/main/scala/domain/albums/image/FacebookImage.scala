@@ -1,3 +1,5 @@
 package domain.albums.image
 
-final case class FacebookImage(height: Double, source: String, width: Double)
+import java.net.URL
+
+final case class FacebookImage(height: Double, source: URL, width: Double)

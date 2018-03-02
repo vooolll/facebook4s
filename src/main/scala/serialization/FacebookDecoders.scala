@@ -1,26 +1,26 @@
 package serialization
 
+import java.net.URL
 import java.time._
 import java.util.Locale
 
-import domain.feed._
-import domain.oauth._
-import io.circe._
-import io.circe.Decoder._
 import cats.syntax.either._
 import config.FacebookConstants._
 import domain._
-import domain.comments._
-import domain.likes._
-import domain.oauth.FacebookError.FacebookErrorType
-import domain.posts._
-import domain.profile._
-import org.apache.commons.lang3._
-import FacebookErrorCodeDecoders._
-import domain.albums.{FacebookAlbum, FacebookAlbumId}
 import domain.albums.image.FacebookImage
 import domain.albums.photo.{FacebookPhoto, FacebookPhotoId}
-
+import domain.albums.{FacebookAlbum, FacebookAlbumId}
+import domain.comments._
+import domain.feed._
+import domain.likes._
+import domain.oauth.FacebookError.FacebookErrorType
+import domain.oauth._
+import domain.posts._
+import domain.profile._
+import io.circe.Decoder._
+import io.circe._
+import org.apache.commons.lang3._
+import serialization.FacebookErrorCodeDecoders._
 
 import scala.concurrent.duration._
 
@@ -32,6 +32,8 @@ object FacebookDecoders {
     case "male"   => Gender.Male
     case "female" => Gender.Female
   }
+
+  implicit val decodeUrl: Decoder[URL] = decodeString.map(s => new URL(s))
 
   implicit val decodeProfileId: Decoder[FacebookProfileId] = decodeString.map(FacebookProfileId)
 
@@ -88,7 +90,7 @@ object FacebookDecoders {
       firstName <- c.get[Option[String]]("first_name")
       lastName  <- c.get[Option[String]]("last_name")
       verified  <- c.get[Option[Boolean]]("verified")
-      link      <- c.get[Option[String]]("link")
+      link      <- c.get[Option[URL]]("link")
       picture   <- c.downField("picture").get[Option[FacebookUserPicture]]("data")
       locale    <- c.get[Option[Locale]]("locale")
       timezone  <- c.get[Option[ZoneOffset]]("timezone")
@@ -104,7 +106,7 @@ object FacebookDecoders {
   implicit val decodeApplication: Decoder[FacebookApplication] = new Decoder[FacebookApplication] {
     override def apply(c: HCursor) = for {
       id     <- c.get[FacebookAppId]("id")
-      link   <- c.get[String]("link")
+      link   <- c.get[URL]("link")
       name   <- c.get[String]("name")
     } yield FacebookApplication(id, link, name)
   }
@@ -115,7 +117,7 @@ object FacebookDecoders {
       name        <- c.get[Option[String]]("story")
       createdTime <- c.get[Option[Instant]]("created_time")
       objectId    <- c.get[Option[String]]("object_id")
-      picture     <- c.get[Option[String]]("picture")
+      picture     <- c.get[Option[URL]]("picture")
       from        <- c.downField("from").get[Option[FacebookProfileId]]("id")
     } yield FacebookPost(id, name, createdTime, objectId, picture, from)
   }
@@ -201,7 +203,7 @@ object FacebookDecoders {
   implicit val decodeImage: Decoder[FacebookImage] = new Decoder[FacebookImage] {
     override def apply(c: HCursor) = for {
       height <- c.get[Double]("height")
-      source <- c.get[String]("source")
+      source <- c.get[URL]("source")
       width  <- c.get[Double]("width")
     } yield FacebookImage(height, source, width)
   }

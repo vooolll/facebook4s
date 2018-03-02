@@ -1,9 +1,10 @@
 package client
 
+import java.net.URL
 import domain.comments.FacebookCommentId
 import domain.feed.{FacebookFeed, FacebookFeedPaging}
 import domain.posts.{FacebookPost, FacebookPostId}
-import domain.profile.{FacebookProfileId, FacebookUser, FacebookUserId}
+import domain.profile._
 import serialization.compatibility.toInstant
 
 package object feed {
@@ -17,7 +18,7 @@ package object feed {
     Some("Bob Willins updated her cover photo."),
     Some(toInstant("2017-12-19T14:08:44+0000")),
     Some("120118675447496"),
-    Some("https://scontent.xx.fbcdn.net/v/t1.0-0/s130x130/25398995_120118675447496_5830741756468130361_n.jpg"),
+    Some(new URL("https://scontent.xx.fbcdn.net/v/t1.0-0/s130x130/25398995_120118675447496_5830741756468130361_n.jpg")),
     Some(FacebookProfileId("117656352360395")))
 
   val realPost1 = FacebookPost(
@@ -25,7 +26,7 @@ package object feed {
     Some("Bob Willins updated her profile picture."),
     Some(toInstant("2017-12-18T11:30:10+0000")),
     Some("117607225698641"),
-    Some("https://scontent.xx.fbcdn.net/v/t1.0-0/s130x130/25396081_117607225698641_6348338142026249400_n.jpg"),
+    Some(new URL("https://scontent.xx.fbcdn.net/v/t1.0-0/s130x130/25396081_117607225698641_6348338142026249400_n.jpg")),
     Some(FacebookProfileId("117656352360395")))
 
   val paging = FacebookFeedPaging(
@@ -53,11 +54,14 @@ package object feed {
 
   implicit class FacebookUserWithoutQuery(user: FacebookUser) {
     def withoutQueryParams = {
-      user.copy(cover = user.cover.map(cover => cover.copy(source = withoutQuery(cover.source))),
-        picture = user.picture.map(pic => pic.copy(url = withoutQuery(pic.url))))
+      user.copy(cover = user.cover.map(cover => withoutCoverQuery(cover)),
+        picture = user.picture.map(withoutPictureQuery))
     }
   }
 
-  private[this] def withoutQuery(s: String) = s.takeWhile(_ != '?')
+  private[this] def withoutCoverQuery(cover: Cover) = cover.copy(source = withoutQuery(cover.source))
+  private[this] def withoutPictureQuery(pic: FacebookUserPicture) = pic.copy(url = withoutQuery(pic.url))
+
+  private[this] def withoutQuery(u: URL) = new URL(u.toString.takeWhile(_ != '?'))
 
 }

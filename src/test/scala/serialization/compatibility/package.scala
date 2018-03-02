@@ -1,5 +1,6 @@
 package serialization
 
+import java.net.URL
 import java.time.{Instant, ZoneOffset}
 
 import config.FacebookConstants.dateFormat
@@ -29,24 +30,24 @@ package object compatibility {
     story = "Valeryi Baibossynov updated his profile picture.".some,
     createdTime = Some(toInstant("2017-10-01T13:43:05+0000")),
     objectId = "513792128965391".some,
-    picture = "picture link".some,
+    picture = new URL("http://example.com").some,
     from = FacebookProfileId("499313270413277").some
   )
 
-  val userPicture = FacebookUserPicture(50, isSilhouette = false, "image url", 50)
+  val userPicture = FacebookUserPicture(50, isSilhouette = false, new URL("http://example.com"), 50)
   val user = FacebookUser(
     id          = userId,
     name        = "Valeryi Baibossynov".some,
     lastName    = "Baibossynov".some,
     firstName   = "Valeryi".some,
     verified    = true.some,
-    link        = "https://www.facebook.com/app_scoped_user_id/499313270413277/".some,
+    link        = new URL("https://www.facebook.com/app_scoped_user_id/499313270413277/").some,
     picture     = userPicture.some,
     locale      = LocaleUtils.toLocale("en_US").some,
     timezone    = ZoneOffset.ofHours(2).some,
     gender      = Gender.Male.some,
     ageRange    = AgeRange(21, None).some,
-    cover       = Cover("527696177574986", 0, 0, "link").some,
+    cover       = Cover("527696177574986", 0, 0, new URL("http://example.com")).some,
     updatedTime = Some(toInstant("2017-11-11T00:10:08+0000")))
 
   val appId = FacebookAppId("1969406143275709")
@@ -59,7 +60,8 @@ package object compatibility {
     TokenValue("1234567891011121|A6BCDEFiGASDFdB1_Zviht7lzxc"), AppAccessToken("bearer"))
 
   val clientCode = FacebookClientCode("test-test-test-test", "machine id".some)
-  val application = FacebookApplication(FacebookAppId("1969406143275709"), "https://www.facebook.com/games/?app_id=1969406143275709",
+  val application = FacebookApplication(FacebookAppId("1969406143275709"),
+    new URL("https://www.facebook.com/games/?app_id=1969406143275709"),
     "testing_app")
 
   val facebookError = FacebookError("Invalid verification code format.",
@@ -104,7 +106,7 @@ package object compatibility {
     canComment = true.some)
 
   val facebookImage = FacebookImage(225,
-    "https://scontent.xx.fbcdn.net/v/t1.0-0/p75x225/25396081_117607225698641_6348338142026249400_n.jpg",
+    new URL("https://scontent.xx.fbcdn.net/v/t1.0-0/p75x225/25396081_117607225698641_6348338142026249400_n.jpg"),
     450)
 
   val facebookAlbum = FacebookAlbum(FacebookAlbumId("117607235698640"), "Profile Pictures", toInstant("2017-12-18T11:30:10+0000"))

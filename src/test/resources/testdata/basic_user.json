@@ -10,7 +10,7 @@
     "data": {
       "height": 50,
       "is_silhouette": false,
-      "url": "image url",
+      "url": "http://example.com",
       "width": 50
     }
   },
@@ -23,7 +23,7 @@
     "id": "527696177574986",
     "offset_x": 0,
     "offset_y": 0,
-    "source": "link"
+    "source": "http://example.com"
   },
   "id": "499313270413277"
 }
