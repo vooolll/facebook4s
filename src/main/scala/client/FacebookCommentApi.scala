@@ -2,7 +2,6 @@ package client
 
 import client.FacebookClient._
 import domain.comments.FacebookCommentAttributes._
-import domain.comments.FacebookCommentAttributes.FacebookCommentAttribute
 import domain.comments.{FacebookComment, FacebookCommentId}
 import services.FacebookInternals
 
