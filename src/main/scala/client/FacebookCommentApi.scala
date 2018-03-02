@@ -1,12 +1,105 @@
 package client
 
 import client.FacebookClient._
+import domain.comments.FacebookCommentAttributes._
+import domain.comments.FacebookCommentAttributes.FacebookCommentAttribute
+import domain.comments.{FacebookComment, FacebookCommentId}
 import services.FacebookInternals
 
 import scala.concurrent.Future
 
 trait FacebookCommentApi extends FacebookInternals {
-  import serialization.FacebookDecoders.decodeComments
+  import serialization.FacebookDecoders.{decodeComments, decodeComment}
+
+
+
+  /**
+    * @param commentId Facebook comment id
+    * @param accessTokenValue User access token value
+    * @return Facebook comment
+    *         @throws scala.RuntimeException if facebook responds with bad request
+    */
+  def comment(
+    commentId        : FacebookCommentId,
+    accessTokenValue : String,
+    attributes       : Seq[FacebookCommentAttribute]): Future[FacebookComment] =
+    comment(commentId, accessToken(accessTokenValue), attributes)
+
+  /**
+    * @param commentId Facebook comment id
+    * @param accessTokenValue User access token value
+    * @return Facebook comment
+    *         @throws scala.RuntimeException if facebook responds with bad request
+    */
+  def comment(
+    commentId        : FacebookCommentId,
+    accessTokenValue : String): Future[FacebookComment] =
+    comment(commentId, accessToken(accessTokenValue), defaultCommentAttributeValues)
+
+  /**
+    * @param commentId Facebook comment id
+    * @param accessToken User access token value
+    * @return Facebook comment
+    *         @throws scala.RuntimeException if facebook responds with bad request
+    */
+  def comment(
+      commentId   : FacebookCommentId,
+      accessToken : AccessToken,
+      attributes  : Seq[FacebookCommentAttribute]): Future[FacebookComment] =
+    sendRequestOrFail(commentUri(commentId, accessToken, attributes))(decodeComment)
+
+  /**
+    * @param commentId Facebook comment id
+    * @param accessToken User access token value
+    * @return Facebook comment
+    *         @throws scala.RuntimeException if facebook responds with bad request
+    */
+  def comment(
+    commentId   : FacebookCommentId,
+    accessToken : AccessToken): Future[FacebookComment] =
+    comment(commentId, accessToken, defaultCommentAttributeValues)
+
+  /**
+    * @param commentId Facebook comment id
+    * @param accessToken User access token value
+    * @return Either facebook comment or error FacebookError
+    */
+  def commentResult(
+    commentId   : FacebookCommentId,
+    accessToken : AccessToken,
+    attributes  : Seq[FacebookCommentAttribute]): Future[Either[ApiError, FacebookComment]] =
+    sendRequest(commentUri(commentId, accessToken, attributes))(decodeComment)
+
+  /**
+    * @param commentId Facebook comment id
+    * @param accessTokenValue User access token value
+    * @return Either facebook comment or error FacebookError
+    */
+  def commentResult(
+      commentId        : FacebookCommentId,
+      accessTokenValue : String,
+      attributes       : Seq[FacebookCommentAttribute]): Future[Either[ApiError, FacebookComment]] =
+    commentResult(commentId, accessToken(accessTokenValue), attributes)
+
+  /**
+    * @param commentId Facebook comment id
+    * @param accessTokenValue User access token value
+    * @return Either facebook comment or error FacebookError
+    */
+  def commentResult(
+    commentId        : FacebookCommentId,
+    accessTokenValue : String): Future[Either[ApiError, FacebookComment]] =
+    commentResult(commentId, accessToken(accessTokenValue), defaultCommentAttributeValues)
+
+  /**
+    * @param commentId Facebook comment id
+    * @param accessToken User access token value
+    * @return Either facebook comment or error FacebookError
+    */
+  def commentResult(
+    commentId   : FacebookCommentId,
+    accessToken : AccessToken): Future[Either[ApiError, FacebookComment]] =
+    commentResult(commentId, accessToken, defaultCommentAttributeValues)
 
   /**
     * @param postId Facebook post id
@@ -34,8 +127,11 @@ trait FacebookCommentApi extends FacebookInternals {
     * @return Facebook comments
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
-  def comments(postId: PostId, accessToken: AccessToken, summary: Boolean): Future[Comments] =
-    sendRequestOrFail(commentsUri(postId, accessToken, summary))
+  def comments(
+    postId      : PostId,
+    accessToken : AccessToken,
+    summary     : Boolean): Future[Comments] =
+    sendRequestOrFail(commentsUri(postId, accessToken, summary))(decodeComments)
 
   /**
     * @param postId Facebook post id
@@ -70,7 +166,7 @@ trait FacebookCommentApi extends FacebookInternals {
     * @return Either facebook comments or error FacebookError
     */
   def commentsResult(postId: PostId, accessToken: AccessToken, summary: Boolean): AsyncCommentsResult =
-    sendRequest(commentsUri(postId, accessToken, summary))
+    sendRequest(commentsUri(postId, accessToken, summary))(decodeComments)
 
   /**
     * @param postId Id of facebook post alpha numeric

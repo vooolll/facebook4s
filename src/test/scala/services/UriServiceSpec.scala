@@ -3,6 +3,7 @@ package services
 import base.TestUrls
 import cats.implicits._
 import config.FacebookConfig._
+import domain.comments.FacebookCommentAttributes.Id
 import domain.oauth.FacebookToken
 import domain.permission.FacebookPermissions.FacebookUserPosts
 import domain.posts.{FacebookPostAttributes, FacebookPostId}

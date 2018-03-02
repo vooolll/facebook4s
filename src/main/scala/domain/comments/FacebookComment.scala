@@ -13,7 +13,7 @@ final case class FacebookComment(
   message     : Option[String],
   createdTime : Option[Instant],
   from        : Option[FacebookProfileId],
-  parent      : Option[FacebookCommentId])
+  parent      : Option[FacebookComment])
 
 final case class FacebookComments(
   comments : List[FacebookComment],

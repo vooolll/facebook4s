@@ -1,5 +1,6 @@
 package client
 
+import domain.comments.FacebookCommentId
 import domain.feed.{FacebookFeed, FacebookFeedPaging}
 import domain.posts.{FacebookPost, FacebookPostId}
 import domain.profile.{FacebookProfileId, FacebookUser, FacebookUserId}
@@ -7,6 +8,7 @@ import serialization.compatibility.toInstant
 
 package object feed {
   val postId = FacebookPostId("117656352360395_120118735447490")
+  val commentId = FacebookCommentId("120118675447496_170608873731809")
 
   val userId = FacebookUserId("117656352360395")
 

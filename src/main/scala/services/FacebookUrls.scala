@@ -7,6 +7,8 @@ import config.FacebookConstants._
 import domain.FacebookAttribute
 import domain.albums.photo.FacebookPhotoAttributes.FacebookPhotoAttribute
 import domain.albums.photo.FacebookPhotoId
+import domain.comments.FacebookCommentAttributes.FacebookCommentAttribute
+import domain.comments.FacebookCommentId
 import domain.oauth._
 import domain.permission.FacebookPermissions.FacebookPermission
 import domain.posts.FacebookPostAttributes.FacebookPostAttribute
@@ -73,8 +75,17 @@ trait FacebookUrls {
   def likesUri(postId: FacebookPostId, accessToken: FacebookAccessToken, summary: Boolean = false) =
     withSummary(edge(likeUri, postUri(postId, accessToken, Nil)), summary)
 
-  def commentsUri(postId: FacebookPostId, accessToken: FacebookAccessToken, summary: Boolean = false) =
-    withSummary(edge(commentUri, postUri(postId, accessToken, Nil)), summary)
+  def commentsUri(
+    postId      : FacebookPostId,
+    accessToken : FacebookAccessToken,
+    summary     : Boolean = false) =
+  withSummary(edge(commentEdge, postUri(postId, accessToken, Nil)), summary)
+
+  def commentUri(
+    commentId   : FacebookCommentId,
+    accessToken : FacebookAccessToken,
+    attributes  : Seq[FacebookCommentAttribute]) =
+    manyParams(withAccessToken(accessToken).withPathSegments(commentId.value), attributes)
 
   def buildAuthUrl(permissions: Seq[FacebookPermission],
                    responseType: FacebookAttribute = FacebookCode,
