@@ -14,19 +14,19 @@ class PhotoCompatSpec extends SyncSpec with JsonSerializationSupport {
 
   "FacebookImage" should {
     s"be compatible with $imagePath" in {
-      decodeJson[FacebookImage](imagePath) map(_ shouldBe facebookImage)
+      decodeJson[FacebookImage](imagePath) shouldBe facebookImage
     }
   }
 
   "FacebookAlbum" should {
     s"be compatible with $albumPath" in {
-      decodeJson[FacebookAlbum](albumPath) map(_ shouldBe facebookAlbum)
+      decodeJson[FacebookAlbum](albumPath) shouldBe facebookAlbum
     }
   }
 
   "FacebookPhoto" should {
     s"be compatible with $photoPath" in {
-      decodeJson[FacebookPhoto](albumPath) map(_ shouldBe facebookPhoto)
+      decodeJson[FacebookPhoto](photoPath) shouldBe facebookPhoto
     }
   }
 

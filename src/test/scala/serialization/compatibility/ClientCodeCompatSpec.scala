@@ -10,7 +10,7 @@ class ClientCodeCompatSpec extends SyncSpec with JsonSerializationSupport {
 
   "FacebookClientCode" should {
     s"be compatible with $clientCodePath" in {
-      decodeJson[FacebookClientCode](clientCodePath).map(_ shouldBe clientCode)
+      decodeJson[FacebookClientCode](clientCodePath) shouldBe clientCode
     }
   }
 

@@ -13,6 +13,7 @@ import domain.albums.{FacebookAlbum, FacebookAlbumId}
 import domain.comments._
 import domain.feed._
 import domain.likes._
+import domain.media.{FacebookAttachmentId, FacebookAttachmentTarget}
 import domain.oauth.FacebookError.FacebookErrorType
 import domain.oauth._
 import domain.posts._
@@ -228,5 +229,10 @@ object FacebookDecoders {
       album       <- c.get[Option[FacebookAlbum]]("album")
     } yield FacebookPhoto(id, createdTime, images, album)
   }
+
+  implicit val decodeAttachmentTargetId: Decoder[FacebookAttachmentId] = Decoder.decodeString.map(FacebookAttachmentId)
+
+  implicit val decodeAttachmentTarget: Decoder[FacebookAttachmentTarget] =
+    Decoder.forProduct2("id", "url")(FacebookAttachmentTarget)
 
 }

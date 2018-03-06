@@ -15,24 +15,24 @@ class LikesCompatSpec extends SyncSpec with JsonSerializationSupport {
 
   "FacebookLikes" should {
     s"be compatible with $likesPath" in {
-      decodeJson[FacebookLikes](likesPath) map(_ shouldBe likes)
+      decodeJson[FacebookLikes](likesPath) shouldBe likes
     }
 
     s"be compatible with $likePath" in {
-      decodeJson[FacebookLike](likePath) map(_ shouldBe like)
+      decodeJson[FacebookLike](likePath) shouldBe like
     }
 
     s"be compatible with $likesPagingPath" in {
-      decodeJson[FacebookPaging](likesPagingPath) map(_ shouldBe likesPaging)
+      decodeJson[FacebookPaging](likesPagingPath) shouldBe likesPaging
     }
 
     s"be compatible with $likesSummaryPath" in {
-      decodeJson[FacebookLikesSummary](likesSummaryPath) map(_ shouldBe likesSummary)
+      decodeJson[FacebookLikesSummary](likesSummaryPath) shouldBe likesSummary
     }
 
     s"be compatible with $likesWithSummaryPath" in {
-      decodeJson[FacebookLikes](likesWithSummaryPath) map(_ shouldBe likes.copy(
-        summary = likesSummary.some))
+      decodeJson[FacebookLikes](likesWithSummaryPath) shouldBe likes.copy(
+        summary = likesSummary.some)
     }
   }
 

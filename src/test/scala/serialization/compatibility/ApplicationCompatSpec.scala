@@ -10,7 +10,7 @@ class ApplicationCompatSpec extends SyncSpec with JsonSerializationSupport {
 
   "FacebookApplication" should {
     s"be compatible with $applicationPath" in {
-      decodeJson[FacebookApplication](applicationPath) map(_ shouldBe application)
+      decodeJson[FacebookApplication](applicationPath) shouldBe application
     }
   }
 }
