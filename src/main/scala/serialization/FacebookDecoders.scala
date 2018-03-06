@@ -13,7 +13,7 @@ import domain.albums.{FacebookAlbum, FacebookAlbumId}
 import domain.comments._
 import domain.feed._
 import domain.likes._
-import domain.media.{FacebookAttachmentId, FacebookAttachmentTarget}
+import domain.media.{FacebookAttachmentId, FacebookAttachmentTarget, FacebookImageSource}
 import domain.oauth.FacebookError.FacebookErrorType
 import domain.oauth._
 import domain.posts._
@@ -234,5 +234,8 @@ object FacebookDecoders {
 
   implicit val decodeAttachmentTarget: Decoder[FacebookAttachmentTarget] =
     Decoder.forProduct2("id", "url")(FacebookAttachmentTarget)
+
+  implicit val decodeImageSource: Decoder[FacebookImageSource] =
+    Decoder.forProduct3("height", "src", "width")(FacebookImageSource)
 
 }
