@@ -174,8 +174,9 @@ object FacebookDecoders {
       from        <- c.downField("from").get[Option[FacebookProfileId]]("id")
       createdTime <- c.get[Option[Instant]]("created_time")
       parent      <- c.get[Option[FacebookComment]]("parent")
+      attachment  <- c.get[Option[FacebookAttachment]]("attachment")
     } yield {
-      FacebookComment(id, message, createdTime, from, parent)
+      FacebookComment(id, message, createdTime, from, parent, attachment)
     }
   }
 

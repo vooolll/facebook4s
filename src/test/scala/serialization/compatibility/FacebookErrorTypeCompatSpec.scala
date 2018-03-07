@@ -1,7 +1,6 @@
 package serialization.compatibility
 
 import base.{JsonSerializationSupport, SyncSpec}
-import cats.implicits._
 import domain.oauth.FacebookError
 import io.circe.Encoder
 import io.circe.generic.semiauto._

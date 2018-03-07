@@ -1,5 +1,7 @@
 package client.feed
 
+import java.net.URL
+
 import base.FacebookClientSupport
 import base.TestConfiguration.userTokenRaw
 import cats.implicits._
@@ -9,15 +11,25 @@ import domain.likes.FacebookPaging
 import domain.profile.FacebookProfileId
 import serialization.compatibility.toInstant
 import FacebookCommentAttributes._
+import domain.media._
 
 class CommentSpec extends FacebookClientSupport {
+
+  val url = new URL("https://www.facebook.com/photo.php?fbid=173295196796510&set=p.173295196796510&type=3")
+
+  val attachment = Some(FacebookAttachment(
+    FacebookImageSource(720.0,
+      new URL("https://scontent.xx.fbcdn.net/v/t31.0-8/s720x720/28617069_173295196796510_8133139076598269923_o.jpg?" +
+        "oh=d37083dfdda57930068086618cb525bf&oe=5B492E4F"), 549.0),
+    FacebookAttachmentTarget(FacebookAttachmentId("173295196796510"), url), url, AttachmentTypes.Photo))
 
   val comment = FacebookComment(
     id = FacebookCommentId("120118675447496_128078554651508"),
     message = "Super comment".some,
     createdTime = Some(toInstant("2017-12-25T10:23:54+0000")),
     from = FacebookProfileId("117656352360395").some,
-    None)
+    None, attachment)
+
 
   val commentPaging = FacebookPaging(
     "WTI5dGJXVnVkRjlqZAFhKemIzSTZANVEk0TURjNE5UVTBOalV4TlRBNE9qRTFNVFF4T1RjME16UT0ZD".some,
@@ -39,7 +51,8 @@ class CommentSpec extends FacebookClientSupport {
     Some(FacebookComment(FacebookCommentId("120118675447496_128078554651508"),
       Some("Super comment"),
       Some(toInstant("2017-12-25T10:23:54+0000")),
-      Some(FacebookProfileId("117656352360395")), None)))
+      Some(FacebookProfileId("117656352360395")), None, None)),
+    None)
 
   "Facebook Graph Api" should {
     "return comments of post" in { c =>

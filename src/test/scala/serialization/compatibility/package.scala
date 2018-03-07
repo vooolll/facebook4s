@@ -93,6 +93,7 @@ package object compatibility {
     message = "Super comment".some,
     createdTime = Some(toInstant("2017-12-25T10:23:54+0000")),
     from = FacebookProfileId("117661112359919").some,
+    None,
     None)
 
   val commentPaging = FacebookPaging(

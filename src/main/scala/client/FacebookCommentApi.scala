@@ -2,6 +2,7 @@ package client
 
 import client.FacebookClient._
 import domain.comments.FacebookCommentAttributes._
+import domain.comments.FacebookCommentsAttributes._
 import domain.comments.{FacebookComment, FacebookCommentId}
 import services.FacebookInternals
 
@@ -130,7 +131,7 @@ trait FacebookCommentApi extends FacebookInternals {
     postId      : PostId,
     accessToken : AccessToken,
     summary     : Boolean): Future[Comments] =
-    sendRequestOrFail(commentsUri(postId, accessToken, summary))(decodeComments)
+    sendRequestOrFail(commentsUri(postId, accessToken, defaultCommentsAttributeValues, summary))(decodeComments)
 
   /**
     * @param postId Facebook post id
@@ -165,7 +166,7 @@ trait FacebookCommentApi extends FacebookInternals {
     * @return Either facebook comments or error FacebookError
     */
   def commentsResult(postId: PostId, accessToken: AccessToken, summary: Boolean): AsyncCommentsResult =
-    sendRequest(commentsUri(postId, accessToken, summary))(decodeComments)
+    sendRequest(commentsUri(postId, accessToken, defaultCommentsAttributeValues, summary))(decodeComments)
 
   /**
     * @param postId Id of facebook post alpha numeric
