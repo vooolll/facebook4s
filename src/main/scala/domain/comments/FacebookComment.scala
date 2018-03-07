@@ -13,7 +13,8 @@ final case class FacebookComment(
   message     : Option[String],
   createdTime : Option[Instant],
   from        : Option[FacebookProfileId],
-  parent      : Option[FacebookComment])
+  parent      : Option[FacebookComment],
+  mediaObject : Option[FacebookMediaObject])
 
 final case class FacebookComments(
   comments : List[FacebookComment],
@@ -24,3 +25,7 @@ final case class FacebookCommentSummary(
   order: FacebookOrder,
   totalCount: Int,
   canComment: Option[Boolean])
+
+final case class FacebookMediaObjectId(value: String)
+
+final case class FacebookMediaObject(id: FacebookMediaObjectId, createdTime: Instant)

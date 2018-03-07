@@ -12,12 +12,16 @@ import FacebookCommentAttributes._
 
 class CommentSpec extends FacebookClientSupport {
 
+  val mediaObject = Some(
+    FacebookMediaObject(FacebookMediaObjectId("120118675447496"), toInstant("2017-12-19T14:08:45+0000")))
+
   val comment = FacebookComment(
     id = FacebookCommentId("120118675447496_128078554651508"),
     message = "Super comment".some,
     createdTime = Some(toInstant("2017-12-25T10:23:54+0000")),
     from = FacebookProfileId("117656352360395").some,
-    None)
+    parent = None,
+    mediaObject = None)
 
   val commentPaging = FacebookPaging(
     "WTI5dGJXVnVkRjlqZAFhKemIzSTZANVEk0TURjNE5UVTBOalV4TlRBNE9qRTFNVFF4T1RjME16UT0ZD".some,
@@ -39,7 +43,9 @@ class CommentSpec extends FacebookClientSupport {
     Some(FacebookComment(FacebookCommentId("120118675447496_128078554651508"),
       Some("Super comment"),
       Some(toInstant("2017-12-25T10:23:54+0000")),
-      Some(FacebookProfileId("117656352360395")), None)))
+      Some(FacebookProfileId("117656352360395")), None, None)),
+    None
+  )
 
   "Facebook Graph Api" should {
     "return comments of post" in { c =>

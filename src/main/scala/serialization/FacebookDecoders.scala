@@ -26,8 +26,8 @@ import scala.concurrent.duration._
 
 object FacebookDecoders {
   implicit val decodeTokenType: Decoder[AppAccessToken] = decodeString.map(AppAccessToken)
-  implicit val decodeTokenValue: Decoder[TokenValue] = decodeString.map(TokenValue.apply)
-  implicit val decodePostId: Decoder[FacebookPostId] = decodeString.map(FacebookPostId.apply)
+  implicit val decodeTokenValue: Decoder[TokenValue] = decodeString.map(TokenValue)
+  implicit val decodePostId: Decoder[FacebookPostId] = decodeString.map(FacebookPostId)
   implicit val decodeGender: Decoder[Gender] = decodeString.map {
     case "male"   => Gender.Male
     case "female" => Gender.Female
@@ -48,7 +48,7 @@ object FacebookDecoders {
   }
 
   implicit val decodeClientCode: Decoder[FacebookClientCode] =
-    Decoder.forProduct2("code", "machine_id")(FacebookClientCode.apply)
+    Decoder.forProduct2("code", "machine_id")(FacebookClientCode)
 
   implicit val decodeAgeRange: Decoder[AgeRange] =
     Decoder.forProduct2("min", "max")(AgeRange)
@@ -164,6 +164,11 @@ object FacebookDecoders {
     } yield FacebookLikes(likes, paging, summary)
   }
 
+  implicit val decodeMediaObjectId: Decoder[FacebookMediaObjectId] = decodeString.map(FacebookMediaObjectId)
+
+  implicit val decodeMediaObject: Decoder[FacebookMediaObject] =
+    Decoder.forProduct2("id", "created_at")(FacebookMediaObject)
+
   implicit val decodeCommentId: Decoder[FacebookCommentId] = decodeString.map(FacebookCommentId)
 
   implicit val decodeComment: Decoder[FacebookComment] = new Decoder[FacebookComment] {
@@ -173,8 +178,9 @@ object FacebookDecoders {
       from        <- c.downField("from").get[Option[FacebookProfileId]]("id")
       createdTime <- c.get[Option[Instant]]("created_time")
       parent      <- c.get[Option[FacebookComment]]("parent")
+      mediaObject <- c.get[Option[FacebookMediaObject]]("object")
     } yield {
-      FacebookComment(id, message, createdTime, from, parent)
+      FacebookComment(id, message, createdTime, from, parent, mediaObject)
     }
   }
 
