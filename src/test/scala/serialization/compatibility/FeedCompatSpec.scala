@@ -10,7 +10,7 @@ class FeedCompatSpec extends SyncSpec with JsonSerializationSupport {
 
   "FacebookFeed" should {
     s"be compatible with $feedPath" in {
-      decodeJson[FacebookFeed](feedPath) map(_ shouldBe feed)
+      decodeJson[FacebookFeed](feedPath) shouldBe feed
     }
   }
 }

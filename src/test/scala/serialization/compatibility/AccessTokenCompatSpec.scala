@@ -12,12 +12,12 @@ class AccessTokenCompatSpec extends SyncSpec with JsonSerializationSupport {
   "FacebookAccessToken" should {
     s"be compatible with $userAccessTokenPath" in {
       val decoded = decodeJson[FacebookAccessToken](userAccessTokenPath)(decodeUserAccessToken)
-      decoded map(_ shouldBe userAccessToken)
+      decoded shouldBe userAccessToken
     }
 
     s"be compatible with $appAccessTokenPath" in {
       val decoded = decodeJson[FacebookAccessToken](appAccessTokenPath)(decodeAppAccessToken)
-      decoded map(_ shouldBe appAccessToken)
+      decoded shouldBe appAccessToken
     }
   }
 

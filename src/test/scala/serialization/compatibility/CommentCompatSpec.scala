@@ -14,20 +14,20 @@ class CommentCompatSpec extends SyncSpec with JsonSerializationSupport {
 
   "FacebookComment" should {
     s"be compatible with $commentPath" in {
-      decodeJson[FacebookComment](commentPath).map(_ shouldBe comment)
+      decodeJson[FacebookComment](commentPath) shouldBe comment
     }
 
     s"be compatible with $commentsPath" in {
-      decodeJson[FacebookComments](commentsPath).map(_ shouldBe comments)
+      decodeJson[FacebookComments](commentsPath) shouldBe comments
     }
 
     s"be compatible with $commentSummaryPath" in {
-      decodeJson[FacebookCommentSummary](commentSummaryPath).map(_ shouldBe commentSummary)
+      decodeJson[FacebookCommentSummary](commentSummaryPath) shouldBe commentSummary
     }
 
     s"be compatible with $commentsWithSummaryPath" in {
-      decodeJson[FacebookComments](commentsWithSummaryPath).map(_ shouldBe comments.copy(
-        summary = commentSummary.some))
+      decodeJson[FacebookComments](commentsWithSummaryPath) shouldBe comments.copy(
+        summary = commentSummary.some)
     }
 
   }

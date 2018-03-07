@@ -10,7 +10,7 @@ class FacebookErrorCompatSpec extends SyncSpec with JsonSerializationSupport {
 
   "FacebookError" should {
     s"be compatible with $wrongCodePath" in {
-      decodeJson[FacebookError](wrongCodePath) map(_ shouldBe facebookError)
+      decodeJson[FacebookError](wrongCodePath) shouldBe facebookError
     }
   }
 

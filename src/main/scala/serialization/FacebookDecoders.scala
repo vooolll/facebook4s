@@ -13,6 +13,7 @@ import domain.albums.{FacebookAlbum, FacebookAlbumId}
 import domain.comments._
 import domain.feed._
 import domain.likes._
+import domain.media._
 import domain.oauth.FacebookError.FacebookErrorType
 import domain.oauth._
 import domain.posts._
@@ -179,8 +180,9 @@ object FacebookDecoders {
       createdTime <- c.get[Option[Instant]]("created_time")
       parent      <- c.get[Option[FacebookComment]]("parent")
       mediaObject <- c.get[Option[FacebookMediaObject]]("object")
+      attachment  <- c.get[Option[FacebookAttachment]]("attachment")
     } yield {
-      FacebookComment(id, message, createdTime, from, parent, mediaObject)
+      FacebookComment(id, message, createdTime, from, parent, attachment, mediaObject)
     }
   }
 
@@ -235,4 +237,27 @@ object FacebookDecoders {
     } yield FacebookPhoto(id, createdTime, images, album)
   }
 
+  implicit val decodeAttachmentTargetId: Decoder[FacebookAttachmentId] = Decoder.decodeString.map(FacebookAttachmentId)
+
+  implicit val decodeAttachmentTarget: Decoder[FacebookAttachmentTarget] =
+    Decoder.forProduct2("id", "url")(FacebookAttachmentTarget)
+
+  implicit val decodeImageSource: Decoder[FacebookImageSource] =
+    Decoder.forProduct3("height", "src", "width")(FacebookImageSource)
+
+  implicit val decodeAttachmentType: Decoder[AttachmentType] = decodeString.map {
+    case "photo"                   => AttachmentTypes.Photo
+    case "video_inline"            => AttachmentTypes.Video
+    case "animated_image_autoplay" => AttachmentTypes.GIF
+    case "sticker"                 => AttachmentTypes.Sticker
+  }
+
+  implicit val decodeAttachment: Decoder[FacebookAttachment] = new Decoder[FacebookAttachment] {
+    override def apply(c: HCursor) = for {
+      attachment <- c.downField("media").get[FacebookImageSource]("image")
+      target <- c.get[FacebookAttachmentTarget]("target")
+      url <- c.get[URL]("url")
+      attachmentType <- c.get[AttachmentType]("type")
+    } yield FacebookAttachment(attachment, target, url, attachmentType)
+  }
 }

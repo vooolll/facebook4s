@@ -4,6 +4,7 @@ import base.TestUrls
 import cats.implicits._
 import config.FacebookConfig._
 import domain.comments.FacebookCommentAttributes.Id
+import domain.comments.FacebookCommentsAttributes
 import domain.oauth.FacebookToken
 import domain.permission.FacebookPermissions.FacebookUserPosts
 import domain.posts.{FacebookPostAttributes, FacebookPostId}
@@ -67,13 +68,17 @@ class UriServiceSpec extends WordSpec with Matchers {
     }
 
     "return comment uri" in {
-      TestUrls.commentsUri(FacebookPostId("postId"), userAccessToken).toString() shouldBe "https://graph.facebook.com" +
-        "/v2.10/postId/comments?access_token=token&summary=false"
+      TestUrls.commentsUri(FacebookPostId("postId"), userAccessToken,
+        FacebookCommentsAttributes.defaultCommentsAttributeValues).toString() shouldBe "https://graph.facebook.com" +
+        "/v2.10/postId/comments?access_token=token&summary=false" +
+        "&fields=id%2Cmessage%2Ccreated_time%2Cattachment%2Cfrom"
     }
 
     "return comment uri with summary" in {
-      TestUrls.commentsUri(FacebookPostId("postId"), userAccessToken, summary = true).toString() shouldBe "https://graph." +
-        "facebook.com/v2.10/postId/comments?access_token=token&summary=true"
+      TestUrls.commentsUri(FacebookPostId("postId"), userAccessToken,
+        FacebookCommentsAttributes.defaultCommentsAttributeValues, summary = true).toString() shouldBe "https://graph." +
+        "facebook.com/v2.10/postId/comments?access_token=token&summary=true" +
+        "&fields=id%2Cmessage%2Ccreated_time%2Cattachment%2Cfrom"
     }
 
   }
