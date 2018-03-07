@@ -31,8 +31,8 @@ class CommentSpec extends FacebookClientSupport {
     createdTime = Some(toInstant("2017-12-25T10:23:54+0000")),
     from = FacebookProfileId("117656352360395").some,
     parent = None,
-    mediaObject = None)
-    None, attachment)
+    mediaObject = mediaObject,
+    attachment = attachment)
   
   val commentPaging = FacebookPaging(
     "WTI5dGJXVnVkRjlqZAFhKemIzSTZANVEk0TURjNE5UVTBOalV4TlRBNE9qRTFNVFF4T1RjME16UT0ZD".some,
@@ -54,8 +54,8 @@ class CommentSpec extends FacebookClientSupport {
     Some(FacebookComment(FacebookCommentId("120118675447496_128078554651508"),
       Some("Super comment"),
       Some(toInstant("2017-12-25T10:23:54+0000")),
-      Some(FacebookProfileId("117656352360395")), None, None)),
-    None, None
+      Some(FacebookProfileId("117656352360395")), None, None, None)),
+    mediaObject, None
   )
 
   "Facebook Graph Api" should {

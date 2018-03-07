@@ -15,7 +15,7 @@ final case class FacebookComment(
   createdTime : Option[Instant],
   from        : Option[FacebookProfileId],
   parent      : Option[FacebookComment],
-  mediaObject : Option[FacebookMediaObject]),
+  mediaObject : Option[FacebookMediaObject],
   attachment  : Option[FacebookAttachment])
 
 final case class FacebookComments(

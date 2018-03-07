@@ -168,7 +168,7 @@ object FacebookDecoders {
   implicit val decodeMediaObjectId: Decoder[FacebookMediaObjectId] = decodeString.map(FacebookMediaObjectId)
 
   implicit val decodeMediaObject: Decoder[FacebookMediaObject] =
-    Decoder.forProduct2("id", "created_at")(FacebookMediaObject)
+    Decoder.forProduct2("id", "created_time")(FacebookMediaObject)
 
   implicit val decodeCommentId: Decoder[FacebookCommentId] = decodeString.map(FacebookCommentId)
 
@@ -182,7 +182,7 @@ object FacebookDecoders {
       mediaObject <- c.get[Option[FacebookMediaObject]]("object")
       attachment  <- c.get[Option[FacebookAttachment]]("attachment")
     } yield {
-      FacebookComment(id, message, createdTime, from, parent, attachment, mediaObject)
+      FacebookComment(id, message, createdTime, from, parent, mediaObject, attachment)
     }
   }
 

@@ -4,7 +4,7 @@ import domain.FacebookAttribute
 
 object FacebookCommentAttributes {
 
-  val defaultCommentAttributeValues = Seq(Id, Message, CreatedTime, Parent, From)
+  val defaultCommentAttributeValues = Seq(Id, Message, CreatedTime, Parent, From, Object)
 
   trait FacebookCommentAttribute extends FacebookAttribute
 
@@ -26,6 +26,10 @@ object FacebookCommentAttributes {
 
   case object From extends FacebookCommentAttribute {
     override def value = "from"
+  }
+
+  case object Object extends FacebookCommentAttribute {
+    override def value = "object"
   }
 
 }

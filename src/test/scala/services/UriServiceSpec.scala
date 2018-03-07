@@ -71,14 +71,14 @@ class UriServiceSpec extends WordSpec with Matchers {
       TestUrls.commentsUri(FacebookPostId("postId"), userAccessToken,
         FacebookCommentsAttributes.defaultCommentsAttributeValues).toString() shouldBe "https://graph.facebook.com" +
         "/v2.10/postId/comments?access_token=token&summary=false" +
-        "&fields=id%2Cmessage%2Ccreated_time%2Cattachment%2Cfrom"
+        "&fields=id%2Cmessage%2Ccreated_time%2Cattachment%2Cfrom%2Cobject"
     }
 
     "return comment uri with summary" in {
       TestUrls.commentsUri(FacebookPostId("postId"), userAccessToken,
         FacebookCommentsAttributes.defaultCommentsAttributeValues, summary = true).toString() shouldBe "https://graph." +
         "facebook.com/v2.10/postId/comments?access_token=token&summary=true" +
-        "&fields=id%2Cmessage%2Ccreated_time%2Cattachment%2Cfrom"
+        "&fields=id%2Cmessage%2Ccreated_time%2Cattachment%2Cfrom%2Cobject"
     }
 
   }
