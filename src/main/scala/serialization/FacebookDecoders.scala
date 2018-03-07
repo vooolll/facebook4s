@@ -13,7 +13,7 @@ import domain.albums.{FacebookAlbum, FacebookAlbumId}
 import domain.comments._
 import domain.feed._
 import domain.likes._
-import domain.media.{FacebookAttachmentId, FacebookAttachmentTarget, FacebookImageSource}
+import domain.media._
 import domain.oauth.FacebookError.FacebookErrorType
 import domain.oauth._
 import domain.posts._
@@ -238,4 +238,19 @@ object FacebookDecoders {
   implicit val decodeImageSource: Decoder[FacebookImageSource] =
     Decoder.forProduct3("height", "src", "width")(FacebookImageSource)
 
+  implicit val decodeAttachmentType: Decoder[AttachmentType] = decodeString.map {
+    case "photo"                   => AttachmentTypes.Photo
+    case "video_inline"            => AttachmentTypes.Video
+    case "animated_image_autoplay" => AttachmentTypes.GIF
+    case "sticker"                 => AttachmentTypes.Sticker
+  }
+
+  implicit val decodeAttachment: Decoder[FacebookAttachment] = new Decoder[FacebookAttachment] {
+    override def apply(c: HCursor) = for {
+      attachment <- c.downField("media").get[FacebookImageSource]("image")
+      target <- c.get[FacebookAttachmentTarget]("target")
+      url <- c.get[URL]("url")
+      attachmentType <- c.get[AttachmentType]("type")
+    } yield FacebookAttachment(attachment, target, url, attachmentType)
+  }
 }

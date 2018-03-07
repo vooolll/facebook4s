@@ -16,7 +16,7 @@ import domain.albums.{FacebookAlbum, FacebookAlbumId}
 import domain.albums.image.FacebookImage
 import domain.albums.photo.{FacebookPhoto, FacebookPhotoId}
 import domain.comments._
-import domain.media.{FacebookAttachmentId, FacebookAttachmentTarget, FacebookImageSource}
+import domain.media._
 
 import scala.concurrent.duration._
 
@@ -119,9 +119,12 @@ package object compatibility {
   val attachmentTarget = FacebookAttachmentTarget(FacebookAttachmentId("135224317270265"),
     new URL("https://www.facebook.com/photo.php?fbid=135224317270265&set=p.135224317270265&type=3"))
 
-  val imageSource = FacebookImageSource(30,
+  val imageSource = FacebookImageSource(720,
     new URL("https://scontent.xx.fbcdn.net/v/t1.0-9/26169805_135224317270265_2857586441485590537_n.jpg" +
       "?oh=97edfd66290b3e4112a8731e8cd2b5fb&oe=5B0A23AC"), 104)
+
+  val facebookAttachment = FacebookAttachment(imageSource, attachmentTarget, attachmentTarget.url, AttachmentTypes.Photo)
+
 
   def toInstant(string: String) = dateFormat.parse(string, Instant.from(_))
 
