@@ -37,7 +37,7 @@ class AttachmentCompatSpec extends SyncSpec with JsonSerializationSupport {
     }
   }
 
-  private def decodeType(attachmentTypeRaw: String) = {
+  private[this] def decodeType(attachmentTypeRaw: String) = {
     decodeStringJson[TestObject]("{ \"attachmentType\": \"" + attachmentTypeRaw + "\"}")
   }
 }
