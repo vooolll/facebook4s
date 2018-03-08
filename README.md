@@ -12,7 +12,7 @@ Prerequisites
 ### Installation
 Add the following line to your sbt dependencies: 
 ```scala
-"com.github.vooolll" %% "facebook4s" % "0.2.3"
+"com.github.vooolll" %% "facebook4s" % "0.2.4"
 ```
 
 Note: make sure that you have in your `build.sbt`
@@ -218,8 +218,8 @@ facebookClient.likes(FacebookPostId("499313270413277_527696260908311"), facebook
 }
 ```
 
-#### Post api
-Supported `comment` fields - `id`, `from`, `created_time`, `message`
+#### Comment api
+Supported `comment` fields - `id`, `from`, `created_time`, `message`, `parent`, `object`, `attachment`
 
 Supported `summary`(optional) fields - `total_count`, `order`, `can_comment`
 ```scala
@@ -261,9 +261,20 @@ Supported fields - `id`, `created_time`, `images`, `album`
 
 ```scala
 
-facebookClient.photo(FacebookPhotoId("some photo id"), facebookAccessToken).map { photo =>
+facebookClient.photo(FacebookPhotoId("some photo id"), facebookAccessToken) map { photo =>
   println("Photo: " + photo)
 }
+```
+
+#### Albums api
+
+Supported fields - `id`, `created_time`, `name`
+
+```scala
+facebookClient.albums(profileId, userTokenRaw) map { albums =>
+  println("Albums: " + albums)
+}
+
 ```
 
 
@@ -282,22 +293,6 @@ facebookClient.application(FacebookAppId("1969406143275709"), facebookAccessToke
 ```
 
 Note: in terms of facebook4s there is no difference between `client_id` and `application_id`. 
-
-#### Chaining futures
-
-You can compose facebook4s calls as expected:
-
-```scala
-for {
-  app  <- facebookClient.application(FacebookConfig.clientId, facebookAccessToken)
-  user <- facebookClient.userProfile(userId, facebookAccessToken)
-  feed <- facebookClient.feed(userId, facebookAccessToken)
-} {
-  println(user)
-  println(feed)
-  println(app)
-}
-```
 
 
 #### Either based api
