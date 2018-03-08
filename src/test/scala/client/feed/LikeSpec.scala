@@ -3,7 +3,8 @@ package client.feed
 import base.FacebookClientSupport
 import cats.implicits._
 import base.TestConfiguration._
-import domain.likes.{FacebookLike, FacebookLikes, FacebookPaging, FacebookLikesSummary}
+import domain.FacebookPaging
+import domain.likes.{FacebookLike, FacebookLikes, FacebookLikesSummary}
 import domain.profile.FacebookUserId
 
 class LikeSpec extends FacebookClientSupport {

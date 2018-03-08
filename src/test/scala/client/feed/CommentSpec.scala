@@ -5,9 +5,8 @@ import java.net.URL
 import base.FacebookClientSupport
 import base.TestConfiguration.userTokenRaw
 import cats.implicits._
-import domain.FacebookOrder
+import domain.{FacebookOrder, FacebookPaging}
 import domain.comments._
-import domain.likes.FacebookPaging
 import domain.profile.FacebookProfileId
 import serialization.compatibility.toInstant
 import FacebookCommentAttributes._

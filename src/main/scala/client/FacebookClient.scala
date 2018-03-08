@@ -1,6 +1,7 @@
 package client
 
 import config.FacebookConfig._
+import domain.albums.FacebookAlbums
 import domain.albums.photo.FacebookPhotoAttributes.FacebookPhotoAttribute
 import domain.albums.photo.{FacebookPhoto, FacebookPhotoId}
 import domain.comments.FacebookComments
@@ -27,6 +28,7 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
   with FacebookUserProfileApi
   with FacebookCommentApi
   with FacebookPhotoApi
+  with FacebookAlbumApi
 
 /**
   * Facebook client constructors and helper types
@@ -77,6 +79,8 @@ object FacebookClient {
   type Comments = FacebookComments
   type PhotoId = FacebookPhotoId
   type Photo = FacebookPhoto
+  type Albums = FacebookAlbums
+  type ProfileId = FacebookProfileId
 
   type AsyncUserFeedResult = Future[Either[ApiError, UserFeed]]
   type AsyncPostResult = Future[Either[ApiError, Post]]
@@ -87,6 +91,7 @@ object FacebookClient {
   type AsyncClientCodeResult = Future[Either[ApiError, ClientCode]]
   type AsyncApplicationResult = Future[Either[ApiError, Application]]
   type AsyncPhotoResult = Future[Either[ApiError, Photo]]
+  type AsyncAlbumsResult = Future[Either[ApiError, Albums]]
 
   type PhotoAttribute = FacebookPhotoAttribute
   type PostAttribute = FacebookPostAttribute

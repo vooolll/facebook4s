@@ -4,6 +4,7 @@ import base.{JsonSerializationSupport, SyncSpec}
 import domain.likes._
 import serialization.FacebookDecoders._
 import cats.implicits._
+import domain.FacebookPaging
 
 class LikesCompatSpec extends SyncSpec with JsonSerializationSupport {
 

@@ -5,14 +5,14 @@ import java.time.{Instant, ZoneOffset}
 
 import config.FacebookConstants.dateFormat
 import domain.feed.{FacebookFeed, FacebookFeedPaging}
-import domain.likes.{FacebookLike, FacebookLikes, FacebookLikesSummary, FacebookPaging}
+import domain.likes._
 import domain.oauth._
 import domain.posts.{FacebookPost, FacebookPostId}
 import domain.profile._
 import org.apache.commons.lang3.LocaleUtils
 import cats.implicits._
-import domain.FacebookOrder
-import domain.albums.{FacebookAlbum, FacebookAlbumId}
+import domain.{FacebookOrder, FacebookPaging}
+import domain.albums.{FacebookAlbum, FacebookAlbumId, FacebookAlbums}
 import domain.albums.image.FacebookImage
 import domain.albums.photo.{FacebookPhoto, FacebookPhotoId}
 import domain.comments._
@@ -112,10 +112,11 @@ package object compatibility {
     new URL("https://scontent.xx.fbcdn.net/v/t1.0-0/p75x225/25396081_117607225698641_6348338142026249400_n.jpg"),
     450)
 
-  val facebookAlbum = FacebookAlbum(FacebookAlbumId("117607235698640"), "Profile Pictures", toInstant("2017-12-18T11:30:10+0000"))
+  val facebookProfileAlbum = FacebookAlbum(FacebookAlbumId("117607235698640"), "Profile Pictures", toInstant("2017-12-18T11:30:10+0000"))
+  val facebookCoverAlbum = FacebookAlbum(FacebookAlbumId("120118722114158"), "Cover Photos", toInstant("2017-12-19T14:08:44+0000"))
 
   val facebookPhoto = FacebookPhoto(
-    FacebookPhotoId("117607225698641"), Some(toInstant("2017-12-18T11:30:11+0000")), List(facebookImage), facebookAlbum.some
+    FacebookPhotoId("117607225698641"), Some(toInstant("2017-12-18T11:30:11+0000")), List(facebookImage), facebookProfileAlbum.some
   )
 
   val attachmentTarget = FacebookAttachmentTarget(FacebookAttachmentId("135224317270265"),
@@ -127,6 +128,11 @@ package object compatibility {
 
   val facebookAttachment = FacebookAttachment(imageSource, attachmentTarget, attachmentTarget.url, AttachmentTypes.Photo)
 
+  val facebookAlbums = FacebookAlbums(
+    List(facebookCoverAlbum, facebookProfileAlbum),
+    FacebookPaging(
+      Some("MTIwMTE4NzIyMTE0MTU4"),
+      Some("MTE3NjA3MjM1Njk4NjQw")))
 
   def toInstant(string: String) = dateFormat.parse(string, Instant.from(_))
 

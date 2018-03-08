@@ -13,7 +13,8 @@ object FacebookConstants {
   final val feedUri = "/feed"
   final val authUri = "/dialog/oauth"
   final val likeUri = "/likes"
-  final val commentEdge = "/comments"
+  final val commentsEdge = "/comments"
+  final val albumsEdge = "/albums"
 
   final val dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ")
 }

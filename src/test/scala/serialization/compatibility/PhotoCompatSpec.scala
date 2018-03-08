@@ -12,7 +12,7 @@ class PhotoCompatSpec extends SyncSpec with JsonSerializationSupport {
   val albumPath = "testdata/photo_album.json"
   val photoPath = "testdata/photo.json"
 
-  "FacebookImage" should {
+  "FacebookPhoto" should {
     s"be compatible with $imagePath" in {
       decodeJson[FacebookImage](imagePath) shouldBe facebookImage
     }
@@ -20,7 +20,7 @@ class PhotoCompatSpec extends SyncSpec with JsonSerializationSupport {
 
   "FacebookAlbum" should {
     s"be compatible with $albumPath" in {
-      decodeJson[FacebookAlbum](albumPath) shouldBe facebookAlbum
+      decodeJson[FacebookAlbum](albumPath) shouldBe facebookProfileAlbum
     }
   }
 

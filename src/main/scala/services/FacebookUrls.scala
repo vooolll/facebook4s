@@ -14,7 +14,7 @@ import domain.oauth._
 import domain.permission.FacebookPermissions.FacebookPermission
 import domain.posts.FacebookPostAttributes.FacebookPostAttribute
 import domain.posts.FacebookPostId
-import domain.profile.{FacebookUserAttribute, FacebookUserId}
+import domain.profile.{FacebookProfileId, FacebookUserAttribute, FacebookUserId}
 import org.f100ded.scalaurlbuilder.URLBuilder
 import syntax.FacebookShowOps._
 
@@ -81,13 +81,16 @@ trait FacebookUrls {
     accessToken : FacebookAccessToken,
     attributes  : Seq[FacebookCommentsAttribute],
     summary     : Boolean = false) =
-    manyParams(withSummary(edge(commentEdge, postUri(postId, accessToken, Nil)), summary), attributes)
+    manyParams(withSummary(edge(commentsEdge, postUri(postId, accessToken, Nil)), summary), attributes)
 
   def commentUri(
     commentId   : FacebookCommentId,
     accessToken : FacebookAccessToken,
     attributes  : Seq[FacebookCommentAttribute]) =
     manyParams(withAccessToken(accessToken).withPathSegments(commentId.value), attributes)
+
+  def albumsUri(profileId: FacebookProfileId, accessToken: FacebookAccessToken) =
+    edge(albumsEdge, profileUri(accessToken, profileId))
 
   def buildAuthUrl(permissions: Seq[FacebookPermission],
                    responseType: FacebookAttribute = FacebookCode,
@@ -99,6 +102,10 @@ trait FacebookUrls {
     ) ++ many("scope", permissions) ++ state.map("state" -> _)
     baseHostBuilder.withPathSegments(FacebookConstants.authUri).withQueryParameters(params:_*)
   }
+
+  def profileUri(accessToken : FacebookAccessToken,
+                 profileId   : FacebookProfileId) =
+    withAccessToken(accessToken).withPathSegments(profileId.value)
 
   def userUri(accessToken : FacebookAccessToken,
               userId      : FacebookUserId = FacebookUserId("me"),

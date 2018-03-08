@@ -8,14 +8,14 @@ import domain.comments.FacebookCommentsAttributes
 import domain.oauth.FacebookToken
 import domain.permission.FacebookPermissions.FacebookUserPosts
 import domain.posts.{FacebookPostAttributes, FacebookPostId}
-import domain.profile.FacebookUserId
+import domain.profile.{FacebookProfileId, FacebookUserId}
 import org.scalatest.{Matchers, WordSpec}
 import syntax.FacebookShowOps._
 import serialization.compatibility._
 
-class UriServiceSpec extends WordSpec with Matchers {
+class FacebookUrlsSpec extends WordSpec with Matchers {
 
-  "UriService" should {
+  "FacebookUrls" should {
     "return url to obtain log lived uri" in {
       TestUrls.longLivedTokenUri("test").toString() shouldBe "https://graph.facebook.com/v2.10/oauth/access_token" +
         s"?client_id=${clientId.show}" +
@@ -79,6 +79,11 @@ class UriServiceSpec extends WordSpec with Matchers {
         FacebookCommentsAttributes.defaultCommentsAttributeValues, summary = true).toString() shouldBe "https://graph." +
         "facebook.com/v2.10/postId/comments?access_token=token&summary=true" +
         "&fields=id%2Cmessage%2Ccreated_time%2Cattachment%2Cfrom%2Cobject"
+    }
+
+    "return albums uri" in {
+      TestUrls.albumsUri(FacebookProfileId("profileId"), userAccessToken).toString() shouldBe "https://graph." +
+        "facebook.com/v2.10/profileId/albums?access_token=token"
     }
 
   }

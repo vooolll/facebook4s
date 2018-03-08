@@ -9,7 +9,7 @@ import config.FacebookConstants._
 import domain._
 import domain.albums.image.FacebookImage
 import domain.albums.photo.{FacebookPhoto, FacebookPhotoId}
-import domain.albums.{FacebookAlbum, FacebookAlbumId}
+import domain.albums.{FacebookAlbum, FacebookAlbumId, FacebookAlbums}
 import domain.comments._
 import domain.feed._
 import domain.likes._
@@ -224,6 +224,13 @@ object FacebookDecoders {
       name        <- c.get[String]("name")
       createdTime <- c.get[Instant]("created_time")
     } yield FacebookAlbum(id, name, createdTime)
+  }
+
+  implicit val decodeAlbums: Decoder[FacebookAlbums] = new Decoder[FacebookAlbums] {
+    override def apply(c: HCursor) = for {
+      albums <- c.get[List[FacebookAlbum]]("data")
+      paging <- c.get[FacebookPaging]("paging")
+    } yield FacebookAlbums(albums, paging)
   }
 
   implicit val decodePhotoId: Decoder[FacebookPhotoId] = decodeString.map(FacebookPhotoId)

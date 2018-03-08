@@ -2,10 +2,9 @@ package domain.comments
 
 import java.time.Instant
 
-import domain.FacebookOrder
-import domain.likes.FacebookPaging
 import domain.media.FacebookAttachment
 import domain.profile.FacebookProfileId
+import domain.{FacebookOrder, FacebookPaging}
 
 final case class FacebookCommentId(value: String)
 
