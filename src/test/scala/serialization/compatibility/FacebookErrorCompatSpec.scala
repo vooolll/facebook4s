@@ -1,10 +1,9 @@
 package serialization.compatibility
 
-import base.{JsonSerializationSupport, SyncSpec}
 import domain.oauth.FacebookError
 import serialization.FacebookDecoders._
 
-class FacebookErrorCompatSpec extends SyncSpec with JsonSerializationSupport {
+class FacebookErrorCompatSpec extends CompatibilitySpec {
 
   val wrongCodePath = "testdata/oauth_error.json"
 

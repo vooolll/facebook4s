@@ -1,13 +1,12 @@
 package serialization.compatibility
 
-import base.{JsonSerializationSupport, SyncSpec}
 import domain.oauth.FacebookError
 import io.circe.Encoder
 import io.circe.generic.semiauto._
 import io.circe.syntax._
 import serialization.FacebookDecoders._
 
-class FacebookErrorTypeCompatSpec extends SyncSpec with JsonSerializationSupport {
+class FacebookErrorTypeCompatSpec extends CompatibilitySpec {
 
   val codes = FacebookError.values.map(_.code)
 

@@ -1,12 +1,11 @@
 package serialization.compatibility
 
-import base.{JsonSerializationSupport, SyncSpec}
 import domain.albums.FacebookAlbum
-import serialization.FacebookDecoders._
 import domain.albums.image.FacebookImage
 import domain.albums.photo.FacebookPhoto
+import serialization.FacebookDecoders._
 
-class PhotoCompatSpec extends SyncSpec with JsonSerializationSupport {
+class PhotoCompatSpec extends CompatibilitySpec {
 
   val imagePath = "testdata/photo_image.json"
   val albumPath = "testdata/photo_album.json"

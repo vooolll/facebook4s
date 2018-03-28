@@ -1,12 +1,11 @@
 package serialization.compatibility
 
-import base.{JsonSerializationSupport, SyncSpec}
 import domain.media._
 import io.circe._
 import io.circe.generic.semiauto._
 import serialization.FacebookDecoders._
 
-class AttachmentCompatSpec extends SyncSpec with JsonSerializationSupport {
+class AttachmentCompatSpec extends CompatibilitySpec {
 
   case class TestObject(attachmentType: AttachmentType)
 

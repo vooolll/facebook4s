@@ -1,11 +1,10 @@
 package serialization.compatibility
 
-import base.{JsonSerializationSupport, SyncSpec}
+import cats.implicits._
 import domain.comments.{FacebookComment, FacebookCommentSummary, FacebookComments}
 import serialization.FacebookDecoders._
-import cats.implicits._
 
-class CommentCompatSpec extends SyncSpec with JsonSerializationSupport {
+class CommentCompatSpec extends CompatibilitySpec {
 
   val commentPath = "testdata/comment.json"
   val commentsPath = "testdata/comments.json"

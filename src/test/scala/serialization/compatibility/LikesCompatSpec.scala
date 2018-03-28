@@ -1,12 +1,11 @@
 package serialization.compatibility
 
-import base.{JsonSerializationSupport, SyncSpec}
-import domain.likes._
-import serialization.FacebookDecoders._
 import cats.implicits._
 import domain.FacebookPaging
+import domain.likes._
+import serialization.FacebookDecoders._
 
-class LikesCompatSpec extends SyncSpec with JsonSerializationSupport {
+class LikesCompatSpec extends CompatibilitySpec {
 
   val likesPath = "testdata/likes.json"
   val likePath = "testdata/like.json"

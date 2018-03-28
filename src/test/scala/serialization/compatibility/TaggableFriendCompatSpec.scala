@@ -1,8 +1,6 @@
 package serialization.compatibility
 
-import base.{JsonSerializationSupport, SyncSpec}
-
-class TaggableFriendCompatSpec extends SyncSpec with JsonSerializationSupport {
+class TaggableFriendCompatSpec extends CompatibilitySpec {
 
   val taggableFriendPath = "testdata/taggable_friend.json"
 
