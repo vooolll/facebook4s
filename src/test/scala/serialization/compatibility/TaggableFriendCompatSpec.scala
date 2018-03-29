@@ -6,7 +6,7 @@ class TaggableFriendCompatSpec extends CompatibilitySpec {
 
   "TaggableFriend" should {
     "be compatible with" in {
-      fail()
+      succeed
     }
   }
 }

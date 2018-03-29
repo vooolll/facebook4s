@@ -9,7 +9,8 @@ import domain.oauth.FacebookError
 import io.circe.Decoder
 import org.f100ded.scalaurlbuilder.URLBuilder
 
-import scala.concurrent.Future
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, Future}
 
 class DomainParsing(asyncRequest: AsyncRequest) extends FailFastCirceSupport with LazyLogging {
 
@@ -43,8 +44,8 @@ class DomainParsing(asyncRequest: AsyncRequest) extends FailFastCirceSupport wit
       case StatusCodes.OK                  => response.entity.asRight
       case StatusCodes.BadRequest          => response.entity.asLeft
       case StatusCodes.InternalServerError =>
-        logger.warn("internal server error")
-        throw new RuntimeException("Internal server error")
+        logger.warn(s"internal server error $response")
+        response.entity.asLeft
       case _                               =>
         logger.warn("unknown status code")
         response.entity.asLeft

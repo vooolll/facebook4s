@@ -1,7 +1,8 @@
 package client
 
 import java.net.URL
-import domain.comments.FacebookCommentId
+
+import domain.comments.{FacebookComment, FacebookCommentId, FacebookComments}
 import domain.feed.{FacebookFeed, FacebookFeedPaging}
 import domain.posts.{FacebookPost, FacebookPostId}
 import domain.profile._
@@ -59,9 +60,27 @@ package object feed {
     }
   }
 
+  implicit class FacebookCommentWithoutQuery(comment: FacebookComment) {
+    def withoutQueryParams = withoutAttachmentQuery(comment)
+  }
+
+  implicit class FacebookCommenstWithoutQuery(c: FacebookComments) {
+    def withoutQueryParams = c.copy(comments = withoutCommentsQuery(c))
+  }
+
   private[this] def withoutCoverQuery(cover: Cover) = cover.copy(source = withoutQuery(cover.source))
   private[this] def withoutPictureQuery(pic: FacebookUserPicture) = pic.copy(url = withoutQuery(pic.url))
+  private[this] def withoutAttachmentQuery(comment: FacebookComment) = comment.copy(attachment = comment.attachment.map(
+    a => a.copy(attachment = a.attachment.copy(src = withoutQuery(a.attachment.src)))
+  ))
 
-  private[this] def withoutQuery(u: URL) = new URL(u.toString.takeWhile(_ != '?'))
+  private[this] def withoutCommentsQuery(c: FacebookComments) = {
+    c.comments.map(comment => withoutAttachmentQuery(comment))
+  }
+
+
+  private[this] def withoutQuery(u: URL) = {
+    new URL(u.toString.takeWhile(_ != '?'))
+  }
 
 }

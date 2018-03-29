@@ -58,7 +58,7 @@ case class FacebookUserPicture(
   * @param source source link
   */
 case class Cover(
-  id      : String,
+  id      : Option[String],
   offsetX : Double,
   offsetY : Double,
   source  : URL

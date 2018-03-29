@@ -48,7 +48,7 @@ package object compatibility {
     timezone    = ZoneOffset.ofHours(2).some,
     gender      = Gender.Male.some,
     ageRange    = AgeRange(21, None).some,
-    cover       = Cover("527696177574986", 0, 0, new URL("http://example.com")).some,
+    cover       = Cover("527696177574986".some, 0, 0, new URL("http://example.com")).some,
     updatedTime = Some(toInstant("2017-11-11T00:10:08+0000")))
 
   val appId = FacebookAppId("1969406143275709")

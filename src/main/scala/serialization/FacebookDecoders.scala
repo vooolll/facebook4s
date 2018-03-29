@@ -54,8 +54,14 @@ object FacebookDecoders {
   implicit val decodeAgeRange: Decoder[AgeRange] =
     Decoder.forProduct2("min", "max")(AgeRange)
 
-  implicit val decodeCover: Decoder[Cover] =
-    Decoder.forProduct4("id", "offset_x", "offset_y", "source")(Cover)
+  implicit val decodeCover: Decoder[Cover] = new Decoder[Cover] {
+    override def apply(c: HCursor) = for {
+      id <- c.get[Option[String]]("id")
+      offsetX <- c.get[Double]("offset_x")
+      offsetY <- c.get[Double]("offset_y")
+      source <- c.get[URL]("source")
+    } yield Cover(id, offsetX, offsetY, source)
+  }
 
   implicit val decodeAppAccessToken: Decoder[FacebookAccessToken] = new Decoder[FacebookAccessToken] {
     override def apply(c: HCursor) = for {

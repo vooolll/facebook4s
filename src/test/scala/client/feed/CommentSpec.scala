@@ -11,7 +11,6 @@ import domain.profile.FacebookProfileId
 import serialization.compatibility.toInstant
 import FacebookCommentAttributes._
 import domain.media._
-
 class CommentSpec extends FacebookClientSupport {
 
   val mediaObject = Some(
@@ -20,8 +19,7 @@ class CommentSpec extends FacebookClientSupport {
 
   val attachment = Some(FacebookAttachment(
     FacebookImageSource(720.0,
-      new URL("https://scontent.xx.fbcdn.net/v/t31.0-8/s720x720/28617069_173295196796510_8133139076598269923_o.jpg?" +
-        "oh=d37083dfdda57930068086618cb525bf&oe=5B492E4F"), 549.0),
+      new URL("https://scontent.xx.fbcdn.net/v/t31.0-8/s720x720/28617069_173295196796510_8133139076598269923_o.jpg"), 549.0),
     FacebookAttachmentTarget(FacebookAttachmentId("173295196796510"), url), url, AttachmentTypes.Photo))
 
   val comment = FacebookComment(
@@ -59,28 +57,28 @@ class CommentSpec extends FacebookClientSupport {
 
   "Facebook Graph Api" should {
     "return comments of post" in { c =>
-      c.comments(postId, userTokenRaw) map (_ shouldBe comments)
+      c.comments(postId, userTokenRaw) map (_.withoutQueryParams shouldBe comments)
     }
 
     "return comments of post result" in { c =>
-      c.commentsResult(postId, userTokenRaw) map (_ shouldBe comments.asRight)
+      c.commentsResult(postId, userTokenRaw) map (_.map(_.withoutQueryParams) shouldBe comments.asRight)
     }
 
     "return comments of post with summary" in { c =>
-      c.comments(postId, userTokenRaw, summary = true) map (_ shouldBe commentsWithSummary)
+      c.comments(postId, userTokenRaw, summary = true) map (_.withoutQueryParams shouldBe commentsWithSummary)
     }
 
     "return comments of post result with summary" in { c =>
-      c.commentsResult(postId, userTokenRaw, summary = true) map (_ shouldBe commentsWithSummary.asRight)
+      c.commentsResult(postId, userTokenRaw, summary = true) map (_.map(_.withoutQueryParams) shouldBe commentsWithSummary.asRight)
     }
 
     "return comment of comment" in { c =>
-      c.comment(commentId, userTokenRaw, defaultCommentAttributeValues) map (_ shouldBe commentReplyWithSummary)
+      c.comment(commentId, userTokenRaw, defaultCommentAttributeValues) map (_.withoutQueryParams shouldBe commentReplyWithSummary)
     }
 
     "return comment of comment result" in { c =>
       c.commentResult(
-        commentId, userTokenRaw, defaultCommentAttributeValues) map (_ shouldBe commentReplyWithSummary.asRight)
+        commentId, userTokenRaw, defaultCommentAttributeValues) map (_.map(_.withoutQueryParams) shouldBe commentReplyWithSummary.asRight)
     }
   }
 }
