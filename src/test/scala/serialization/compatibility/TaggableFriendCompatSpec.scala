@@ -1,6 +1,6 @@
 package serialization.compatibility
 
-import domain.friends.TaggableFriend
+import domain.friends.FacebookTaggableFriend
 import serialization.FacebookDecoders.decodeTaggableFriend
 
 class TaggableFriendCompatSpec extends CompatibilitySpec {
@@ -9,7 +9,7 @@ class TaggableFriendCompatSpec extends CompatibilitySpec {
 
   "TaggableFriend" should {
     "be compatible with" in {
-      decodeJson[TaggableFriend](taggableFriendPath) shouldBe taggableFriend
+      decodeJson[FacebookTaggableFriend](taggableFriendPath) shouldBe taggableFriend
     }
   }
 }

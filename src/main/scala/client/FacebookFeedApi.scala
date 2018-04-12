@@ -56,7 +56,7 @@ trait FacebookFeedApi extends FacebookInternals {
     * @param fields Sequence of facebook post attributes
     * @return Either facebook user feed or error FacebookError
     */
-  def feedResult(userId: UserId, accessToken: AccessToken, fields: Seq[PostAttribute]): AsyncUserFeedResult =
+  def feedResult(userId: UserId, accessToken: AccessToken, fields: Seq[PostAttribute]): FutureResult[UserFeed] =
     sendRequest(userFeedUri(accessToken, userId, fields))
 
   /**
@@ -64,7 +64,7 @@ trait FacebookFeedApi extends FacebookInternals {
     * @param accessToken Facebook user access token with "user_posts" permission
     * @return Either facebook user feed or error FacebookError
     */
-  def feedResult(userId: UserId, accessToken: AccessToken): AsyncUserFeedResult =
+  def feedResult(userId: UserId, accessToken: AccessToken): FutureResult[UserFeed] =
     feedResult(userId, accessToken, defaultPostAttributeValues)
 
   /**
