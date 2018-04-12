@@ -65,21 +65,24 @@ libraryDependencies ++= {
   val circeV = "0.8.0"
   val commonsLang = "3.7"
 
-  Seq(
+  val testDependencies = Seq(
+    "org.scalatest"  %% "scalatest"       % scalaTestV,
+    "ch.qos.logback" %  "logback-classic" % logbackClassicV,
+    "org.mockito"    %  "mockito-core"    % mockitoV,
+    "io.circe"       %% "circe-parser"    % circeV).map(_ % Test)
+
+  val dependencies = Seq(
     "com.typesafe.akka"              %% "akka-http"           % akkaHttpV,
     "com.typesafe.scala-logging"     %% "scala-logging"       % scalaLoggingV,
     "de.heikoseeberger"              %% "akka-http-circe"     % akkaJsonSupportV,
     "org.f100ded.scala-url-builder"  %% "scala-url-builder"   % uriBuilderV,
     "io.circe"                       %% "circe-core"          % circeV,
     "io.circe"                       %% "circe-generic"       % circeV,
-    "io.circe"                       %% "circe-parser"        % circeV,
-    "org.scalatest"                  %% "scalatest"           % scalaTestV % "test",
-
-    "org.apache.commons"             %  "commons-lang3"       % commonsLang,
-    "ch.qos.logback"                 %  "logback-classic"     % logbackClassicV,
-    "org.mockito"                    %  "mockito-core"        % mockitoV % "test",
-    "com.typesafe"                   %  "config"              % typesafeV
+    "com.typesafe"                   %  "config"              % typesafeV,
+    "org.apache.commons"             %  "commons-lang3"       % commonsLang
   )
+
+  dependencies ++ testDependencies
 }
 
 licenses := Seq("Apache-2.0" -> url("http://opensource.org/licenses/Apache-2.0"))
