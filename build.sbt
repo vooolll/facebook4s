@@ -54,7 +54,6 @@ pomExtra :=
   </developers>
 
 libraryDependencies ++= {
-  val akkaV = "2.4.19"
   val akkaHttpV = "10.0.9"
   val scalaTestV = "3.0.1"
   val typesafeV = "1.3.1"
@@ -67,7 +66,6 @@ libraryDependencies ++= {
   val commonsLang = "3.7"
 
   Seq(
-    "com.typesafe.akka"              %% "akka-actor"          % akkaV,
     "com.typesafe.akka"              %% "akka-http"           % akkaHttpV,
     "com.typesafe.scala-logging"     %% "scala-logging"       % scalaLoggingV,
     "de.heikoseeberger"              %% "akka-http-circe"     % akkaJsonSupportV,
