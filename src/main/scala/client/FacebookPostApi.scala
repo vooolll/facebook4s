@@ -35,7 +35,7 @@ trait FacebookPostApi extends FacebookInternals {
     * @param fields Sequence of facebook post attributes
     * @return Either facebook post details or error FacebookError
     */
-  def postResult(postId: PostId, accessToken: AccessToken,fields: Seq[PostAttribute]): AsyncPostResult =
+  def postResult(postId: PostId, accessToken: AccessToken,fields: Seq[PostAttribute]): FutureResult[Post] =
     sendRequest(postUri(postId, accessToken, fields))
 
   /**
@@ -43,7 +43,7 @@ trait FacebookPostApi extends FacebookInternals {
     * @param accessToken Facebook access token
     * @return Either facebook post details or error FacebookError
     */
-  def postResult(postId: PostId, accessToken: AccessToken): AsyncPostResult =
+  def postResult(postId: PostId, accessToken: AccessToken): FutureResult[Post] =
     postResult(postId, accessToken, defaultPostAttributeValues)
 
 }
