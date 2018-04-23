@@ -40,8 +40,6 @@ trait FacebookUrls {
 
   lazy val appTokenUri = oauthTokenBuilder.withQueryParameters("grant_type" -> "client_credentials")
 
-//  println(appTokenUri)
-
   def userTokenUri(code: String, machineId: Option[String]) = {
     val mid = machineId.map("machine_id" -> _)
     val params = Seq(

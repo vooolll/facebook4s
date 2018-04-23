@@ -12,7 +12,6 @@ import domain.albums.photo.{FacebookPhoto, FacebookPhotoId}
 import domain.albums.{FacebookAlbum, FacebookAlbumId, FacebookAlbums}
 import domain.comments._
 import domain.feed._
-import domain.friends.{FacebookTaggableFriend, FacebookTaggableFriendId}
 import domain.likes._
 import domain.media._
 import domain.oauth.FacebookError.FacebookErrorType
@@ -275,12 +274,4 @@ object FacebookDecoders {
     } yield FacebookAttachment(attachment, target, url, attachmentType)
   }
 
-  implicit val decodeTaggableFriendId: Decoder[FacebookTaggableFriendId] = Decoder.decodeString.map(FacebookTaggableFriendId)
-  implicit val decodeTaggableFriend: Decoder[FacebookTaggableFriend] = new Decoder[FacebookTaggableFriend] {
-    override def apply(c: HCursor) = for {
-      id <- c.get[FacebookTaggableFriendId]("id")
-      name <- c.get[Option[String]]("name")
-      picture <- c.downField("picture").get[Option[FacebookUserPicture]]("data")
-    } yield FacebookTaggableFriend(id, name, picture)
-  }
 }

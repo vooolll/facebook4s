@@ -6,7 +6,6 @@ import domain.albums.photo.FacebookPhotoAttributes.FacebookPhotoAttribute
 import domain.albums.photo.{FacebookPhoto, FacebookPhotoId}
 import domain.comments.FacebookComments
 import domain.feed.FacebookFeed
-import domain.friends.{FacebookTaggableFriendId, FacebookTaggableFriends}
 import domain.likes.FacebookLikes
 import domain.oauth._
 import domain.permission.FacebookPermissions._
@@ -69,7 +68,6 @@ object FacebookClient {
   type PostId = FacebookPostId
   type PhotoId = FacebookPhotoId
   type ProfileId = FacebookProfileId
-  type TaggableFriendsId = FacebookTaggableFriendId
 
   type AccessToken = FacebookAccessToken
   type Application = FacebookApplication
@@ -85,7 +83,6 @@ object FacebookClient {
   type Comments = FacebookComments
   type Photo = FacebookPhoto
   type Albums = FacebookAlbums
-  type TaggableFriends = FacebookTaggableFriends
 
   type FutureResult[T] = Future[Either[ApiError, T]]
 

@@ -16,7 +16,6 @@ import domain.albums.{FacebookAlbum, FacebookAlbumId, FacebookAlbums}
 import domain.albums.image.FacebookImage
 import domain.albums.photo.{FacebookPhoto, FacebookPhotoId}
 import domain.comments._
-import domain.friends.{FacebookTaggableFriend, FacebookTaggableFriendId}
 import domain.media._
 
 import scala.concurrent.duration._
@@ -134,8 +133,6 @@ package object compatibility {
     FacebookPaging(
       Some("MTIwMTE4NzIyMTE0MTU4"),
       Some("MTE3NjA3MjM1Njk4NjQw")))
-
-  val taggableFriend = FacebookTaggableFriend(FacebookTaggableFriendId("id"), "Valeryi Baibossynov".some, userPicture.some)
 
   def toInstant(string: String) = dateFormat.parse(string, Instant.from(_))
 
