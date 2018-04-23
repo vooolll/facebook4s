@@ -1,39 +1,45 @@
 package client
 
-import client.FacebookClient._
+import client.FacebookClient.{accessToken, _}
+import domain.profile.FacebookUserAttribute
 import services.FacebookInternals
 
 import scala.concurrent.Future
 
 trait FacebookFriendsApi extends FacebookInternals {
 
-  import serialization.FacebookDecoders.decodeUser
+  import serialization.FacebookDecoders.decodeFriends
 
   /**
-    * Returns taggable_friends for given user id
+    * Returns friends that installed current app for given user id
     * @param userId facebook user id
     * @param accessTokenValue facebook access token value
     */
-  def taggableFriends(userId: UserId, accessTokenValue: String): Future[List[User]]
+  def friends(userId: UserId, accessTokenValue: String): Future[Friends] =
+    friends(userId, accessToken(accessTokenValue))
 
   /**
-    * Returns taggable_friends for given user id
+    * Returns friends that installed current app for given user id
     * @param userId facebook user id
     * @param accessToken facebook access token
     */
-  def taggableFriends(userId: UserId, accessToken: AccessToken): Future[List[User]]
+  def friends(userId: UserId, accessToken: AccessToken): Future[Friends] =
+    sendRequestOrFail(friendsUri(accessToken, userId, FacebookUserAttribute.defaultAttributeValues))
 
   /**
-    * Returns taggable_friends for given user id
+    * Returns friends that installed current app for given user id
     * @param userId facebook user id
     * @param accessToken facebook access token
     */
-  def taggableFriendsResult(userId: UserId, accessToken: AccessToken): FutureResult[List[User]]
+  def friendsResult(userId: UserId, accessToken: AccessToken): FutureResult[Friends] =
+    sendRequest(friendsUri(accessToken, userId, FacebookUserAttribute.defaultAttributeValues))
 
   /**
-    * Returns taggable_friends for given user id
+    * Returns friends that installed current app for given user id
     * @param userId facebook user id
     * @param accessTokenValue facebook access token value
     */
-  def taggableFriendsResult(userId: UserId, accessTokenValue: String): FutureResult[List[User]]
+  def friendsResult(userId: UserId, accessTokenValue: String): FutureResult[Friends] =
+    friendsResult(userId, accessToken(accessTokenValue))
+
 }

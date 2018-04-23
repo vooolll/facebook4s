@@ -59,13 +59,14 @@ trait FacebookUrls {
     "access_token" -> longLeavingTokenValue,
     "redirect_uri" -> redirect().show)
 
-  def taggableFriendsUri(
+  def friendsUri(
     accessToken: FacebookAccessToken,
-    userId     : FacebookUserId = FacebookUserId("me")) = edge(taggableFriendsEdge, userUri(accessToken, userId, Nil))
+    userId     : FacebookUserId,
+    attributes : Seq[FacebookUserAttribute]) = edge(friendsEdge, userUri(accessToken, userId, attributes))
 
   def userFeedUri(
     accessToken : FacebookAccessToken,
-    userId      : FacebookUserId = FacebookUserId("me"),
+    userId      : FacebookUserId,
     attributes  : Seq[FacebookPostAttribute]) =
     manyParams(withAccessToken(accessToken).withPathSegments(userId.show).withPathSegments(feedUri), attributes)
 

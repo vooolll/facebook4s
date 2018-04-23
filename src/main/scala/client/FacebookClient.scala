@@ -6,6 +6,7 @@ import domain.albums.photo.FacebookPhotoAttributes.FacebookPhotoAttribute
 import domain.albums.photo.{FacebookPhoto, FacebookPhotoId}
 import domain.comments.FacebookComments
 import domain.feed.FacebookFeed
+import domain.friends.FacebookFriends
 import domain.likes.FacebookLikes
 import domain.oauth._
 import domain.permission.FacebookPermissions._
@@ -29,6 +30,7 @@ class FacebookClient(val clientId: FacebookClientId, val appSecret: FacebookAppS
   with FacebookCommentApi
   with FacebookPhotoApi
   with FacebookAlbumApi
+  with FacebookFriendsApi
 
 /**
   * Facebook client constructors and helper types
@@ -83,6 +85,7 @@ object FacebookClient {
   type Comments = FacebookComments
   type Photo = FacebookPhoto
   type Albums = FacebookAlbums
+  type Friends = FacebookFriends
 
   type FutureResult[T] = Future[Either[ApiError, T]]
 

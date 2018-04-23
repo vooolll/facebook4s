@@ -4,6 +4,7 @@ import java.net.URL
 
 import domain.comments.{FacebookComment, FacebookCommentId, FacebookComments}
 import domain.feed.{FacebookFeed, FacebookFeedPaging}
+import domain.friends.FacebookFriends
 import domain.posts.{FacebookPost, FacebookPostId}
 import domain.profile._
 import serialization.compatibility.toInstant
@@ -57,6 +58,12 @@ package object feed {
     def withoutQueryParams = {
       user.copy(cover = user.cover.map(cover => withoutCoverQuery(cover)),
         picture = user.picture.map(withoutPictureQuery))
+    }
+  }
+
+  implicit class FacebookFriendsWithoutQuery(facebookFriends: FacebookFriends) {
+    def withoutQueryParams = {
+      facebookFriends.copy(friends = facebookFriends.friends.map(_.withoutQueryParams))
     }
   }
 
