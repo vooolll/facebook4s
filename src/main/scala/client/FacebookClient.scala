@@ -63,35 +63,28 @@ object FacebookClient {
     */
   def accessToken(value: String) = FacebookAccessToken(TokenValue(value), UserAccessToken.notSpecified)
 
+  type ApplicationId = FacebookApplicationId
+  type UserId = FacebookUserId
+  type PostId = FacebookPostId
+  type PhotoId = FacebookPhotoId
+  type ProfileId = FacebookProfileId
+
   type AccessToken = FacebookAccessToken
   type Application = FacebookApplication
   type ApiError = FacebookError
   type ClientCode = FacebookClientCode
   type Permissions = FacebookPermission
   type ResponseType = FacebookOauthResponseType
-  type ApplicationId = FacebookApplicationId
+
   type User = FacebookUser
-  type UserId = FacebookUserId
   type Post = FacebookPost
-  type PostId = FacebookPostId
   type Likes = FacebookLikes
   type UserFeed = FacebookFeed
   type Comments = FacebookComments
-  type PhotoId = FacebookPhotoId
   type Photo = FacebookPhoto
   type Albums = FacebookAlbums
-  type ProfileId = FacebookProfileId
 
-  type AsyncUserFeedResult = Future[Either[ApiError, UserFeed]]
-  type AsyncPostResult = Future[Either[ApiError, Post]]
-  type AsyncUserResult = Future[Either[ApiError, User]]
-  type AsyncLikesResult = Future[Either[ApiError, Likes]]
-  type AsyncCommentsResult = Future[Either[ApiError, Comments]]
-  type AsyncAccessTokenResult = Future[Either[ApiError, AccessToken]]
-  type AsyncClientCodeResult = Future[Either[ApiError, ClientCode]]
-  type AsyncApplicationResult = Future[Either[ApiError, Application]]
-  type AsyncPhotoResult = Future[Either[ApiError, Photo]]
-  type AsyncAlbumsResult = Future[Either[ApiError, Albums]]
+  type FutureResult[T] = Future[Either[ApiError, T]]
 
   type PhotoAttribute = FacebookPhotoAttribute
   type PostAttribute = FacebookPostAttribute

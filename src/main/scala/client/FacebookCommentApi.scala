@@ -148,7 +148,7 @@ trait FacebookCommentApi extends FacebookInternals {
     * @param summary Boolean flag, retrieve summary or not
     * @return Either facebook comments or error FacebookError
     */
-  def commentsResult(postId: PostId, accessTokenValue: String, summary: Boolean): AsyncCommentsResult =
+  def commentsResult(postId: PostId, accessTokenValue: String, summary: Boolean): FutureResult[Comments] =
     commentsResult(postId, accessToken(accessTokenValue), summary)
 
   /**
@@ -156,7 +156,7 @@ trait FacebookCommentApi extends FacebookInternals {
     * @param accessTokenValue User access token value
     * @return Either facebook comments or error FacebookError
     */
-  def commentsResult(postId: PostId, accessTokenValue: String): AsyncCommentsResult =
+  def commentsResult(postId: PostId, accessTokenValue: String): FutureResult[Comments] =
     commentsResult(postId, accessToken(accessTokenValue), summary = false)
 
   /**
@@ -165,7 +165,7 @@ trait FacebookCommentApi extends FacebookInternals {
     * @param summary Boolean flag, retrieve summary or not
     * @return Either facebook comments or error FacebookError
     */
-  def commentsResult(postId: PostId, accessToken: AccessToken, summary: Boolean): AsyncCommentsResult =
+  def commentsResult(postId: PostId, accessToken: AccessToken, summary: Boolean): FutureResult[Comments] =
     sendRequest(commentsUri(postId, accessToken, defaultCommentsAttributeValues, summary))(decodeComments)
 
   /**
@@ -173,7 +173,7 @@ trait FacebookCommentApi extends FacebookInternals {
     * @param accessToken User access token
     * @return Either facebook comments or error FacebookError
     */
-  def commentsResult(postId: PostId, accessToken: AccessToken): AsyncCommentsResult =
+  def commentsResult(postId: PostId, accessToken: AccessToken): FutureResult[Comments] =
     commentsResult(postId, accessToken, summary = false)
 
 }

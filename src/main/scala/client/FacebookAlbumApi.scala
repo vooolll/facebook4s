@@ -30,7 +30,7 @@ trait FacebookAlbumApi extends FacebookInternals {
     * @param accessToken user access token
     * @return either FacebookAlbums or FacebookError
     */
-  def albumsResult(profileId: ProfileId, accessToken: AccessToken): AsyncAlbumsResult =
+  def albumsResult(profileId: ProfileId, accessToken: AccessToken): FutureResult[Albums] =
     sendRequest(albumsUri(profileId, accessToken))
 
   /**
@@ -38,7 +38,7 @@ trait FacebookAlbumApi extends FacebookInternals {
     * @param accessTokenValue user access token value
     * @return either FacebookAlbums or FacebookError
     */
-  def albumsResult(profileId: ProfileId, accessTokenValue: String): AsyncAlbumsResult =
+  def albumsResult(profileId: ProfileId, accessTokenValue: String): FutureResult[Albums] =
     albumsResult(profileId, accessToken(accessTokenValue))
 
 }

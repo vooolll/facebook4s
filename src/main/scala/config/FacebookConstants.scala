@@ -15,6 +15,7 @@ object FacebookConstants {
   final val likeUri = "/likes"
   final val commentsEdge = "/comments"
   final val albumsEdge = "/albums"
+  final val taggableFriendsEdge = "/taggable_friends"
 
   final val dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ")
 }

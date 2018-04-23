@@ -86,6 +86,11 @@ class FacebookUrlsSpec extends WordSpec with Matchers {
         "facebook.com/v2.10/profileId/albums?access_token=token"
     }
 
+    "return taggable_friends uri" in {
+      TestUrls.taggableFriendsUri(userAccessToken, FacebookUserId("123")).toString() shouldBe "https://graph." +
+        "facebook.com/v2.10/123/taggable_friends?access_token=token"
+    }
+
   }
 
 }

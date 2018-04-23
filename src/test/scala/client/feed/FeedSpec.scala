@@ -12,7 +12,7 @@ class FeedSpec extends FacebookClientSupport {
     }
 
     "return feed result" in { c =>
-      c.feedResult(userId, userTokenRaw) map(f => f.map(_.pictureWithoutQueryParams) shouldBe feed.asRight)
+      c.feedResult(userId, userTokenRaw) map(_.map(_.pictureWithoutQueryParams) shouldBe feed.asRight)
     }
   }
 }

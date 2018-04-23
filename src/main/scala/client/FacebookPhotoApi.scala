@@ -63,7 +63,7 @@ trait FacebookPhotoApi extends FacebookInternals {
   def photoResult(
     photoId     : PhotoId,
     accessToken : AccessToken,
-    fields      : Seq[PhotoAttribute]): AsyncPhotoResult =
+    fields      : Seq[PhotoAttribute]): FutureResult[Photo] =
     sendRequest(photoUri(photoId, accessToken, fields))
 
   /**
@@ -73,7 +73,7 @@ trait FacebookPhotoApi extends FacebookInternals {
     */
   def photoResult(
       photoId     : PhotoId,
-      accessToken : AccessToken): AsyncPhotoResult =
+      accessToken : AccessToken): FutureResult[Photo] =
     photoResult(photoId, accessToken, defaultPhotoAttributeValues)
 
   /**
@@ -85,7 +85,7 @@ trait FacebookPhotoApi extends FacebookInternals {
   def photoResult(
     photoId          : PhotoId,
     accessTokenValue : String,
-    fields           : Seq[PhotoAttribute]): AsyncPhotoResult =
+    fields           : Seq[PhotoAttribute]): FutureResult[Photo] =
     photoResult(photoId, accessToken(accessTokenValue), fields)
 
   /**
@@ -95,6 +95,6 @@ trait FacebookPhotoApi extends FacebookInternals {
     */
   def photoResult(
     photoId          : PhotoId,
-    accessTokenValue : String): AsyncPhotoResult =
+    accessTokenValue : String): FutureResult[Photo] =
     photoResult(photoId, accessTokenValue, defaultPhotoAttributeValues)
 }

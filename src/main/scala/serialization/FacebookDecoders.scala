@@ -273,4 +273,5 @@ object FacebookDecoders {
       attachmentType <- c.get[AttachmentType]("type")
     } yield FacebookAttachment(attachment, target, url, attachmentType)
   }
+
 }

@@ -32,7 +32,7 @@ trait FacebookApplicationApi extends FacebookInternals {
     * @param accessToken Facebook user access token
     * @return Either facebook application details or error FacebookError
     */
-  def applicationResult(applicationId: ApplicationId, accessToken: AccessToken): AsyncApplicationResult =
+  def applicationResult(applicationId: ApplicationId, accessToken: AccessToken): FutureResult[Application] =
     sendRequest(applicationUri(accessToken, applicationId))
 
   /**
@@ -40,6 +40,6 @@ trait FacebookApplicationApi extends FacebookInternals {
     * @param accessTokenValue Facebook user access token string value
     * @return Either facebook application details or error FacebookError
     */
-  def applicationResult(applicationId: ApplicationId, accessTokenValue: String): AsyncApplicationResult =
+  def applicationResult(applicationId: ApplicationId, accessTokenValue: String): FutureResult[Application] =
     applicationResult(applicationId, accessToken(accessTokenValue))
 }

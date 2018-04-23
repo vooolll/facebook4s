@@ -40,8 +40,6 @@ trait FacebookUrls {
 
   lazy val appTokenUri = oauthTokenBuilder.withQueryParameters("grant_type" -> "client_credentials")
 
-//  println(appTokenUri)
-
   def userTokenUri(code: String, machineId: Option[String]) = {
     val mid = machineId.map("machine_id" -> _)
     val params = Seq(
@@ -61,9 +59,14 @@ trait FacebookUrls {
     "access_token" -> longLeavingTokenValue,
     "redirect_uri" -> redirect().show)
 
-  def userFeedUri(accessToken : FacebookAccessToken,
-                  userId      : FacebookUserId = FacebookUserId("me"),
-                  attributes  : Seq[FacebookPostAttribute]) =
+  def taggableFriendsUri(
+    accessToken: FacebookAccessToken,
+    userId     : FacebookUserId = FacebookUserId("me")) = edge(taggableFriendsEdge, userUri(accessToken, userId, Nil))
+
+  def userFeedUri(
+    accessToken : FacebookAccessToken,
+    userId      : FacebookUserId = FacebookUserId("me"),
+    attributes  : Seq[FacebookPostAttribute]) =
     manyParams(withAccessToken(accessToken).withPathSegments(userId.show).withPathSegments(feedUri), attributes)
 
   def applicationUri(accessToken: FacebookAccessToken, applicationId: FacebookApplicationId) =
