@@ -12,7 +12,7 @@ Prerequisites
 ### Installation
 Add the following line to your sbt dependencies: 
 ```scala
-"com.github.vooolll" %% "facebook4s" % "0.2.5"
+"com.github.vooolll" %% "facebook4s" % "0.2.6"
 ```
 
 Note: make sure that you have in your `build.sbt`
@@ -46,7 +46,7 @@ facebook {
 #### Create FacebookClient
 In order to use api you need to create `FacebookClient` all api is available via this object
 ```scala
-import api.FacebookClient
+import client.FacebookClient
 
 val facebookClient = FacebookClient()
 ```
@@ -54,14 +54,14 @@ In example above `FacebookClient` will use configured parameters, see [Configura
 
 If you want to specify client id and application secret explicitly you can do it as expected:
 ```scala
-import api.FacebookClient
+import client.FacebookClient
 
 val facebookClient = FacebookClient("your client id", "your app secret")
 ```
 
 or you can use types to your advantage:
 ```scala
-import api.FacebookClient
+import client.FacebookClient
 import domain.{FacebookClientId, FacebookAppSecret}
 
 val facebookClient = FacebookClient(FacebookClientId("your client id"), FacebookAppSecret("your app secret"))
@@ -71,7 +71,7 @@ val facebookClient = FacebookClient(FacebookClientId("your client id"), Facebook
 
 `FacebookClient` can be used to get authentication url for client. It is starting point if you want to use api.
 ```scala
-import api.FacebookClient
+import client.FacebookClient
 import domain.permission.FacebookPermissions.FacebookUserPosts
 
 val facebookClient = FacebookClient()
@@ -96,7 +96,7 @@ After `client code` received, it can be exchanged to `access token`.
 
 
 ```scala
-import api.FacebookClient
+import client.FacebookClient
 import scala.util.{Success, Failure}
 
 val facebookClient = FacebookClient()
@@ -119,7 +119,7 @@ val shortLivedAccessToken = "user access token"
 
 Then you may exchange it to long lived access token, you need to create `FacebookClient` object:
 ```scala
-import api.FacebookClient
+import client.FacebookClient
 import scala.util.{Success, Failure}
 
 val facebookClient = FacebookClient()
@@ -133,7 +133,7 @@ facebookClient.extendUserAccessToken(shortLivedAccessToken) onComplete {
 #### Exchange long-lived token to client code
 It is possible to obtain client code using api call and long lived token from previous auth:
 ```scala
-import api.FacebookClient
+import client.FacebookClient
 import scala.util.{Success, Failure}
 
 val facebookClient = FacebookClient()
@@ -152,7 +152,7 @@ After obtaining client code you can send it to client over secure channel
 
 In some cases you may need your application access token, you can get it using `appAccessToken` api call:
 ```scala
-import api.FacebookClient
+import client.FacebookClient
 import scala.util.{Success, Failure}
 
 val facebookClient = FacebookClient()
@@ -163,8 +163,20 @@ facebookClient.appAccessToken() onComplete {
 }
 ```
 
+#### Post api
+
+Supported fields - `id`, `story`, `created_time`, `object_id`, `picture`, `from`
+
+
+```scala
+facebookClient.post(FacebookPostId("499313270413277_527696260908311"), facebookAccessToken).map { post =>
+  println("Post: " + post)
+}
+```
 
 #### Feed api
+
+`FacebookFeed` includes `List[FacebookPost]`. So the same fields supported as listed in post api section.
 
 ```scala
 import domain.feed._
@@ -179,16 +191,6 @@ val facebookAccessToken: FacebookAccessToken = ??? // your token
 // Feed
 facebookClient.feed(FacebookUserId("499283963749541"), facebookAccessToken) map(feed =>
   println(feed)
-//  prints:
-//  FacebookFeed(
-//    List(
-//      FacebookSimplePost("499313270413277_504668796544391", "Valeryi Baibossynov updated his profile picture.",
-//        toInstant("2017-10-01T13:43:05+0000")),
-//      FacebookSimplePost("499313270413277_139299253081349",
-//        "Valeryi Baibossynov added a life event from May 2, 1993: Born on May 2, 1993.",
-//        toInstant("1993-05-02T07:00:00+0000"))
-//    ),
-//    FacebookPaging("https://graph.facebook.com1", "https://graph.facebook.com"))
 )
   
   // or you can use raw string
@@ -207,17 +209,6 @@ Note: Summary(total friends count) and paging will be returned ass well
 facebookClient.friends(FacebookUserId("499283963749541"), facebookAccessToken) map(friends =>
   println(friends)
 )
-```
-
-#### Post api
-
-Supported fields - `id`, `story`, `created_time`, `object_id`, `picture`, `from`
-
-
-```scala
-facebookClient.post(FacebookPostId("499313270413277_527696260908311"), facebookAccessToken).map { post =>
-  println("Post: " + post)
-}
 ```
 
 #### Like api

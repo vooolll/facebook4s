@@ -1,10 +1,10 @@
 name := "facebook4s"
 
-version := "0.2.6-M3"
+version := "0.2.6"
 
 scalaVersion := "2.12.1"
 
-resolvers += Resolver.sonatypeRepo("snapshots")
+resolvers += Resolver.sonatypeRepo("release")
 
 publishMavenStyle := true
 
