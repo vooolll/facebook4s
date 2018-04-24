@@ -166,7 +166,7 @@ object FacebookDecoders {
   implicit val decodeLikes: Decoder[FacebookLikes] = new Decoder[FacebookLikes] {
     override def apply(c: HCursor) = for {
       likes   <- c.get[List[FacebookLike]]("data")
-      paging  <- c.get[FacebookPaging]("paging")
+      paging  <- c.get[Option[FacebookPaging]]("paging")
       summary <- c.get[Option[FacebookLikesSummary]]("summary")
     } yield FacebookLikes(likes, paging, summary)
   }
@@ -235,7 +235,7 @@ object FacebookDecoders {
   implicit val decodeAlbums: Decoder[FacebookAlbums] = new Decoder[FacebookAlbums] {
     override def apply(c: HCursor) = for {
       albums <- c.get[List[FacebookAlbum]]("data")
-      paging <- c.get[FacebookPaging]("paging")
+      paging <- c.get[Option[FacebookPaging]]("paging")
     } yield FacebookAlbums(albums, paging)
   }
 

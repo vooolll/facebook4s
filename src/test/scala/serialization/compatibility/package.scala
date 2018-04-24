@@ -86,7 +86,7 @@ package object compatibility {
 
   val likesPaging = FacebookPaging("MTkzMDAwNzk1MDU5NTAzOAZDZD".some, "MjE1MDgwNTgyMzY4MDUw".some)
 
-  val likes = FacebookLikes(List(like), likesPaging)
+  val likes = FacebookLikes(List(like), Some(likesPaging))
 
   val comment = FacebookComment(
     id = FacebookCommentId("120118675447496_128078554651508"),
@@ -130,9 +130,9 @@ package object compatibility {
 
   val facebookAlbums = FacebookAlbums(
     List(facebookCoverAlbum, facebookProfileAlbum),
-    FacebookPaging(
+    Some(FacebookPaging(
       Some("MTIwMTE4NzIyMTE0MTU4"),
-      Some("MTE3NjA3MjM1Njk4NjQw")))
+      Some("MTE3NjA3MjM1Njk4NjQw"))))
 
   def toInstant(string: String) = dateFormat.parse(string, Instant.from(_))
 

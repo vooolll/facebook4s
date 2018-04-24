@@ -5,7 +5,7 @@ import domain.profile.FacebookUserId
 
 final case class FacebookLikes(
   likes   : List[FacebookLike],
-  paging  : FacebookPaging,
+  paging  : Option[FacebookPaging],
   summary : Option[FacebookLikesSummary] = None)
 
 final case class FacebookLike(id: FacebookUserId, name: Option[String])

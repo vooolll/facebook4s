@@ -11,7 +11,7 @@ class LikeSpec extends FacebookClientSupport {
 
   val like = FacebookLike(FacebookUserId("117656352360395"), "Bob Willins".some)
   val likePaging = FacebookPaging("MTE3NjU2MzUyMzYwMzk1".some, "MTE3NjU2MzUyMzYwMzk1".some)
-  val likes = FacebookLikes(List(like), likePaging)
+  val likes = FacebookLikes(List(like), likePaging.some)
   val likesSummary = FacebookLikesSummary(totalCount = 1, canLike = true.some, hasLikes = true.some)
 
   val likesWithSummary = likes.copy(summary = likesSummary.some)

@@ -32,9 +32,9 @@ package object album {
 
   val facebookAlbums = FacebookAlbums(
     List(coverAlbum, profileAlbum),
-    FacebookPaging(
+    Some(FacebookPaging(
       Some("MTIwMTE4NzIyMTE0MTU4"),
-      Some("MTE3NjA3MjM1Njk4NjQw")))
+      Some("MTE3NjA3MjM1Njk4NjQw"))))
 
   val photo = FacebookPhoto(
     photoId,
