@@ -197,6 +197,18 @@ facebookClient.feed(FacebookUserId("499283963749541"), "your user access token")
   println(feed))
 ``` 
 
+#### Friends api
+
+Supported fields - `id`, `name`, `picture`, `locale`, `first_name`, `last_name`, `link`, `gender`, `cover`, `updated_time`
+    
+Note: Summary(total friends count) and paging will be returned ass well
+    
+```scala
+facebookClient.friends(FacebookUserId("499283963749541"), facebookAccessToken) map(friends =>
+  println(friends)
+)
+```
+
 #### Post api
 
 Supported fields - `id`, `story`, `created_time`, `object_id`, `picture`, `from`

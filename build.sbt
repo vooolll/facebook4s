@@ -1,6 +1,6 @@
 name := "facebook4s"
 
-version := "0.2.6-M2"
+version := "0.2.6-M3"
 
 scalaVersion := "2.12.1"
 
@@ -22,7 +22,7 @@ organization := "com.github.vooolll"
 
 organizationHomepage := Some(url("https://github.com/vooolll"))
 
-description := "Async Scala SDK for the Facebook Graph API."
+description := "An asynchronous non-blocking Scala client for Facebook Graph API (Facebook api REST)"
 
 autoAPIMappings := true
 apiMappings ++= {

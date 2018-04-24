@@ -12,6 +12,7 @@ import domain.albums.photo.{FacebookPhoto, FacebookPhotoId}
 import domain.albums.{FacebookAlbum, FacebookAlbumId, FacebookAlbums}
 import domain.comments._
 import domain.feed._
+import domain.friends.{FacebookFriends, FacebookFriendsSummary}
 import domain.likes._
 import domain.media._
 import domain.oauth.FacebookError.FacebookErrorType
@@ -272,6 +273,16 @@ object FacebookDecoders {
       url <- c.get[URL]("url")
       attachmentType <- c.get[AttachmentType]("type")
     } yield FacebookAttachment(attachment, target, url, attachmentType)
+  }
+
+  implicit val decodeFriendsSummary: Decoder[FacebookFriendsSummary] = Decoder.forProduct1("total_count")(FacebookFriendsSummary)
+
+  implicit val decodeFriends: Decoder[FacebookFriends] = new Decoder[FacebookFriends] {
+    override def apply(c: HCursor) = for {
+      friends <- c.get[List[FacebookUser]]("data")
+      paging <- c.get[Option[FacebookPaging]]("paging")
+      summary <- c.get[Option[FacebookFriendsSummary]]("summary")
+    } yield FacebookFriends(friends, paging, summary)
   }
 
 }
