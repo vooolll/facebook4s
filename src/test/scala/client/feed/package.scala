@@ -2,6 +2,7 @@ package client
 
 import java.net.URL
 
+import config.FacebookConfig
 import domain.comments.{FacebookComment, FacebookCommentId, FacebookComments}
 import domain.feed.{FacebookFeed, FacebookFeedPaging}
 import domain.friends.FacebookFriends
@@ -14,6 +15,8 @@ package object feed {
   val commentId = FacebookCommentId("120118675447496_170608873731809")
 
   val userId = FacebookUserId("117656352360395")
+
+  val v = FacebookConfig.version.value
 
   val post = FacebookPost(
     postId,
@@ -32,12 +35,12 @@ package object feed {
     Some(FacebookProfileId("117656352360395")))
 
   val paging = FacebookFeedPaging(
-    Some("https://graph.facebook.com/v2.11/117656352360395/feed?fields=id,story,created_time,object_id,picture,from" +
+    Some(s"https://graph.facebook.com/v$v/117656352360395/feed?fields=id,story,created_time,object_id,picture,from" +
       "&access_token=EAAcAL79ZCFjMBAGMIwVasYODBBZAXi2QQmMR3R6DTBYYfAcpkftWBXGlQiFHmvZAPFd5M444mnAiwqzvS1ooziExJp9rq" +
       "zI3FFhtdzbopZCVDKObgh6ewfmDErB7PtSyGbSI1q6SEp2eQcMwq7B4rh7ZAtzxHZAhCDCDbjPV6psCwZA1I4Wcb5x&limit=25&until=15" +
       "13596610&__paging_token=enc_AdBcIKGgOAbPox4xsIiSOefrZB0Q3aubqn57sZCqgjhMbzdBD6Kt5jeKpngUrNXGNIQHVtPr0dfy5n4S" +
       "auEoFsr2ApzN40Jxb2VXbZBiNGT8TjJJwZDZD"),
-    Some("https://graph.facebook.com/v2.11/117656352360395/feed?fields=id,story,created_time,object_id,picture,from" +
+    Some(s"https://graph.facebook.com/v$v/117656352360395/feed?fields=id,story,created_time,object_id,picture,from" +
       "&since=1513692524&access_token=EAAcAL79ZCFjMBAGMIwVasYODBBZAXi2QQmMR3R6DTBYYfAcpkftWBXGlQiFHmvZAPFd5M444mnAi" +
       "wqzvS1ooziExJp9rqzI3FFhtdzbopZCVDKObgh6ewfmDErB7PtSyGbSI1q6SEp2eQcMwq7B4rh7ZAtzxHZAhCDCDbjPV6psCwZA1I4Wcb5x&" +
       "limit=25&__paging_token=enc_AdCES1F18OvZCu2nFAIVLb6KtNttBdZBFYY0pu41aoKx8Ef8M76cxG9p7HsOfs4H17MJ2JXwvy3bkAk1" +
