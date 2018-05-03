@@ -2,7 +2,7 @@ package example
 
 import client.FacebookClient
 import domain.oauth.{FacebookCode, FacebookToken}
-import domain.permission.FacebookPermissions.FacebookUserPosts
+import domain.permission.FacebookPermissions.UserDataPermissions.Posts
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Failure, Success}
@@ -12,8 +12,8 @@ object TokenApp extends App {
   val facebookClient = FacebookClient()
 
   //getting request urls
-  val authUriToGetCode = facebookClient.buildAuthUrl(Seq(FacebookUserPosts))
-  val authUriToGetToken = facebookClient.buildAuthUrl(Seq(FacebookUserPosts), responseType = FacebookToken)
+  val authUriToGetCode = facebookClient.buildAuthUrl(Seq(Posts))
+  val authUriToGetToken = facebookClient.buildAuthUrl(Seq(Posts), responseType = FacebookToken)
 
   println(authUriToGetCode)
   println(authUriToGetToken)

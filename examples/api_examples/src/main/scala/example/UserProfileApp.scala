@@ -2,7 +2,7 @@ import client.FacebookClient
 import config.{FacebookConfig, FacebookConstants}
 import domain.feed._
 import domain.oauth._
-import domain.permission.FacebookPermissions.FacebookUserPosts
+import domain.permission.FacebookPermissions.UserDataPermissions.Posts
 import domain.posts.FacebookPostId
 import domain.profile.FacebookUserId
 
@@ -13,7 +13,7 @@ object UserProfileApp extends App {
   val facebookClient = FacebookClient()
 
   //getting request urls
-  println(facebookClient.buildAuthUrl(Seq(FacebookUserPosts), responseType = FacebookToken))
+  println(facebookClient.buildAuthUrl(Seq(Posts), responseType = FacebookToken))
 
   val userId = FacebookUserId("499283963749541")
   val tokenStringValue = "token"

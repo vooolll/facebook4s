@@ -5,7 +5,7 @@ import cats.implicits._
 import config.FacebookConfig._
 import domain.comments.FacebookCommentsAttributes
 import domain.oauth.FacebookToken
-import domain.permission.FacebookPermissions.FacebookUserPosts
+import domain.permission.FacebookPermissions.UserDataPermissions.Posts
 import domain.posts.{FacebookPostAttributes, FacebookPostId}
 import domain.profile.{FacebookProfileId, FacebookUserId}
 import org.scalatest.{Matchers, WordSpec}
@@ -48,13 +48,13 @@ class FacebookUrlsSpec extends WordSpec with Matchers {
 
     "return auth uri with state, response_type and permissions" in {
       TestUrls.buildAuthUrl(
-        permissions  = Seq(FacebookUserPosts),
+        permissions  = Seq(Posts),
         responseType = FacebookToken,
         state        = "asd".some).toString() shouldBe s"https://facebook.com/v$v/dialog/oauth" +
         s"?client_id=${clientId.show}" +
         s"&redirect_uri=http%3A%2F%2Flocalhost%3A9000%2Fredirect" +
         s"&response_type=${FacebookToken.value}" +
-        s"&scope=${FacebookUserPosts.value}" +
+        s"&scope=${Posts.value}" +
         s"&state=asd"
     }
 

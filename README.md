@@ -71,23 +71,23 @@ val facebookClient = FacebookClient(FacebookClientId("your client id"), Facebook
 `FacebookClient` can be used to get authentication url for client. It is starting point if you want to use api.
 ```scala
 import client.FacebookClient
-import domain.permission.FacebookPermissions.FacebookUserPosts
+import domain.permission.FacebookPermissions.UserDataPermissions.Posts
 
 val facebookClient = FacebookClient()
 
-val urlWithCodeAsQueryParam = facebookClient.authUrl(Seq(FacebookUserPosts))
+val urlWithCodeAsQueryParam = facebookClient.authUrl(Seq(Posts))
 
-println(url) // prints url client needs to request to get credentials (client code by default)
+println(urlWithCodeAsQueryParam) // prints url client needs to request to get credentials (client code by default)
 ```
 
 Or you can tell to `FacebookClient` that you want to receive `access token` instead of `client code`
 by passing specific argument: 
 
 ```scala
-import domain.permission.FacebookPermissions.FacebookUserPosts
+import domain.permission.FacebookPermissions.UserDataPermissions.Posts
 import domain.oauth.FacebookToken
 
-val urlWithTokenAsQueryParam = facebookClient.authUrl(Seq(FacebookUserPosts), FacebookToken)
+val urlWithTokenAsQueryParam = facebookClient.authUrl(Seq(Posts), FacebookToken)
 ```
 
 #### Exchanging client code to access token
