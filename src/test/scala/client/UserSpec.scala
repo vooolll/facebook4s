@@ -18,7 +18,7 @@ class UserSpec extends FacebookClientSupport {
   val realUser = FacebookUser(
     realUserId, Some("Bob Willins"),
     Some(FacebookUserPicture(50.0, isSilhouette = false, new URL("https://lookaside.facebook.com/platform/profilepic/"), 50.0)),
-    Some("Bob"), Some("Willins"), Some(new URL("https://www.facebook.com/app_scoped_user_id/117656352360395/")), Some(true),
+    Some("Bob"), Some("Willins"), Some(new URL("https://www.facebook.com")), Some(true),
     Some(LocaleUtils.toLocale("en_US")), ZoneOffset.ofHours(3).some , Gender.Female.some, AgeRange(21,None).some,
     Some(Cover(None,0.0,50.0, new URL("https://lookaside.facebook.com/platform/coverpic/"))),
     Some(toInstant("2017-12-18T11:30:11+0000")))

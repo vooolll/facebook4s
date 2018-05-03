@@ -1,17 +1,16 @@
 package client
 
 import java.net.URL
-import java.time.ZoneOffset
 
 import base.FacebookClientSupport
+import base.TestConfiguration._
+import cats.implicits._
+import client.feed._
+import domain.FacebookPaging
+import domain.friends.{FacebookFriends, FacebookFriendsSummary}
 import domain.profile._
 import org.apache.commons.lang3.LocaleUtils
 import serialization.compatibility.toInstant
-import cats.implicits._
-import domain.FacebookPaging
-import domain.friends.{FacebookFriends, FacebookFriendsSummary}
-import base.TestConfiguration._
-import feed._
 
 class FriendsSpec extends FacebookClientSupport {
   val friendId = FacebookUserId("595040754173861")
@@ -19,8 +18,8 @@ class FriendsSpec extends FacebookClientSupport {
   val friend = FacebookUser(
     friendId, "Valeryi Baibossynov".some,
     Some(FacebookUserPicture(50.0, isSilhouette = false, new URL("https://lookaside.facebook.com/platform/profilepic/"), 50.0)),
-    Some("Valeryi"), Some("Baibossynov"), Some(new URL("https://www.facebook.com/app_scoped_user_id/595040754173861/")), None,
-    Some(LocaleUtils.toLocale("en_US")), None, Gender.Male.some, None,
+    Some("Valeryi"), Some("Baibossynov"), link = Some(new URL("https://www.facebook.com")), None,
+    Some(LocaleUtils.toLocale("en_US")), None, Gender.Male.some, AgeRange(21, None).some,
     Some(Cover(None,0.0,0.0, new URL("https://lookaside.facebook.com/platform/coverpic/"))),
     Some(toInstant("2017-11-11T00:10:08+0000")))
 

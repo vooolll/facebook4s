@@ -60,7 +60,8 @@ package object feed {
   implicit class FacebookUserWithoutQuery(user: FacebookUser) {
     def withoutQueryParams = {
       user.copy(cover = user.cover.map(cover => withoutCoverQuery(cover)),
-        picture = user.picture.map(withoutPictureQuery))
+        picture = user.picture.map(withoutPictureQuery),
+        link = user.link.map(l => new URL(l.getProtocol + "://" + l.getHost))) //TODO facebook4s-117
     }
   }
 
