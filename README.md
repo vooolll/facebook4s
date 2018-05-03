@@ -200,7 +200,7 @@ facebookClient.feed(FacebookUserId("499283963749541"), "your user access token")
 
 #### Friends api
 
-Supported fields - `id`, `name`, `picture`, `locale`, `first_name`, `last_name`, `link`, `gender`, `cover`, `updated_time`
+Supported fields - `id`, `name`, `picture`, `locale[depricated]`, `first_name`, `last_name`, `link`, `gender`, `cover[depricated]`, `updated_time[depricated]`
     
 Note: Summary(total friends count) and paging will be returned ass well
     
@@ -233,16 +233,13 @@ facebookClient.comments(FacebookPostId("499313270413277_527696260908311"), faceb
 
 #### User api
 
-Supported fields - `id`, `name`, `picture`, `locale`, `first_name`, `last_name`, `verified`, `link`, `timezone`, `gender`,
-    `age_range`, `cover`, `updated_time`
+Supported fields - `id`, `name`, `picture`, `locale[depricated]`, `first_name`, `last_name`, `verified[depricated]`, `link`, `timezone[depricated]`, `gender`,
+    `age_range`, `cover[depricated]`, `updated_time[depricated]`
     
     
 ```scala
 facebookClient.userProfile(FacebookUserId("499283963749541"), facebookAccessToken) map(user =>
-  println(user) //FacebookUser(FacebookUserId(499283963749541),Some(Valeryi Baibossynov),
-                  // Some(FacebookUserPicture(50.0,false,https://scontent.xx.fbcdn.net/v/t1.0-1/p50x50/22728655_513792128965391_443796664145972604_n.jpg?oh=96ab05455244b5f7062d2a194e30aa8e&oe=5A88C8AD,50.0)),
-                  // Some(Valeryi),Some(Baibossynov),Some(https://www.facebook.com/app_scoped_user_id/499283963749541/),Some(true),Some(en_US),Some(+02:00),Some(Male),Some(AgeRange(21,None)),
-                  // Some(Cover(527696177574986,0.0,0.0,https://scontent.xx.fbcdn.net/v/t1.0-9/s720x720/23905322_527696177574986_8012137948429389386_n.jpg?oh=dc4f829792fa00613db226d992140957&oe=5AA288B0)),Some(2017-11-11T00:10:08Z))
+  println(user)
 )
 ```
 
@@ -250,10 +247,7 @@ facebookClient.userProfile(FacebookUserId("499283963749541"), facebookAccessToke
 
 //raw string value supported as well
 facebookClient.userProfile(FacebookUserId("499283963749541"), "your user access token") map(user =>
-  println(user) //FacebookUser(FacebookUserId(499283963749541),Some(Valeryi Baibossynov),
-                // Some(FacebookUserPicture(50.0,false,https://scontent.xx.fbcdn.net/v/t1.0-1/p50x50/22728655_513792128965391_443796664145972604_n.jpg?oh=96ab05455244b5f7062d2a194e30aa8e&oe=5A88C8AD,50.0)),
-                // Some(Valeryi),Some(Baibossynov),Some(https://www.facebook.com/app_scoped_user_id/499283963749541/),Some(true),Some(en_US),Some(+02:00),Some(Male),Some(AgeRange(21,None)),
-                // Some(Cover(527696177574986,0.0,0.0,https://scontent.xx.fbcdn.net/v/t1.0-9/s720x720/23905322_527696177574986_8012137948429389386_n.jpg?oh=dc4f829792fa00613db226d992140957&oe=5AA288B0)),Some(2017-11-11T00:10:08Z))
+  println(user)
 )
 ```
 
