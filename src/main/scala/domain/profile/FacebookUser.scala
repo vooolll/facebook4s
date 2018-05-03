@@ -32,11 +32,15 @@ case class FacebookUser(
   lastName    : Option[String],
   link        : Option[URL],
   verified    : Option[Boolean],
+  @Deprecated("Deprecated by facebook wont be returned since 3.0")
   locale      : Option[Locale],
+  @Deprecated("Deprecated by facebook wont be returned since 3.0")
   timezone    : Option[ZoneOffset],
   gender      : Option[Gender],
   ageRange    : Option[AgeRange],
+  @Deprecated("Deprecated by facebook wont be returned since 3.0")
   cover       : Option[Cover],
+  @Deprecated("Deprecated by facebook wont be returned since 3.0")
   updatedTime : Option[Instant]) extends FacebookProfile
 
 /**
