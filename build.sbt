@@ -1,6 +1,6 @@
 name := "facebook4s"
 
-version := "0.2.6"
+version := "0.2.7"
 
 scalaVersion := "2.12.1"
 
@@ -91,12 +91,10 @@ scalacOptions ++= Seq(
   "-encoding",
   "UTF-8",
   "-Xlint",
-  "-deprecation",
-  "-Xfatal-warnings",
   "-feature",
   "-language:postfixOps",
-  "-unchecked"
-)
+  "-unchecked",
+  "-deprecation")
 
 fork := true
 

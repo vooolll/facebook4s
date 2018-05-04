@@ -11,7 +11,7 @@ Prerequisites
 ### Installation
 Add the following line to your sbt dependencies: 
 ```scala
-"com.github.vooolll" %% "facebook4s" % "0.2.6"
+"com.github.vooolll" %% "facebook4s" % "0.2.7"
 ```
 
 Note: make sure that you have in your `build.sbt`
@@ -21,7 +21,7 @@ resolvers += Resolver.sonatypeRepo("releases")
 
 ### Useful links
 * [Examples](https://github.com/vooolll/facebook4s/tree/master/examples)
-* [Documentation (Scaladoc)](https://www.javadoc.io/doc/com.github.vooolll/facebook4s_2.12/)
+* [Documentation (ScalaDoc)](https://www.javadoc.io/doc/com.github.vooolll/facebook4s_2.12/)
 
 
 ### User guide
