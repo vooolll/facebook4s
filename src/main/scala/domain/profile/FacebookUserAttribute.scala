@@ -19,7 +19,7 @@ object FacebookUserAttribute {
     override def value = "picture"
   }
 
-  @Deprecated
+  @deprecated(message="Won't be supported by facebook in 3.0", since="0.2.6")
   case object Locale extends FacebookUserAttribute {
     override def value = "locale"
   }
@@ -32,7 +32,7 @@ object FacebookUserAttribute {
     override def value = "last_name"
   }
 
-  @Deprecated
+  @deprecated(message="Won't be supported by facebook in 3.0", since="0.2.6")
   case object Verified extends FacebookUserAttribute {
     override def value = "verified"
   }
@@ -41,7 +41,7 @@ object FacebookUserAttribute {
     override def value = "link"
   }
 
-  @Deprecated
+  @deprecated(message="Won't be supported by facebook in 3.0", since="0.2.6")
   case object Timezone extends FacebookUserAttribute {
     override def value = "timezone"
   }
@@ -54,12 +54,12 @@ object FacebookUserAttribute {
     override def value = "age_range"
   }
 
-  @Deprecated
+  @deprecated(message="Won't be supported by facebook in 3.0", since="0.2.6")
   case object Cover extends FacebookUserAttribute {
     override def value = "cover"
   }
 
-  @Deprecated
+  @deprecated(message="Won't be supported by facebook in 3.0", since="0.2.6")
   case object UpdatedTime extends FacebookUserAttribute {
     override def value = "updated_time"
   }

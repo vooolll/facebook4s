@@ -31,17 +31,17 @@ case class FacebookUser(
   firstName   : Option[String],
   lastName    : Option[String],
   link        : Option[URL],
-  @Deprecated
+  @deprecated(message="Won't be supported by facebook in 3.0", since="0.2.6")
   verified    : Option[Boolean],
-  @Deprecated
+  @deprecated(message="Won't be supported by facebook in 3.0", since="0.2.6")
   locale      : Option[Locale],
-  @Deprecated
+  @deprecated(message="Won't be supported by facebook in 3.0", since="0.2.6")
   timezone    : Option[ZoneOffset],
   gender      : Option[Gender],
   ageRange    : Option[AgeRange],
-  @Deprecated
+  @deprecated(message="Won't be supported by facebook in 3.0", since="0.2.6")
   cover       : Option[Cover],
-  @Deprecated
+  @deprecated(message="Won't be supported by facebook in 3.0", since="0.2.6")
   updatedTime : Option[Instant]) extends FacebookProfile
 
 /**
