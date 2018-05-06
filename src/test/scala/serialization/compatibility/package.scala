@@ -1,28 +1,25 @@
 package serialization
 
 import java.net.URL
-import java.time.{Instant, ZoneOffset}
+import java.time.Instant
 
+import cats.implicits._
 import config.FacebookConstants.dateFormat
+import domain.albums.image.FacebookImage
+import domain.albums.photo.{FacebookPhoto, FacebookPhotoId}
+import domain.albums.{FacebookAlbum, FacebookAlbumId, FacebookAlbums}
+import domain.comments._
 import domain.feed.{FacebookFeed, FacebookFeedPaging}
 import domain.likes._
+import domain.media._
 import domain.oauth._
 import domain.posts.{FacebookPost, FacebookPostId}
 import domain.profile._
-import org.apache.commons.lang3.LocaleUtils
-import cats.implicits._
 import domain.{FacebookOrder, FacebookPaging}
-import domain.albums.{FacebookAlbum, FacebookAlbumId, FacebookAlbums}
-import domain.albums.image.FacebookImage
-import domain.albums.photo.{FacebookPhoto, FacebookPhotoId}
-import domain.comments._
-import domain.media._
 
 import scala.concurrent.duration._
 
 package object compatibility {
-
-  val userId = FacebookUserId("499313270413277")
 
   val postId = FacebookPostId("499313270413277_504668796544391")
 
@@ -34,22 +31,6 @@ package object compatibility {
     picture = new URL("http://example.com").some,
     from = FacebookProfileId("499313270413277").some
   )
-
-  val userPicture = FacebookUserPicture(50, isSilhouette = false, new URL("http://example.com"), 50)
-  val user = FacebookUser(
-    id          = userId,
-    name        = "Valeryi Baibossynov".some,
-    lastName    = "Baibossynov".some,
-    firstName   = "Valeryi".some,
-    verified    = true.some,
-    link        = new URL("https://www.facebook.com/app_scoped_user_id/499313270413277/").some,
-    picture     = userPicture.some,
-    locale      = LocaleUtils.toLocale("en_US").some,
-    timezone    = ZoneOffset.ofHours(2).some,
-    gender      = Gender.Male.some,
-    ageRange    = AgeRange(21, None).some,
-    cover       = Cover("527696177574986".some, 0, 0, new URL("http://example.com")).some,
-    updatedTime = Some(toInstant("2017-11-11T00:10:08+0000")))
 
   val appId = FacebookAppId("1969406143275709")
   val facebookClientId = FacebookClientId("1969406143275709")

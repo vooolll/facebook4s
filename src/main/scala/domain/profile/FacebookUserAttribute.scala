@@ -7,6 +7,10 @@ object FacebookUserAttribute {
     Name, Id, Picture, Locale, FirstName, LastName, Verified, Link, AgeRange, Timezone, Gender,
     Cover, UpdatedTime)
 
+  case object Email extends FacebookUserAttribute {
+    override def value = "email"
+  }
+
   case object Name extends FacebookUserAttribute {
     override def value = "name"
   }

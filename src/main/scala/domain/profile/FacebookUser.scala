@@ -11,6 +11,7 @@ final case class FacebookUserId(value: String)
 
 /**
   * @param id id - numeric string
+  * @param email email - optional email
   * @param name optional name
   * @param picture optional picture
   * @param locale optional locale
@@ -26,6 +27,7 @@ final case class FacebookUserId(value: String)
   */
 case class FacebookUser(
   id          : FacebookUserId,
+  email       : Option[String],
   name        : Option[String],
   picture     : Option[FacebookUserPicture],
   firstName   : Option[String],
