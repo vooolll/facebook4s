@@ -3,6 +3,7 @@ package serialization.compatibility
 import cats.implicits._
 import domain.FacebookPaging
 import domain.likes._
+import domain.profile.FacebookUserId
 import serialization.FacebookDecoders._
 
 class LikesCompatSpec extends CompatibilitySpec {
@@ -12,6 +13,14 @@ class LikesCompatSpec extends CompatibilitySpec {
   val likesPagingPath = "testdata/likes_paging.json"
   val likesSummaryPath = "testdata/likes_summary.json"
   val likesWithSummaryPath = "testdata/likes_with_summary.json"
+
+  val likesSummary = FacebookLikesSummary(totalCount = 1, canLike = true.some, hasLikes = true.some)
+
+  val like = FacebookLike(FacebookUserId("215080582368050"), "Iana Baibossynova".some)
+
+  val likesPaging = FacebookPaging("MTkzMDAwNzk1MDU5NTAzOAZDZD".some, "MjE1MDgwNTgyMzY4MDUw".some)
+
+  val likes = FacebookLikes(List(like), Some(likesPaging))
 
   "FacebookLikes" should {
     s"be compatible with $likesPath" in {

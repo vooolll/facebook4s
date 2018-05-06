@@ -1,5 +1,7 @@
 package serialization.compatibility
 
+import java.net.URL
+
 import domain.media._
 import io.circe._
 import io.circe.generic.semiauto._
@@ -14,6 +16,16 @@ class AttachmentCompatSpec extends CompatibilitySpec {
   val attachmentTargetPath = "testdata/attachment_target.json"
   val attachmentImagePath = "testdata/attachment_image.json"
   val attachmentPath = "testdata/comment_attachment.json"
+
+  val imageSource = FacebookImageSource(720,
+    new URL("https://scontent.xx.fbcdn.net/v/t1.0-9/26169805_135224317270265_2857586441485590537_n.jpg" +
+      "?oh=97edfd66290b3e4112a8731e8cd2b5fb&oe=5B0A23AC"), 104)
+
+  val attachmentTarget = FacebookAttachmentTarget(FacebookAttachmentId("135224317270265"),
+    new URL("https://www.facebook.com/photo.php?fbid=135224317270265&set=p.135224317270265&type=3"))
+
+
+  val facebookAttachment = FacebookAttachment(imageSource, attachmentTarget, attachmentTarget.url, AttachmentTypes.Photo)
 
   "FacebookAttachmentTarget" should {
     s"be compatible with $attachmentTargetPath" in {

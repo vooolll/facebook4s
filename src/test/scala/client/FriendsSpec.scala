@@ -2,6 +2,7 @@ package client
 
 import java.net.URL
 
+import base.toInstant
 import base.FacebookClientSupport
 import base.TestConfiguration._
 import cats.implicits._
@@ -10,13 +11,12 @@ import domain.FacebookPaging
 import domain.friends.{FacebookFriends, FacebookFriendsSummary}
 import domain.profile._
 import org.apache.commons.lang3.LocaleUtils
-import serialization.compatibility.toInstant
 
 class FriendsSpec extends FacebookClientSupport {
   val friendId = FacebookUserId("595040754173861")
 
   val friend = FacebookUser(
-    friendId, "Valeryi Baibossynov".some,
+    friendId, None, "Valeryi Baibossynov".some,
     Some(FacebookUserPicture(50.0, isSilhouette = false, new URL("https://lookaside.facebook.com/platform/profilepic/"), 50.0)),
     Some("Valeryi"), Some("Baibossynov"), link = Some(new URL("https://www.facebook.com")), None,
     Some(LocaleUtils.toLocale("en_US")), None, Gender.Male.some, AgeRange(21, None).some,

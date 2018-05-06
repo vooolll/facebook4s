@@ -1,10 +1,10 @@
 package client
 
+import base._
 import base.FacebookClientStubSupport
 import domain.oauth.UserAccessToken
 
 import scala.concurrent.duration.DurationInt
-import serialization.compatibility._
 
 class UserAccessTokenSpec extends FacebookClientStubSupport {
 

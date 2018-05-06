@@ -8,9 +8,10 @@ import cats.implicits._
 import domain.{FacebookOrder, FacebookPaging}
 import domain.comments._
 import domain.profile.FacebookProfileId
-import serialization.compatibility.toInstant
+import base._
 import FacebookCommentAttributes._
 import domain.media._
+
 class CommentSpec extends FacebookClientSupport {
 
   val mediaObject = Some(

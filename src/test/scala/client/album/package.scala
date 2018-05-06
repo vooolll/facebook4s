@@ -2,12 +2,12 @@ package client
 
 import java.net.URL
 
+import base._
 import domain.FacebookPaging
 import domain.albums.{FacebookAlbum, FacebookAlbumId, FacebookAlbums}
 import domain.albums.image.FacebookImage
 import domain.albums.photo.{FacebookPhoto, FacebookPhotoId}
 import domain.profile.FacebookProfileId
-import serialization.compatibility._
 
 package object album {
 

@@ -1,7 +1,7 @@
 package client
 
+import base._
 import base.FacebookClientStubSupport
-import serialization.compatibility._
 
 class ClientCodeSpec extends FacebookClientStubSupport {
   "Facebook Graph Api" should {

@@ -3,6 +3,7 @@ package serialization.compatibility
 import java.net.URL
 import java.time.ZoneOffset
 
+import base._
 import domain.profile._
 import org.apache.commons.lang3.LocaleUtils
 import serialization.FacebookDecoders._

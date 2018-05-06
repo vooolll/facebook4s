@@ -2,13 +2,13 @@ package client
 
 import java.net.URL
 
+import base._
 import config.FacebookConfig
 import domain.comments.{FacebookComment, FacebookCommentId, FacebookComments}
 import domain.feed.{FacebookFeed, FacebookFeedPaging}
 import domain.friends.FacebookFriends
 import domain.posts.{FacebookPost, FacebookPostId}
 import domain.profile._
-import serialization.compatibility.toInstant
 
 package object feed {
   val postId = FacebookPostId("117656352360395_120118735447490")

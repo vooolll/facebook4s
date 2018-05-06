@@ -3,6 +3,7 @@ package client
 import java.net.URL
 import java.time.ZoneOffset
 
+import base._
 import feed._
 import base.FacebookClientSupport
 import cats.implicits._
@@ -10,13 +11,12 @@ import base.TestConfiguration._
 import domain.oauth.FacebookError
 import domain.profile._
 import org.apache.commons.lang3.LocaleUtils
-import serialization.compatibility._
 
 class UserSpec extends FacebookClientSupport {
   val realUserId = FacebookUserId("117656352360395")
 
   val realUser = FacebookUser(
-    realUserId, Some("Bob Willins"),
+    realUserId, None, Some("Bob Willins"),
     Some(FacebookUserPicture(50.0, isSilhouette = false, new URL("https://lookaside.facebook.com/platform/profilepic/"), 50.0)),
     Some("Bob"), Some("Willins"), Some(new URL("https://www.facebook.com")), Some(true),
     Some(LocaleUtils.toLocale("en_US")), ZoneOffset.ofHours(3).some , Gender.Female.some, AgeRange(21,None).some,

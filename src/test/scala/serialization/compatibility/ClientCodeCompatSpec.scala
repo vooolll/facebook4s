@@ -1,5 +1,6 @@
 package serialization.compatibility
 
+import base._
 import domain.oauth.FacebookClientCode
 import serialization.FacebookDecoders._
 

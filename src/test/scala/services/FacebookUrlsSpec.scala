@@ -1,6 +1,6 @@
 package services
 
-import base.TestUrls
+import base._
 import cats.implicits._
 import config.FacebookConfig._
 import domain.comments.FacebookCommentsAttributes
