@@ -5,7 +5,6 @@ import java.time.ZoneOffset
 
 import base._
 import feed._
-import base.FacebookClientSupport
 import cats.implicits._
 import base.TestConfiguration._
 import domain.oauth.FacebookError

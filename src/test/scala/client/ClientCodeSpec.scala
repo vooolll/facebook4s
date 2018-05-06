@@ -1,7 +1,6 @@
 package client
 
 import base._
-import base.FacebookClientStubSupport
 
 class ClientCodeSpec extends FacebookClientStubSupport {
   "Facebook Graph Api" should {

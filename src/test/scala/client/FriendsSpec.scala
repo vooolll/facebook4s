@@ -2,8 +2,7 @@ package client
 
 import java.net.URL
 
-import base.toInstant
-import base.FacebookClientSupport
+import base.{FacebookClientSupport, toInstant}
 import base.TestConfiguration._
 import cats.implicits._
 import client.feed._
