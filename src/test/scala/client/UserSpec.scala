@@ -8,6 +8,7 @@ import feed._
 import cats.implicits._
 import base.TestConfiguration._
 import domain.oauth.FacebookError
+import domain.profile.FacebookUserAttribute.{Email, defaultAttributeValues}
 import domain.profile._
 import org.apache.commons.lang3.LocaleUtils
 
@@ -24,7 +25,7 @@ class UserSpec extends FacebookClientSupport {
 
   "Facebook Graph Api" should {
     "return user profile" in { c =>
-      c.userProfile(realUserId, userTokenRaw) map (_.withoutQueryParams shouldBe realUser)
+      c.userProfile(realUserId, userTokenRaw, defaultAttributeValues :+ Email) map (_.withoutQueryParams shouldBe realUser)
     }
 
     "return user profile result" in { c =>
