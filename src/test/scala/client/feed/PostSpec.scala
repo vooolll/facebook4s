@@ -9,11 +9,11 @@ class PostSpec extends FacebookClientSupport {
 
   "Facebook Graph Api" should {
     "return posts" in { c =>
-      c.post(postId, userAccessToken) map(_.withoutQueryParams shouldBe post)
+      c.post(postId, userAccessToken) map(_.withoutQueryParams shouldBe post1)
     }
 
     "return posts result" in { c =>
-      c.postResult(postId, userAccessToken) map(p => p.map(_.withoutQueryParams) shouldBe post.asRight)
+      c.postResult(postId, userAccessToken) map(p => p.map(_.withoutQueryParams) shouldBe post1.asRight)
     }
 
     "return error SpecifiedObjectNotFound" in { c =>
