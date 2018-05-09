@@ -1,5 +1,7 @@
 package serialization.compatibility
 
+import java.net.URL
+
 import base._
 import domain.feed._
 import domain.posts.{FacebookPost, FacebookPostId}
@@ -19,7 +21,7 @@ class FeedCompatSpec extends CompatibilitySpec {
         "Valeryi Baibossynov added a life event from May 2, 1993: Born on May 2, 1993.".some,
         Some(toInstant("1993-05-02T07:00:00+0000")), None, None, None)
     ),
-    FacebookFeedPaging("https://graph.facebook.com1".some, "https://graph.facebook.com".some))
+    FacebookFeedPaging(new URL("https://graph.facebook.com1").some, new URL("https://graph.facebook.com").some))
 
 
   "FacebookFeed" should {
