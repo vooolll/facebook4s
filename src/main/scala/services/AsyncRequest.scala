@@ -12,7 +12,7 @@ import scala.concurrent.Future
 class AsyncRequest() {
   def apply(url: URLBuilder)(implicit appResources: AppResources): Future[HttpResponse] = {
     import appResources._
-    Http().singleRequest(HttpRequest(uri = url.toString()))(materializer)
+    Http().singleRequest(HttpRequest(uri = url.toString()))
   }
 }
 

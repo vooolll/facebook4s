@@ -54,15 +54,15 @@ pomExtra :=
   </developers>
 
 libraryDependencies ++= {
-  val akkaHttpV = "10.0.9"
+  val akkaHttpV = "10.1.1"
   val scalaTestV = "3.0.1"
   val typesafeV = "1.3.1"
   val mockitoV = "1.8.5"
   val scalaLoggingV = "3.7.2"
-  val akkaJsonSupportV = "1.18.0"
+  val akkaJsonSupportV = "1.20.1"
   val logbackClassicV = "1.2.3"
   val uriBuilderV = "0.9.0"
-  val circeV = "0.8.0"
+  val circeV = "0.9.3"
   val commonsLang = "3.7"
 
   val testDependencies = Seq(
