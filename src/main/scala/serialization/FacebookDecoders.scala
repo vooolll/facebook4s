@@ -91,6 +91,8 @@ object FacebookDecoders {
 
   implicit val decodeLocale: Decoder[Locale] = decodeString.map(LocaleUtils.toLocale)
 
+  implicit val decodeTown: Decoder[FacebookTown] = Decoder.forProduct2("id", "name")(FacebookTown)
+
   implicit val decodeUser: Decoder[FacebookUser] = new Decoder[FacebookUser] {
     override def apply(c: HCursor) = for {
       id        <- c.get[FacebookUserId]("id")
@@ -102,8 +104,8 @@ object FacebookDecoders {
       picture   <- c.downField("picture").get[Option[FacebookUserPicture]]("data")
       gender    <- c.get[Option[Gender]]("gender")
       ageRange  <- c.get[Option[AgeRange]]("age_range")
-      updatedTime <- c.get[Option[Instant]]("updated_time")
-    } yield FacebookUser(id, email, name, picture, firstName, lastName, link, gender, ageRange)
+      hometown  <- c.get[Option[FacebookTown]]("hometown")
+    } yield FacebookUser(id, email, name, picture, firstName, lastName, link, gender, ageRange, hometown)
   }
 
   implicit val decodeApplication: Decoder[FacebookApplication] = new Decoder[FacebookApplication] {

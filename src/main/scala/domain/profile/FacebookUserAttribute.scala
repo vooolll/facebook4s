@@ -3,7 +3,8 @@ package domain.profile
 import domain.FacebookAttribute
 
 object FacebookUserAttribute {
-  val defaultAttributeValues = Seq(Name, Id, Picture, FirstName, LastName, Link, AgeRange, Gender)
+  val defaultAttributeValues = Seq(Email, Name, Id, Picture, FirstName, LastName, Link, AgeRange, Gender,
+    Hometown)
 
   case object Email extends FacebookUserAttribute {
     override def value = "email"
@@ -39,6 +40,10 @@ object FacebookUserAttribute {
 
   case object AgeRange extends FacebookUserAttribute {
     override def value = "age_range"
+  }
+
+  case object Hometown extends FacebookUserAttribute {
+    override def value = "hometown"
   }
 }
 

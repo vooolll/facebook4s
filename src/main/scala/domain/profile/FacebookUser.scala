@@ -10,15 +10,16 @@ import java.util.Locale
 final case class FacebookUserId(value: String)
 
 /**
-  * @param id id - numeric string
-  * @param email email - optional email
-  * @param name optional name
+  * @param id user numeric string
+  * @param email user email
+  * @param name user name
   * @param picture optional picture
-  * @param firstName optional first name
-  * @param lastName optional last name
-  * @param link optional link
-  * @param gender optional gender
-  * @param ageRange optional age segment for this person expressed as a minimum and maximum age
+  * @param firstName user first name
+  * @param lastName user last name
+  * @param link user page link
+  * @param gender user gender
+  * @param ageRange age segment for this person expressed as a minimum and maximum age
+  * @param hometown hometown
   */
 case class FacebookUser(
   id          : FacebookUserId,
@@ -29,7 +30,8 @@ case class FacebookUser(
   lastName    : Option[String],
   link        : Option[URL],
   gender      : Option[Gender],
-  ageRange    : Option[AgeRange]) extends FacebookProfile
+  ageRange    : Option[AgeRange],
+  hometown    : Option[FacebookTown]) extends FacebookProfile
 
 /**
   * @param height image height
@@ -53,8 +55,15 @@ case class Cover(
   id      : Option[String],
   offsetX : Double,
   offsetY : Double,
-  source  : URL
-)
+  source  : URL)
+
+/**
+  * @param id town id
+  * @param town name like New York, USA
+  */
+case class FacebookTown(
+  id: String,
+  name: String)
 
 /**
   * @param min upper bounds of the range for this person's age

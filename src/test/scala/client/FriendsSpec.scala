@@ -7,6 +7,7 @@ import base.TestConfiguration._
 import cats.implicits._
 import client.feed._
 import domain.FacebookPaging
+import domain.profile.FacebookTown
 import domain.friends.{FacebookFriends, FacebookFriendsSummary}
 import domain.profile._
 import org.apache.commons.lang3.LocaleUtils
@@ -23,7 +24,8 @@ class FriendsSpec extends FacebookClientSupport {
     lastName = Some("Baibossynov"),
     link = Some(new URL("https://www.facebook.com")),
     gender = Gender.Male.some,
-    ageRange = AgeRange(21, None).some)
+    ageRange = AgeRange(21, None).some,
+    hometown = Some(FacebookTown("115486911798138", "Almaty, Kazakhstan")))
 
   val friendPaging = FacebookPaging(
     "QVFIUjlua0ltaGRGXzdlT295V25GX01ZAV1dJczhsNmxBSlBWcWRDS0RET2x1VXNmOXVGczhEZAzJDbmdSNFBRVURNZA0pES2hKRWZACblRBUlZA0ZAnl0YUJvVUd3".some,

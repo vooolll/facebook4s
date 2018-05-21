@@ -15,7 +15,7 @@ class UserCompatSpec extends CompatibilitySpec {
 
   val user = FacebookUser(
     id          = FacebookUserId("499313270413277"),
-    email       = "baibossynov.valery@gmail.com".some,
+    email       = "potnyiakk@gmail.com".some,
     name        = "Valeryi Baibossynov".some,
     lastName    = "Baibossynov".some,
     firstName   = "Valeryi".some,
@@ -26,7 +26,8 @@ class UserCompatSpec extends CompatibilitySpec {
       url          = new URL("http://example.com"),
       wight        = 50).some,
     gender      = Gender.Male.some,
-    ageRange    = AgeRange(21, None).some)
+    ageRange    = AgeRange(21, None).some,
+    hometown    = FacebookTown(id = "115486911798138", name = "Almaty, Kazakhstan").some)
 
   "FacebookUser" should {
     s"be compatible with $userPath" in {

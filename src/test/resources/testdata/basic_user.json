@@ -1,7 +1,6 @@
 {
   "name": "Valeryi Baibossynov",
   "email": "baibossynov.valery@gmail.com",
-  "verified": true,
   "age_range": {
     "min": 21
   },
@@ -15,16 +14,12 @@
       "width": 50
     }
   },
-  "locale": "en_US",
-  "timezone": 2,
-  "updated_time": "2017-11-11T00:10:08+0000",
+  "hometown": {
+    "id": "115486911798138",
+    "name": "Almaty, Kazakhstan"
+  },
   "first_name": "Valeryi",
   "last_name": "Baibossynov",
-  "cover": {
-    "id": "527696177574986",
-    "offset_x": 0,
-    "offset_y": 0,
-    "source": "http://example.com"
-  },
-  "id": "499313270413277"
+  "id": "499313270413277",
+  "email": "potnyiakk@gmail.com"
 }
