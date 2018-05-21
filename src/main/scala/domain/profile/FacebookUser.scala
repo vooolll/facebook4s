@@ -20,6 +20,7 @@ final case class FacebookUserId(value: String)
   * @param gender user gender
   * @param ageRange age segment for this person expressed as a minimum and maximum age
   * @param hometown hometown
+  * @param location current town
   */
 case class FacebookUser(
   id          : FacebookUserId,
@@ -31,7 +32,8 @@ case class FacebookUser(
   link        : Option[URL],
   gender      : Option[Gender],
   ageRange    : Option[AgeRange],
-  hometown    : Option[FacebookTown]) extends FacebookProfile
+  hometown    : Option[FacebookTown],
+  location    : Option[FacebookTown]) extends FacebookProfile
 
 /**
   * @param height image height

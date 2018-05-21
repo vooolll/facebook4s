@@ -4,7 +4,7 @@ import domain.FacebookAttribute
 
 object FacebookUserAttribute {
   val defaultAttributeValues = Seq(Email, Name, Id, Picture, FirstName, LastName, Link, AgeRange, Gender,
-    Hometown)
+    Hometown, Location)
 
   case object Email extends FacebookUserAttribute {
     override def value = "email"
@@ -44,6 +44,10 @@ object FacebookUserAttribute {
 
   case object Hometown extends FacebookUserAttribute {
     override def value = "hometown"
+  }
+
+  case object Location extends FacebookUserAttribute {
+    override def value = "location"
   }
 }
 

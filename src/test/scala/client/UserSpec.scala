@@ -25,7 +25,8 @@ class UserSpec extends FacebookClientSupport {
     link = Some(new URL("https://www.facebook.com")),
     gender = Gender.Female.some,
     ageRange = AgeRange(21,None).some,
-    hometown = Some(FacebookTown("115486911798138", "Almaty, Kazakhstan")))
+    hometown = Some(FacebookTown("115486911798138", "Almaty, Kazakhstan")),
+    location = Some(FacebookTown("115353315143936", "Rome, Italy")))
 
   "Facebook Graph Api" should {
     "return user profile" in { c =>

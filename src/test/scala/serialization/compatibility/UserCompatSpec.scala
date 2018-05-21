@@ -27,7 +27,8 @@ class UserCompatSpec extends CompatibilitySpec {
       wight        = 50).some,
     gender      = Gender.Male.some,
     ageRange    = AgeRange(21, None).some,
-    hometown    = FacebookTown(id = "115486911798138", name = "Almaty, Kazakhstan").some)
+    hometown    = FacebookTown(id = "115486911798138", name = "Almaty, Kazakhstan").some,
+    location    = FacebookTown(id = "115486911792222", name = "Rome, Italy").some)
 
   "FacebookUser" should {
     s"be compatible with $userPath" in {

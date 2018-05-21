@@ -105,7 +105,8 @@ object FacebookDecoders {
       gender    <- c.get[Option[Gender]]("gender")
       ageRange  <- c.get[Option[AgeRange]]("age_range")
       hometown  <- c.get[Option[FacebookTown]]("hometown")
-    } yield FacebookUser(id, email, name, picture, firstName, lastName, link, gender, ageRange, hometown)
+      location  <- c.get[Option[FacebookTown]]("location")
+    } yield FacebookUser(id, email, name, picture, firstName, lastName, link, gender, ageRange, hometown, location)
   }
 
   implicit val decodeApplication: Decoder[FacebookApplication] = new Decoder[FacebookApplication] {
