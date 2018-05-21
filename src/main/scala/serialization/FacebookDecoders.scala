@@ -98,18 +98,12 @@ object FacebookDecoders {
       email     <- c.get[Option[String]]("email")
       firstName <- c.get[Option[String]]("first_name")
       lastName  <- c.get[Option[String]]("last_name")
-      verified  <- c.get[Option[Boolean]]("verified")
       link      <- c.get[Option[URL]]("link")
       picture   <- c.downField("picture").get[Option[FacebookUserPicture]]("data")
-      locale    <- c.get[Option[Locale]]("locale")
-      timezone  <- c.get[Option[ZoneOffset]]("timezone")
       gender    <- c.get[Option[Gender]]("gender")
       ageRange  <- c.get[Option[AgeRange]]("age_range")
-      cover     <- c.get[Option[Cover]]("cover")
       updatedTime <- c.get[Option[Instant]]("updated_time")
-    } yield FacebookUser(
-      id, email, name, picture, firstName, lastName, link, verified, locale, timezone, gender, ageRange,
-      cover, updatedTime)
+    } yield FacebookUser(id, email, name, picture, firstName, lastName, link, gender, ageRange)
   }
 
   implicit val decodeApplication: Decoder[FacebookApplication] = new Decoder[FacebookApplication] {

@@ -3,9 +3,7 @@ package domain.profile
 import domain.FacebookAttribute
 
 object FacebookUserAttribute {
-  val defaultAttributeValues = Seq(
-    Name, Id, Picture, Locale, FirstName, LastName, Verified, Link, AgeRange, Timezone, Gender,
-    Cover, UpdatedTime)
+  val defaultAttributeValues = Seq(Name, Id, Picture, FirstName, LastName, Link, AgeRange, Gender)
 
   case object Email extends FacebookUserAttribute {
     override def value = "email"
@@ -23,11 +21,6 @@ object FacebookUserAttribute {
     override def value = "picture"
   }
 
-  @deprecated(message="Won't be supported by facebook in 3.0", since="0.2.6")
-  case object Locale extends FacebookUserAttribute {
-    override def value = "locale"
-  }
-
   case object FirstName extends FacebookUserAttribute {
     override def value = "first_name"
   }
@@ -36,18 +29,8 @@ object FacebookUserAttribute {
     override def value = "last_name"
   }
 
-  @deprecated(message="Won't be supported by facebook in 3.0", since="0.2.6")
-  case object Verified extends FacebookUserAttribute {
-    override def value = "verified"
-  }
-
   case object Link extends FacebookUserAttribute {
     override def value = "link"
-  }
-
-  @deprecated(message="Won't be supported by facebook in 3.0", since="0.2.6")
-  case object Timezone extends FacebookUserAttribute {
-    override def value = "timezone"
   }
 
   case object Gender extends FacebookUserAttribute {
@@ -56,16 +39,6 @@ object FacebookUserAttribute {
 
   case object AgeRange extends FacebookUserAttribute {
     override def value = "age_range"
-  }
-
-  @deprecated(message="Won't be supported by facebook in 3.0", since="0.2.6")
-  case object Cover extends FacebookUserAttribute {
-    override def value = "cover"
-  }
-
-  @deprecated(message="Won't be supported by facebook in 3.0", since="0.2.6")
-  case object UpdatedTime extends FacebookUserAttribute {
-    override def value = "updated_time"
   }
 }
 

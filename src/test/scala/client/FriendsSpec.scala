@@ -15,12 +15,15 @@ class FriendsSpec extends FacebookClientSupport {
   val friendId = FacebookUserId("595040754173861")
 
   val friend = FacebookUser(
-    friendId, None, "Valeryi Baibossynov".some,
-    Some(FacebookUserPicture(50.0, isSilhouette = false, new URL("https://lookaside.facebook.com/platform/profilepic/"), 50.0)),
-    Some("Valeryi"), Some("Baibossynov"), link = Some(new URL("https://www.facebook.com")), None,
-    Some(LocaleUtils.toLocale("en_US")), None, Gender.Male.some, AgeRange(21, None).some,
-    Some(Cover(None,0.0,0.0, new URL("https://lookaside.facebook.com/platform/coverpic/"))),
-    Some(toInstant("2017-11-11T00:10:08+0000")))
+    id = friendId,
+    email = None,
+    name = "Valeryi Baibossynov".some,
+    picture = Some(FacebookUserPicture(50.0, isSilhouette = false, new URL("https://lookaside.facebook.com/platform/profilepic/"), 50.0)),
+    firstName = Some("Valeryi"),
+    lastName = Some("Baibossynov"),
+    link = Some(new URL("https://www.facebook.com")),
+    gender = Gender.Male.some,
+    ageRange = AgeRange(21, None).some)
 
   val friendPaging = FacebookPaging(
     "QVFIUjlua0ltaGRGXzdlT295V25GX01ZAV1dJczhsNmxBSlBWcWRDS0RET2x1VXNmOXVGczhEZAzJDbmdSNFBRVURNZA0pES2hKRWZACblRBUlZA0ZAnl0YUJvVUd3".some,

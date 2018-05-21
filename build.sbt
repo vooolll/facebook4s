@@ -100,6 +100,8 @@ fork := true
 
 testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-W", "120", "60")
 
+ensimeIgnoreScalaMismatch in ThisBuild := true
+
 javaOptions in Test ++= Seq(sys.env.getOrElse("TRAVIS_OPTION", "-Dconfig.file=src/test/resources/.facebook-dev.conf"))
 
 scalacOptions in ThisBuild ++= Seq("-language:postfixOps",

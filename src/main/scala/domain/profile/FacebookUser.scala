@@ -14,16 +14,11 @@ final case class FacebookUserId(value: String)
   * @param email email - optional email
   * @param name optional name
   * @param picture optional picture
-  * @param locale optional locale
   * @param firstName optional first name
   * @param lastName optional last name
   * @param link optional link
-  * @param verified optional verified status flag
   * @param gender optional gender
-  * @param timezone optional person's current timezone offset from UTC
   * @param ageRange optional age segment for this person expressed as a minimum and maximum age
-  * @param cover optional cover
-  * @param updatedTime optional updated time
   */
 case class FacebookUser(
   id          : FacebookUserId,
@@ -33,18 +28,8 @@ case class FacebookUser(
   firstName   : Option[String],
   lastName    : Option[String],
   link        : Option[URL],
-  @deprecated(message="Won't be supported by facebook in 3.0", since="0.2.6")
-  verified    : Option[Boolean],
-  @deprecated(message="Won't be supported by facebook in 3.0", since="0.2.6")
-  locale      : Option[Locale],
-  @deprecated(message="Won't be supported by facebook in 3.0", since="0.2.6")
-  timezone    : Option[ZoneOffset],
   gender      : Option[Gender],
-  ageRange    : Option[AgeRange],
-  @deprecated(message="Won't be supported by facebook in 3.0", since="0.2.6")
-  cover       : Option[Cover],
-  @deprecated(message="Won't be supported by facebook in 3.0", since="0.2.6")
-  updatedTime : Option[Instant]) extends FacebookProfile
+  ageRange    : Option[AgeRange]) extends FacebookProfile
 
 /**
   * @param height image height

@@ -71,7 +71,7 @@ package object feed {
 
   implicit class FacebookUserWithoutQuery(user: FacebookUser) {
     def withoutQueryParams = {
-      user.copy(cover = user.cover.map(cover => withoutCoverQuery(cover)),
+      user.copy(
         picture = user.picture.map(withoutPictureQuery),
         link = user.link.map(l => new URL(l.getProtocol + "://" + l.getHost))) //TODO facebook4s-117
     }
@@ -91,7 +91,6 @@ package object feed {
     def withoutQueryParams = c.copy(comments = withoutCommentsQuery(c))
   }
 
-  private[this] def withoutCoverQuery(cover: Cover) = cover.copy(source = withoutQuery(cover.source))
   private[this] def withoutPictureQuery(pic: FacebookUserPicture) = pic.copy(url = withoutQuery(pic.url))
   private[this] def withoutAttachmentQuery(comment: FacebookComment) = comment.copy(attachment = comment.attachment.map(
     a => a.copy(attachment = a.attachment.copy(src = withoutQuery(a.attachment.src)))

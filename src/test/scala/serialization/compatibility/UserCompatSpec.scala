@@ -19,19 +19,14 @@ class UserCompatSpec extends CompatibilitySpec {
     name        = "Valeryi Baibossynov".some,
     lastName    = "Baibossynov".some,
     firstName   = "Valeryi".some,
-    verified    = true.some,
     link        = new URL("https://www.facebook.com/app_scoped_user_id/499313270413277/").some,
     picture     = FacebookUserPicture(
       height       = 50,
       isSilhouette = false,
       url          = new URL("http://example.com"),
       wight        = 50).some,
-    locale      = LocaleUtils.toLocale("en_US").some,
-    timezone    = ZoneOffset.ofHours(2).some,
     gender      = Gender.Male.some,
-    ageRange    = AgeRange(21, None).some,
-    cover       = Cover("527696177574986".some, 0, 0, new URL("http://example.com")).some,
-    updatedTime = Some(toInstant("2017-11-11T00:10:08+0000")))
+    ageRange    = AgeRange(21, None).some)
 
   "FacebookUser" should {
     s"be compatible with $userPath" in {
