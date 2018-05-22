@@ -11,7 +11,7 @@ Prerequisites
 ### Installation
 Add the following line to your sbt dependencies: 
 ```scala
-"com.github.vooolll" %% "facebook4s" % "0.2.8"
+"com.github.vooolll" %% "facebook4s" % "0.2.9"
 ```
 
 Note: make sure that you have in your `build.sbt`
@@ -200,7 +200,7 @@ facebookClient.feed(FacebookUserId("499283963749541"), "your user access token")
 
 #### Friends api
 
-Supported fields - `id`, `name`, `picture`, `locale[depricated]`, `first_name`, `last_name`, `link`, `gender`, `cover[depricated]`, `updated_time[depricated]`
+Supported fields - `id`, `name`, `picture`, `first_name`, `last_name`, `link`, `gender`, `hometown`, `location`, `email[if pulbic]`
     
 Note: Summary(total friends count) and paging will be returned ass well
     
@@ -233,8 +233,7 @@ facebookClient.comments(FacebookPostId("499313270413277_527696260908311"), faceb
 
 #### User api
 
-Supported fields - `id`, `name`, `picture`, `locale[depricated]`, `first_name`, `last_name`, `verified[depricated]`, `link`, `timezone[depricated]`, `gender`,
-    `age_range`, `cover[depricated]`, `updated_time[depricated]`
+Supported fields - `id`, `name`, `picture`, `first_name`, `last_name`, `link`, `gender`, `age_range`, `hometown`, `location`, `email`
     
     
 ```scala
