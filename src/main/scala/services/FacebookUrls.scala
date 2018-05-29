@@ -18,7 +18,9 @@ import domain.profile.{FacebookProfileId, FacebookUserAttribute, FacebookUserId}
 import org.f100ded.scalaurlbuilder.URLBuilder
 import syntax.FacebookShowOps._
 
-trait FacebookUrls {
+import com.typesafe.scalalogging.LazyLogging
+
+trait FacebookUrls extends LazyLogging {
 
   val clientId: FacebookClientId
   val appSecret: FacebookAppSecret
@@ -73,8 +75,10 @@ trait FacebookUrls {
   def applicationUri(accessToken: FacebookAccessToken, applicationId: FacebookApplicationId) =
     withAccessToken(accessToken).withPathSegments(applicationId.show)
 
-  def postUri(postId: FacebookPostId, accessToken: FacebookAccessToken, attributes: Seq[FacebookPostAttribute]) =
+  def postUri(postId: FacebookPostId, accessToken: FacebookAccessToken, attributes: Seq[FacebookPostAttribute]) = {
+    logger.debug("sending request : " + manyParams(graphHostBuilder.withPathSegments(postId.show), attributes))
     manyParams(withAccessToken(accessToken).withPathSegments(postId.show), attributes)
+  }
 
   def photoUri(photoId: FacebookPhotoId, accessToken: FacebookAccessToken, attributes: Seq[FacebookPhotoAttribute]) =
     manyParams(withAccessToken(accessToken).withPathSegments(photoId.show), attributes)

@@ -20,7 +20,7 @@ package object feed {
 
   val post1 = FacebookPost(
     postId,
-    Some("Bob Willins updated her cover photo."),
+    None, //facebook4s-123
     Some(toInstant("2017-12-19T14:08:44+0000")),
     Some("120118675447496"),
     Some(new URL("https://scontent.xx.fbcdn.net/v/t1.0-0/s130x130/25398995_120118675447496_5830741756468130361_n.jpg")),
@@ -28,7 +28,7 @@ package object feed {
 
   val post3 = FacebookPost(
     id = FacebookPostId("117656352360395_117427439049953"),
-    story = None,
+    message = None,
     createdTime = Some(toInstant("2017-12-18T09:38:18+0000")),
     objectId = Some("117427432383287"),
     picture = None,
@@ -36,7 +36,7 @@ package object feed {
 
   val post2 = FacebookPost(
     FacebookPostId("117656352360395_117607245698639"),
-    Some("Bob Willins updated her profile picture."),
+    None, //facebook4s-123
     Some(toInstant("2017-12-18T11:30:10+0000")),
     Some("117607225698641"),
     Some(new URL("https://scontent.xx.fbcdn.net/v/t1.0-0/s130x130/25396081_117607225698641_6348338142026249400_n.jpg")),
