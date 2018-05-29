@@ -8,4 +8,3 @@ src/main/resources/.facebook-dev.conf
 .DS_Store
 .ensime
 .ensime_cache/
-enisme.sbt
