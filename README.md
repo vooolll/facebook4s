@@ -164,7 +164,7 @@ facebookClient.appAccessToken() onComplete {
 
 #### Post api
 
-Supported fields - `id`, `story`, `created_time`, `object_id`, `picture`, `from`
+Supported fields - `id`, `message`, `created_time`, `object_id`, `picture`, `from`
 
 
 ```scala
