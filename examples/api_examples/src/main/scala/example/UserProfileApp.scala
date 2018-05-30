@@ -1,10 +1,10 @@
-import client.FacebookClient
-import config.{FacebookConfig, FacebookConstants}
-import domain.feed._
-import domain.oauth._
-import domain.permission.FacebookPermissions.UserDataPermissions.Posts
-import domain.posts.FacebookPostId
-import domain.profile.FacebookUserId
+import com.github.vooolll.client.FacebookClient
+import com.github.vooolll.config.{FacebookConfig, FacebookConstants}
+import com.github.vooolll.domain.feed._
+import com.github.vooolll.domain.oauth._
+import com.github.vooolll.domain.permission.FacebookPermissions.UserDataPermissions.Posts
+import com.github.vooolll.domain.posts.FacebookPostId
+import com.github.vooolll.domain.profile.FacebookUserId
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.DurationInt

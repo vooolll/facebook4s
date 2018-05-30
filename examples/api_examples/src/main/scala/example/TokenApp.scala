@@ -1,8 +1,8 @@
 package example
 
-import client.FacebookClient
-import domain.oauth.{FacebookCode, FacebookToken}
-import domain.permission.FacebookPermissions.UserDataPermissions.Posts
+import com.github.vooolll.client.FacebookClient
+import com.github.vooolll.domain.oauth.{FacebookCode, FacebookToken}
+import com.github.vooolll.domain.permission.FacebookPermissions.UserDataPermissions.Posts
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Failure, Success}
