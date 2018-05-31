@@ -2,7 +2,6 @@ package com.github.vooolll.client.feed
 
 import java.net.URL
 
-import com.github.vooolll.base.FacebookClientSupport
 import com.github.vooolll.base.TestConfiguration.userTokenRaw
 import cats.implicits._
 import com.github.vooolll.domain.{FacebookOrder, FacebookPaging}
