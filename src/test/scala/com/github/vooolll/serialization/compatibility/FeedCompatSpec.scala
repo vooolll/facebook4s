@@ -14,10 +14,10 @@ class FeedCompatSpec extends CompatibilitySpec {
 
   val feed = FacebookFeed(
     List(
-      FacebookPost(FacebookPostId("499313270413277_504668796544391"), "Valeryi Baibossynov updated his profile picture.".some,
+      FacebookPost(FacebookPostId("499313270413277_504668796544391"), "Valeryi Baibossynov updated his profile picture".some, "Valeryi Baibossynov updated his profile picture.".some,
         Some(toInstant("2017-10-01T13:43:05+0000")), None, None, None),
 
-      FacebookPost(FacebookPostId("499313270413277_139299253081349"),
+      FacebookPost(FacebookPostId("499313270413277_139299253081349"), "Valeryi Baibossynov added a life event from May 2, 1993: Born on May 2, 1993.".some,
         "Valeryi Baibossynov added a life event from May 2, 1993: Born on May 2, 1993.".some,
         Some(toInstant("1993-05-02T07:00:00+0000")), None, None, None)
     ),

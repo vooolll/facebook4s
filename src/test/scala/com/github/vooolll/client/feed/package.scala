@@ -20,6 +20,7 @@ package object feed {
 
   val post = FacebookPost(
     id = FacebookPostId("117656352360395_214427839349912"),
+    name = None,
     message = Some("hala"),
     createdTime = Some(toInstant("2018-05-30T06:16:31+0000")),
     objectId = None,
@@ -28,26 +29,29 @@ package object feed {
 
   val post1 = FacebookPost(
     id = postId,
+    name = Some("Bob's cover photo"),
     message = None,
     createdTime = Some(toInstant("2017-12-19T14:08:44+0000")),
     objectId = Some("120118675447496"),
     picture = Some(new URL("https://scontent.xx.fbcdn.net/v/t1.0-0/s130x130/25398995_120118675447496_5830741756468130361_n.jpg")),
     from = Some(FacebookProfileId("117656352360395")))
 
-  val post3 = FacebookPost(
-    id = FacebookPostId("117656352360395_117427439049953"),
-    message = None,
-    createdTime = Some(toInstant("2017-12-18T09:38:18+0000")),
-    objectId = Some("117427432383287"),
-    picture = None,
-    from = Some(FacebookProfileId("117656352360395")))
-
   val post2 = FacebookPost(
     id = FacebookPostId("117656352360395_117607245698639"),
+    name = Some("Bob Willins"),
     message = None,
     createdTime = Some(toInstant("2017-12-18T11:30:10+0000")),
     objectId = Some("117607225698641"),
     picture = Some(new URL("https://scontent.xx.fbcdn.net/v/t1.0-0/s130x130/25396081_117607225698641_6348338142026249400_n.jpg")),
+    from = Some(FacebookProfileId("117656352360395")))
+
+  val post3 = FacebookPost(
+    id = FacebookPostId("117656352360395_117427439049953"),
+    name = Some("Born on December 18, 1992"),
+    message = None,
+    createdTime = Some(toInstant("2017-12-18T09:38:18+0000")),
+    objectId = Some("117427432383287"),
+    picture = None,
     from = Some(FacebookProfileId("117656352360395")))
 
   val paging = FacebookFeedPaging(
