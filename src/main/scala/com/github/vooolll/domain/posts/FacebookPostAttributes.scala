@@ -4,7 +4,7 @@ import com.github.vooolll.domain.FacebookAttribute
 
 object FacebookPostAttributes {
 
-  val defaultPostAttributeValues = Seq(Id, Messages, CreatedTime, ObjectId, Picture, From)
+  val defaultPostAttributeValues = Seq(Id, Messages, CreatedTime, ObjectId, Picture, From, Name)
 
   trait FacebookPostAttribute extends FacebookAttribute
 
@@ -30,5 +30,9 @@ object FacebookPostAttributes {
 
   case object From extends FacebookPostAttribute {
     override def value = "from"
+  }
+
+  case object Name extends FacebookPostAttribute {
+    override def value = "name"
   }
 }
