@@ -9,8 +9,7 @@ import com.github.vooolll.domain.oauth.FacebookError
 import io.circe.Decoder
 import org.f100ded.scalaurlbuilder.URLBuilder
 
-import scala.concurrent.duration.Duration
-import scala.concurrent.{Await, Future}
+import scala.concurrent.Future
 
 class DomainParsing(asyncRequest: AsyncRequest) extends FailFastCirceSupport with LazyLogging {
 

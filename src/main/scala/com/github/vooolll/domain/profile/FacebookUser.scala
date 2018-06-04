@@ -1,8 +1,6 @@
 package com.github.vooolll.domain.profile
 
 import java.net.URL
-import java.time.{Instant, ZoneOffset}
-import java.util.Locale
 
 /**
   * @param value Facebook user id

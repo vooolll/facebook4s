@@ -21,7 +21,7 @@ after_success:
   - bash <(curl -s https://codecov.io/bash)
 
 scala:
-  - 2.12.1
+  - 2.12.4
   - 2.11.1
 
 jdk:

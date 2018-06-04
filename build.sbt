@@ -2,7 +2,7 @@ name := "facebook4s"
 
 version := "0.2.8"
 
-scalaVersion := "2.12.1"
+scalaVersion := "2.12.4"
 
 resolvers += Resolver.sonatypeRepo("release")
 

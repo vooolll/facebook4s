@@ -2,7 +2,6 @@ package com.github.vooolll.client
 
 import com.github.vooolll.client.FacebookClient._
 import com.github.vooolll.domain.profile.FacebookUserAttribute._
-import com.github.vooolll.domain.profile._
 import com.github.vooolll.services.FacebookInternals
 
 import scala.concurrent.Future
