@@ -263,15 +263,20 @@ object FacebookDecoders {
     case "video_inline"            => AttachmentTypes.Video
     case "animated_image_autoplay" => AttachmentTypes.GIF
     case "sticker"                 => AttachmentTypes.Sticker
+    case "cover_photo"             => AttachmentTypes.CoverPhoto
+    case "profile_media"           => AttachmentTypes.ProfileMedia
+    case "life_event"              => AttachmentTypes.LifeEvent
+    case _                         => AttachmentTypes.UnknowAttachmentType
   }
 
   implicit val decodeAttachment: Decoder[FacebookAttachment] = new Decoder[FacebookAttachment] {
     override def apply(c: HCursor) = for {
-      attachment <- c.downField("media").get[FacebookImageSource]("image")
-      target <- c.get[FacebookAttachmentTarget]("target")
-      url <- c.get[URL]("url")
+      attachment     <- c.downField("media").get[Option[FacebookImageSource]]("image")
+      target         <- c.get[FacebookAttachmentTarget]("target")
+      url            <- c.get[URL]("url")
       attachmentType <- c.get[AttachmentType]("type")
-    } yield FacebookAttachment(attachment, target, url, attachmentType)
+      title          <- c.get[Option[String]]("titile")
+    } yield FacebookAttachment(attachment, target, url, attachmentType, title)
   }
 
   implicit val decodeFriendsSummary: Decoder[FacebookFriendsSummary] = Decoder.forProduct1("total_count")(FacebookFriendsSummary)

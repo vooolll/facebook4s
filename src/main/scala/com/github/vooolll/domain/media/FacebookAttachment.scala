@@ -9,13 +9,18 @@ object AttachmentTypes {
   case object Video extends AttachmentType
   case object GIF extends AttachmentType
   case object Sticker extends AttachmentType
+  case object CoverPhoto extends AttachmentType
+  case object ProfileMedia extends AttachmentType
+  case object LifeEvent extends AttachmentType
+  case object UnknowAttachmentType extends AttachmentType
 }
 
 final case class FacebookAttachment(
-  attachment    : FacebookImageSource,
+  attachment    : Option[FacebookImageSource], // TODO facebook4s-130 Rename to media
   target        : FacebookAttachmentTarget,
   url           : URL,
-  attachmentType: AttachmentType)
+  attachmentType: AttachmentType,
+  title         : Option[String])
 
 final case class FacebookImageSource(height: Double, src: URL, width: Double)
 final case class FacebookAttachmentId(value: String)
