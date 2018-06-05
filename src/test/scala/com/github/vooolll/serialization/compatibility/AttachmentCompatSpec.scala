@@ -46,7 +46,31 @@ class AttachmentCompatSpec extends CompatibilitySpec {
       decodeType("photo") shouldBe TestObject(AttachmentTypes.Photo)
       decodeType("sticker") shouldBe TestObject(AttachmentTypes.Sticker)
       decodeType("animated_image_autoplay") shouldBe TestObject(AttachmentTypes.GIF)
+      decodeType("cover_photo") shouldBe TestObject(AttachmentTypes.CoverPhoto)
     }
+  }
+
+  val values = Map(
+    "video_inline"            -> AttachmentTypes.Video,
+    "photo"                   -> AttachmentTypes.Photo,
+    "sticker"                 -> AttachmentTypes.Sticker,
+    "animated_image_autoplay" -> AttachmentTypes.GIF,
+    "cover_photo"             -> AttachmentTypes.CoverPhoto,
+    "profile_media"           -> AttachmentTypes.ProfileMedia,
+    "life_event"              -> AttachmentTypes.LifeEvent
+  )
+
+  "AttachmentTypes" should {
+    for {
+      (value, attachmentType) <- values
+    } {
+      s"like $attachmentType compatible with $value" in {
+        decodeType(value) shouldBe TestObject(attachmentType)
+      }
+    }
+
+
+
   }
 
   private[this] def decodeType(attachmentTypeRaw: String) = {
