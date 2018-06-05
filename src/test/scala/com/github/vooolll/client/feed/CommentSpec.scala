@@ -19,8 +19,8 @@ class CommentSpec extends FacebookClientSupport {
 
   val attachment = Some(FacebookAttachment(
     FacebookImageSource(720.0,
-      new URL("https://scontent.xx.fbcdn.net/v/t31.0-8/s720x720/28617069_173295196796510_8133139076598269923_o.jpg"), 549.0),
-    FacebookAttachmentTarget(FacebookAttachmentId("173295196796510"), url), url, AttachmentTypes.Photo))
+      new URL("https://scontent.xx.fbcdn.net/v/t31.0-8/s720x720/28617069_173295196796510_8133139076598269923_o.jpg"), 549.0).some,
+    FacebookAttachmentTarget(FacebookAttachmentId("173295196796510"), url), url, AttachmentTypes.Photo, None))
 
   val comment = FacebookComment(
     id = FacebookCommentId("120118675447496_128078554651508"),
@@ -30,7 +30,7 @@ class CommentSpec extends FacebookClientSupport {
     parent = None,
     mediaObject = mediaObject,
     attachment = attachment)
-  
+
   val commentPaging = FacebookPaging(
     "WTI5dGJXVnVkRjlqZAFhKemIzSTZANVEk0TURjNE5UVTBOalV4TlRBNE9qRTFNVFF4T1RjME16UT0ZD".some,
     "WTI5dGJXVnVkRjlqZAFhKemIzSTZANVEk0TURjNE5UVTBOalV4TlRBNE9qRTFNVFF4T1RjME16UT0ZD".some)

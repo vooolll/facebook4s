@@ -6,6 +6,7 @@ import com.github.vooolll.domain.media._
 import io.circe._
 import io.circe.generic.semiauto._
 import com.github.vooolll.serialization.FacebookDecoders._
+import cats.implicits._
 
 class AttachmentCompatSpec extends CompatibilitySpec {
 
@@ -25,7 +26,7 @@ class AttachmentCompatSpec extends CompatibilitySpec {
     new URL("https://www.facebook.com/photo.php?fbid=135224317270265&set=p.135224317270265&type=3"))
 
 
-  val facebookAttachment = FacebookAttachment(imageSource, attachmentTarget, attachmentTarget.url, AttachmentTypes.Photo)
+  val facebookAttachment = FacebookAttachment(imageSource.some, attachmentTarget, attachmentTarget.url, AttachmentTypes.Photo, "photo".some)
 
   "FacebookAttachmentTarget" should {
     s"be compatible with $attachmentTargetPath" in {

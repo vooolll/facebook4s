@@ -105,7 +105,7 @@ package object feed {
 
   private[this] def withoutPictureQuery(pic: FacebookUserPicture) = pic.copy(url = withoutQuery(pic.url))
   private[this] def withoutAttachmentQuery(comment: FacebookComment) = comment.copy(attachment = comment.attachment.map(
-    a => a.copy(attachment = a.attachment.copy(src = withoutQuery(a.attachment.src)))
+    a => a.copy(attachment = a.attachment.map(v => v.copy(src = withoutQuery(v.src))))
   ))
 
   private[this] def withoutCommentsQuery(c: FacebookComments) = {

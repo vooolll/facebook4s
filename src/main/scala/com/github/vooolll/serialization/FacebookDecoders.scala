@@ -275,7 +275,7 @@ object FacebookDecoders {
       target         <- c.get[FacebookAttachmentTarget]("target")
       url            <- c.get[URL]("url")
       attachmentType <- c.get[AttachmentType]("type")
-      title          <- c.get[Option[String]]("titile")
+      title          <- c.get[Option[String]]("title")
     } yield FacebookAttachment(attachment, target, url, attachmentType, title)
   }
 
