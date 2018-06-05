@@ -25,6 +25,16 @@ class AttachmentCompatSpec extends CompatibilitySpec {
   val attachmentTarget = FacebookAttachmentTarget(FacebookAttachmentId("135224317270265"),
     new URL("https://www.facebook.com/photo.php?fbid=135224317270265&set=p.135224317270265&type=3"))
 
+  val attachmentTypes = Map(
+    "video_inline"            -> AttachmentTypes.Video,
+    "photo"                   -> AttachmentTypes.Photo,
+    "sticker"                 -> AttachmentTypes.Sticker,
+    "animated_image_autoplay" -> AttachmentTypes.GIF,
+    "cover_photo"             -> AttachmentTypes.CoverPhoto,
+    "profile_media"           -> AttachmentTypes.ProfileMedia,
+    "life_event"              -> AttachmentTypes.LifeEvent
+  )
+
 
   val facebookAttachment = FacebookAttachment(imageSource.some, attachmentTarget, attachmentTarget.url, AttachmentTypes.Photo, "photo".some)
 
@@ -50,28 +60,15 @@ class AttachmentCompatSpec extends CompatibilitySpec {
     }
   }
 
-  val values = Map(
-    "video_inline"            -> AttachmentTypes.Video,
-    "photo"                   -> AttachmentTypes.Photo,
-    "sticker"                 -> AttachmentTypes.Sticker,
-    "animated_image_autoplay" -> AttachmentTypes.GIF,
-    "cover_photo"             -> AttachmentTypes.CoverPhoto,
-    "profile_media"           -> AttachmentTypes.ProfileMedia,
-    "life_event"              -> AttachmentTypes.LifeEvent
-  )
 
-  "AttachmentTypes" should {
-    for {
-      (value, attachmentType) <- values
-    } {
-      s"like $attachmentType compatible with $value" in {
-        decodeType(value) shouldBe TestObject(attachmentType)
-      }
+  for {
+    (value, attachmentType) <- attachmentTypes
+  } {
+    s"attachment type $attachmentType should be compatible with $value" in {
+      decodeType(value) shouldBe TestObject(attachmentType)
     }
-
-
-
   }
+
 
   private[this] def decodeType(attachmentTypeRaw: String) = {
     decodeStringJson[TestObject]("{ \"attachmentType\": \"" + attachmentTypeRaw + "\"}")
