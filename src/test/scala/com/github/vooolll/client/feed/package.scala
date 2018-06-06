@@ -20,10 +20,10 @@ package object feed {
   val v = FacebookConfig.version.value
 
   val post = FacebookPost(
-    id = FacebookPostId("117656352360395_214427839349912"),
+    id = FacebookPostId("117656352360395_217907052335324"),
     name = None,
     message = Some("hala"),
-    createdTime = Some(toInstant("2018-05-30T06:16:31+0000")),
+    createdTime = Some(toInstant("2018-06-06T12:43:52+0000")),
     objectId = None,
     picture = None,
     from = Some(FacebookProfileId("117656352360395")),

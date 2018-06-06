@@ -32,7 +32,9 @@ class AttachmentCompatSpec extends CompatibilitySpec {
     "animated_image_autoplay" -> AttachmentTypes.GIF,
     "cover_photo"             -> AttachmentTypes.CoverPhoto,
     "profile_media"           -> AttachmentTypes.ProfileMedia,
-    "life_event"              -> AttachmentTypes.LifeEvent
+    "life_event"              -> AttachmentTypes.LifeEvent,
+    "map"                     -> AttachmentTypes.Map,
+    "fun_fact_stack"          -> AttachmentTypes.FunFactStack
   )
 
   val facebookAttachment = FacebookAttachment(imageSource.some, attachmentTarget, attachmentTarget.url, AttachmentTypes.Photo, "photo".some)

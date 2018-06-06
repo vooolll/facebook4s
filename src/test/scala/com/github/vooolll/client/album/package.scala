@@ -26,14 +26,15 @@ package object album {
 
   val profileId = FacebookProfileId("117656352360395")
 
+  val timelineAlbum = FacebookAlbum(FacebookAlbumId("217892655670097"), "Timeline Photos", toInstant("2018-06-06T12:07:16+0000"))
   val coverAlbum = FacebookAlbum(FacebookAlbumId("120118722114158"), "Cover Photos", toInstant("2017-12-19T14:08:44+0000"))
   val profileAlbum = FacebookAlbum(FacebookAlbumId("117607235698640"), "Profile Pictures",
     toInstant("2017-12-18T11:30:10+0000"))
 
   val facebookAlbums = FacebookAlbums(
-    List(coverAlbum, profileAlbum),
+    List(timelineAlbum, coverAlbum, profileAlbum),
     Some(FacebookPaging(
-      Some("MTIwMTE4NzIyMTE0MTU4"),
+      Some("MjE3ODkyNjU1NjcwMDk3"),
       Some("MTE3NjA3MjM1Njk4NjQw"))))
 
   val photo = FacebookPhoto(

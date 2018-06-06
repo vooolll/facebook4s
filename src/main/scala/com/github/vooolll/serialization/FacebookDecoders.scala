@@ -268,6 +268,7 @@ object FacebookDecoders {
     case "profile_media"           => AttachmentTypes.ProfileMedia
     case "life_event"              => AttachmentTypes.LifeEvent
     case "fun_fact_stack"          => AttachmentTypes.FunFactStack
+    case "map"                     => AttachmentTypes.Map
     case _                         => AttachmentTypes.UnknowAttachmentType
   }
 

@@ -13,6 +13,7 @@ object AttachmentTypes {
   case object ProfileMedia extends AttachmentType
   case object LifeEvent extends AttachmentType
   case object FunFactStack extends AttachmentType
+  case object Map extends AttachmentType
   case object UnknowAttachmentType extends AttachmentType
 }
 
