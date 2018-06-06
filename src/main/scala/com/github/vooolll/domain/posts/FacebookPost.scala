@@ -3,6 +3,7 @@ package com.github.vooolll.domain.posts
 import java.net.URL
 import java.time.Instant
 
+import com.github.vooolll.domain.media.FacebookAttachment
 import com.github.vooolll.domain.profile.FacebookProfileId
 
 final case class FacebookPostId(value: String)
@@ -14,4 +15,5 @@ final case class FacebookPost(
   createdTime : Option[Instant],
   objectId    : Option[String], // TODO facebook4s-133: change type to MediaObjectId
   picture     : Option[URL],
-  from        : Option[FacebookProfileId])
+  from        : Option[FacebookProfileId],
+  attachments : List[FacebookAttachment])

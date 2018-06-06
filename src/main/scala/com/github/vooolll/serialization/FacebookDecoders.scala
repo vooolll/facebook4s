@@ -126,7 +126,8 @@ object FacebookDecoders {
       objectId    <- c.get[Option[String]]("object_id")
       picture     <- c.get[Option[URL]]("picture")
       from        <- c.downField("from").get[Option[FacebookProfileId]]("id")
-    } yield FacebookPost(id, name, message, createdTime, objectId, picture, from)
+      attachmetns <- c.downField("attachments").getOrElse[List[FacebookAttachment]]("data")(Nil)
+    } yield FacebookPost(id, name, message, createdTime, objectId, picture, from, attachmetns)
   }
 
   implicit val decodeFeedPaging: Decoder[FacebookFeedPaging] =
