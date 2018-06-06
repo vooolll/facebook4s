@@ -35,7 +35,6 @@ class AttachmentCompatSpec extends CompatibilitySpec {
     "life_event"              -> AttachmentTypes.LifeEvent
   )
 
-
   val facebookAttachment = FacebookAttachment(imageSource.some, attachmentTarget, attachmentTarget.url, AttachmentTypes.Photo, "photo".some)
 
   "FacebookAttachmentTarget" should {
@@ -51,24 +50,14 @@ class AttachmentCompatSpec extends CompatibilitySpec {
       decodeJson[FacebookAttachment](attachmentPath) shouldBe facebookAttachment
     }
 
-    s"attachment types should be compatible" in {
-      decodeType("video_inline") shouldBe TestObject(AttachmentTypes.Video)
-      decodeType("photo") shouldBe TestObject(AttachmentTypes.Photo)
-      decodeType("sticker") shouldBe TestObject(AttachmentTypes.Sticker)
-      decodeType("animated_image_autoplay") shouldBe TestObject(AttachmentTypes.GIF)
-      decodeType("cover_photo") shouldBe TestObject(AttachmentTypes.CoverPhoto)
+    for {
+      (value, attachmentType) <- attachmentTypes
+    } {
+      s"attachment type $attachmentType should be compatible with $value" in {
+        decodeType(value) shouldBe TestObject(attachmentType)
+      }
     }
   }
-
-
-  for {
-    (value, attachmentType) <- attachmentTypes
-  } {
-    s"attachment type $attachmentType should be compatible with $value" in {
-      decodeType(value) shouldBe TestObject(attachmentType)
-    }
-  }
-
 
   private[this] def decodeType(attachmentTypeRaw: String) = {
     decodeStringJson[TestObject]("{ \"attachmentType\": \"" + attachmentTypeRaw + "\"}")
