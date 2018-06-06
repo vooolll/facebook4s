@@ -1,7 +1,6 @@
 package com.github.vooolll.client
 
 import java.net.URL
-import java.time.ZoneOffset
 
 import com.github.vooolll.base._
 import feed._
@@ -10,7 +9,6 @@ import com.github.vooolll.base.TestConfiguration._
 import com.github.vooolll.domain.oauth.FacebookError
 import com.github.vooolll.domain.profile.FacebookUserAttribute.defaultAttributeValues
 import com.github.vooolll.domain.profile._
-import org.apache.commons.lang3.LocaleUtils
 
 class UserSpec extends FacebookClientSupport {
   val realUserId = FacebookUserId("117656352360395")

@@ -267,6 +267,7 @@ object FacebookDecoders {
     case "cover_photo"             => AttachmentTypes.CoverPhoto
     case "profile_media"           => AttachmentTypes.ProfileMedia
     case "life_event"              => AttachmentTypes.LifeEvent
+    case "fun_fact_stack"          => AttachmentTypes.FunFactStack
     case _                         => AttachmentTypes.UnknowAttachmentType
   }
 
@@ -274,7 +275,7 @@ object FacebookDecoders {
     override def apply(c: HCursor) = for {
       attachment     <- c.downField("media").get[Option[FacebookImageSource]]("image")
       target         <- c.get[FacebookAttachmentTarget]("target")
-      url            <- c.get[URL]("url")
+      url            <- c.get[Option[URL]]("url")
       attachmentType <- c.get[AttachmentType]("type")
       title          <- c.get[Option[String]]("title")
     } yield FacebookAttachment(attachment, target, url, attachmentType, title)

@@ -40,11 +40,11 @@ class FeedCompatSpec extends CompatibilitySpec {
             ), width = 720)),
             target = FacebookAttachmentTarget(
               id = FacebookAttachmentId("100023480929454"),
-              url = new URL("https://www.facebook.com/bob.willins.98")
+              url = Some(new URL("https://www.facebook.com/bob.willins.98"))
             ),
             title = Some("Bob Willins"),
             attachmentType = AttachmentTypes.ProfileMedia,
-            url = new URL("https://www.facebook.com/bob.willins.98")
+            url = Some(new URL("https://www.facebook.com/bob.willins.98"))
           )
         ))
     ),

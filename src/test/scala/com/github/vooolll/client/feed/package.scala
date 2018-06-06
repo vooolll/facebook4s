@@ -43,11 +43,11 @@ package object feed {
       ), width = 720)),
       target = FacebookAttachmentTarget(
         id = FacebookAttachmentId("100023480929454"),
-        url = new URL("https://www.facebook.com/bob.willins.98")
+        url = Some(new URL("https://www.facebook.com/bob.willins.98"))
       ),
       title = Some("Bob's cover photo"),
       attachmentType = AttachmentTypes.CoverPhoto,
-      url = new URL("https://www.facebook.com/bob.willins.98")
+      url = Some(new URL("https://www.facebook.com/bob.willins.98"))
     )))
 
   val post2 = FacebookPost(
@@ -65,11 +65,11 @@ package object feed {
         ), width = 720)),
         target = FacebookAttachmentTarget(
           id = FacebookAttachmentId("100023480929454"),
-          url = new URL("https://www.facebook.com/bob.willins.98")
+          url = Some(new URL("https://www.facebook.com/bob.willins.98"))
         ),
         title = Some("Bob Willins"),
         attachmentType = AttachmentTypes.ProfileMedia,
-        url = new URL("https://www.facebook.com/bob.willins.98")
+        url = Some(new URL("https://www.facebook.com/bob.willins.98"))
       )
     ))
 
@@ -86,11 +86,11 @@ package object feed {
         attachment = None,
         target = FacebookAttachmentTarget(
           id = FacebookAttachmentId("117427432383287"),
-          url = new URL("https://www.facebook.com/100023480929454/posts/117427432383287/")
+          url = Some(new URL("https://www.facebook.com/100023480929454/posts/117427432383287/"))
         ),
         title = Some("Born on December 18, 1992"),
         attachmentType = AttachmentTypes.LifeEvent,
-        url = new URL("https://www.facebook.com/100023480929454/posts/117427432383287/")
+        url = Some(new URL("https://www.facebook.com/100023480929454/posts/117427432383287/"))
       )
     ))
 

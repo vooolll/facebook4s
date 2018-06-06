@@ -2,14 +2,13 @@ package com.github.vooolll.client
 
 import java.net.URL
 
-import com.github.vooolll.base.{FacebookClientSupport, toInstant}
+import com.github.vooolll.base.FacebookClientSupport
 import com.github.vooolll.base.TestConfiguration._
 import cats.implicits._
 import com.github.vooolll.client.feed._
 import com.github.vooolll.domain.FacebookPaging
 import com.github.vooolll.domain.friends.{FacebookFriends, FacebookFriendsSummary}
 import com.github.vooolll.domain.profile._
-import org.apache.commons.lang3.LocaleUtils
 
 class FriendsSpec extends FacebookClientSupport {
   val friendId = FacebookUserId("595040754173861")

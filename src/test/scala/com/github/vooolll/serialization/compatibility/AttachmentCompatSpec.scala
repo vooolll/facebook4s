@@ -23,7 +23,7 @@ class AttachmentCompatSpec extends CompatibilitySpec {
       "?oh=97edfd66290b3e4112a8731e8cd2b5fb&oe=5B0A23AC"), 104)
 
   val attachmentTarget = FacebookAttachmentTarget(FacebookAttachmentId("135224317270265"),
-    new URL("https://www.facebook.com/photo.php?fbid=135224317270265&set=p.135224317270265&type=3"))
+    Some(new URL("https://www.facebook.com/photo.php?fbid=135224317270265&set=p.135224317270265&type=3")))
 
   val attachmentTypes = Map(
     "video_inline"            -> AttachmentTypes.Video,
