@@ -22,7 +22,7 @@ class FriendsSpec extends FacebookClientSupport {
     lastName = Some("Baibossynov"),
     link = Some(new URL("https://www.facebook.com")),
     gender = Gender.Male.some,
-    ageRange = AgeRange(21, None).some,
+    ageRange = None,
     hometown = Some(FacebookTown("115486911798138", "Almaty, Kazakhstan")),
     location = Some(FacebookTown("111536985531661", "Riga, Latvia")))
 
