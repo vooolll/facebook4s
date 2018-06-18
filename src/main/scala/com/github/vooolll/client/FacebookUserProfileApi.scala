@@ -17,7 +17,7 @@ trait FacebookUserProfileApi extends FacebookInternals {
     * @return Facebook user profile
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
-  def userProfile(userId: UserId, accessToken: AccessToken, attributes: Seq[UserAttributes]): Future[User] =
+  def userProfile(userId: UserId, attributes: Seq[UserAttributes])(implicit accessToken: AccessToken): Future[User] =
     sendRequestOrFail(userUri(accessToken, userId, attributes))
 
 
@@ -27,8 +27,8 @@ trait FacebookUserProfileApi extends FacebookInternals {
     * @return Facebook user profile
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
-  def userProfile(userId: UserId, accessToken: AccessToken): Future[User] =
-    userProfile(userId, accessToken, defaultAttributeValues)
+  def userProfile(userId: UserId)(implicit accessToken: AccessToken): Future[User] =
+    userProfile(userId, defaultAttributeValues)
 
 
   /**
@@ -38,8 +38,10 @@ trait FacebookUserProfileApi extends FacebookInternals {
     * @return Facebook user profile
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
+
+  @deprecated("use `AccessToken` instead of String", "0.2.9")
   def userProfile(userId: UserId, accessTokenValue: String, attributes: Seq[UserAttributes]): Future[User] =
-    userProfile(userId, accessToken(accessTokenValue), attributes)
+    userProfile(userId, attributes)(accessToken(accessTokenValue))
 
   /**
     * @param userId Facebook user id
@@ -47,6 +49,7 @@ trait FacebookUserProfileApi extends FacebookInternals {
     * @return Facebook user profile
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
+  @deprecated("use `AccessToken` instead of String", "0.2.9")
   def userProfile(userId: UserId, accessTokenValue: String): Future[User] =
     userProfile(userId, accessTokenValue, defaultAttributeValues)
 
@@ -56,7 +59,7 @@ trait FacebookUserProfileApi extends FacebookInternals {
     * @param attributes Sequence of FacebookUserAttribute
     * @return Facebook user profile or error FacebookError
     */
-  def userProfileResult(userId: UserId, accessToken: AccessToken, attributes: Seq[UserAttributes]): FutureResult[User] =
+  def userProfileResult(userId: UserId, attributes: Seq[UserAttributes])(implicit accessToken: AccessToken): FutureResult[User] =
     sendRequest(userUri(accessToken, userId, attributes))
 
   /**
@@ -64,8 +67,8 @@ trait FacebookUserProfileApi extends FacebookInternals {
     * @param accessToken Facebook user access token
     * @return Facebook user profile or error FacebookError
     */
-  def userProfileResult(userId: UserId, accessToken: AccessToken): FutureResult[User] =
-    userProfileResult(userId, accessToken, defaultAttributeValues)
+  def userProfileResult(userId: UserId)(implicit accessToken: AccessToken): FutureResult[User] =
+    userProfileResult(userId, defaultAttributeValues)(accessToken)
 
   /**
     * @param userId FacebookUserId
@@ -73,8 +76,9 @@ trait FacebookUserProfileApi extends FacebookInternals {
     * @param attributes Sequence of FacebookUserAttribute
     * @return Facebook user profile or error FacebookError
     */
+  @deprecated("use `AccessToken` instead of String", "0.2.9")
   def userProfileResult(userId: UserId, accessTokenValue: String, attributes: Seq[UserAttributes]): FutureResult[User] =
-    userProfileResult(userId, accessToken(accessTokenValue), attributes)
+    userProfileResult(userId, attributes)(accessToken(accessTokenValue))
 
   /**
     * @param userId FacebookUserId
