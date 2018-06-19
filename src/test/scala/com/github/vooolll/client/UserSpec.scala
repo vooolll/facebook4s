@@ -5,12 +5,14 @@ import java.net.URL
 import com.github.vooolll.base._
 import feed._
 import cats.implicits._
-import com.github.vooolll.base.TestConfiguration._
 import com.github.vooolll.domain.oauth.FacebookError
 import com.github.vooolll.domain.profile.FacebookUserAttribute.defaultAttributeValues
 import com.github.vooolll.domain.profile._
 
 class UserSpec extends FacebookClientSupport {
+
+  import com.github.vooolll.base.TestConfiguration._
+
   val realUserId = FacebookUserId("117656352360395")
 
   val realUser = FacebookUser(
@@ -28,22 +30,22 @@ class UserSpec extends FacebookClientSupport {
 
   "Facebook Graph Api" should {
     "return user profile" in { c =>
-      c.userProfile(realUserId, userTokenRaw, defaultAttributeValues) map (_.withoutQueryParams shouldBe realUser)
+      c.userProfile(realUserId, defaultAttributeValues) map (_.withoutQueryParams shouldBe realUser)
     }
 
     "return user profile result" in { c =>
-      c.userProfileResult(realUserId, userTokenRaw) map (_.map(_.withoutQueryParams) shouldBe realUser.asRight)
+      c.userProfileResult(realUserId) map (_.map(_.withoutQueryParams) shouldBe realUser.asRight)
     }
 
     "return error SpecifiedObjectNotFound" in { c =>
-      c.userProfileResult(realUserId.copy(value = "asd"), userTokenRaw) map {
+      c.userProfileResult(realUserId.copy(value = "asd")) map {
         case Right(_) => fail("bad request expected")
         case Left(e)  => e.errorType shouldBe FacebookError.SpecifiedObjectNotFound
       }
     }
 
     "return error InvalidVerificationCodeFormat" in { c =>
-      c.userProfileResult(realUserId.copy(value = "777661112359912"), userTokenRaw) map {
+      c.userProfileResult(realUserId.copy(value = "777661112359912")) map {
         case Right(_) => fail("bad request expected")
         case Left(e)  => e.errorType shouldBe FacebookError.InvalidVerificationCodeFormat
       }

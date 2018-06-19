@@ -17,7 +17,7 @@ trait FacebookPostApi extends FacebookInternals {
     * @return Facebook post details
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
-  def post(postId: PostId, accessToken: AccessToken, fields: Seq[PostAttribute]): Future[Post] =
+  def post(postId: PostId, fields: Seq[PostAttribute])(implicit accessToken: AccessToken): Future[Post] =
     sendRequestOrFail(postUri(postId, accessToken, fields))
 
   /**
@@ -26,8 +26,8 @@ trait FacebookPostApi extends FacebookInternals {
     * @return Facebook post details
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
-  def post(postId: PostId, accessToken: AccessToken): Future[Post] =
-    post(postId, accessToken, defaultPostAttributeValues)
+  def post(postId: PostId)(implicit accessToken: AccessToken): Future[Post] =
+    post(postId, defaultPostAttributeValues)
 
   /**
     * @param postId Id of facebook post alpha numeric
@@ -35,7 +35,7 @@ trait FacebookPostApi extends FacebookInternals {
     * @param fields Sequence of facebook post attributes
     * @return Either facebook post details or error FacebookError
     */
-  def postResult(postId: PostId, accessToken: AccessToken,fields: Seq[PostAttribute]): FutureResult[Post] =
+  def postResult(postId: PostId,fields: Seq[PostAttribute])(implicit accessToken: AccessToken): FutureResult[Post] =
     sendRequest(postUri(postId, accessToken, fields))
 
   /**
@@ -43,7 +43,7 @@ trait FacebookPostApi extends FacebookInternals {
     * @param accessToken Facebook access token
     * @return Either facebook post details or error FacebookError
     */
-  def postResult(postId: PostId, accessToken: AccessToken): FutureResult[Post] =
-    postResult(postId, accessToken, defaultPostAttributeValues)
+  def postResult(postId: PostId)(implicit accessToken: AccessToken): FutureResult[Post] =
+    postResult(postId, defaultPostAttributeValues)
 
 }

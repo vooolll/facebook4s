@@ -14,12 +14,12 @@ object TestConfiguration extends ConfigurationDetector {
     tokenValue = tokenValueOf("FACEBOOK_TEST_APP_ACCESS_TOKEN", "facebook.testAppAccessToken"),
     tokenType  = AppAccessToken("bearer"))
 
-  val userAccessToken = FacebookAccessToken(
+  implicit val userAccessToken = FacebookAccessToken(
     tokenValue = tokenValueOf("FACEBOOK_TEST_USER_ACCESS_TOKEN", "facebook.testUserAccessToken"),
     tokenType  = UserAccessToken("bearer", 60.days)
   )
   val userTokenRaw = userAccessToken.tokenValue.value
-  
+
   def tokenValueOf(envStr: String, typesafeStr: String) =
     TokenValue(envVarOrConfig(envStr, typesafeStr))
 }
