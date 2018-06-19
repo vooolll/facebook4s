@@ -6,8 +6,6 @@ object FacebookCommentAttributes {
 
   val defaultCommentAttributeValues = Seq(Id, Message, CreatedTime, Parent, From, Object)
 
-  trait FacebookCommentAttribute extends FacebookAttribute
-
   case object Id extends FacebookCommentAttribute {
     override def value = "id"
   }
@@ -33,3 +31,5 @@ object FacebookCommentAttributes {
   }
 
 }
+
+trait FacebookCommentAttribute extends FacebookAttribute

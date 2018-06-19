@@ -7,7 +7,7 @@ import com.github.vooolll.config.FacebookConstants._
 import com.github.vooolll.domain.FacebookAttribute
 import com.github.vooolll.domain.albums.photo.FacebookPhotoAttributes.FacebookPhotoAttribute
 import com.github.vooolll.domain.albums.photo.FacebookPhotoId
-import com.github.vooolll.domain.comments.FacebookCommentAttributes.FacebookCommentAttribute
+import com.github.vooolll.domain.comments._
 import com.github.vooolll.domain.comments.FacebookCommentsAttributes.FacebookCommentsAttribute
 import com.github.vooolll.domain.comments._
 import com.github.vooolll.domain.oauth._

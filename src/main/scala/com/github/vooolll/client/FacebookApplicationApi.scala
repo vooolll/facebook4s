@@ -15,7 +15,7 @@ trait FacebookApplicationApi extends FacebookInternals {
     * @return Facebook application details
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
-  def application(applicationId: ApplicationId, accessToken: AccessToken): Future[Application] =
+  def application(applicationId: ApplicationId)(implicit accessToken: AccessToken): Future[Application] =
     sendRequestOrFail(applicationUri(accessToken, applicationId))
 
   /**
@@ -24,15 +24,17 @@ trait FacebookApplicationApi extends FacebookInternals {
     * @return Facebook application details
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
+
+  @deprecated("use `AccessToken` instead of String", "0.2.9")
   def application(applicationId: ApplicationId, accessTokenValue: String): Future[Application] =
-    application(applicationId, accessToken(accessTokenValue))
+    application(applicationId)(accessToken(accessTokenValue))
 
   /**
     * @param applicationId Facebook application(client) id
     * @param accessToken Facebook user access token
     * @return Either facebook application details or error FacebookError
     */
-  def applicationResult(applicationId: ApplicationId, accessToken: AccessToken): FutureResult[Application] =
+  def applicationResult(applicationId: ApplicationId)(implicit accessToken: AccessToken): FutureResult[Application] =
     sendRequest(applicationUri(accessToken, applicationId))
 
   /**
@@ -40,6 +42,7 @@ trait FacebookApplicationApi extends FacebookInternals {
     * @param accessTokenValue Facebook user access token string value
     * @return Either facebook application details or error FacebookError
     */
+  @deprecated("use `AccessToken` instead of String", "0.2.9")
   def applicationResult(applicationId: ApplicationId, accessTokenValue: String): FutureResult[Application] =
-    applicationResult(applicationId, accessToken(accessTokenValue))
+    applicationResult(applicationId)(accessToken(accessTokenValue))
 }

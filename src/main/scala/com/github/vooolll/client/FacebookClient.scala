@@ -4,7 +4,7 @@ import com.github.vooolll.config.FacebookConfig._
 import com.github.vooolll.domain.albums.FacebookAlbums
 import com.github.vooolll.domain.albums.photo.FacebookPhotoAttributes.FacebookPhotoAttribute
 import com.github.vooolll.domain.albums.photo.{FacebookPhoto, FacebookPhotoId}
-import com.github.vooolll.domain.comments.FacebookComments
+import com.github.vooolll.domain.comments._
 import com.github.vooolll.domain.feed.FacebookFeed
 import com.github.vooolll.domain.friends.FacebookFriends
 import com.github.vooolll.domain.likes.FacebookLikes
@@ -70,6 +70,7 @@ object FacebookClient {
   type PostId = FacebookPostId
   type PhotoId = FacebookPhotoId
   type ProfileId = FacebookProfileId
+  type CommentId = FacebookCommentId
 
   type AccessToken = FacebookAccessToken
   type Application = FacebookApplication
@@ -83,6 +84,7 @@ object FacebookClient {
   type Likes = FacebookLikes
   type UserFeed = FacebookFeed
   type Comments = FacebookComments
+  type Comment = FacebookComment
   type Photo = FacebookPhoto
   type Albums = FacebookAlbums
   type Friends = FacebookFriends
@@ -92,4 +94,5 @@ object FacebookClient {
   type PhotoAttribute = FacebookPhotoAttribute
   type PostAttribute = FacebookPostAttribute
   type UserAttributes = FacebookUserAttribute
+  type CommentAttribute = FacebookCommentAttribute
 }

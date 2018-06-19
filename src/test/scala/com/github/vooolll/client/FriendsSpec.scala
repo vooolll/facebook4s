@@ -3,7 +3,6 @@ package com.github.vooolll.client
 import java.net.URL
 
 import com.github.vooolll.base.FacebookClientSupport
-import com.github.vooolll.base.TestConfiguration._
 import cats.implicits._
 import com.github.vooolll.client.feed._
 import com.github.vooolll.domain.FacebookPaging
@@ -11,6 +10,9 @@ import com.github.vooolll.domain.friends.{FacebookFriends, FacebookFriendsSummar
 import com.github.vooolll.domain.profile._
 
 class FriendsSpec extends FacebookClientSupport {
+
+  import com.github.vooolll.base.TestConfiguration._
+
   val friendId = FacebookUserId("595040754173861")
 
   val friend = FacebookUser(
@@ -40,11 +42,11 @@ class FriendsSpec extends FacebookClientSupport {
 
   "Graph Api" should {
     "return user friends" in { c =>
-      c.friends(FacebookUserId("me"), userAccessToken).map(_.withoutQueryParams shouldBe facebookFriends)
+      c.friends(FacebookUserId("me")).map(_.withoutQueryParams shouldBe facebookFriends)
     }
 
     "return user friends result" in { c =>
-      c.friendsResult(FacebookUserId("me"), userAccessToken).map(_.map(_.withoutQueryParams) shouldBe facebookFriends.asRight)
+      c.friendsResult(FacebookUserId("me")).map(_.map(_.withoutQueryParams) shouldBe facebookFriends.asRight)
     }
   }
 }

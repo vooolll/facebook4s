@@ -15,8 +15,9 @@ trait FacebookLikeApi extends FacebookInternals {
     * @return Facebook likes
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
+  @deprecated("use `AccessToken` instead of String", "0.2.9")
   def likes(postId: PostId, accessTokenValue: String): Future[Likes] =
-    likes(postId, accessToken(accessTokenValue), summary = false)
+    likes(postId, summary = false)(accessToken(accessTokenValue))
 
   /**
     * @param postId Facebook post id
@@ -25,8 +26,9 @@ trait FacebookLikeApi extends FacebookInternals {
     * @return Facebook likes
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
+  @deprecated("use `AccessToken` instead of String", "0.2.9")
   def likes(postId: PostId, accessTokenValue: String, summary: Boolean): Future[Likes] =
-    likes(postId, accessToken(accessTokenValue), summary)
+    likes(postId, summary)(accessToken(accessTokenValue))
 
   /**
     * @param postId Facebook post id
@@ -35,7 +37,7 @@ trait FacebookLikeApi extends FacebookInternals {
     * @return Facebook likes
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
-  def likes(postId: PostId, accessToken: AccessToken, summary: Boolean): Future[Likes] =
+  def likes(postId: PostId, summary: Boolean)(implicit accessToken: AccessToken): Future[Likes] =
     sendRequestOrFail(likesUri(postId, accessToken, summary))
 
   /**
@@ -44,8 +46,8 @@ trait FacebookLikeApi extends FacebookInternals {
     * @return Facebook likes
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
-  def likes(postId: PostId, accessToken: AccessToken): Future[Likes] =
-    likes(postId, accessToken, summary = false)
+  def likes(postId: PostId)(implicit accessToken: AccessToken): Future[Likes] =
+    likes(postId, summary = false)
 
   /**
     * @param postId Id of facebook post alpha numeric
@@ -53,16 +55,18 @@ trait FacebookLikeApi extends FacebookInternals {
     * @param summary Boolean flag, retrieve summary or not
     * @return Either facebook post likes or error FacebookError
     */
+  @deprecated("use `AccessToken` instead of String", "0.2.9")
   def likesResult(postId: PostId, accessTokenValue: String, summary: Boolean): FutureResult[Likes] =
-    likesResult(postId, accessToken(accessTokenValue), summary)
+    likesResult(postId, summary)(accessToken(accessTokenValue))
 
   /**
     * @param postId Id of facebook post alpha numeric
     * @param accessTokenValue User access token value
     * @return Either facebook post likes or error FacebookError
     */
+  @deprecated("use `AccessToken` instead of String", "0.2.9")
   def likesResult(postId: PostId, accessTokenValue: String): FutureResult[Likes] =
-    likesResult(postId, accessToken(accessTokenValue), summary = false)
+    likesResult(postId, summary = false)(accessToken(accessTokenValue))
 
   /**
     * @param postId Id of facebook post alpha numeric
@@ -70,7 +74,7 @@ trait FacebookLikeApi extends FacebookInternals {
     * @param summary Boolean flag, retrieve summary or not
     * @return Either facebook post likes or error FacebookError
     */
-  def likesResult(postId: PostId, accessToken: AccessToken, summary: Boolean): FutureResult[Likes] =
+  def likesResult(postId: PostId, summary: Boolean)(implicit accessToken: AccessToken): FutureResult[Likes] =
     sendRequest(likesUri(postId, accessToken, summary))
 
   /**
@@ -78,7 +82,7 @@ trait FacebookLikeApi extends FacebookInternals {
     * @param accessToken User access token
     * @return Either facebook post likes or error FacebookError
     */
-  def likesResult(postId: PostId, accessToken: AccessToken): FutureResult[Likes] =
-    likesResult(postId, accessToken, summary = false)
+  def likesResult(postId: PostId)(implicit accessToken: AccessToken): FutureResult[Likes] =
+    likesResult(postId, summary = false)
 
 }
