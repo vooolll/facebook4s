@@ -18,9 +18,9 @@ class FriendsSpec extends FacebookClientSupport {
   val friend = FacebookUser(
     id = friendId,
     email = None,
-    name = "Valeryi Baibossynov".some,
+    name = "Valeriy Baibossynov".some,
     picture = Some(FacebookUserPicture(50.0, isSilhouette = false, new URL("https://platform-lookaside.fbsbx.com/platform/profilepic/"), 50.0)),
-    firstName = Some("Valeryi"),
+    firstName = Some("Valeriy"),
     lastName = Some("Baibossynov"),
     link = Some(new URL("https://www.facebook.com")),
     gender = Gender.Male.some,
