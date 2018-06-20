@@ -19,7 +19,7 @@ class UserSpec extends FacebookClientSupport {
     id = realUserId,
     email = Some("potnyiakk@gmail.com"),
     name = Some("Bob Willins"),
-    picture = Some(FacebookUserPicture(50.0, isSilhouette = false, new URL("https://lookaside.facebook.com/platform/profilepic/"), 50.0)),
+    picture = Some(FacebookUserPicture(50.0, isSilhouette = false, new URL("https://platform-lookaside.fbsbx.com/platform/profilepic/"), 50.0)),
     firstName = Some("Bob"),
     lastName = Some("Willins"),
     link = Some(new URL("https://www.facebook.com")),
