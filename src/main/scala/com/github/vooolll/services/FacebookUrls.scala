@@ -9,7 +9,6 @@ import com.github.vooolll.domain.albums.photo.FacebookPhotoAttributes.FacebookPh
 import com.github.vooolll.domain.albums.photo.FacebookPhotoId
 import com.github.vooolll.domain.comments._
 import com.github.vooolll.domain.comments.FacebookCommentsAttributes.FacebookCommentsAttribute
-import com.github.vooolll.domain.comments._
 import com.github.vooolll.domain.oauth._
 import com.github.vooolll.domain.permission.FacebookPermissions.FacebookPermission
 import com.github.vooolll.domain.posts.FacebookPostAttributes.FacebookPostAttribute
@@ -133,9 +132,8 @@ trait FacebookUrls extends LazyLogging {
   private[this] def withSummary(uriBuilder: URLBuilder, summary: Boolean) =
     uriBuilder.withQueryParameters("summary" -> summary.toString)
 
-  private[this] def redirect() = {
+  private[this] def redirect() =
     redirectUri getOrElse(throw new RuntimeException("redirect uri is not set"))
-  }
 
   private[this] def many(key: String, attr: Seq[FacebookAttribute]) =
     if (attr.nonEmpty) key -> commaSeparated(attr) some else none
