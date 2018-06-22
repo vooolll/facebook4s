@@ -10,6 +10,6 @@ libraryDependencies ++= {
   val facebook4sVersion = "0.2.9"
 
   Seq(
-    "com.github.vooolll" %% "facebook4s" % version
+    "com.github.vooolll" %% "facebook4s" % facebook4sVersion
   )
 }
