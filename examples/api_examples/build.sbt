@@ -18,4 +18,4 @@ libraryDependencies ++= {
 
 fork := true
 
-javaOptions in ThisBuild ++= Seq(sys.env.getOrElse("TRAVIS_OPTION", "-Dconfig.file=src/main/resources/.facebook-dev.conf"))
+javaOptions in ThisBuild ++= Seq(sys.env.getOrElse("TRAVIS_OPTION_EXAMPLE", "-Dconfig.file=src/main/resources/.facebook-dev.conf"))
