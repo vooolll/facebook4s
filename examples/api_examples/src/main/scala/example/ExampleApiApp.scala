@@ -37,10 +37,6 @@ object ExampleApiApp extends App {
   println("Post: " + post)
   println("------------------")
 
-  val application1 = Await.result(facebookClient.application(FacebookConfig.clientId), 3.seconds)
-  println("Application: " + application1)
-  println("------------------")
-
   val application2 = Await.result(facebookClient.application(applicationId), 3.seconds)
   println("Application: " + application2)
   println("------------------")
