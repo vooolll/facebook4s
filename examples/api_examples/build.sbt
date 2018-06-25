@@ -8,8 +8,14 @@ resolvers += Resolver.sonatypeRepo("releases")
 
 libraryDependencies ++= {
   val facebook4sVersion = "0.2.9"
+  val typesafeV = "1.3.1"
 
   Seq(
-    "com.github.vooolll" %% "facebook4s" % facebook4sVersion
+    "com.github.vooolll" %% "facebook4s" % facebook4sVersion,
+    "com.typesafe"       %  "config"     % typesafeV
   )
 }
+
+fork := true
+
+javaOptions in ThisBuild ++= Seq(sys.env.getOrElse("TRAVIS_OPTION", "-Dconfig.file=src/main/resources/.facebook-dev.conf"))

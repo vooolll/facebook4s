@@ -8,20 +8,20 @@ import com.github.vooolll.domain.permission.FacebookPermissions.UserDataPermissi
 import com.github.vooolll.domain.posts.FacebookPostId
 import com.github.vooolll.domain.profile.FacebookUserId
 
+import com.typesafe.config._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
 import scala.concurrent._
+import scala.util._
 
-object UserProfileApp extends App {
+object ExampleApiApp extends App {
+  val config = ConfigFactory.load
+
+  val tokenStringValue = Properties.envOrNone("FACEBOOK_TEST_USER_ACCESS_TOKEN") getOrElse config.getString("facebook.testUserAccessToken")
   val facebookClient = FacebookClient()
-
-  //getting request urls
-  println(facebookClient.buildAuthUrl(Seq(Posts), responseType = FacebookToken))
-
-  val userId = FacebookUserId("499283963749541")
-  val postId = FacebookPostId("499313270413277_527696260908311")
-  val applicationId = FacebookAppId("1969406143275709")
-  val tokenStringValue = "token"
+  val userId = FacebookUserId("117656352360395")
+  val postId = FacebookPostId("117656352360395_117427439049953")
+  val applicationId = FacebookAppId("1970529913214515")
 
   implicit val token = FacebookClient.accessToken(tokenStringValue)
 
@@ -50,5 +50,4 @@ object UserProfileApp extends App {
     case Right(user) => println("Success: " + user)
     case Left(error) => println("Failure: " + error)
   }
-  
 }
