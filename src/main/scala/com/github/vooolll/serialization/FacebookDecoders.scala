@@ -79,7 +79,7 @@ object FacebookDecoders {
   }
 
   implicit val decodeInstant: Decoder[Instant] = decodeString.emap { str =>
-    Either.catchNonFatal(dateFormat.parse(str, Instant.from(_))).leftMap(t => "Instant")
+    Either.catchNonFatal(Instant.from(dateFormat.parse(str))).leftMap(t => "Instant")
   }
 
   implicit val decodeUserId: Decoder[FacebookUserId] = decodeString.map(FacebookUserId)

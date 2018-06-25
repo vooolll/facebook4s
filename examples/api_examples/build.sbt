@@ -1,13 +1,13 @@
-name := "access_tokens"
+name := "api_examples"
 
 version := "0.0.1"
 
-scalaVersion := "2.12.1"
+crossScalaVersions := Seq("2.12.1", "2.11.1")
 
-resolvers += Resolver.sonatypeRepo("releases")
+resolvers += Resolver.sonatypeRepo("snapshots")
 
 libraryDependencies ++= {
-  val facebook4sVersion = "0.2.9"
+  val facebook4sVersion = "0.3.0-SNAPSHOT"
   val typesafeV = "1.3.1"
 
   Seq(
