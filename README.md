@@ -6,7 +6,7 @@ facebook4s
 
 Prerequisites
 -------------
-* Scala 2.12.x and 2.11.x
+* Scala 2.12.x
 
 ### Installation
 Add the following line to your sbt dependencies: 
@@ -316,8 +316,8 @@ The list is not full, feel free to contribute by adding new error types.
 ### Release process
 * Update `build.sbt` with new version
 * Enter `sbt` shell
-* Run `publishSigned`
-* Run `sonatypeRelease`
+* Run `+ publishSigned`
+* Run `+ sonatypeRelease`
 
 ### License
 
