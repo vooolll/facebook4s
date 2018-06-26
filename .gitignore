@@ -2,8 +2,8 @@ target
 project/project
 project/target
 *.swp
-src/test/resources/.facebook-dev.conf
-src/main/resources/.facebook-dev.conf
+.facebook-dev.conf
+.facebook-dev.conf
 .idea/
 .DS_Store
 .ensime

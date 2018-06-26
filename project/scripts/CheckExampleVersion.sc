@@ -14,4 +14,3 @@ assert(examplVersionLine.contains(targetVersion),
   s"Example version do not match release version, $examplVersionLine doesn't contain $targetVersion")
 
 println(s"Example version is $targetVersion")
-

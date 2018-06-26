@@ -1,10 +1,12 @@
 name := "facebook4s"
 
-version := "0.2.9"
+version := "0.3.0-SNAPSHOT"
 
-scalaVersion := "2.12.4"
+scalaVersion := "2.12.6"
 
-resolvers += Resolver.sonatypeRepo("snapshots")
+crossScalaVersions := Seq("2.12.6", "2.11.12")
+
+resolvers += Resolver.sonatypeRepo("releases")
 
 publishMavenStyle := true
 
@@ -102,7 +104,8 @@ testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-W", "120", "60
 
 javaOptions in Test ++= Seq(sys.env.getOrElse("TRAVIS_OPTION", "-Dconfig.file=src/test/resources/.facebook-dev.conf"))
 
-scalacOptions in ThisBuild ++= Seq("-language:postfixOps",
+scalacOptions in ThisBuild ++= Seq(
+  "-language:postfixOps",
   "-language:implicitConversions",
   "-language:existentials",
   "-feature",
