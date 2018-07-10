@@ -44,6 +44,8 @@ object ExampleApiApp extends App {
   val userResult = Await.result(facebookClient.userProfileResult(userId), 3.seconds)
   userResult match {
     case Right(user) => println("Success: " + user)
-    case Left(error) => println("Failure: " + error)
+    case Left(error) =>
+      println("Failure: " + error)
+      throw new RuntimeException(s"Failed to get user profile, $error")
   }
 }
