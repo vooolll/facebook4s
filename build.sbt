@@ -47,7 +47,7 @@ tutSourceDirectory := (sourceDirectory in Compile).value / "docs"
 
 tutTargetDirectory := file("./docs")
 
-scalacOptions in Tut --= Seq("-Ywarn-unused-import", "-Ywarn-unused:imports")
+javaOptions in Tut ++= Seq(sys.env.getOrElse("TRAVIS_OPTION", "-Dconfig.file=src/test/resources/.facebook-dev.conf"))
 
 pomExtra :=
   <url>https://github.com/vooolll/facebook4s</url>
@@ -101,20 +101,17 @@ scalacOptions ++= Seq(
   "-encoding",
   "UTF-8",
   "-Xlint",
-  "-feature",
-  "-language:postfixOps",
   "-unchecked",
+  "-language:postfixOps",
+  "-language:implicitConversions",
+  "-language:existentials",
+  "-feature",
   "-deprecation")
+
+scalacOptions in Tut --= Seq("-Ywarn-unused-import", "-Ywarn-unused:imports")
 
 fork := true
 
 testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-W", "120", "60")
 
 javaOptions in Test ++= Seq(sys.env.getOrElse("TRAVIS_OPTION", "-Dconfig.file=src/test/resources/.facebook-dev.conf"))
-
-scalacOptions in ThisBuild ++= Seq(
-  "-language:postfixOps",
-  "-language:implicitConversions",
-  "-language:existentials",
-  "-feature",
-  "-deprecation")
