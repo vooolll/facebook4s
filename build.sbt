@@ -41,6 +41,8 @@ apiMappings ++= {
   )
 }
 
+enablePlugins(TutPlugin)
+
 pomExtra :=
   <url>https://github.com/vooolll/facebook4s</url>
   <scm>
