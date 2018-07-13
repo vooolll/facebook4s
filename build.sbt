@@ -43,6 +43,12 @@ apiMappings ++= {
 
 enablePlugins(TutPlugin)
 
+tutSourceDirectory := (sourceDirectory in Compile).value / "docs"
+
+tutTargetDirectory := file("./docs")
+
+scalacOptions in Tut --= Seq("-Ywarn-unused-import", "-Ywarn-unused:imports")
+
 pomExtra :=
   <url>https://github.com/vooolll/facebook4s</url>
   <scm>
