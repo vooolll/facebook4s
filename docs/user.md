@@ -3,7 +3,7 @@
 Supported fields - `id`, `name`, `picture`, `first_name`, `last_name`, `link`, `gender`, `age_range`, `hometown`, `location`, `email`
 
 
-```tut:silent
+```scala
 import com.github.vooolll.client.FacebookClient
 import com.github.vooolll.domain.profile._
 
