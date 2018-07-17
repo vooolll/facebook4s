@@ -9,3 +9,5 @@ Set(InvalidApiKey, Session, Unknown, ServiceDown, TooManyCalls, UserTooManyCalls
   AccessTokenHasExpired, ApplicationLimitReached, Blocked, DuplicatePost,
   ErrorPostingLink, PermissionNotGrantedOrRemoved, InvalidVerificationCodeFormat, SpecifiedObjectNotFound)
 ```
+
+The list is not full, feel free to contribute by adding new error types.
