@@ -1,11 +1,10 @@
-#### User api
+#### Albums api
 
-Supported fields - `id`, `name`, `picture`, `first_name`, `last_name`, `link`, `gender`, `age_range`, `hometown`, `location`, `email`
-
+Supported fields - `id`, `created_time`, `name`
 
 ```tut:silent
 import com.github.vooolll.client.FacebookClient
-import com.github.vooolll.domain.profile._
+import com.github.vooolll.domain.profile.FacebookProfileId
 
 import scala.concurrent.ExecutionContext.Implicits.global // don't do it in production environment, only for example purpose
 
@@ -13,7 +12,7 @@ val facebookClient = FacebookClient()
 
 implicit val facebookAccessToken = FacebookClient.accessToken("some token value")
 
-facebookClient.userProfile(FacebookUserId("user id")) map(user =>
-  println(user)
-)
+facebookClient.albums(FacebookProfileId("user id")) map { albums =>
+  println("Albums: " + albums)
+}
 ```

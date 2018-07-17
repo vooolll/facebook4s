@@ -13,7 +13,7 @@ val facebookClient = FacebookClient()
 
 implicit val facebookAccessToken = FacebookClient.accessToken("some token value")
 
-facebookClient.userProfile(FacebookUserId("499283963749541")) map(user =>
+facebookClient.userProfile(FacebookUserId("user id")) map(user =>
   println(user)
 )
 ```
