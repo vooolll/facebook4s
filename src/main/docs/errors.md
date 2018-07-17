@@ -3,6 +3,7 @@
 List of supported `errorType`'s of `FacebookError`
 ```tut:silent
 import com.github.vooolll.domain.oauth._
+import com.github.vooolll.domain.oauth.FacebookError._
 
 Set(InvalidApiKey, Session, Unknown, ServiceDown, TooManyCalls, UserTooManyCalls, PermissionDenied,
   AccessTokenHasExpired, ApplicationLimitReached, Blocked, DuplicatePost,

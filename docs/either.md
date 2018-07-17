@@ -3,7 +3,7 @@ In case you want to use `Result`(`Either`) based api you can use Result suffixed
 return `Future[FacebookUser]`, then `facebookClient.userProfileResult` returns `Future[Either[FacebookError, FacebookUser]]`
 
 Example:
-```tut:silent
+```scala
 import com.github.vooolll.client.FacebookClient
 import com.github.vooolll.domain.profile._
 
