@@ -1,9 +1,10 @@
-#### Like api
-Supported `like` fields - `id`, `name`
+#### Comment api
+Supported `comment` fields - `id`, `from`, `created_time`, `message`, `parent`, `object`, `attachment`
 
-Supported `summary`(optional) fields - `total_count`, `can_like`, `has_liked`
+Supported `summary`(optional) fields - `total_count`, `order`, `can_comment`
 
-```scala
+
+```tut:silent
 import com.github.vooolll.client.FacebookClient
 import com.github.vooolll.domain.posts._
 
@@ -13,7 +14,7 @@ val facebookClient = FacebookClient()
 
 implicit val facebookAccessToken = FacebookClient.accessToken("some token value")
 
-facebookClient.likes(FacebookPostId("post id"), summary = true).map { likes =>
-  println("Like: " + likes)
+facebookClient.comments(FacebookPostId("post id"), summary = true).map { comments =>
+  println("Comments: " + comments)
 }
 ```
