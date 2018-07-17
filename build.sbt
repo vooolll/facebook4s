@@ -100,7 +100,6 @@ licenses := Seq("Apache-2.0" -> url("http://opensource.org/licenses/Apache-2.0")
 scalacOptions ++= Seq(
   "-encoding",
   "UTF-8",
-  "-Xlint",
   "-unchecked",
   "-language:postfixOps",
   "-language:implicitConversions",
@@ -108,7 +107,6 @@ scalacOptions ++= Seq(
   "-feature",
   "-deprecation")
 
-scalacOptions in Tut --= Seq("-Ywarn-unused-import", "-Ywarn-unused:imports")
 
 fork := true
 
