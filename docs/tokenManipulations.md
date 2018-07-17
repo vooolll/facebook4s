@@ -11,7 +11,7 @@ import scala.concurrent.ExecutionContext.Implicits.global // don't do it in prod
 
 ```scala
 val facebookClient = FacebookClient()
-// facebookClient: com.github.vooolll.client.FacebookClient = com.github.vooolll.client.FacebookClient@19d7bf98
+// facebookClient: com.github.vooolll.client.FacebookClient = com.github.vooolll.client.FacebookClient@30c9d01c
 
 val clientCode = "code from request"
 // clientCode: String = code from request

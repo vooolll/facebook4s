@@ -1,6 +1,6 @@
 #### Post api
 
-Supported fields - `id`, `message`, `created_time`, `object_id`, `picture`, `from`, `attachments`
+Supported fields - `id`, `message`, `created_time`, `object_id`, `picture`, `from`
 
 ```scala
 import com.github.vooolll.client.FacebookClient
