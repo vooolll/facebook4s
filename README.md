@@ -27,7 +27,7 @@ resolvers += Resolver.sonatypeRepo("releases")
 ### User guide
 
 * [Client configuration](https://github.com/vooolll/facebook4s/tree/master/docs/createClient.md)
-* [Getting authentication uri](https://github.com/vooolll/facebook4s/tree/master/docs/authenicationUri.md)
+* [Getting authentication uri](https://github.com/vooolll/facebook4s/tree/master/docs/authenticationUri.md)
 * [Token manipulations](https://github.com/vooolll/facebook4s/tree/master/docs/tokenManipulations.md)
 * [Posts](https://github.com/vooolll/facebook4s/tree/master/docs/post.md)
 * [Likes](https://github.com/vooolll/facebook4s/tree/master/docs/likes.md)
