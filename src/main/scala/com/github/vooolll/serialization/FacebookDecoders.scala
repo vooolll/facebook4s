@@ -21,7 +21,6 @@ import com.github.vooolll.domain.posts._
 import com.github.vooolll.domain.profile._
 import io.circe.Decoder._
 import io.circe._
-import org.apache.commons.lang3._
 import com.github.vooolll.serialization.FacebookErrorCodeDecoders._
 
 import scala.concurrent.duration._
@@ -88,8 +87,6 @@ object FacebookDecoders {
 
   implicit val decodeUserPicture: Decoder[FacebookUserPicture] =
     Decoder.forProduct4("height", "is_silhouette", "url", "width")(FacebookUserPicture)
-
-  implicit val decodeLocale: Decoder[Locale] = decodeString.map(LocaleUtils.toLocale)
 
   implicit val decodeTown: Decoder[FacebookTown] = Decoder.forProduct2("id", "name")(FacebookTown)
 
