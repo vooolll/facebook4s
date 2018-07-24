@@ -13,15 +13,6 @@ trait FacebookFriendsApi extends FacebookInternals {
   /**
     * Returns friends that installed current app for given user id
     * @param userId facebook user id
-    * @param accessTokenValue facebook access token value
-    */
-  @deprecated("use `AccessToken` instead of String", "0.2.9")
-  def friends(userId: UserId, accessTokenValue: String): Future[Friends] =
-    friends(userId)(accessToken(accessTokenValue))
-
-  /**
-    * Returns friends that installed current app for given user id
-    * @param userId facebook user id
     * @param accessToken facebook access token
     */
   def friends(userId: UserId)(implicit accessToken: AccessToken): Future[Friends] =
@@ -34,14 +25,5 @@ trait FacebookFriendsApi extends FacebookInternals {
     */
   def friendsResult(userId: UserId)(implicit accessToken: AccessToken): FutureResult[Friends] =
     sendRequest(friendsUri(accessToken, userId, FacebookUserAttribute.defaultAttributeValues))
-
-  /**
-    * Returns friends that installed current app for given user id
-    * @param userId facebook user id
-    * @param accessTokenValue facebook access token value
-    */
-  @deprecated("use `AccessToken` instead of String", "0.2.9")
-  def friendsResult(userId: UserId, accessTokenValue: String): FutureResult[Friends] =
-    friendsResult(userId)(accessToken(accessTokenValue))
 
 }

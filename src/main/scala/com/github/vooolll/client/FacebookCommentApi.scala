@@ -12,26 +12,6 @@ trait FacebookCommentApi extends FacebookInternals {
 
   /**
     * @param commentId Facebook comment id
-    * @param accessTokenValue User access token value
-    * @return Facebook comment
-    *         @throws scala.RuntimeException if facebook responds with bad request
-    */
-  @deprecated("use `AccessToken` instead of String", "0.2.9")
-  def comment(commentId: CommentId, accessTokenValue: String, attributes: Seq[CommentAttribute]): Future[Comment] =
-    comment(commentId, attributes)(accessToken(accessTokenValue))
-
-  /**
-    * @param commentId Facebook comment id
-    * @param accessTokenValue User access token value
-    * @return Facebook comment
-    *         @throws scala.RuntimeException if facebook responds with bad request
-    */
-  @deprecated("use `AccessToken` instead of String", "0.2.9")
-  def comment(commentId: CommentId, accessTokenValue: String): Future[Comment] =
-    comment(commentId, defaultCommentAttributeValues)(accessToken(accessTokenValue))
-
-  /**
-    * @param commentId Facebook comment id
     * @param accessToken User access token value
     * @return Facebook comment
     *         @throws scala.RuntimeException if facebook responds with bad request
@@ -58,50 +38,11 @@ trait FacebookCommentApi extends FacebookInternals {
 
   /**
     * @param commentId Facebook comment id
-    * @param accessTokenValue User access token value
-    * @return Either facebook comment or error FacebookError
-    */
-  @deprecated("use `AccessToken` instead of String", "0.2.9")
-  def commentResult(commentId: CommentId, accessTokenValue: String, attributes: Seq[CommentAttribute]): FutureResult[Comment] =
-    commentResult(commentId, attributes)(accessToken(accessTokenValue))
-
-  /**
-    * @param commentId Facebook comment id
-    * @param accessTokenValue User access token value
-    * @return Either facebook comment or error FacebookError
-    */
-  @deprecated("use `AccessToken` instead of String", "0.2.9")
-  def commentResult(commentId: CommentId, accessTokenValue: String): FutureResult[Comment] =
-    commentResult(commentId, defaultCommentAttributeValues)(accessToken(accessTokenValue))
-
-  /**
-    * @param commentId Facebook comment id
     * @param accessToken User access token value
     * @return Either facebook comment or error FacebookError
     */
   def commentResult(commentId: CommentId)(implicit accessToken: AccessToken): FutureResult[Comment] =
     commentResult(commentId, defaultCommentAttributeValues)
-
-  /**
-    * @param postId Facebook post id
-    * @param accessTokenValue User access token value
-    * @return Facebook comments
-    *         @throws scala.RuntimeException if facebook responds with bad request
-    */
-  @deprecated("use `AccessToken` instead of String", "0.2.9")
-  def comments(postId: PostId, accessTokenValue: String): Future[Comments] =
-    comments(postId, summary = false)(accessToken(accessTokenValue))
-
-  /**
-    * @param postId Facebook post id
-    * @param accessTokenValue User access token value
-    * @param summary Boolean flag, retrieve summary or not
-    * @return Facebook comments
-    *         @throws scala.RuntimeException if facebook responds with bad request
-    */
-  @deprecated("use `AccessToken` instead of String", "0.2.9")
-  def comments(postId: PostId, accessTokenValue: String, summary: Boolean): Future[Comments] =
-    comments(postId, summary)(accessToken(accessTokenValue))
 
   /**
     * @param postId Facebook post id
@@ -121,25 +62,6 @@ trait FacebookCommentApi extends FacebookInternals {
     */
   def comments(postId: PostId)(implicit accessToken: AccessToken): Future[Comments] =
     comments(postId, summary = false)
-
-  /**
-    * @param postId Id of facebook post alpha numeric
-    * @param accessTokenValue User access token value
-    * @param summary Boolean flag, retrieve summary or not
-    * @return Either facebook comments or error FacebookError
-    */
-  @deprecated("use `AccessToken` instead of String", "0.2.9")
-  def commentsResult(postId: PostId, accessTokenValue: String, summary: Boolean): FutureResult[Comments] =
-    commentsResult(postId, summary)(accessToken(accessTokenValue))
-
-  /**
-    * @param postId Id of facebook post alpha numeric
-    * @param accessTokenValue User access token value
-    * @return Either facebook comments or error FacebookError
-    */
-  @deprecated("use `AccessToken` instead of String", "0.2.9")
-  def commentsResult(postId: PostId, accessTokenValue: String): FutureResult[Comments] =
-    commentsResult(postId, summary = false)(accessToken(accessTokenValue))
 
   /**
     * @param postId Id of facebook post alpha numeric

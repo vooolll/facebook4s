@@ -24,27 +24,8 @@ trait FacebookPhotoApi extends FacebookInternals {
     * @param accessToken User access token
     * @return future FacebookPhoto
     */
-  def photo(photoId: PhotoId)(implicit accessToken : AccessToken): Future[Photo] =
+  def photo(photoId: PhotoId)(implicit accessToken: AccessToken): Future[Photo] =
     photo(photoId, defaultPhotoAttributeValues)
-
-  /**
-    * @param photoId Id of facebook photo
-    * @param accessTokenValue String representation of user access token
-    * @param fields Sequence of facebook photo attributes
-    * @return FacebookPhoto
-    */
-  @deprecated("use `AccessToken` instead of String", "0.2.9")
-  def photo(photoId : PhotoId, accessTokenValue : String, fields: Seq[PhotoAttribute]): Future[Photo] =
-    photo(photoId, fields)(accessToken(accessTokenValue))
-
-  /**
-    * @param photoId Id of facebook photo
-    * @param accessTokenValue String representation of user access token
-    * @return FacebookPhoto
-    */
-  @deprecated("use `AccessToken` instead of String", "0.2.9")
-  def photo(photoId: PhotoId, accessTokenValue : String): Future[Photo] =
-    photo(photoId, accessTokenValue, defaultPhotoAttributeValues)
 
   /**
     * @param photoId Id of facebook photo
@@ -63,22 +44,4 @@ trait FacebookPhotoApi extends FacebookInternals {
   def photoResult(photoId: PhotoId)(implicit accessToken: AccessToken): FutureResult[Photo] =
     photoResult(photoId, defaultPhotoAttributeValues)
 
-  /**
-    * @param photoId Id of facebook photo
-    * @param accessTokenValue String representation of user access token
-    * @param fields Sequence of facebook photo attributes
-    * @return future either FacebookPhoto or FacebookError
-    */
-  @deprecated("use `AccessToken` instead of String", "0.2.9")
-  def photoResult(photoId: PhotoId, accessTokenValue: String, fields: Seq[PhotoAttribute]): FutureResult[Photo] =
-    photoResult(photoId, fields)(accessToken(accessTokenValue))
-
-  /**
-    * @param photoId Id of facebook photo
-    * @param accessTokenValue String representation of user access token
-    * @return future either FacebookPhoto or FacebookError
-    */
-  @deprecated("use `AccessToken` instead of String", "0.2.9")
-  def photoResult(photoId: PhotoId, accessTokenValue: String): FutureResult[Photo] =
-    photoResult(photoId, accessTokenValue, defaultPhotoAttributeValues)
 }
