@@ -73,7 +73,6 @@ libraryDependencies ++= {
   val logbackClassicV = "1.2.3"
   val uriBuilderV = "0.9.0"
   val circeV = "0.9.3"
-  val commonsLang = "3.7"
 
   val testDependencies = Seq(
     "org.scalatest"  %% "scalatest"       % scalaTestV,
@@ -88,8 +87,7 @@ libraryDependencies ++= {
     "org.f100ded.scala-url-builder"  %% "scala-url-builder"   % uriBuilderV,
     "io.circe"                       %% "circe-core"          % circeV,
     "io.circe"                       %% "circe-generic"       % circeV,
-    "com.typesafe"                   %  "config"              % typesafeV,
-    "org.apache.commons"             %  "commons-lang3"       % commonsLang
+    "com.typesafe"                   %  "config"              % typesafeV
   )
 
   dependencies ++ testDependencies

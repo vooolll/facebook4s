@@ -20,7 +20,7 @@ script:
   - sbt clean coverage test coverageReport
   - sbt clean tut
   - cd examples/api_examples/ && sbt "+ runMain example.ExampleApiApp"
-  - sbt "+ runMain example.TokenApp"
+  - sbt "+ runMain example.TokenApp" && cd ../../
 
 
 after_success:
