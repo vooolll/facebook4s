@@ -16,7 +16,7 @@ trait FacebookCommentApi extends FacebookInternals {
     * @return Facebook comment
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
-  def comment(commentId: CommentId, attributes: Seq[CommentAttribute])(implicit accessToken: AccessToken): Future[Comment] =
+  def comment(commentId: CommentId, attributes: Set[_ <: CommentAttribute])(implicit accessToken: AccessToken): Future[Comment] =
     sendRequestOrFail(commentUri(commentId, accessToken, attributes))(decodeComment)
 
   /**
@@ -33,7 +33,7 @@ trait FacebookCommentApi extends FacebookInternals {
     * @param accessToken User access token value
     * @return Either facebook comment or error FacebookError
     */
-  def commentResult(commentId: CommentId, attributes: Seq[CommentAttribute])(implicit accessToken: AccessToken): FutureResult[Comment] =
+  def commentResult(commentId: CommentId, attributes: Set[_ <: CommentAttribute])(implicit accessToken: AccessToken): FutureResult[Comment] =
     sendRequest(commentUri(commentId, accessToken, attributes))(decodeComment)
 
   /**

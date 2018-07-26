@@ -25,7 +25,7 @@ class FacebookUrlsSpec extends WordSpec with Matchers {
     }
 
     "return post uri" in {
-      TestUrls.postUri(FacebookPostId("postId"), userAccessToken, Nil).toString() shouldBe "https://graph.facebook.com" +
+      TestUrls.postUri(FacebookPostId("postId"), userAccessToken, Set.empty).toString() shouldBe "https://graph.facebook.com" +
         s"/v$v/postId?access_token=token"
     }
 
@@ -35,11 +35,11 @@ class FacebookUrlsSpec extends WordSpec with Matchers {
         userAccessToken,
         FacebookUserId("me"),
         FacebookPostAttributes.defaultPostAttributeValues).toString() shouldBe "https://graph.facebook.com" +
-        s"/v$v/me/feed?access_token=token&fields=id%2Cmessage%2Ccreated_time%2Cobject_id%2Cpicture%2Cfrom%2Cname%2Cattachments"
+        s"/v$v/me/feed?access_token=token&fields=${FacebookPostAttributes.defaultPostAttributeValues.map(_.value).mkString("%2C")}"
     }
 
     "return auth uri" in {
-      TestUrls.buildAuthUrl(Seq.empty).toString() shouldBe s"https://facebook.com/v$v/dialog/oauth" +
+      TestUrls.buildAuthUrl(Set.empty).toString() shouldBe s"https://facebook.com/v$v/dialog/oauth" +
         s"?client_id=${clientId.show}" +
         s"&redirect_uri=http%3A%2F%2Flocalhost%3A9000%2Fredirect" +
         s"&response_type=code"
@@ -47,7 +47,7 @@ class FacebookUrlsSpec extends WordSpec with Matchers {
 
     "return auth uri with state, response_type and permissions" in {
       TestUrls.buildAuthUrl(
-        permissions  = Seq(Posts),
+        permissions  = Set(Posts),
         responseType = FacebookToken,
         state        = "asd".some).toString() shouldBe s"https://facebook.com/v$v/dialog/oauth" +
         s"?client_id=${clientId.show}" +
@@ -71,14 +71,14 @@ class FacebookUrlsSpec extends WordSpec with Matchers {
       TestUrls.commentsUri(FacebookPostId("postId"), userAccessToken,
         FacebookCommentsAttributes.defaultCommentsAttributeValues).toString() shouldBe "https://graph.facebook.com" +
         s"/v$v/postId/comments?access_token=token&summary=false" +
-        "&fields=id%2Cmessage%2Ccreated_time%2Cattachment%2Cfrom%2Cobject"
+        s"&fields=${FacebookCommentsAttributes.defaultCommentsAttributeValues.map(_.value).mkString("%2C")}"
     }
 
     "return comment uri with summary" in {
       TestUrls.commentsUri(FacebookPostId("postId"), userAccessToken,
         FacebookCommentsAttributes.defaultCommentsAttributeValues, summary = true).toString() shouldBe "https://graph." +
         s"facebook.com/v$v/postId/comments?access_token=token&summary=true" +
-        "&fields=id%2Cmessage%2Ccreated_time%2Cattachment%2Cfrom%2Cobject"
+        s"&fields=${FacebookCommentsAttributes.defaultCommentsAttributeValues.map(_.value).mkString("%2C")}"
     }
 
     "return albums uri" in {
@@ -87,7 +87,7 @@ class FacebookUrlsSpec extends WordSpec with Matchers {
     }
 
     "return taggable_friends uri" in {
-      TestUrls.friendsUri(userAccessToken, FacebookUserId("123"), Nil).toString() shouldBe "https://graph." +
+      TestUrls.friendsUri(userAccessToken, FacebookUserId("123"), Set.empty).toString() shouldBe "https://graph." +
         s"facebook.com/v$v/123/friends?access_token=token"
     }
 

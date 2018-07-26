@@ -13,10 +13,10 @@ trait FacebookPhotoApi extends FacebookInternals {
   /**
     * @param photoId Id of facebook photo
     * @param accessToken User access token
-    * @param fields Sequence of facebook photo attributes
+    * @param fields Set of facebook photo attributes
     * @return future FacebookPhoto
     */
-  def photo(photoId: PhotoId, fields: Seq[PhotoAttribute])(implicit accessToken: AccessToken): Future[Photo] =
+  def photo(photoId: PhotoId, fields: Set[_ <: PhotoAttribute])(implicit accessToken: AccessToken): Future[Photo] =
     sendRequestOrFail(photoUri(photoId, accessToken, fields))
 
   /**
@@ -30,10 +30,10 @@ trait FacebookPhotoApi extends FacebookInternals {
   /**
     * @param photoId Id of facebook photo
     * @param accessToken User access token
-    * @param fields Sequence of facebook photo attributes
+    * @param fields Set of facebook photo attributes
     * @return future either FacebookPhoto or FacebookError
     */
-  def photoResult(photoId: PhotoId, fields: Seq[PhotoAttribute])(implicit accessToken: AccessToken): FutureResult[Photo] =
+  def photoResult(photoId: PhotoId, fields: Set[_ <: PhotoAttribute])(implicit accessToken: AccessToken): FutureResult[Photo] =
     sendRequest(photoUri(photoId, accessToken, fields))
 
   /**

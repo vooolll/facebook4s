@@ -5,8 +5,8 @@ import com.github.vooolll.domain.permission.FacebookPermissions.FacebookPermissi
 import com.github.vooolll.domain.permission.FacebookPermissions.UserDataPermissions.Posts
 
 class AuthUriSpec extends FacebookClientStubSupport {
-  val emptyPermissions = Seq.empty[FacebookPermission]
-  val permissions = Seq(Posts)
+  val emptyPermissions = Set.empty
+  val permissions = Set(Posts)
   "Facebook Graph Api" should {
     "obtain client code by long lived token" in { c =>
       c.buildAuthUrl(emptyPermissions).toString() shouldBe TestUrls.buildAuthUrl(emptyPermissions).toString()

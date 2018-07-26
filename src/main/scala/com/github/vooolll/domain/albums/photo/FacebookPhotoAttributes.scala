@@ -4,7 +4,7 @@ import com.github.vooolll.domain.FacebookAttribute
 
 object FacebookPhotoAttributes {
 
-  val defaultPhotoAttributeValues = Seq(Id, CreatedTime, Images, Album)
+  val defaultPhotoAttributeValues = Set(Id, CreatedTime, Images, Album)
 
   trait FacebookPhotoAttribute extends FacebookAttribute
 

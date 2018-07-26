@@ -11,7 +11,7 @@ import com.github.vooolll.domain.oauth._
 ```tut:book
 val facebookClient = FacebookClient()
 
-val urlWithCodeAsQueryParam = facebookClient.authUrl(Seq(UserDataPermissions.Posts))
+val urlWithCodeAsQueryParam = facebookClient.authUrl(Set(UserDataPermissions.Posts))
 
-val urlWithTokenAsQueryParam = facebookClient.authUrl(Seq(UserDataPermissions.Posts), FacebookToken)
+val urlWithTokenAsQueryParam = facebookClient.authUrl(Set(UserDataPermissions.Posts), FacebookToken)
 ```

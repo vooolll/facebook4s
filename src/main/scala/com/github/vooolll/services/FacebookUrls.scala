@@ -63,45 +63,45 @@ trait FacebookUrls extends LazyLogging {
   def friendsUri(
     accessToken: FacebookAccessToken,
     userId     : FacebookUserId,
-    attributes : Seq[FacebookUserAttribute]) = edge(friendsEdge, userUri(accessToken, userId, attributes))
+    attributes : Set[_ <: FacebookUserAttribute]) = edge(friendsEdge, userUri(accessToken, userId, attributes))
 
   def userFeedUri(
     accessToken : FacebookAccessToken,
     userId      : FacebookUserId,
-    attributes  : Seq[FacebookPostAttribute]) =
+    attributes  : Set[_ <: FacebookPostAttribute]) =
     manyParams(withAccessToken(accessToken).withPathSegments(userId.show).withPathSegments(feedUri), attributes)
 
   def applicationUri(accessToken: FacebookAccessToken, applicationId: FacebookApplicationId) =
     withAccessToken(accessToken).withPathSegments(applicationId.show)
 
-  def postUri(postId: FacebookPostId, accessToken: FacebookAccessToken, attributes: Seq[FacebookPostAttribute]) = {
+  def postUri(postId: FacebookPostId, accessToken: FacebookAccessToken, attributes: Set[_ <: FacebookPostAttribute]) = {
     logger.debug("sending request : " + manyParams(graphHostBuilder.withPathSegments(postId.show), attributes))
     manyParams(withAccessToken(accessToken).withPathSegments(postId.show), attributes)
   }
 
-  def photoUri(photoId: FacebookPhotoId, accessToken: FacebookAccessToken, attributes: Seq[FacebookPhotoAttribute]) =
+  def photoUri(photoId: FacebookPhotoId, accessToken: FacebookAccessToken, attributes: Set[_ <: FacebookPhotoAttribute]) =
     manyParams(withAccessToken(accessToken).withPathSegments(photoId.show), attributes)
 
   def likesUri(postId: FacebookPostId, accessToken: FacebookAccessToken, summary: Boolean = false) =
-    withSummary(edge(likeUri, postUri(postId, accessToken, Nil)), summary)
+    withSummary(edge(likeUri, postUri(postId, accessToken, Set.empty)), summary)
 
   def commentsUri(
     postId      : FacebookPostId,
     accessToken : FacebookAccessToken,
-    attributes  : Seq[FacebookCommentsAttribute],
+    attributes  : Set[_ <: FacebookCommentsAttribute],
     summary     : Boolean = false) =
-    manyParams(withSummary(edge(commentsEdge, postUri(postId, accessToken, Nil)), summary), attributes)
+    manyParams(withSummary(edge(commentsEdge, postUri(postId, accessToken, Set.empty)), summary), attributes)
 
   def commentUri(
     commentId   : FacebookCommentId,
     accessToken : FacebookAccessToken,
-    attributes  : Seq[FacebookCommentAttribute]) =
+    attributes  : Set[_ <: FacebookCommentAttribute]) =
     manyParams(withAccessToken(accessToken).withPathSegments(commentId.value), attributes)
 
   def albumsUri(profileId: FacebookProfileId, accessToken: FacebookAccessToken) =
     edge(albumsEdge, profileUri(accessToken, profileId))
 
-  def buildAuthUrl(permissions: Seq[FacebookPermission],
+  def buildAuthUrl(permissions: Set[_ <: FacebookPermission],
                    responseType: FacebookAttribute = FacebookCode,
                    state: Option[String] = None) = {
     val params = Seq(
@@ -118,12 +118,12 @@ trait FacebookUrls extends LazyLogging {
 
   def userUri(accessToken : FacebookAccessToken,
               userId      : FacebookUserId = FacebookUserId("me"),
-              attributes  : Seq[FacebookUserAttribute]) = {
+              attributes  : Set[_ <: FacebookUserAttribute]) = {
     val url = manyParams(withAccessToken(accessToken).withPathSegments(userId.show), attributes)
     url
   }
 
-  private[this] def manyParams(url: URLBuilder, attr: Seq[FacebookAttribute]) =
+  private[this] def manyParams(url: URLBuilder, attr: Set[_ <: FacebookAttribute]) =
     url.withQueryParameters(Seq() ++ many("fields", attr):_*)
 
   private[this] def edge(edge: String, uriBuilder: URLBuilder) =
@@ -135,9 +135,9 @@ trait FacebookUrls extends LazyLogging {
   private[this] def redirect() =
     redirectUri getOrElse(throw new RuntimeException("redirect uri is not set"))
 
-  private[this] def many(key: String, attr: Seq[FacebookAttribute]) =
+  private[this] def many(key: String, attr: Set[_ <: FacebookAttribute]) =
     if (attr.nonEmpty) key -> commaSeparated(attr) some else none
 
-  private[this] def commaSeparated(permissions: Seq[FacebookAttribute]) = permissions.map(_.show).mkString(",")
+  private[this] def commaSeparated(permissions: Set[_ <: FacebookAttribute]) = permissions.map(_.value).mkString(",")
 
 }

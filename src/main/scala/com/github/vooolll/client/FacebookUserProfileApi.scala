@@ -13,11 +13,11 @@ trait FacebookUserProfileApi extends FacebookInternals {
   /**
     * @param userId Facebook user id
     * @param accessToken Facebook user access token
-    * @param attributes Sequence of FacebookUserAttribute
+    * @param attributes Set of FacebookUserAttribute
     * @return Facebook user profile
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
-  def userProfile(userId: UserId, attributes: Seq[UserAttributes])(implicit accessToken: AccessToken): Future[User] =
+  def userProfile(userId: UserId, attributes: Set[_ <: UserAttributes])(implicit accessToken: AccessToken): Future[User] =
     sendRequestOrFail(userUri(accessToken, userId, attributes))
 
 
@@ -33,10 +33,10 @@ trait FacebookUserProfileApi extends FacebookInternals {
   /**
     * @param userId FacebookUserId
     * @param accessToken Facebook user access token
-    * @param attributes Sequence of FacebookUserAttribute
+    * @param attributes Set of FacebookUserAttribute
     * @return Facebook user profile or error FacebookError
     */
-  def userProfileResult(userId: UserId, attributes: Seq[UserAttributes])(implicit accessToken: AccessToken): FutureResult[User] =
+  def userProfileResult(userId: UserId, attributes: Set[_ <: UserAttributes])(implicit accessToken: AccessToken): FutureResult[User] =
     sendRequest(userUri(accessToken, userId, attributes))
 
   /**

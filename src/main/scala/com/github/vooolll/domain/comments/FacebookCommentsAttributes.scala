@@ -4,7 +4,7 @@ import com.github.vooolll.domain.FacebookAttribute
 
 object FacebookCommentsAttributes {
 
-  val defaultCommentsAttributeValues = Seq(Id, Message, CreatedTime, Attachment, From, Object)
+  val defaultCommentsAttributeValues = Set(Id, Message, CreatedTime, Attachment, From, Object)
 
   trait FacebookCommentsAttribute extends FacebookAttribute
 

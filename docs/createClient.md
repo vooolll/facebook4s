@@ -10,12 +10,12 @@ import com.github.vooolll.domain.oauth._
 
 ```scala
 val facebookClient = FacebookClient(FacebookClientId("your client id"), FacebookAppSecret("your app secret"))
-// facebookClient: com.github.vooolll.client.FacebookClient = com.github.vooolll.client.FacebookClient@37af6911
+// facebookClient: com.github.vooolll.client.FacebookClient = com.github.vooolll.client.FacebookClient@4ee6cf9e
 
 //or
 
 val facebookClient = FacebookClient("your client id", "your app secret")
-// facebookClient: com.github.vooolll.client.FacebookClient = com.github.vooolll.client.FacebookClient@34afdb84
+// facebookClient: com.github.vooolll.client.FacebookClient = com.github.vooolll.client.FacebookClient@7c94b99d
 ```
 
 Or using typesafe config or environment variables:
@@ -26,7 +26,7 @@ import com.github.vooolll.client.FacebookClient
 
 ```scala
 val facebookClient = FacebookClient()
-// facebookClient: com.github.vooolll.client.FacebookClient = com.github.vooolll.client.FacebookClient@1678d68c
+// facebookClient: com.github.vooolll.client.FacebookClient = com.github.vooolll.client.FacebookClient@1bb8de48
 ```
 In example above `FacebookClient` will use configured parameters, see [Configuration](#configuration) section.
 

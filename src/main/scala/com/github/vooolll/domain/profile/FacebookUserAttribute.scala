@@ -3,7 +3,7 @@ package com.github.vooolll.domain.profile
 import com.github.vooolll.domain.FacebookAttribute
 
 object FacebookUserAttribute {
-  val defaultAttributeValues = Seq(Email, Name, Id, Picture, FirstName, LastName, Link, AgeRange, Gender,
+  val defaultAttributeValues = Set(Email, Name, Id, Picture, FirstName, LastName, Link, AgeRange, Gender,
     Hometown, Location)
 
   case object Email extends FacebookUserAttribute {

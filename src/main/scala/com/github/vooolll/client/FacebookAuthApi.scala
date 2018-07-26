@@ -77,7 +77,7 @@ trait FacebookAuthApi extends FacebookInternals {
     * @return url that can be used by user of your app log in facebook
     */
   def authUrl(
-    permissions  : Seq[Permissions],
+    permissions  : Set[_ <: Permissions],
     responseType : ResponseType = FacebookCode,
     state        : Option[String] = None): String = buildAuthUrl(permissions, responseType, state).toString()
 

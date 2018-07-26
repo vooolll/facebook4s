@@ -12,7 +12,7 @@ object FacebookPermissions {
   }
 
   object UserDataPermissions {
-    val values = Seq(Email, AgeRange, BirthDay, Fiends, Hometown, Gender, Likes, Location, Photos, Videos,
+    val values = Set(Email, AgeRange, BirthDay, Fiends, Hometown, Gender, Likes, Location, Photos, Videos,
       Status, TaggedPlaces, Posts)
 
 
@@ -70,7 +70,7 @@ object FacebookPermissions {
   }
 
   object EventsGroupsPages {
-    val values = Seq(ManagePages, PagesShowList, PublishPages)
+    val values = Set(ManagePages, PagesShowList, PublishPages)
 
     final case object ManagePages extends FacebookPermission {
       override val value = "manage_pages"

@@ -13,11 +13,11 @@ trait FacebookPostApi extends FacebookInternals {
   /**
     * @param postId Id of facebook post alpha numeric
     * @param accessToken Facebook access token
-    * @param fields Sequence of facebook post attributes
+    * @param fields Set of facebook post attributes
     * @return Facebook post details
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
-  def post(postId: PostId, fields: Seq[PostAttribute])(implicit accessToken: AccessToken): Future[Post] =
+  def post(postId: PostId, fields: Set[_ <: PostAttribute])(implicit accessToken: AccessToken): Future[Post] =
     sendRequestOrFail(postUri(postId, accessToken, fields))
 
   /**
@@ -32,10 +32,10 @@ trait FacebookPostApi extends FacebookInternals {
   /**
     * @param postId Id of facebook post alpha numeric
     * @param accessToken Facebook access token
-    * @param fields Sequence of facebook post attributes
+    * @param fields Set of facebook post attributes
     * @return Either facebook post details or error FacebookError
     */
-  def postResult(postId: PostId, fields: Seq[PostAttribute])(implicit accessToken: AccessToken): FutureResult[Post] =
+  def postResult(postId: PostId, fields: Set[_ <: PostAttribute])(implicit accessToken: AccessToken): FutureResult[Post] =
     sendRequest(postUri(postId, accessToken, fields))
 
   /**
