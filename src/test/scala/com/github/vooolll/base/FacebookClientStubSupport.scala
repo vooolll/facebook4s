@@ -1,6 +1,7 @@
 package com.github.vooolll.base
 
 import akka.actor.ActorSystem
+import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpResponse, StatusCodes}
 import akka.stream.ActorMaterializer
 import com.github.vooolll.client.FacebookClient
@@ -39,25 +40,31 @@ trait ClientProbe extends FacebookInternals with MockitoSugar {
   def mockSendWithResource(resourcePath: String) = {
     when(mockAsyncRequestService.apply(anyObject[URLBuilder])(
       anyObject[AppResources])).thenReturn(
-      Future.successful(
-        HttpResponse(
-          entity = HttpEntity(
-            contentType = ContentTypes.`application/json`,
-            string      = readFile(resourcePath))
+        (
+          Http(),
+          Future.successful(
+            HttpResponse(
+              entity = HttpEntity(
+                contentType = ContentTypes.`application/json`,
+                string      = readFile(resourcePath))
+            )
+          )
         )
-      )
     )
   }
 
   def mockSendError(resourcePath: String) = {
     when(mockAsyncRequestService.apply(anyObject[URLBuilder])(
       anyObject[AppResources])).thenReturn(
-      Future.successful(
-        HttpResponse(
-          status = StatusCodes.BadRequest,
-          entity = HttpEntity(
-            contentType = ContentTypes.`application/json`,
-            string      = readFile(resourcePath))
+      (
+        Http(),
+        Future.successful(
+          HttpResponse(
+            status = StatusCodes.BadRequest,
+            entity = HttpEntity(
+              contentType = ContentTypes.`application/json`,
+              string      = readFile(resourcePath))
+          )
         )
       )
     )

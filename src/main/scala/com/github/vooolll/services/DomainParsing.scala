@@ -16,20 +16,23 @@ class DomainParsing(asyncRequest: AsyncRequest) extends FailFastCirceSupport wit
   def asDomain[A, B <: FacebookError](url: URLBuilder)
     (implicit entityDecoder: Decoders[A, B], appResources: AppResources): Future[A] = {
     import appResources.executionContext
-    shutdownActorSystem(responseAsDomainResult(url) map valueOrException)
+    responseAsDomainResult(url) map valueOrException
   }
 
   def asDomainResult[A, B <: FacebookError](url: URLBuilder)
     (implicit entityDecoder: Decoders[A, B], appResources: AppResources): Future[Either[B, A]] = {
-    shutdownActorSystem(responseAsDomainResult(url))
+    responseAsDomainResult(url)
   }
 
   private[this] def responseAsDomainResult[A, B <: FacebookError](url: URLBuilder)
     (implicit entityDecoder: Decoders[A, B], appResources: AppResources): Future[Either[B, A]] = {
     import appResources._
+    val (httpResouce, httpRequest) = asyncRequest(url)
     for {
-      httpResponse <- asyncRequest(url)
+      httpResponse <- httpRequest
       domain       <- parseResult(responseEntityResult(httpResponse))
+      _            <- httpResouce.shutdownAllConnectionPools()
+      _            <- actorSystem.terminate()
     } yield domain
   }
 
@@ -69,12 +72,7 @@ class DomainParsing(asyncRequest: AsyncRequest) extends FailFastCirceSupport wit
       case Left(httpEntity)  => parse[B](httpEntity) map(b => b.asLeft)
     }
   }
-
-  private[this] def shutdownActorSystem[A](f: Future[A])(implicit appResources: AppResources) = {
-    import appResources._
-    f.onComplete(_ => actorSystem.terminate())
-    f
-  }
+  
 }
 
 object DomainParsing {

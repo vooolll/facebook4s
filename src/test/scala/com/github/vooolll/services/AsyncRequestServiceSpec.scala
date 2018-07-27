@@ -13,6 +13,7 @@ class AsyncRequestServiceSpec extends AsyncSpec {
   implicit val ec: ExecutionContext = executionContext
 
   "Should send request" taggedAs Tag("slow") in {
-    asyncRequest(TestUrls.appTokenUri).map(_.status shouldBe StatusCodes.OK)
+    val (_, request) = asyncRequest(TestUrls.appTokenUri)
+    request.map(_.status shouldBe StatusCodes.OK)
   }
 }
