@@ -22,9 +22,9 @@ class UserSpec extends FacebookClientSupport {
     picture = Some(FacebookUserPicture(50.0, isSilhouette = false, new URL("https://platform-lookaside.fbsbx.com/platform/profilepic/"), 50.0)),
     firstName = Some("Bob"),
     lastName = Some("Willins"),
-    link = Some(new URL("https://www.facebook.com")),
-    gender = Gender.Female.some,
-    ageRange = AgeRange(21,None).some,
+    link = None,
+    gender = None,
+    ageRange = None,
     hometown = Some(FacebookTown("115486911798138", "Almaty, Kazakhstan")),
     location = Some(FacebookTown("115353315143936", "Rome, Italy")))
 
