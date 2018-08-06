@@ -1,6 +1,8 @@
 package com.github.vooolll.services
 
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpResponse, StatusCodes}
+import akka.http.scaladsl.HttpExt
+import akka.stream.ActorMaterializer
 import akka.http.scaladsl.unmarshalling.Unmarshal
 import cats.implicits._
 import com.typesafe.scalalogging.LazyLogging
@@ -10,30 +12,48 @@ import io.circe.Decoder
 import org.f100ded.scalaurlbuilder.URLBuilder
 
 import scala.concurrent.Future
+import scala.util._
+
 
 class DomainParsing(asyncRequest: AsyncRequest) extends FailFastCirceSupport with LazyLogging {
 
   def asDomain[A, B <: FacebookError](url: URLBuilder)
     (implicit entityDecoder: Decoders[A, B], appResources: AppResources): Future[A] = {
     import appResources.executionContext
-    responseAsDomainResult(url) map valueOrException
+    cleanUpGlobalResources(responseAsDomainResult(url) map valueOrException)
   }
 
   def asDomainResult[A, B <: FacebookError](url: URLBuilder)
     (implicit entityDecoder: Decoders[A, B], appResources: AppResources): Future[Either[B, A]] = {
-    responseAsDomainResult(url)
+    cleanUpGlobalResources(responseAsDomainResult(url))
   }
 
   private[this] def responseAsDomainResult[A, B <: FacebookError](url: URLBuilder)
     (implicit entityDecoder: Decoders[A, B], appResources: AppResources): Future[Either[B, A]] = {
     import appResources._
-    val (httpResouce, httpRequest) = asyncRequest(url)
+    val (httpResource, httpRequest) = asyncRequest(url)
     for {
       httpResponse <- httpRequest
       domain       <- parseResult(responseEntityResult(httpResponse))
-      _            <- httpResouce.shutdownAllConnectionPools()
-      _            <- actorSystem.terminate()
+      _            = cleanUpHttpResources(httpResource)
     } yield domain
+  }
+
+  private[this] def cleanUpHttpResources(httpResource: HttpExt)(implicit appResources: AppResources): Unit = {
+    import appResources._
+    httpResource.shutdownAllConnectionPools() onComplete {
+      case Success(unit) => logger.debug(s"all actor system connections in shut down")
+      case Failure(e) => logger.debug(s"failure can not shutdown all connections ${e}")
+    }
+  }
+
+  private[this] def cleanUpGlobalResources[A](f: Future[A])(implicit appResources: AppResources) = {
+    import appResources._
+
+    for {
+      result <- f
+      _ <- actorSystem.terminate()
+    } yield result
   }
 
   private[this] def valueOrException[A, B <: FacebookError](result: Either[B, A]): A = result match {
@@ -72,7 +92,7 @@ class DomainParsing(asyncRequest: AsyncRequest) extends FailFastCirceSupport wit
       case Left(httpEntity)  => parse[B](httpEntity) map(b => b.asLeft)
     }
   }
-  
+
 }
 
 object DomainParsing {
