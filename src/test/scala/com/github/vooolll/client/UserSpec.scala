@@ -3,11 +3,14 @@ package com.github.vooolll.client
 import java.net.URL
 
 import com.github.vooolll.base._
+import com.github.vooolll.domain.profile._
 import feed._
 import cats.implicits._
 import com.github.vooolll.domain.oauth.FacebookError
 import com.github.vooolll.domain.profile.FacebookUserAttribute.defaultAttributeValues
 import com.github.vooolll.domain.profile._
+
+import java.net.URL
 
 class UserSpec extends FacebookClientSupport {
 
@@ -22,9 +25,9 @@ class UserSpec extends FacebookClientSupport {
     picture = Some(FacebookUserPicture(50.0, isSilhouette = false, new URL("https://platform-lookaside.fbsbx.com/platform/profilepic/"), 50.0)),
     firstName = Some("Bob"),
     lastName = Some("Willins"),
-    link = None,
-    gender = None,
-    ageRange = None,
+    link = Some(new URL("https://www.facebook.com")),
+    gender = Some(Gender.Female),
+    ageRange = Some(AgeRange(21,None)),
     hometown = Some(FacebookTown("115486911798138", "Almaty, Kazakhstan")),
     location = Some(FacebookTown("115353315143936", "Rome, Italy")))
 
