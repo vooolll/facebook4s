@@ -72,7 +72,6 @@ class DomainParsing(asyncRequest: AsyncRequest) extends FailFastCirceSupport wit
       case Left(httpEntity)  => parse[B](httpEntity) map(b => b.asLeft)
     }
   }
-  
 }
 
 object DomainParsing {

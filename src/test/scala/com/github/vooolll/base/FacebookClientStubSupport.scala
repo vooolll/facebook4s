@@ -34,8 +34,6 @@ trait ClientProbe extends FacebookInternals with MockitoSugar {
   val mockAsyncRequestService = mock[AsyncRequest]
 
   implicit lazy val system = ActorSystem()
-  implicit lazy val mat = ActorMaterializer()
-  implicit lazy val ec = system.dispatcher
 
   def mockSendWithResource(resourcePath: String) = {
     when(mockAsyncRequestService.apply(anyObject[URLBuilder])(

@@ -1,18 +1,12 @@
 package com.github.vooolll.services
 
 import akka.http.scaladsl.model.StatusCodes
-import com.github.vooolll.base.{AsyncSpec, TestUrls}
-import org.scalatest.Tag
+import com.github.vooolll.base.{AsyncResourceSpec, TestUrls}
 
-import scala.concurrent.ExecutionContext
-
-class AsyncRequestServiceSpec extends AsyncSpec {
-  implicit val appResources: FacebookAppResources = FacebookAppResources()
+class AsyncRequestServiceSpec extends AsyncResourceSpec {
   val asyncRequest = AsyncRequest()
 
-  implicit val ec: ExecutionContext = executionContext
-
-  "Should send request" taggedAs Tag("slow") in {
+  "Should send request" in {
     val (_, request) = asyncRequest(TestUrls.appTokenUri)
     request.map(_.status shouldBe StatusCodes.OK)
   }
