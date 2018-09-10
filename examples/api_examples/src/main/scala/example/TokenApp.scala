@@ -5,9 +5,8 @@ import com.github.vooolll.domain.oauth.{FacebookCode, FacebookToken}
 import com.github.vooolll.domain.permission.FacebookPermissions.UserDataPermissions.Posts
 
 import com.typesafe.config._
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.util.{Failure, Success}
 
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util._
 
 

@@ -4,14 +4,15 @@ import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpResponse, StatusCodes}
 import akka.stream.ActorMaterializer
-import com.github.vooolll.client.FacebookClient
-import com.github.vooolll.config.FacebookConfig.{appSecret, clientId}
 import org.f100ded.scalaurlbuilder.URLBuilder
 import org.mockito.Matchers.anyObject
 import org.mockito.Mockito._
 import org.scalatest._
 import org.scalatest.mockito.MockitoSugar
-import com.github.vooolll.services.{AppResources, AsyncRequest, DomainParsing, FacebookInternals}
+
+import com.github.vooolll.services._
+import com.github.vooolll.client.FacebookClient
+import com.github.vooolll.config.FacebookConfig.{appSecret, clientId}
 
 import scala.concurrent.Future
 import scala.io.Source

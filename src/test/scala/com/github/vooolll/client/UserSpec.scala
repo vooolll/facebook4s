@@ -3,14 +3,11 @@ package com.github.vooolll.client
 import java.net.URL
 
 import com.github.vooolll.base._
-import com.github.vooolll.domain.profile._
-import feed._
+import com.github.vooolll.client.feed._
 import cats.implicits._
+import com.github.vooolll.domain.profile._
 import com.github.vooolll.domain.oauth.FacebookError
 import com.github.vooolll.domain.profile.FacebookUserAttribute.defaultAttributeValues
-import com.github.vooolll.domain.profile._
-
-import java.net.URL
 
 class UserSpec extends FacebookClientSupport {
 
