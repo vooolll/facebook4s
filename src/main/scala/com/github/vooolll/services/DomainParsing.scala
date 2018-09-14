@@ -27,11 +27,11 @@ class DomainParsing(asyncRequest: AsyncRequest) extends FailFastCirceSupport wit
   private[this] def responseAsDomainResult[A, B <: FacebookError](url: URLBuilder)
     (implicit entityDecoder: Decoders[A, B], appResources: AppResources): Future[Either[B, A]] = {
     import appResources._
-    val (httpResource, httpRequest) = asyncRequest(url)
+    val responseContext = asyncRequest(url)
     for {
-      httpResponse <- httpRequest
+      httpResponse <- responseContext.response
       domain       <- parseResult(responseEntityResult(httpResponse))
-      _            <- httpResource.shutdownAllConnectionPools()
+      _            <- responseContext.cleanResources()
       _            <- actorSystem.terminate()
     } yield domain
   }

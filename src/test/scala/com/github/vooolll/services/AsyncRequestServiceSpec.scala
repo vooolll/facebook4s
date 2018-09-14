@@ -7,14 +7,15 @@ class AsyncRequestServiceSpec extends AsyncResourceSpec {
   val asyncRequest = AsyncRequest()
 
   "Should send GET request" in {
-    val (http, request) = asyncRequest(TestUrls.appTokenUri)
-    http.shutdownAllConnectionPools()
-    request.map(_.status shouldBe StatusCodes.OK)
+    val responseContext = asyncRequest(TestUrls.appTokenUri)
+    responseContext.cleanResources()
+    responseContext.response.map(_.status shouldBe StatusCodes.OK)
   }
 
   "Should send POST request" in {
-    val (http, request) = asyncRequest.post(TestUrls.appTokenUri, Map("test" -> "value"))
-    http.shutdownAllConnectionPools()
-    request.map(_.status shouldBe StatusCodes.OK)
+    val responseContext = asyncRequest.post(TestUrls.appTokenUri, Map("test" -> "value"))
+    responseContext.cleanResources()
+    responseContext.response.map(_.status shouldBe StatusCodes.OK)
   }
+
 }

@@ -3,16 +3,15 @@ package com.github.vooolll.base
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpResponse, StatusCodes}
-import akka.stream.ActorMaterializer
+import com.github.vooolll.client.FacebookClient
+import com.github.vooolll.config.FacebookConfig.{appSecret, clientId}
+import com.github.vooolll.services.AsyncRequest.AsyncResponseContext
+import com.github.vooolll.services._
 import org.f100ded.scalaurlbuilder.URLBuilder
 import org.mockito.Matchers.anyObject
 import org.mockito.Mockito._
 import org.scalatest._
 import org.scalatest.mockito.MockitoSugar
-
-import com.github.vooolll.services._
-import com.github.vooolll.client.FacebookClient
-import com.github.vooolll.config.FacebookConfig.{appSecret, clientId}
 
 import scala.concurrent.Future
 import scala.io.Source
@@ -39,24 +38,22 @@ trait ClientProbe extends FacebookInternals with MockitoSugar {
   def mockSendWithResource(resourcePath: String) = {
     when(mockAsyncRequestService.apply(anyObject[URLBuilder])(
       anyObject[AppResources])).thenReturn(
-        (
-          Http(),
-          Future.successful(
-            HttpResponse(
-              entity = HttpEntity(
-                contentType = ContentTypes.`application/json`,
-                string      = readFile(resourcePath))
-            )
+      new AsyncResponseContext(
+        Future.successful(
+          HttpResponse(
+            entity = HttpEntity(
+              contentType = ContentTypes.`application/json`,
+              string      = readFile(resourcePath))
           )
         )
+      )(Http())
     )
   }
 
   def mockSendError(resourcePath: String) = {
     when(mockAsyncRequestService.apply(anyObject[URLBuilder])(
       anyObject[AppResources])).thenReturn(
-      (
-        Http(),
+      new AsyncResponseContext(
         Future.successful(
           HttpResponse(
             status = StatusCodes.BadRequest,
@@ -65,7 +62,7 @@ trait ClientProbe extends FacebookInternals with MockitoSugar {
               string      = readFile(resourcePath))
           )
         )
-      )
+      )(Http())
     )
   }
 

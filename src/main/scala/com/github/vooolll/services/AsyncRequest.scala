@@ -2,7 +2,7 @@ package com.github.vooolll.services
 
 import akka.http.scaladsl.{Http, HttpExt}
 import akka.http.scaladsl.model._
-import com.github.vooolll.services.AsyncRequest.UntypedData
+import com.github.vooolll.services.AsyncRequest.{AsyncResponseContext, UntypedData}
 import org.f100ded.scalaurlbuilder.URLBuilder
 
 import scala.concurrent.Future
@@ -12,16 +12,16 @@ import scala.concurrent.Future
   */
 class AsyncRequest() {
 
-  def apply(url: URLBuilder)(implicit appResources: AppResources): (HttpExt, Future[HttpResponse]) = {
+  def apply(url: URLBuilder)(implicit appResources: AppResources): AsyncResponseContext = {
     import appResources._
-    val http = Http()
+    implicit val httpExtension = Http()
 
-    (http, http.singleRequest(HttpRequest(uri = url.toString())))
+    new AsyncResponseContext(httpExtension.singleRequest(HttpRequest(uri = url.toString())))
   }
 
-  def post(url: URLBuilder, data: UntypedData)(implicit appResources: AppResources):(HttpExt, Future[HttpResponse]) = {
+  def post(url: URLBuilder, data: UntypedData)(implicit appResources: AppResources): AsyncResponseContext = {
     import appResources._
-    val http = Http()
+    implicit val http = Http()
 
     val response = http.singleRequest(
       HttpRequest(
@@ -31,7 +31,7 @@ class AsyncRequest() {
       )
     )
 
-    (http, response)
+    new AsyncResponseContext(response)
   }
 
 }
@@ -39,6 +39,12 @@ class AsyncRequest() {
 object AsyncRequest {
 
   type UntypedData = Map[String, String]
+
+  class AsyncResponseContext(val response: Future[HttpResponse])(implicit val httpExtension: HttpExt) {
+    def cleanResources() = {
+      httpExtension.shutdownAllConnectionPools()
+    }
+  }
 
   def apply(): AsyncRequest = new AsyncRequest()
 }
