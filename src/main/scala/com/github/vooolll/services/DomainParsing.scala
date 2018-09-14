@@ -6,6 +6,8 @@ import cats.implicits._
 import com.typesafe.scalalogging.LazyLogging
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport
 import com.github.vooolll.domain.oauth.FacebookError
+import com.github.vooolll.services.AsyncRequest.{AsyncResponseContext, UntypedData}
+import com.github.vooolll.services.DomainParsing.{GetRequestContext, PostRequestContext, RequestContext}
 import io.circe.Decoder
 import org.f100ded.scalaurlbuilder.URLBuilder
 
@@ -13,21 +15,31 @@ import scala.concurrent.Future
 
 class DomainParsing(asyncRequest: AsyncRequest) extends FailFastCirceSupport with LazyLogging {
 
-  def asDomain[A, B <: FacebookError](url: URLBuilder)
-    (implicit entityDecoder: Decoders[A, B], appResources: AppResources): Future[A] = {
+  def asDomain[A, B <: FacebookError]
+  (url: URLBuilder, requestContext: RequestContext = GetRequestContext)
+  (implicit entityDecoder: Decoders[A, B], appResources: AppResources): Future[A] = {
     import appResources.executionContext
-    responseAsDomainResult(url) map valueOrException
+    domainByUrl(url, requestContext) map valueOrException
   }
 
-  def asDomainResult[A, B <: FacebookError](url: URLBuilder)
-    (implicit entityDecoder: Decoders[A, B], appResources: AppResources): Future[Either[B, A]] = {
-    responseAsDomainResult(url)
+  def asDomainResult[A, B <: FacebookError]
+  (url: URLBuilder, requestContext: RequestContext = GetRequestContext)
+  (implicit entityDecoder: Decoders[A, B], appResources: AppResources): Future[Either[B, A]] = {
+    domainByUrl(url, requestContext)
   }
 
-  private[this] def responseAsDomainResult[A, B <: FacebookError](url: URLBuilder)
+  private def domainByUrl[A, B <: FacebookError]
+  (url: URLBuilder, requestContext: RequestContext = GetRequestContext)
+  (implicit entityDecoder: Decoders[A, B], appResources: AppResources): Future[Either[B, A]] = {
+    requestContext match {
+      case GetRequestContext           => responseAsDomainResult(asyncRequest(url))
+      case context: PostRequestContext => responseAsDomainResult(asyncRequest.post(url, context.params))
+    }
+  }
+
+  private[this] def responseAsDomainResult[A, B <: FacebookError](responseContext: AsyncResponseContext)
     (implicit entityDecoder: Decoders[A, B], appResources: AppResources): Future[Either[B, A]] = {
     import appResources._
-    val responseContext = asyncRequest(url)
     for {
       httpResponse <- responseContext.response
       domain       <- parseResult(responseEntityResult(httpResponse))
@@ -77,6 +89,11 @@ class DomainParsing(asyncRequest: AsyncRequest) extends FailFastCirceSupport wit
 object DomainParsing {
   def apply(asyncRequest: AsyncRequest): DomainParsing = new DomainParsing(asyncRequest)
   def apply(): DomainParsing = new DomainParsing(AsyncRequest())
+
+  trait RequestContext
+
+  case object GetRequestContext extends RequestContext
+  case class PostRequestContext(params: UntypedData) extends RequestContext
 }
 
 case class Decoders[A, B <: FacebookError](implicit val success: Decoder[A], failure: Decoder[B])
