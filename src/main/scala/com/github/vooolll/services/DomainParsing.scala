@@ -28,7 +28,7 @@ class DomainParsing(asyncRequest: AsyncRequest) extends FailFastCirceSupport wit
     domainByUrl(url)
   }
 
-  private def domainByUrl[A](url: URLBuilder)
+  private[this] def domainByUrl[A](url: URLBuilder)
   (implicit domainContext: DomainParsingContext[A]): Future[Either[FacebookError, A]] = {
     import domainContext._
     requestContext match {
