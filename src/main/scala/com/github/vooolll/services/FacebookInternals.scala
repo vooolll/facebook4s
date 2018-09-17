@@ -18,5 +18,5 @@ abstract class FacebookInternals extends FacebookUrls {
   def sendRequestOrFail[A](uri: URLBuilder)(implicit reads: Decoder[A]): Future[A] =
     asDomain(uri)(decoders(reads), FacebookAppResources())
 
-  private[this] def decoders[A](reads: Decoder[A]) = Decoders()(reads, decodeError)
+  private[this] def decoders[A](reads: Decoder[A]): Decoders[A, FacebookError] = new Decoders(reads, decodeError)
 }

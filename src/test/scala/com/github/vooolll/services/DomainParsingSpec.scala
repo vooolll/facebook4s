@@ -10,7 +10,7 @@ class DomainParsingSpec extends AsyncResourceSpec {
     "terminate actor system after parsing" in {
 
       val domainEntity = domainService.asDomainResult(TestUrls.appTokenUri)(
-        Decoders()(decodeAppAccessToken, decodeError), appResources)
+        new Decoders(decodeAppAccessToken, decodeError), appResources)
       domainEntity flatMap { _ =>
         appResources.actorSystem.whenTerminated.map(_ => succeed)
       }
