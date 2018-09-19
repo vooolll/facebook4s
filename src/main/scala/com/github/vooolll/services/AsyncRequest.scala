@@ -21,9 +21,9 @@ class AsyncRequest() {
 
   def post(url: URLBuilder, data: UntypedData)(implicit appResources: AppResources): AsyncResponseContext = {
     import appResources._
-    implicit val http = Http()
+    implicit val httpExtension = Http()
 
-    val response = http.singleRequest(
+    val response = httpExtension.singleRequest(
       HttpRequest(
         uri    = url.toString(),
         method = HttpMethods.POST,
