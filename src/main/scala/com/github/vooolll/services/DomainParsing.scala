@@ -100,8 +100,8 @@ object DomainParsing {
     implicit val appResources: AppResources)
 
   object DomainParsingContext {
-    def apply[A]()(implicit entityDecoder: Decoder[A], appResources: AppResources): DomainParsingContext[A] = {
-      new DomainParsingContext(GetRequestContext)
+    def apply[A](entityDecoder: Decoder[A]): DomainParsingContext[A] = {
+      new DomainParsingContext(GetRequestContext)(entityDecoder, FacebookAppResources())
     }
   }
 }

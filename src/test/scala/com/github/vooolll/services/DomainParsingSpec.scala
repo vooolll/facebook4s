@@ -9,9 +9,10 @@ class DomainParsingSpec extends AsyncResourceSpec {
   val domainService = DomainParsing()
   "DomainParseService" should {
     "terminate actor system after parsing" in {
-      val domainEntity = domainService.asDomainResult(TestUrls.appTokenUri)(DomainParsingContext()(decodeAppAccessToken, appResources))
+      val domainParsingContext = DomainParsingContext(decodeAppAccessToken)
+      val domainEntity = domainService.asDomainResult(TestUrls.appTokenUri)(domainParsingContext)
       domainEntity flatMap { _ =>
-        appResources.actorSystem.whenTerminated.map(_ => succeed)
+        domainParsingContext.appResources.actorSystem.whenTerminated.map(_ => succeed)
       }
     }
   }

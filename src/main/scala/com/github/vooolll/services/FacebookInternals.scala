@@ -14,9 +14,9 @@ abstract class FacebookInternals extends FacebookUrls {
   import domainParing._
 
   def sendRequest[A](uri: URLBuilder)(implicit decoder: Decoder[A]): Future[Either[FacebookError, A]] =
-    asDomainResult(uri)(DomainParsingContext()(decoder, FacebookAppResources()))
+    asDomainResult(uri)(DomainParsingContext(decoder))
 
   def sendRequestOrFail[A](uri: URLBuilder)(implicit decoder: Decoder[A]): Future[A] =
-    asDomain(uri)(DomainParsingContext()(decoder, FacebookAppResources()))
+    asDomain(uri)(DomainParsingContext(decoder))
 
 }
