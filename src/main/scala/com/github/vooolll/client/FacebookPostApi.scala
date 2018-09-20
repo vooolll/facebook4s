@@ -46,4 +46,7 @@ trait FacebookPostApi extends FacebookInternals {
   def postResult(postId: PostId)(implicit accessToken: AccessToken): FutureResult[Post] =
     postResult(postId, defaultPostAttributeValues)
 
+
+  def createPost(post: Post)(implicit accessToken: AccessToken): FutureResult[PostId] = ???
+
 }
