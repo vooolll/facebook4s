@@ -103,5 +103,9 @@ object DomainParsing {
     def apply[A](entityDecoder: Decoder[A], context: RequestContext): DomainParsingContext[A] = {
       new DomainParsingContext(context)(entityDecoder, FacebookAppResources())
     }
+
+    def apply[A](entityDecoder: Decoder[A]): DomainParsingContext[A] = {
+      new DomainParsingContext(GetRequestContext)(entityDecoder, FacebookAppResources())
+    }
   }
 }
