@@ -1,6 +1,7 @@
 package com.github.vooolll.client
 
 import com.github.vooolll.config.FacebookConfig._
+import com.github.vooolll.domain.FacebookPageId
 import com.github.vooolll.domain.albums.FacebookAlbums
 import com.github.vooolll.domain.albums.photo.FacebookPhotoAttributes.FacebookPhotoAttribute
 import com.github.vooolll.domain.albums.photo.{FacebookPhoto, FacebookPhotoId}
@@ -11,7 +12,7 @@ import com.github.vooolll.domain.likes.FacebookLikes
 import com.github.vooolll.domain.oauth._
 import com.github.vooolll.domain.permission.FacebookPermissions._
 import com.github.vooolll.domain.posts.FacebookPostAttributes.FacebookPostAttribute
-import com.github.vooolll.domain.posts.{FacebookPost, FacebookPostId}
+import com.github.vooolll.domain.posts.{FacebookCreatePost, FacebookPost, FacebookPostId}
 import com.github.vooolll.domain.profile._
 
 import scala.concurrent._
@@ -70,6 +71,7 @@ object FacebookClient {
   type PostId = FacebookPostId
   type PhotoId = FacebookPhotoId
   type ProfileId = FacebookProfileId
+  type PageId = FacebookPageId
   type CommentId = FacebookCommentId
 
   type AccessToken = FacebookAccessToken
@@ -88,6 +90,8 @@ object FacebookClient {
   type Photo = FacebookPhoto
   type Albums = FacebookAlbums
   type Friends = FacebookFriends
+
+  type CreatePost = FacebookCreatePost
 
   type FutureResult[T] = Future[Either[ApiError, T]]
 

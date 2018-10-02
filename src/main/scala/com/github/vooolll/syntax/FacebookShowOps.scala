@@ -2,7 +2,7 @@ package com.github.vooolll.syntax
 
 import cats.Show
 import com.github.vooolll.domain.albums.photo.FacebookPhotoId
-import com.github.vooolll.domain.{FacebookAttribute, FacebookVersion}
+import com.github.vooolll.domain.{FacebookAttribute, FacebookPageId, FacebookVersion}
 import com.github.vooolll.domain.oauth._
 import com.github.vooolll.domain.permission.FacebookPermissions.FacebookPermission
 import com.github.vooolll.domain.posts.FacebookPostId
@@ -24,4 +24,5 @@ object FacebookShowOps {
   implicit val showHasStringValue = Show.show[FacebookAttribute](_.value)
   implicit val showFacebookPostId = Show.show[FacebookPostId](_.value)
   implicit val showFacebookPhotoId = Show.show[FacebookPhotoId](_.value)
+  implicit val showFacebookPageId = Show.show[FacebookPageId](_.value)
 }

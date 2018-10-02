@@ -2,10 +2,12 @@ package com.github.vooolll.domain.profile
 
 import java.net.URL
 
+import com.github.vooolll.domain.FacebookPageId
+
 /**
   * @param value Facebook user id
   */
-final case class FacebookUserId(value: String)
+final case class FacebookUserId(value: String) extends FacebookPageId
 
 /**
   * @param id user numeric string
@@ -21,17 +23,17 @@ final case class FacebookUserId(value: String)
   * @param location current town
   */
 case class FacebookUser(
-  id          : FacebookUserId,
-  email       : Option[String],
-  name        : Option[String],
-  picture     : Option[FacebookUserPicture],
-  firstName   : Option[String],
-  lastName    : Option[String],
-  link        : Option[URL],
-  gender      : Option[Gender],
-  ageRange    : Option[AgeRange],
-  hometown    : Option[FacebookTown],
-  location    : Option[FacebookTown]) extends FacebookProfile
+  id        : FacebookUserId,
+  email     : Option[String],
+  name      : Option[String],
+  picture   : Option[FacebookUserPicture],
+  firstName : Option[String],
+  lastName  : Option[String],
+  link      : Option[URL],
+  gender    : Option[Gender],
+  ageRange  : Option[AgeRange],
+  hometown  : Option[FacebookTown],
+  location  : Option[FacebookTown]) extends FacebookProfile
 
 /**
   * @param height image height
@@ -59,7 +61,7 @@ case class Cover(
 
 /**
   * @param id town id
-  * @param town name like New York, USA
+  * @param name name like New York, USA
   */
 case class FacebookTown(
   id: String,

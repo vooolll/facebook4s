@@ -4,7 +4,7 @@ import cats.implicits._
 import com.github.vooolll.config.FacebookConfig.{redirectUri, version}
 import com.github.vooolll.config.FacebookConstants
 import com.github.vooolll.config.FacebookConstants._
-import com.github.vooolll.domain.FacebookAttribute
+import com.github.vooolll.domain.{FacebookAttribute, FacebookPageId}
 import com.github.vooolll.domain.albums.photo.FacebookPhotoAttributes.FacebookPhotoAttribute
 import com.github.vooolll.domain.albums.photo.FacebookPhotoId
 import com.github.vooolll.domain.comments._
@@ -16,7 +16,6 @@ import com.github.vooolll.domain.posts.FacebookPostId
 import com.github.vooolll.domain.profile.{FacebookProfileId, FacebookUserAttribute, FacebookUserId}
 import org.f100ded.scalaurlbuilder.URLBuilder
 import com.github.vooolll.syntax.FacebookShowOps._
-
 import com.typesafe.scalalogging.LazyLogging
 
 trait FacebookUrls extends LazyLogging {
@@ -70,6 +69,11 @@ trait FacebookUrls extends LazyLogging {
     userId      : FacebookUserId,
     attributes  : Set[_ <: FacebookPostAttribute]) =
     manyParams(withAccessToken(accessToken).withPathSegments(userId.show).withPathSegments(feedUri), attributes)
+
+  def pageUri(
+    pageId      : FacebookPageId,
+    accessToken : FacebookAccessToken) =
+    withAccessToken(accessToken).withPathSegments(pageId.show).withPathSegments(feedUri)
 
   def applicationUri(accessToken: FacebookAccessToken, applicationId: FacebookApplicationId) =
     withAccessToken(accessToken).withPathSegments(applicationId.show)
