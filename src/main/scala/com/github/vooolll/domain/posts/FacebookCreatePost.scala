@@ -8,15 +8,15 @@ import io.circe.Json
 
 case class FacebookCreatePost(
   message      : String,
-  link         : Option[URL],
-  name         : Option[String],
-  description  : Option[String],
-  caption      : Option[String],
-  picture      : Option[URL],
-  published    : Option[Boolean],
-  callToAction : Option[Json],
   accessToken  : FacebookAccessToken,
-  thumbnail    : Option[URL]) {
+  link         : Option[URL] = None,
+  name         : Option[String] = None,
+  description  : Option[String] = None,
+  caption      : Option[String] = None,
+  picture      : Option[URL] = None,
+  published    : Option[Boolean] = None,
+  callToAction : Option[Json] = None,
+  thumbnail    : Option[URL] = None) {
 
   def toMap = {
     val mandatoryPart = Map(
