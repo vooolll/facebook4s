@@ -41,7 +41,7 @@ object ExampleApiApp extends App {
   println("Application: " + application2)
   println("------------------")
 
-  val createdPostId = Await.result(facebookClient.createPostResult(FacebookCreatePost("hello facebook", token), userId), 3.seconds)
+  val createdPostId = Await.result(facebookClient.createPostResult(FacebookCreatePost("hello facebook"), userId), 3.seconds)
   println("Created post: " + createdPostId)
   println("------------------")
 

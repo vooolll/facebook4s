@@ -55,7 +55,7 @@ trait FacebookPostApi extends FacebookInternals {
     * @return Either Page id of newly created post or FacebookError
     */
   def createPostResult(createPost: CreatePost, pageId: PageId)(implicit accessToken: AccessToken): FutureResult[PostId] =
-    sendRequest(pageUri(pageId, accessToken), PostRequestContext(createPost.toMap))(decodePostId)
+    sendRequest(pageUri(pageId, accessToken), PostRequestContext(createPost.toMap()))(decodePostId)
 
   /**
     * @param createPost New post information
@@ -65,6 +65,6 @@ trait FacebookPostApi extends FacebookInternals {
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
   def createPost(createPost: CreatePost, pageId: PageId)(implicit accessToken: AccessToken): Future[PostId] =
-    sendRequestOrFail(pageUri(pageId, accessToken), PostRequestContext(createPost.toMap))(decodePostId)
+    sendRequestOrFail(pageUri(pageId, accessToken), PostRequestContext(createPost.toMap()))(decodePostId)
 
 }

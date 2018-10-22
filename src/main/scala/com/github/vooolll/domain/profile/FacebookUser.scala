@@ -2,12 +2,10 @@ package com.github.vooolll.domain.profile
 
 import java.net.URL
 
-import com.github.vooolll.domain.FacebookPageId
-
 /**
   * @param value Facebook user id
   */
-final case class FacebookUserId(value: String) extends AnyVal with FacebookPageId
+final case class FacebookUserId(value: String) extends AnyVal
 
 /**
   * @param id user numeric string

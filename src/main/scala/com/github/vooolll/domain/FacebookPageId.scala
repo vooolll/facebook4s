@@ -1,5 +1,6 @@
 package com.github.vooolll.domain
 
-trait FacebookPageId extends Any {
-  def value: String
-}
+/**
+  * @param value Facebook page id
+  */
+final case class FacebookPageId(value: String) extends AnyVal
