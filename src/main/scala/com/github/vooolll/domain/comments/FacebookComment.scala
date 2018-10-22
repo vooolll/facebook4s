@@ -6,7 +6,7 @@ import com.github.vooolll.domain.media.FacebookAttachment
 import com.github.vooolll.domain.profile.FacebookProfileId
 import com.github.vooolll.domain.{FacebookOrder, FacebookPaging}
 
-final case class FacebookCommentId(value: String)
+final case class FacebookCommentId(value: String) extends AnyVal
 
 final case class FacebookComment(
   id          : FacebookCommentId,

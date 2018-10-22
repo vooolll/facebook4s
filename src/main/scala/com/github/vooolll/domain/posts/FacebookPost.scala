@@ -6,7 +6,7 @@ import java.time.Instant
 import com.github.vooolll.domain.media.FacebookAttachment
 import com.github.vooolll.domain.profile.FacebookProfileId
 
-final case class FacebookPostId(value: String)
+final case class FacebookPostId(value: String) extends AnyVal
 
 final case class FacebookPost(
   id          : FacebookPostId,

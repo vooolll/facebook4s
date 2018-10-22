@@ -1,7 +1,7 @@
 package com.github.vooolll.domain.oauth
 
-trait FacebookApplicationId {
-  val value: String
+trait FacebookApplicationId extends Any {
+  def value: String
 }
 
 /**

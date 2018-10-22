@@ -42,8 +42,8 @@ class AppAccessTokenSpec extends AsyncSpec with FacebookClientFixture {
 
 trait FacebookClientFixture {
   val facebookWrongClientSecret = FacebookClient(
-    clientId = FacebookClientId("1969406143275709"),
-    appSecret = FacebookAppSecret("41725f9990f489d5f1b1533a77a17263"))
+    FacebookClientId("1969406143275709"),
+    FacebookAppSecret("41725f9990f489d5f1b1533a77a17263"))
 
   val facebookWrongClientIdAndSecret = FacebookClient(
     clientId = FacebookClientId("1234567143275712"),

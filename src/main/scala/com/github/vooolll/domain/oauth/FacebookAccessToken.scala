@@ -5,19 +5,19 @@ import scala.concurrent.duration._
 /**
   * Base trait for token type
   */
-sealed trait FacebookTokenType
+sealed trait FacebookTokenType extends Any
 
 /**
   * Token value
   * @param value string value that represents token
   */
-final case class TokenValue(value: String)
+final case class TokenValue(value: String) extends AnyVal
 
 /**
   * Application access token - https://developers.facebook.com/docs/facebook-login/access-tokens/#apptokens
   * @param oauthTokenType A token_type from oauth(https://tools.ietf.org/html/rfc6749) often has value "bearer"
   */
-final case class AppAccessToken(oauthTokenType: String) extends FacebookTokenType
+final case class AppAccessToken(oauthTokenType: String) extends AnyVal with FacebookTokenType
 
 /**
   * User access token -

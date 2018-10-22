@@ -7,7 +7,7 @@ import com.github.vooolll.domain.FacebookPageId
 /**
   * @param value Facebook user id
   */
-final case class FacebookUserId(value: String) extends FacebookPageId
+final case class FacebookUserId(value: String) extends AnyVal with FacebookPageId
 
 /**
   * @param id user numeric string

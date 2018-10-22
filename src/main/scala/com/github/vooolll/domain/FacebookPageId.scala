@@ -1,5 +1,5 @@
 package com.github.vooolll.domain
 
-trait FacebookPageId {
-  val value: String
+trait FacebookPageId extends Any {
+  def value: String
 }
