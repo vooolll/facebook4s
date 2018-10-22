@@ -7,7 +7,7 @@ crossScalaVersions := Seq("2.12.1", "2.11.1")
 resolvers += Resolver.sonatypeRepo("snapshots")
 
 libraryDependencies ++= {
-  val facebook4sVersion = "0.3.2"
+  val facebook4sVersion = "0.3.2-SNAPSHOT"
   val typesafeV = "1.3.1"
 
   Seq(

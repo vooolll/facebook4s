@@ -10,7 +10,7 @@ import com.github.vooolll.domain.oauth._
 
 ```scala
 val facebookClient = FacebookClient()
-// facebookClient: com.github.vooolll.client.FacebookClient = com.github.vooolll.client.FacebookClient@537762d7
+// facebookClient: com.github.vooolll.client.FacebookClient = com.github.vooolll.client.FacebookClient@326451bf
 
 val urlWithCodeAsQueryParam = facebookClient.authUrl(Set(UserDataPermissions.Posts))
 // urlWithCodeAsQueryParam: String = https://facebook.com/v3.0/dialog/oauth?client_id=1970529913214515&redirect_uri=http%3A%2F%2Flocalhost%3A9000%2Fredirect&response_type=code&scope=user_posts

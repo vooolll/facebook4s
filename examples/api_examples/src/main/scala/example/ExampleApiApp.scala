@@ -4,6 +4,7 @@ import com.github.vooolll.client.FacebookClient
 import com.github.vooolll.config.{FacebookConfig, FacebookConstants}
 import com.github.vooolll.domain.feed._
 import com.github.vooolll.domain.oauth._
+import com.github.vooolll.domain._
 import com.github.vooolll.domain.permission.FacebookPermissions.UserDataPermissions.Posts
 import com.github.vooolll.domain.posts.{FacebookCreatePost, FacebookPostId}
 import com.github.vooolll.domain.profile.FacebookUserId
@@ -41,12 +42,9 @@ object ExampleApiApp extends App {
   println("Application: " + application2)
   println("------------------")
 
-  val createdPostId = Await.result(facebookClient.createPostResult(FacebookCreatePost("hello facebook"), userId), 3.seconds)
+  val createdPostId = Await.result(facebookClient.createPostResult(
+    FacebookCreatePost("hello facebook"), FacebookPageId("117656352360395")), 3.seconds)
   println("Created post: " + createdPostId)
-  println("------------------")
-
-  val createdPost = Await.result(facebookClient.post(createdPostId), 3.seconds)
-  println("Created post: " + createdPost)
   println("------------------")
 
   val userResult = Await.result(facebookClient.userProfileResult(userId), 3.seconds)
