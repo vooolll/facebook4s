@@ -2,8 +2,6 @@ name := "facebook4s"
 
 version := "0.3.3-SNAPSHOT"
 
-scalaVersion := "2.12.6"
-
 crossScalaVersions := Seq("2.12.6", "2.11.12")
 
 resolvers += Resolver.sonatypeRepo("snapshots")
@@ -36,7 +34,7 @@ apiMappings ++= {
 
 
   Map(
-    findJar("scala-library") -> url("http://scala-lang.org/api/" + "2.12.1" + "/"),
+    findJar("scala-library") -> url("http://scala-lang.org/api/" + "2.12.6" + "/"),
     findJar("config") -> url("https://typesafehub.github.io/config/latest/api/")
   )
 }

@@ -31,7 +31,6 @@ scala:
 jdk:
   - oraclejdk8
 
-# whitelist
 branches:
   only:
     - master
