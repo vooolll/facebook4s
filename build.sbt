@@ -1,6 +1,6 @@
 name := "facebook4s"
 
-version := "0.3.3-SNAPSHOT"
+version := "0.3.2"
 
 crossScalaVersions := Seq("2.12.6", "2.11.12")
 
