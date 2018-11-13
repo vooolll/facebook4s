@@ -29,11 +29,7 @@ trait FacebookClientStubSupport extends fixture.AsyncWordSpec with Matchers {
 
 trait ClientProbe extends FacebookInternals with MockitoSugar {
   import ClientProbe._
-  val facebookServices = mock[FacebookInternals]
-
   val mockAsyncRequestService = mock[AsyncRequest]
-
-  implicit lazy val system = ActorSystem()
 
   def mockSendWithResource(resourcePath: String) = {
     when(mockAsyncRequestService.apply(anyObject[URLBuilder])(
