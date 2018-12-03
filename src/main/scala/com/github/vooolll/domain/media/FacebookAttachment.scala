@@ -26,4 +26,4 @@ final case class FacebookAttachment(
 
 final case class FacebookImageSource(height: Double, src: URL, width: Double)
 final case class FacebookAttachmentId(value: String) extends AnyVal
-final case class FacebookAttachmentTarget(id: FacebookAttachmentId, url: Option[URL])
+final case class FacebookAttachmentTarget(id: Option[FacebookAttachmentId], url: Option[URL])

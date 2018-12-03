@@ -39,7 +39,7 @@ class FeedCompatSpec extends CompatibilitySpec {
               "https://scontent.xx.fbcdn.net/v/t1.0-9/q82/s720x720/25396081_117607225698641_6348338142026249400_n.jpg"
             ), width = 720)),
             target = FacebookAttachmentTarget(
-              id = FacebookAttachmentId("100023480929454"),
+              id = None,
               url = Some(new URL("https://www.facebook.com/bob.willins.98"))
             ),
             title = Some("Bob Willins"),

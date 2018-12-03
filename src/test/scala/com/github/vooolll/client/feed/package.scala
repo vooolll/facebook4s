@@ -42,7 +42,7 @@ package object feed {
         "https://scontent.xx.fbcdn.net/v/t1.0-9/s720x720/25398995_120118675447496_5830741756468130361_n.jpg"
       ), width = 720)),
       target = FacebookAttachmentTarget(
-        id = FacebookAttachmentId("100023480929454"),
+        id = Some(FacebookAttachmentId("100023480929454")),
         url = Some(new URL("https://www.facebook.com/bob.willins.98"))
       ),
       title = Some("Bob's cover photo"),
@@ -64,7 +64,7 @@ package object feed {
           "https://scontent.xx.fbcdn.net/v/t1.0-9/q82/s720x720/25396081_117607225698641_6348338142026249400_n.jpg"
         ), width = 720)),
         target = FacebookAttachmentTarget(
-          id = FacebookAttachmentId("100023480929454"),
+          id = Some(FacebookAttachmentId("100023480929454")),
           url = Some(new URL("https://www.facebook.com/bob.willins.98"))
         ),
         title = Some("Bob Willins"),
@@ -85,7 +85,7 @@ package object feed {
       FacebookAttachment(
         attachment = None,
         target = FacebookAttachmentTarget(
-          id = FacebookAttachmentId("117427432383287"),
+          id = Some(FacebookAttachmentId("117427432383287")),
           url = Some(new URL("https://www.facebook.com/100023480929454/posts/117427432383287/"))
         ),
         title = Some("Born on December 18, 1992"),

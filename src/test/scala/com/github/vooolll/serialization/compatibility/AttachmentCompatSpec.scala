@@ -22,7 +22,7 @@ class AttachmentCompatSpec extends CompatibilitySpec {
     new URL("https://scontent.xx.fbcdn.net/v/t1.0-9/26169805_135224317270265_2857586441485590537_n.jpg" +
       "?oh=97edfd66290b3e4112a8731e8cd2b5fb&oe=5B0A23AC"), 104)
 
-  val attachmentTarget = FacebookAttachmentTarget(FacebookAttachmentId("135224317270265"),
+  val attachmentTarget = FacebookAttachmentTarget(Some(FacebookAttachmentId("135224317270265")),
     Some(new URL("https://www.facebook.com/photo.php?fbid=135224317270265&set=p.135224317270265&type=3")))
 
   val attachmentTypes = Map(
