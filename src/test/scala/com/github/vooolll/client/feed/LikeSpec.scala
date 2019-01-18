@@ -12,26 +12,26 @@ class LikeSpec extends FacebookClientSupport {
 
   val like = FacebookLike(FacebookUserId("117656352360395"), "Bob Willins".some)
   val likePaging = FacebookPaging("MTE3NjU2MzUyMzYwMzk1".some, "MTE3NjU2MzUyMzYwMzk1".some)
-  val likes = FacebookLikes(List(like), likePaging.some)
+  val likes = FacebookLikes(List(like), paging = None)
   val likesSummary = FacebookLikesSummary(totalCount = 1, canLike = true.some, hasLikes = true.some)
 
   val likesWithSummary = likes.copy(summary = likesSummary.some)
 
   "Facebook Graph Api" should {
     "return likes of post" in { c =>
-      c.likes(postId) map (_ shouldBe likes)
+      c.likes(postId).withoutPaging map (_ shouldBe likes)
     }
 
     "return likes of post result" in { c =>
-      c.likesResult(postId) map (_ shouldBe likes.asRight)
+      c.likesResult(postId).withoutPaging map (_ shouldBe likes.asRight)
     }
 
     "return likes of post with summary" in { c =>
-      c.likes(postId, summary = true) map (_ shouldBe likesWithSummary)
+      c.likes(postId, summary = true).withoutPaging map (_ shouldBe likesWithSummary)
     }
 
     "return likes of post result with summary" in { c =>
-      c.likesResult(postId, summary = true) map (_ shouldBe likesWithSummary.asRight)
+      c.likesResult(postId, summary = true).withoutPaging map (_ shouldBe likesWithSummary.asRight)
     }
   }
 }

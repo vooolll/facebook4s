@@ -7,9 +7,13 @@ import com.github.vooolll.config.FacebookConfig
 import com.github.vooolll.domain.comments.{FacebookComment, FacebookCommentId, FacebookComments}
 import com.github.vooolll.domain.feed.{FacebookFeed, FacebookFeedPaging}
 import com.github.vooolll.domain.friends.FacebookFriends
+import com.github.vooolll.domain.likes.FacebookLikes
 import com.github.vooolll.domain.media._
+import com.github.vooolll.domain.oauth.FacebookError
 import com.github.vooolll.domain.posts.{FacebookPost, FacebookPostId}
 import com.github.vooolll.domain.profile._
+
+import scala.concurrent.{ExecutionContext, Future}
 
 package object feed {
   val postId = FacebookPostId("117656352360395_120118735447490")
@@ -77,7 +81,7 @@ package object feed {
     id = FacebookPostId("117656352360395_117427439049953"),
     name = Some("Born on December 18, 1992"),
     message = None,
-    createdTime = Some(toInstant("2017-12-18T09:38:18+0000")),
+    createdTime = Some(toInstant("1992-12-18T08:00:00+0000")),
     objectId = Some("117427432383287"),
     picture = None,
     from = Some(FacebookProfileId("117656352360395")),
@@ -150,6 +154,17 @@ package object feed {
     def withoutQueryParams = attach.copy(
       attachment = attach.attachment.map(a => a.copy(src = withoutQuery(a.src)))
     )
+  }
+
+  implicit class FacebookLikeFuture(attach: Future[FacebookLikes])(implicit ec: ExecutionContext) {
+    def withoutPaging: Future[FacebookLikes] = attach.map(_.copy(paging = None))
+  }
+
+  implicit class FacebookLikeFutureResult(attach: Future[Either[FacebookError, FacebookLikes]])(implicit ec: ExecutionContext) {
+    def withoutPaging: Future[Either[FacebookError, FacebookLikes]] = attach.map {
+      case Right(likes) => Right(likes.copy(paging = None))
+      case left         => left
+    }
   }
 
   private[this] def withoutPictureQuery(pic: FacebookUserPicture) = pic.copy(url = withoutQuery(pic.url))
