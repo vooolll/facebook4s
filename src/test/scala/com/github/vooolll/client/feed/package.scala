@@ -77,32 +77,11 @@ package object feed {
       )
     ))
 
-  val post3 = FacebookPost(
-    id = FacebookPostId("117656352360395_117427439049953"),
-    name = Some("Born on December 18, 1992"),
-    message = None,
-    createdTime = Some(toInstant("1992-12-18T08:00:00+0000")),
-    objectId = Some("117427432383287"),
-    picture = None,
-    from = Some(FacebookProfileId("117656352360395")),
-    attachments = List(
-      FacebookAttachment(
-        attachment = None,
-        target = FacebookAttachmentTarget(
-          id = Some(FacebookAttachmentId("117427432383287")),
-          url = Some(new URL("https://www.facebook.com/100023480929454/posts/117427432383287/"))
-        ),
-        title = Some("Born on December 18, 1992"),
-        attachmentType = AttachmentTypes.LifeEvent,
-        url = Some(new URL("https://www.facebook.com/100023480929454/posts/117427432383287/"))
-      )
-    ))
-
   val paging = FacebookFeedPaging(
     Some(new URL(s"https://graph.facebook.com/v$v/117656352360395/feed")),
     Some(new URL(s"https://graph.facebook.com/v$v/117656352360395/feed")))
 
-  val feed = FacebookFeed(List(post, post1, post2, post3), paging)
+  val feed = FacebookFeed(List(post, post1, post2), paging)
 
 
   implicit class FacebookPostWithoutQuery(post: FacebookPost) {
