@@ -18,11 +18,12 @@ object AttachmentTypes {
 }
 
 final case class FacebookAttachment(
-  attachment    : Option[FacebookImageSource], // TODO facebook4s-130 Rename to media
-  target        : FacebookAttachmentTarget,
-  url           : Option[URL],
+  attachment: Option[FacebookImageSource], // TODO facebook4s-130 Rename to media
+  target: FacebookAttachmentTarget,
+  url: Option[URL],
   attachmentType: AttachmentType,
-  title         : Option[String])
+  title: Option[String]
+)
 
 final case class FacebookImageSource(height: Double, src: URL, width: Double)
 final case class FacebookAttachmentId(value: String) extends AnyVal

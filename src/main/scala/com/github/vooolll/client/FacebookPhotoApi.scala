@@ -16,7 +16,9 @@ trait FacebookPhotoApi extends FacebookInternals {
     * @param fields Set of facebook photo attributes
     * @return future FacebookPhoto
     */
-  def photo(photoId: PhotoId, fields: Set[_ <: PhotoAttribute])(implicit accessToken: AccessToken): Future[Photo] =
+  def photo(photoId: PhotoId, fields: Set[_ <: PhotoAttribute])(
+    implicit accessToken: AccessToken
+  ): Future[Photo] =
     sendRequestOrFail(photoUri(photoId, accessToken, fields))
 
   /**
@@ -24,7 +26,9 @@ trait FacebookPhotoApi extends FacebookInternals {
     * @param accessToken User access token
     * @return future FacebookPhoto
     */
-  def photo(photoId: PhotoId)(implicit accessToken: AccessToken): Future[Photo] =
+  def photo(
+    photoId: PhotoId
+  )(implicit accessToken: AccessToken): Future[Photo] =
     photo(photoId, defaultPhotoAttributeValues)
 
   /**
@@ -33,7 +37,9 @@ trait FacebookPhotoApi extends FacebookInternals {
     * @param fields Set of facebook photo attributes
     * @return future either FacebookPhoto or FacebookError
     */
-  def photoResult(photoId: PhotoId, fields: Set[_ <: PhotoAttribute])(implicit accessToken: AccessToken): FutureResult[Photo] =
+  def photoResult(photoId: PhotoId, fields: Set[_ <: PhotoAttribute])(
+    implicit accessToken: AccessToken
+  ): FutureResult[Photo] =
     sendRequest(photoUri(photoId, accessToken, fields))
 
   /**
@@ -41,7 +47,9 @@ trait FacebookPhotoApi extends FacebookInternals {
     * @param accessToken User access token
     * @return future either FacebookPhoto or FacebookError
     */
-  def photoResult(photoId: PhotoId)(implicit accessToken: AccessToken): FutureResult[Photo] =
+  def photoResult(
+    photoId: PhotoId
+  )(implicit accessToken: AccessToken): FutureResult[Photo] =
     photoResult(photoId, defaultPhotoAttributeValues)
 
 }

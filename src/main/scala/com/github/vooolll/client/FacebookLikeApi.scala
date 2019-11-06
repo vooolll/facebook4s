@@ -16,7 +16,9 @@ trait FacebookLikeApi extends FacebookInternals {
     * @return Facebook likes
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
-  def likes(postId: PostId, summary: Boolean)(implicit accessToken: AccessToken): Future[Likes] =
+  def likes(postId: PostId, summary: Boolean)(
+    implicit accessToken: AccessToken
+  ): Future[Likes] =
     sendRequestOrFail(likesUri(postId, accessToken, summary))
 
   /**
@@ -34,7 +36,9 @@ trait FacebookLikeApi extends FacebookInternals {
     * @param summary Boolean flag, retrieve summary or not
     * @return Either facebook post likes or error FacebookError
     */
-  def likesResult(postId: PostId, summary: Boolean)(implicit accessToken: AccessToken): FutureResult[Likes] =
+  def likesResult(postId: PostId, summary: Boolean)(
+    implicit accessToken: AccessToken
+  ): FutureResult[Likes] =
     sendRequest(likesUri(postId, accessToken, summary))
 
   /**
@@ -42,7 +46,9 @@ trait FacebookLikeApi extends FacebookInternals {
     * @param accessToken User access token
     * @return Either facebook post likes or error FacebookError
     */
-  def likesResult(postId: PostId)(implicit accessToken: AccessToken): FutureResult[Likes] =
+  def likesResult(
+    postId: PostId
+  )(implicit accessToken: AccessToken): FutureResult[Likes] =
     likesResult(postId, summary = false)
 
 }

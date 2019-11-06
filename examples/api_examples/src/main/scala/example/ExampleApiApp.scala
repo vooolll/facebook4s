@@ -18,11 +18,12 @@ import scala.util._
 object ExampleApiApp extends App {
   val config = ConfigFactory.load
 
-  val tokenStringValue = Properties.envOrNone("FACEBOOK_TEST_USER_ACCESS_TOKEN") getOrElse config.getString("facebook.testUserAccessToken")
+  val tokenStringValue = Properties.envOrNone("FACEBOOK_TEST_USER_ACCESS_TOKEN") getOrElse config
+    .getString("facebook.testUserAccessToken")
   val facebookClient = FacebookClient()
-  val userId = FacebookUserId("117656352360395")
-  val postId = FacebookPostId("117656352360395_117427439049953")
-  val applicationId = FacebookAppId("1970529913214515")
+  val userId         = FacebookUserId("117656352360395")
+  val postId         = FacebookPostId("117656352360395_117427439049953")
+  val applicationId  = FacebookAppId("1970529913214515")
 
   implicit val token = FacebookClient.accessToken(tokenStringValue)
 
@@ -38,16 +39,23 @@ object ExampleApiApp extends App {
   println("Post: " + post)
   println("------------------")
 
-  val application2 = Await.result(facebookClient.application(applicationId), 3.seconds)
+  val application2 =
+    Await.result(facebookClient.application(applicationId), 3.seconds)
   println("Application: " + application2)
   println("------------------")
 
-  val createdPostId = Await.result(facebookClient.createPostResult(
-    FacebookCreatePost("hello facebook"), FacebookPageId("117656352360395")), 3.seconds)
+  val createdPostId = Await.result(
+    facebookClient.createPostResult(
+      FacebookCreatePost("hello facebook"),
+      FacebookPageId("117656352360395")
+    ),
+    3.seconds
+  )
   println("Created post: " + createdPostId)
   println("------------------")
 
-  val userResult = Await.result(facebookClient.userProfileResult(userId), 3.seconds)
+  val userResult =
+    Await.result(facebookClient.userProfileResult(userId), 3.seconds)
   userResult match {
     case Right(user) => println("Success: " + user)
     case Left(error) =>

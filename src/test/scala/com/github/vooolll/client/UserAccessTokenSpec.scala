@@ -21,7 +21,9 @@ class UserAccessTokenSpec extends FacebookClientStubSupport {
     }
 
     "return prolonged user access token" in { c =>
-      c.mockSendWithResource(resourcePath = "testdata/long_lived_access_token.json")
+      c.mockSendWithResource(
+        resourcePath = "testdata/long_lived_access_token.json"
+      )
       c.extendUserAccessToken("short lived token") map { token =>
         token.tokenValue.value shouldBe "long lived token"
         token.tokenType shouldBe UserAccessToken("bearer", 5184000.seconds)

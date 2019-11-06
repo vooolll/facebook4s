@@ -25,7 +25,9 @@ class ConfigurationDetectorSpec extends WordSpec with Matchers with MockitoSugar
 
     "return throw exception if both config sources undefined" in {
       new Scope with NoEnvVariable with NoConfigFromFile {
-        an[RuntimeException] shouldBe thrownBy(envVarOrConfig(variableName, configName))
+        an[RuntimeException] shouldBe thrownBy(
+          envVarOrConfig(variableName, configName)
+        )
       }
     }
 
@@ -40,7 +42,7 @@ class ConfigurationDetectorSpec extends WordSpec with Matchers with MockitoSugar
     val config = mock[Config]
 
     val variableName = "MY-CONFIG"
-    val configName = "my.config"
+    val configName   = "my.config"
   }
 
   trait NoEnvVariable extends ConfigurationDetector {
@@ -56,6 +58,7 @@ class ConfigurationDetectorSpec extends WordSpec with Matchers with MockitoSugar
   }
 
   trait NoConfigFromFile extends ConfigurationDetector {
-    override def configuration(path: String) = throw new ConfigException.Missing(path)
+    override def configuration(path: String) =
+      throw new ConfigException.Missing(path)
   }
 }

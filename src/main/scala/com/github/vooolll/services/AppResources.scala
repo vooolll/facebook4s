@@ -13,7 +13,8 @@ trait AppResources {
 
 class FacebookAppResources extends AppResources {
   override implicit val actorSystem: ActorSystem = ActorSystem()
-  override implicit val executionContext: ExecutionContext = actorSystem.dispatcher
+  override implicit val executionContext: ExecutionContext =
+    actorSystem.dispatcher
   override implicit val materializer: ActorMaterializer = ActorMaterializer()
 }
 

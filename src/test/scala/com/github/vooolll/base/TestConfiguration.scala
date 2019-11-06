@@ -11,12 +11,19 @@ object TestConfiguration extends ConfigurationDetector {
   override def config = ConfigFactory.load
 
   val appAccessToken = FacebookAccessToken(
-    tokenValue = tokenValueOf("FACEBOOK_TEST_APP_ACCESS_TOKEN", "facebook.testAppAccessToken"),
-    tokenType  = AppAccessToken("bearer"))
+    tokenValue = tokenValueOf(
+      "FACEBOOK_TEST_APP_ACCESS_TOKEN",
+      "facebook.testAppAccessToken"
+    ),
+    tokenType = AppAccessToken("bearer")
+  )
 
   implicit val userAccessToken = FacebookAccessToken(
-    tokenValue = tokenValueOf("FACEBOOK_TEST_USER_ACCESS_TOKEN", "facebook.testUserAccessToken"),
-    tokenType  = UserAccessToken("bearer", 60.days)
+    tokenValue = tokenValueOf(
+      "FACEBOOK_TEST_USER_ACCESS_TOKEN",
+      "facebook.testUserAccessToken"
+    ),
+    tokenType = UserAccessToken("bearer", 60.days)
   )
   val userTokenRaw = userAccessToken.tokenValue.value
 

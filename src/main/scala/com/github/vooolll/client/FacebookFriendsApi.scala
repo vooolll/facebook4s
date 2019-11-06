@@ -15,15 +15,31 @@ trait FacebookFriendsApi extends FacebookInternals {
     * @param userId facebook user id
     * @param accessToken facebook access token
     */
-  def friends(userId: UserId)(implicit accessToken: AccessToken): Future[Friends] =
-    sendRequestOrFail(friendsUri(accessToken, userId, FacebookUserAttribute.defaultAttributeValues))
+  def friends(
+    userId: UserId
+  )(implicit accessToken: AccessToken): Future[Friends] =
+    sendRequestOrFail(
+      friendsUri(
+        accessToken,
+        userId,
+        FacebookUserAttribute.defaultAttributeValues
+      )
+    )
 
   /**
     * Returns friends that installed current app for given user id
     * @param userId facebook user id
     * @param accessToken facebook access token
     */
-  def friendsResult(userId: UserId)(implicit accessToken: AccessToken): FutureResult[Friends] =
-    sendRequest(friendsUri(accessToken, userId, FacebookUserAttribute.defaultAttributeValues))
+  def friendsResult(
+    userId: UserId
+  )(implicit accessToken: AccessToken): FutureResult[Friends] =
+    sendRequest(
+      friendsUri(
+        accessToken,
+        userId,
+        FacebookUserAttribute.defaultAttributeValues
+      )
+    )
 
 }

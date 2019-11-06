@@ -6,6 +6,5 @@ import scala.concurrent.ExecutionContext
 
 trait AsyncResourceSpec extends AsyncSpec {
   implicit val appResources: FacebookAppResources = FacebookAppResources()
-  implicit val ec: ExecutionContext = executionContext
+  implicit val ec: ExecutionContext               = executionContext
 }
-

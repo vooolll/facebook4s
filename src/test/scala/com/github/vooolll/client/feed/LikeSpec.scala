@@ -11,9 +11,14 @@ class LikeSpec extends FacebookClientSupport {
   import com.github.vooolll.base.TestConfiguration._
 
   val like = FacebookLike(FacebookUserId("117656352360395"), "Bob Willins".some)
-  val likePaging = FacebookPaging("MTE3NjU2MzUyMzYwMzk1".some, "MTE3NjU2MzUyMzYwMzk1".some)
+  val likePaging =
+    FacebookPaging("MTE3NjU2MzUyMzYwMzk1".some, "MTE3NjU2MzUyMzYwMzk1".some)
   val likes = FacebookLikes(List(like), paging = None)
-  val likesSummary = FacebookLikesSummary(totalCount = 1, canLike = true.some, hasLikes = true.some)
+  val likesSummary = FacebookLikesSummary(
+    totalCount = 1,
+    canLike    = true.some,
+    hasLikes   = true.some
+  )
 
   val likesWithSummary = likes.copy(summary = likesSummary.some)
 

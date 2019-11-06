@@ -4,7 +4,8 @@ import com.github.vooolll.domain.FacebookAttribute
 
 object FacebookCommentAttributes {
 
-  val defaultCommentAttributeValues = Set(Id, Message, CreatedTime, Parent, From, Object)
+  val defaultCommentAttributeValues =
+    Set(Id, Message, CreatedTime, Parent, From, Object)
 
   case object Id extends FacebookCommentAttribute {
     override def value = "id"

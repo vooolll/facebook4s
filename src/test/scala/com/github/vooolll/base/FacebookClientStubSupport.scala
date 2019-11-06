@@ -16,7 +16,6 @@ import org.scalatest.mockito.MockitoSugar
 import scala.concurrent.Future
 import scala.io.Source
 
-
 trait FacebookClientStubSupport extends fixture.AsyncWordSpec with Matchers {
 
   type FixtureParam = ClientProbe with FacebookClient
@@ -34,14 +33,17 @@ trait ClientProbe extends FacebookInternals with MockitoSugar {
   implicit val actorSystem = ActorSystem()
 
   def mockSendWithResource(resourcePath: String) = {
-    when(mockAsyncRequestService.apply(anyObject[URLBuilder])(
-      anyObject[AppResources])).thenReturn(
+    when(
+      mockAsyncRequestService
+        .apply(anyObject[URLBuilder])(anyObject[AppResources])
+    ).thenReturn(
       new AsyncResponseContext(
         Future.successful(
           HttpResponse(
             entity = HttpEntity(
               contentType = ContentTypes.`application/json`,
-              string      = readFile(resourcePath))
+              string      = readFile(resourcePath)
+            )
           )
         )
       )(Http())
@@ -49,15 +51,18 @@ trait ClientProbe extends FacebookInternals with MockitoSugar {
   }
 
   def mockSendError(resourcePath: String) = {
-    when(mockAsyncRequestService.apply(anyObject[URLBuilder])(
-      anyObject[AppResources])).thenReturn(
+    when(
+      mockAsyncRequestService
+        .apply(anyObject[URLBuilder])(anyObject[AppResources])
+    ).thenReturn(
       new AsyncResponseContext(
         Future.successful(
           HttpResponse(
             status = StatusCodes.BadRequest,
             entity = HttpEntity(
               contentType = ContentTypes.`application/json`,
-              string      = readFile(resourcePath))
+              string      = readFile(resourcePath)
+            )
           )
         )
       )(Http())
@@ -70,5 +75,6 @@ trait ClientProbe extends FacebookInternals with MockitoSugar {
 object ClientProbe {
   def apply() = new FacebookClient(clientId, appSecret) with ClientProbe
 
-  def readFile(resourcePath: String) = Source.fromResource(resourcePath).mkString
+  def readFile(resourcePath: String) =
+    Source.fromResource(resourcePath).mkString
 }

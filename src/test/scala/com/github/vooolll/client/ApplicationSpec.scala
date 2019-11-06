@@ -11,23 +11,28 @@ class ApplicationSpec extends FacebookClientSupport {
 
   import com.github.vooolll.base.TestConfiguration._
 
-  val appId = FacebookAppId("1970529913214515")
+  val appId    = FacebookAppId("1970529913214515")
   val clientId = FacebookClientId(appId.value)
-  val application = FacebookApplication(appId, new URL("http://localhost:9000/redirect"), "testing_app")
+  val application = FacebookApplication(
+    appId,
+    new URL("http://localhost:9000/redirect"),
+    "testing_app"
+  )
 
   "Facebook Graph Api" should {
     "get application by id" in { c =>
-      c.application(appId) map(_ shouldBe application)
+      c.application(appId) map (_ shouldBe application)
     }
 
     "get application result by id" in { c =>
-      c.applicationResult(clientId) map(_ shouldBe application.asRight)
+      c.applicationResult(clientId) map (_ shouldBe application.asRight)
     }
 
     "return error InvalidVerificationCodeFormat" in { c =>
       c.applicationResult(clientId.copy("wrong id")) map {
         case Right(_) => fail("bad request expected")
-        case Left(e)  => e.errorType shouldBe FacebookError.SpecifiedObjectNotFound
+        case Left(e) =>
+          e.errorType shouldBe FacebookError.SpecifiedObjectNotFound
       }
     }
   }

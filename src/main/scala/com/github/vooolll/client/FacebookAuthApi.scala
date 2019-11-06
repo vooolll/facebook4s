@@ -13,7 +13,8 @@ trait FacebookAuthApi extends FacebookInternals {
   /**
     * @return future application access token
     */
-  def appAccessToken(): Future[AccessToken] = sendRequestOrFail(appTokenUri)(decodeAppAccessToken)
+  def appAccessToken(): Future[AccessToken] =
+    sendRequestOrFail(appTokenUri)(decodeAppAccessToken)
 
   /**
     * @param code client code
@@ -39,12 +40,15 @@ trait FacebookAuthApi extends FacebookInternals {
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
   def extendUserAccessToken(shortLivedTokenValue: String): Future[AccessToken] =
-    sendRequestOrFail(longLivedTokenUri(shortLivedTokenValue))(decodeUserAccessToken)
+    sendRequestOrFail(longLivedTokenUri(shortLivedTokenValue))(
+      decodeUserAccessToken
+    )
 
   /**
     * @return Either future value of facebook app access token or FacebookError
     */
-  def appAccessTokenResult(): FutureResult[AccessToken] = sendRequest(appTokenUri)(decodeAppAccessToken)
+  def appAccessTokenResult(): FutureResult[AccessToken] =
+    sendRequest(appTokenUri)(decodeAppAccessToken)
 
   /**
     * @param longLivedTokenValue long lived user access token value
@@ -58,14 +62,19 @@ trait FacebookAuthApi extends FacebookInternals {
     * @param machineId optional value that helps to identify specified client
     * @return Either future long lived user access token or FacebookError
     */
-  def userAccessTokenResult(code: String, machineId: Option[String]): FutureResult[AccessToken] =
+  def userAccessTokenResult(
+    code: String,
+    machineId: Option[String]
+  ): FutureResult[AccessToken] =
     sendRequest(userTokenUri(code, machineId))(decodeUserAccessToken)
 
   /**
     * @param shortLivedTokenValue short lived user access token
     * @return Either future long lived user access token or FacebookError
     */
-  def extendUserAccessTokenResult(shortLivedTokenValue: String): FutureResult[AccessToken] =
+  def extendUserAccessTokenResult(
+    shortLivedTokenValue: String
+  ): FutureResult[AccessToken] =
     sendRequest(longLivedTokenUri(shortLivedTokenValue))(decodeUserAccessToken)
 
   /**
@@ -77,8 +86,10 @@ trait FacebookAuthApi extends FacebookInternals {
     * @return url that can be used by user of your app log in facebook
     */
   def authUrl(
-    permissions  : Set[_ <: Permissions],
-    responseType : ResponseType = FacebookCode,
-    state        : Option[String] = None): String = buildAuthUrl(permissions, responseType, state).toString()
+    permissions: Set[_ <: Permissions],
+    responseType: ResponseType = FacebookCode,
+    state: Option[String]      = None
+  ): String =
+    buildAuthUrl(permissions, responseType, state).toString()
 
 }

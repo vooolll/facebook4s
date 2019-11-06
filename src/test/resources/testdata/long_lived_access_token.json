@@ -1,5 +1,5 @@
 {
-  "access_token":"long lived token",
-  "token_type":"bearer",
-  "expires_in":5184000
+  "access_token": "long lived token",
+  "token_type": "bearer",
+  "expires_in": 5184000
 }

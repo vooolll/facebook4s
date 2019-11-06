@@ -7,8 +7,10 @@ class FacebookErrorCompatSpec extends CompatibilitySpec {
 
   val wrongCodePath = "testdata/oauth_error.json"
 
-  val facebookError = FacebookError("Invalid verification code format.",
-    FacebookError.InvalidVerificationCodeFormat)
+  val facebookError = FacebookError(
+    "Invalid verification code format.",
+    FacebookError.InvalidVerificationCodeFormat
+  )
 
   "FacebookError" should {
     s"be compatible with $wrongCodePath" in {

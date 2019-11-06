@@ -2,7 +2,6 @@ package com.github.vooolll.domain.oauth
 
 import com.github.vooolll.domain.oauth.FacebookError.FacebookErrorType
 
-
 object FacebookError {
 
   trait FacebookErrorType {
@@ -72,12 +71,26 @@ object FacebookError {
     val code = 803
   }
 
-  val values = Set(InvalidApiKey, Session, Unknown, ServiceDown, TooManyCalls, UserTooManyCalls, PermissionDenied,
-    AccessTokenHasExpired, ApplicationLimitReached, Blocked, DuplicatePost,
-    ErrorPostingLink, PermissionNotGrantedOrRemoved, InvalidVerificationCodeFormat, SpecifiedObjectNotFound)
+  val values = Set(
+    InvalidApiKey,
+    Session,
+    Unknown,
+    ServiceDown,
+    TooManyCalls,
+    UserTooManyCalls,
+    PermissionDenied,
+    AccessTokenHasExpired,
+    ApplicationLimitReached,
+    Blocked,
+    DuplicatePost,
+    ErrorPostingLink,
+    PermissionNotGrantedOrRemoved,
+    InvalidVerificationCodeFormat,
+    SpecifiedObjectNotFound
+  )
 }
 
 /**
   * @param message Facebook error message
   */
-case class FacebookError(message: String,  errorType: FacebookErrorType)
+case class FacebookError(message: String, errorType: FacebookErrorType)

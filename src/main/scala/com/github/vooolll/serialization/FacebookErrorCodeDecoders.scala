@@ -24,7 +24,7 @@ object FacebookErrorCodeDecoders extends LazyLogging {
     case value if value >= 200 && value <= 299 => PermissionNotGrantedOrRemoved
     case InvalidVerificationCodeFormat.code    => InvalidVerificationCodeFormat
     case SpecifiedObjectNotFound.code          => SpecifiedObjectNotFound
-    case e       =>
+    case e =>
       logger.warn("Unknown code : " + e)
       FacebookError.Facebook4SUnsupportedError
   }

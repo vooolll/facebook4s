@@ -1,6 +1,6 @@
 package com.github.vooolll.client
 
-import com.github.vooolll.client.FacebookClient._
+import com.github.vooolll.client.FacebookClient.{UserId, _}
 import com.github.vooolll.domain.profile.FacebookUserAttribute._
 import com.github.vooolll.services.FacebookInternals
 
@@ -17,9 +17,10 @@ trait FacebookUserProfileApi extends FacebookInternals {
     * @return Facebook user profile
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
-  def userProfile(userId: UserId, attributes: Set[_ <: UserAttributes])(implicit accessToken: AccessToken): Future[User] =
+  def userProfile(userId: UserId, attributes: Set[_ <: UserAttributes])(
+    implicit accessToken: AccessToken
+  ): Future[User] =
     sendRequestOrFail(userUri(accessToken, userId, attributes))
-
 
   /**
     * @param userId Facebook user id
@@ -27,8 +28,18 @@ trait FacebookUserProfileApi extends FacebookInternals {
     * @return Facebook user profile
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
-  def userProfile(userId: UserId)(implicit accessToken: AccessToken): Future[User] =
+  def userProfile(
+    userId: UserId
+  )(implicit accessToken: AccessToken): Future[User] =
     userProfile(userId, defaultAttributeValues)
+
+  /**
+    * @param accessToken Facebook user access token
+    * @return Facebook user profile
+    *         @throws scala.RuntimeException if facebook responds with bad request
+    */
+  def currentUserProfile(implicit accessToken: AccessToken): Future[User] =
+    userProfile(new UserId("me"), defaultAttributeValues)
 
   /**
     * @param userId FacebookUserId
@@ -36,7 +47,9 @@ trait FacebookUserProfileApi extends FacebookInternals {
     * @param attributes Set of FacebookUserAttribute
     * @return Facebook user profile or error FacebookError
     */
-  def userProfileResult(userId: UserId, attributes: Set[_ <: UserAttributes])(implicit accessToken: AccessToken): FutureResult[User] =
+  def userProfileResult(userId: UserId, attributes: Set[_ <: UserAttributes])(
+    implicit accessToken: AccessToken
+  ): FutureResult[User] =
     sendRequest(userUri(accessToken, userId, attributes))
 
   /**
@@ -44,7 +57,9 @@ trait FacebookUserProfileApi extends FacebookInternals {
     * @param accessToken Facebook user access token
     * @return Facebook user profile or error FacebookError
     */
-  def userProfileResult(userId: UserId)(implicit accessToken: AccessToken): FutureResult[User] =
+  def userProfileResult(
+    userId: UserId
+  )(implicit accessToken: AccessToken): FutureResult[User] =
     userProfileResult(userId, defaultAttributeValues)
 
 }

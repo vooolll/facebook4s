@@ -12,9 +12,21 @@ object FacebookPermissions {
   }
 
   object UserDataPermissions {
-    val values = Set(Email, AgeRange, BirthDay, Fiends, Hometown, Gender, Likes, Location, Photos, Videos,
-      Status, TaggedPlaces, Posts)
-
+    val values = Set(
+      Email,
+      AgeRange,
+      BirthDay,
+      Fiends,
+      Hometown,
+      Gender,
+      Likes,
+      Location,
+      Photos,
+      Videos,
+      Status,
+      TaggedPlaces,
+      Posts
+    )
 
     final case object Email extends FacebookPermission {
       override val value = "email"
@@ -86,6 +98,3 @@ object FacebookPermissions {
   }
 
 }
-
-
-

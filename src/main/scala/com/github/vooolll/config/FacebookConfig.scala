@@ -16,10 +16,17 @@ object FacebookConfig extends ConfigurationDetector with LazyLogging {
 
   val config = ConfigFactory.load
 
-  val version = FacebookVersion("3.0")
-  val clientId = FacebookClientId(envVarOrConfig("FACEBOOK_CLIENT_ID", "facebook.clientId"))
-  val redirectUri = envVarOrConfigOptional("FACEBOOK_REDIRECT_URI", "facebook.redirectUri").map(FacebookRedirectUri)
-  val appSecret = FacebookAppSecret(envVarOrConfig("FACEBOOK_APP_SECRET", "facebook.appSecret"))
+  val version = FacebookVersion("5.0")
+  val clientId = FacebookClientId(
+    envVarOrConfig("FACEBOOK_CLIENT_ID", "facebook.clientId")
+  )
+  val redirectUri =
+    envVarOrConfigOptional("FACEBOOK_REDIRECT_URI", "facebook.redirectUri").map(
+      FacebookRedirectUri
+    )
+  val appSecret = FacebookAppSecret(
+    envVarOrConfig("FACEBOOK_APP_SECRET", "facebook.appSecret")
+  )
 
   logger.info(s"Client id - $clientId, redirect uri - $redirectUri")
 }
@@ -42,7 +49,7 @@ trait ConfigurationDetector {
     */
   def envVarOrConfig(envVar: String, configName: String): String = {
     Try(environmentVariable(envVar) getOrElse configuration(configName)) match {
-      case Success(s)        => s
+      case Success(s) => s
       case Failure(e) =>
         val msg = s"[facebook4s] configuration missing: " +
           s"Environment variable $envVar or configuration $configName not found."
@@ -54,12 +61,12 @@ trait ConfigurationDetector {
     Try(environmentVariable(envVar) getOrElse configuration(configName)).toOption
   }
 
-
   /**
     * @param name OS environment variable key
     * @return Optional environment variable value
     */
-  def environmentVariable(name: String): Option[String] = Properties.envOrNone(name)
+  def environmentVariable(name: String): Option[String] =
+    Properties.envOrNone(name)
 
   /**
     * @param path Path at type safe config

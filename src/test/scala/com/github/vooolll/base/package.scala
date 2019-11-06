@@ -11,7 +11,9 @@ import scala.concurrent.duration._
 package object base {
 
   val userAccessToken = FacebookAccessToken(
-    TokenValue("token"), UserAccessToken("bearer", 5107587.seconds))
+    TokenValue("token"),
+    UserAccessToken("bearer", 5107587.seconds)
+  )
 
   val clientCode = FacebookClientCode("test-test-test-test", "machine id".some)
 

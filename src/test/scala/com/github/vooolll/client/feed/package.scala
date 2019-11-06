@@ -16,7 +16,7 @@ import com.github.vooolll.domain.profile._
 import scala.concurrent.{ExecutionContext, Future}
 
 package object feed {
-  val postId = FacebookPostId("117656352360395_120118735447490")
+  val postId    = FacebookPostId("117656352360395_120118735447490")
   val commentId = FacebookCommentId("120118675447496_170608873731809")
 
   val userId = FacebookUserId("117656352360395")
@@ -24,69 +24,94 @@ package object feed {
   val v = FacebookConfig.version.value
 
   val post = FacebookPost(
-    id = FacebookPostId("117656352360395_217907052335324"),
-    name = None,
-    message = Some("hala"),
+    id          = FacebookPostId("117656352360395_217907052335324"),
+    name        = None,
+    message     = Some("hala"),
     createdTime = Some(toInstant("2018-06-06T12:43:52+0000")),
-    objectId = None,
-    picture = None,
-    from = Some(FacebookProfileId("117656352360395")),
-    attachments = Nil)
+    objectId    = None,
+    picture     = None,
+    from        = Some(FacebookProfileId("117656352360395")),
+    attachments = Nil
+  )
 
   val post1 = FacebookPost(
-    id = postId,
-    name = Some("Bob's cover photo"),
-    message = None,
+    id          = postId,
+    name        = Some("Bob's cover photo"),
+    message     = None,
     createdTime = Some(toInstant("2017-12-19T14:08:44+0000")),
-    objectId = Some("120118675447496"),
-    picture = Some(new URL("https://scontent.xx.fbcdn.net/v/t1.0-0/s130x130/25398995_120118675447496_5830741756468130361_n.jpg")),
-    from = Some(FacebookProfileId("117656352360395")),
-    attachments = List(FacebookAttachment(
-      attachment = Some(FacebookImageSource(height = 360, src = new URL(
-        "https://scontent.xx.fbcdn.net/v/t1.0-9/s720x720/25398995_120118675447496_5830741756468130361_n.jpg"
-      ), width = 720)),
-      target = FacebookAttachmentTarget(
-        id = Some(FacebookAttachmentId("100023480929454")),
-        url = Some(new URL("https://www.facebook.com/bob.willins.98"))
-      ),
-      title = Some("Bob's cover photo"),
-      attachmentType = AttachmentTypes.CoverPhoto,
-      url = Some(new URL("https://www.facebook.com/bob.willins.98"))
-    )))
-
-  val post2 = FacebookPost(
-    id = FacebookPostId("117656352360395_117607245698639"),
-    name = Some("Bob Willins"),
-    message = None,
-    createdTime = Some(toInstant("2017-12-18T11:30:10+0000")),
-    objectId = Some("117607225698641"),
-    picture = Some(new URL("https://scontent.xx.fbcdn.net/v/t1.0-0/s130x130/25396081_117607225698641_6348338142026249400_n.jpg")),
+    objectId    = Some("120118675447496"),
+    picture = Some(
+      new URL(
+        "https://scontent.xx.fbcdn.net/v/t1.0-0/s130x130/25398995_120118675447496_5830741756468130361_n.jpg"
+      )
+    ),
     from = Some(FacebookProfileId("117656352360395")),
     attachments = List(
       FacebookAttachment(
-        attachment = Some(FacebookImageSource(height = 360, src = new URL(
-          "https://scontent.xx.fbcdn.net/v/t1.0-9/s720x720/25396081_117607225698641_6348338142026249400_n.jpg"
-        ), width = 720)),
+        attachment = Some(
+          FacebookImageSource(
+            height = 360,
+            src = new URL(
+              "https://scontent.xx.fbcdn.net/v/t1.0-9/s720x720/25398995_120118675447496_5830741756468130361_n.jpg"
+            ),
+            width = 720
+          )
+        ),
         target = FacebookAttachmentTarget(
-          id = Some(FacebookAttachmentId("100023480929454")),
+          id  = Some(FacebookAttachmentId("100023480929454")),
           url = Some(new URL("https://www.facebook.com/bob.willins.98"))
         ),
-        title = Some("Bob Willins"),
-        attachmentType = AttachmentTypes.ProfileMedia,
-        url = Some(new URL("https://www.facebook.com/bob.willins.98"))
+        title          = Some("Bob's cover photo"),
+        attachmentType = AttachmentTypes.CoverPhoto,
+        url            = Some(new URL("https://www.facebook.com/bob.willins.98"))
       )
-    ))
+    )
+  )
+
+  val post2 = FacebookPost(
+    id          = FacebookPostId("117656352360395_117607245698639"),
+    name        = Some("Bob Willins"),
+    message     = None,
+    createdTime = Some(toInstant("2017-12-18T11:30:10+0000")),
+    objectId    = Some("117607225698641"),
+    picture = Some(
+      new URL(
+        "https://scontent.xx.fbcdn.net/v/t1.0-0/s130x130/25396081_117607225698641_6348338142026249400_n.jpg"
+      )
+    ),
+    from = Some(FacebookProfileId("117656352360395")),
+    attachments = List(
+      FacebookAttachment(
+        attachment = Some(
+          FacebookImageSource(
+            height = 360,
+            src = new URL(
+              "https://scontent.xx.fbcdn.net/v/t1.0-9/s720x720/25396081_117607225698641_6348338142026249400_n.jpg"
+            ),
+            width = 720
+          )
+        ),
+        target = FacebookAttachmentTarget(
+          id  = Some(FacebookAttachmentId("100023480929454")),
+          url = Some(new URL("https://www.facebook.com/bob.willins.98"))
+        ),
+        title          = Some("Bob Willins"),
+        attachmentType = AttachmentTypes.ProfileMedia,
+        url            = Some(new URL("https://www.facebook.com/bob.willins.98"))
+      )
+    )
+  )
 
   val paging = FacebookFeedPaging(
     Some(new URL(s"https://graph.facebook.com/v$v/117656352360395/feed")),
-    Some(new URL(s"https://graph.facebook.com/v$v/117656352360395/feed")))
+    Some(new URL(s"https://graph.facebook.com/v$v/117656352360395/feed"))
+  )
 
   val feed = FacebookFeed(List(post, post1, post2), paging)
 
-
   implicit class FacebookPostWithoutQuery(post: FacebookPost) {
     def withoutQueryParams = post.copy(
-      picture = post.picture.map(withoutQuery),
+      picture     = post.picture.map(withoutQuery),
       attachments = post.attachments.map(_.withoutQueryParams)
     )
   }
@@ -98,12 +123,12 @@ package object feed {
     )
   }
 
-
   implicit class FacebookFeedPagingWithoutQuery(paging: FacebookFeedPaging) {
     def withoutQueryParams: FacebookFeedPaging = {
       paging.copy(
         next     = paging.next.map(withoutQuery),
-        previous = paging.previous.map(withoutQuery))
+        previous = paging.previous.map(withoutQuery)
+      )
     }
   }
 
@@ -111,13 +136,16 @@ package object feed {
     def withoutQueryParams = {
       user.copy(
         picture = user.picture.map(withoutPictureQuery),
-        link = user.link.map(l => new URL(l.getProtocol + "://" + l.getHost))) //TODO facebook4s-117
+        link    = user.link.map(l => new URL(l.getProtocol + "://" + l.getHost))
+      ) //TODO facebook4s-117
     }
   }
 
   implicit class FacebookFriendsWithoutQuery(facebookFriends: FacebookFriends) {
     def withoutQueryParams = {
-      facebookFriends.copy(friends = facebookFriends.friends.map(_.withoutQueryParams))
+      facebookFriends.copy(
+        friends = facebookFriends.friends.map(_.withoutQueryParams)
+      )
     }
   }
 
@@ -135,26 +163,37 @@ package object feed {
     )
   }
 
-  implicit class FacebookLikeFuture(attach: Future[FacebookLikes])(implicit ec: ExecutionContext) {
+  implicit class FacebookLikeFuture(attach: Future[FacebookLikes])(
+    implicit ec: ExecutionContext
+  ) {
     def withoutPaging: Future[FacebookLikes] = attach.map(_.copy(paging = None))
   }
 
-  implicit class FacebookLikeFutureResult(attach: Future[Either[FacebookError, FacebookLikes]])(implicit ec: ExecutionContext) {
-    def withoutPaging: Future[Either[FacebookError, FacebookLikes]] = attach.map {
-      case Right(likes) => Right(likes.copy(paging = None))
-      case left         => left
-    }
+  implicit class FacebookLikeFutureResult(
+    attach: Future[Either[FacebookError, FacebookLikes]]
+  )(implicit ec: ExecutionContext) {
+    def withoutPaging: Future[Either[FacebookError, FacebookLikes]] =
+      attach.map {
+        case Right(likes) => Right(likes.copy(paging = None))
+        case left         => left
+      }
   }
 
-  private[this] def withoutPictureQuery(pic: FacebookUserPicture) = pic.copy(url = withoutQuery(pic.url))
-  private[this] def withoutAttachmentQuery(comment: FacebookComment) = comment.copy(attachment = comment.attachment.map(
-    a => a.copy(attachment = a.attachment.map(v => v.copy(src = withoutQuery(v.src))))
-  ))
+  private[this] def withoutPictureQuery(pic: FacebookUserPicture) =
+    pic.copy(url = withoutQuery(pic.url))
+  private[this] def withoutAttachmentQuery(comment: FacebookComment) =
+    comment.copy(
+      attachment = comment.attachment.map(
+        a =>
+          a.copy(
+            attachment = a.attachment.map(v => v.copy(src = withoutQuery(v.src)))
+          )
+      )
+    )
 
   private[this] def withoutCommentsQuery(c: FacebookComments) = {
     c.comments.map(comment => withoutAttachmentQuery(comment))
   }
-
 
   private[this] def withoutQuery(u: URL) = {
     new URL(u.toString.takeWhile(_ != '?'))

@@ -12,8 +12,17 @@ import com.github.vooolll.domain.profile.FacebookProfileId
 package object album {
 
   implicit class FacebookPhotoWithoutLinks(photo: FacebookPhoto) {
-    def uriWithoutQueryParams = photo.copy(images = photo.images.map(image =>
-      image.copy(source = new URL(onlyResource(image).fold("CAN'T SPLIT")(e => "http://" + e)))))
+    def uriWithoutQueryParams =
+      photo.copy(
+        images = photo.images.map(
+          image =>
+            image.copy(
+              source = new URL(
+                onlyResource(image).fold("CAN'T SPLIT")(e => "http://" + e)
+              )
+            )
+        )
+      )
   }
 
   private[this] def onlyResource(image: FacebookImage) = {
@@ -22,26 +31,44 @@ package object album {
 
   val photoId = FacebookPhotoId("120118675447496")
 
-  val source = new URL("http://25398995_120118675447496_5830741756468130361_n.jpg")
+  val source = new URL(
+    "http://25398995_120118675447496_5830741756468130361_n.jpg"
+  )
 
   val profileId = FacebookProfileId("117656352360395")
 
-  val timelineAlbum = FacebookAlbum(FacebookAlbumId("217892655670097"), "Timeline Photos", toInstant("2018-06-06T12:07:16+0000"))
-  val coverAlbum = FacebookAlbum(FacebookAlbumId("120118722114158"), "Cover Photos", toInstant("2017-12-19T14:08:44+0000"))
-  val profileAlbum = FacebookAlbum(FacebookAlbumId("117607235698640"), "Profile Pictures",
-    toInstant("2017-12-18T11:30:10+0000"))
+  val timelineAlbum = FacebookAlbum(
+    FacebookAlbumId("217892655670097"),
+    "Timeline Photos",
+    toInstant("2018-06-06T12:07:16+0000")
+  )
+  val coverAlbum = FacebookAlbum(
+    FacebookAlbumId("120118722114158"),
+    "Cover Photos",
+    toInstant("2017-12-19T14:08:44+0000")
+  )
+  val profileAlbum = FacebookAlbum(
+    FacebookAlbumId("117607235698640"),
+    "Profile Pictures",
+    toInstant("2017-12-18T11:30:10+0000")
+  )
 
   val facebookAlbums = FacebookAlbums(
     List(timelineAlbum, coverAlbum, profileAlbum),
-    Some(FacebookPaging(
-      Some("MjE3ODkyNjU1NjcwMDk3"),
-      Some("MTE3NjA3MjM1Njk4NjQw"))))
+    Some(
+      FacebookPaging(Some("MjE3ODkyNjU1NjcwMDk3"), Some("MTE3NjA3MjM1Njk4NjQw"))
+    )
+  )
 
   val photo = FacebookPhoto(
     photoId,
     Some(toInstant("2017-12-19T14:08:45+0000")),
-    List(FacebookImage(400, source, 800), FacebookImage(320, source, 640), FacebookImage(130, source, 260),
-      FacebookImage(225, source, 450)),
+    List(
+      FacebookImage(400, source, 800),
+      FacebookImage(320, source, 640),
+      FacebookImage(130, source, 260),
+      FacebookImage(225, source, 450)
+    ),
     Some(coverAlbum)
   )
 }

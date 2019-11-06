@@ -23,112 +23,161 @@ trait FacebookUrls extends LazyLogging {
   val clientId: FacebookClientId
   val appSecret: FacebookAppSecret
 
-  lazy val graphHostBuilder = URLBuilder(base = graphHost).withPathSegments(version.show)
-  lazy val baseHostBuilder = URLBuilder(base = baseHost).withPathSegments(version.show)
+  lazy val graphHostBuilder =
+    URLBuilder(base = graphHost).withPathSegments(version.show)
+  lazy val baseHostBuilder =
+    URLBuilder(base = baseHost).withPathSegments(version.show)
 
   lazy val oauthTokenBuilder = graphHostBuilder
     .withPathSegments(oauthAccessTokenUri)
     .withQueryParameters(
-      "client_id"     -> clientId.show,
-      "client_secret" -> appSecret.show)
+      "client_id" -> clientId.show,
+      "client_secret" -> appSecret.show
+    )
 
   lazy val oauthCodeBuilder = graphHostBuilder
     .withPathSegments(oauthClientCodeUri)
     .withQueryParameters(
-      "client_id"     -> clientId.show,
-      "client_secret" -> appSecret.show)
+      "client_id" -> clientId.show,
+      "client_secret" -> appSecret.show
+    )
 
-  lazy val appTokenUri = oauthTokenBuilder.withQueryParameters("grant_type" -> "client_credentials")
+  lazy val appTokenUri =
+    oauthTokenBuilder.withQueryParameters("grant_type" -> "client_credentials")
 
   def userTokenUri(code: String, machineId: Option[String]) = {
-    val mid = machineId.map("machine_id" -> _)
-    val params = Seq(
-      "redirect_uri"  -> redirect().show,
-      "code"          -> code) ++ mid
-    oauthTokenBuilder.withQueryParameters(params:_*)
+    val mid    = machineId.map("machine_id" -> _)
+    val params = Seq("redirect_uri" -> redirect().show, "code" -> code) ++ mid
+    oauthTokenBuilder.withQueryParameters(params: _*)
   }
 
   def withAccessToken(accessToken: FacebookAccessToken) =
     graphHostBuilder.withQueryParameters("access_token" -> accessToken.show)
 
-  def longLivedTokenUri(shortLeavingTokenValue: String) = oauthTokenBuilder.withQueryParameters(
-    "grant_type"        -> "fb_exchange_token",
-    "fb_exchange_token" -> shortLeavingTokenValue)
+  def longLivedTokenUri(shortLeavingTokenValue: String) =
+    oauthTokenBuilder.withQueryParameters(
+      "grant_type" -> "fb_exchange_token",
+      "fb_exchange_token" -> shortLeavingTokenValue
+    )
 
-  def accessTokenCodeUri(longLeavingTokenValue: String) = oauthCodeBuilder.withQueryParameters(
-    "access_token" -> longLeavingTokenValue,
-    "redirect_uri" -> redirect().show)
+  def accessTokenCodeUri(longLeavingTokenValue: String) =
+    oauthCodeBuilder.withQueryParameters(
+      "access_token" -> longLeavingTokenValue,
+      "redirect_uri" -> redirect().show
+    )
 
   def friendsUri(
     accessToken: FacebookAccessToken,
-    userId     : FacebookUserId,
-    attributes : Set[_ <: FacebookUserAttribute]) = edge(friendsEdge, userUri(accessToken, userId, attributes))
+    userId: FacebookUserId,
+    attributes: Set[_ <: FacebookUserAttribute]
+  ) =
+    edge(friendsEdge, userUri(accessToken, userId, attributes))
 
   def userFeedUri(
-    accessToken : FacebookAccessToken,
-    userId      : FacebookUserId,
-    attributes  : Set[_ <: FacebookPostAttribute]) =
-    manyParams(withAccessToken(accessToken).withPathSegments(userId.show).withPathSegments(feedUri), attributes)
+    accessToken: FacebookAccessToken,
+    userId: FacebookUserId,
+    attributes: Set[_ <: FacebookPostAttribute]
+  ) =
+    manyParams(
+      withAccessToken(accessToken)
+        .withPathSegments(userId.show)
+        .withPathSegments(feedUri),
+      attributes
+    )
 
-  def pageUri(
-    pageId      : FacebookPageId,
-    accessToken : FacebookAccessToken) =
-    withAccessToken(accessToken).withPathSegments(pageId.show).withPathSegments(feedUri)
+  def pageUri(pageId: FacebookPageId, accessToken: FacebookAccessToken) =
+    withAccessToken(accessToken)
+      .withPathSegments(pageId.show)
+      .withPathSegments(feedUri)
 
   def applicationUri(accessToken: FacebookAccessToken, applicationId: FacebookApplicationId) =
     withAccessToken(accessToken).withPathSegments(applicationId.show)
 
   def postUri(postId: FacebookPostId, accessToken: FacebookAccessToken, attributes: Set[_ <: FacebookPostAttribute]) = {
-    logger.debug("sending request : " + manyParams(graphHostBuilder.withPathSegments(postId.show), attributes))
-    manyParams(withAccessToken(accessToken).withPathSegments(postId.show), attributes)
+    logger.debug(
+      "sending request : " + manyParams(
+        graphHostBuilder.withPathSegments(postId.show),
+        attributes
+      )
+    )
+    manyParams(
+      withAccessToken(accessToken).withPathSegments(postId.show),
+      attributes
+    )
   }
 
-  def photoUri(photoId: FacebookPhotoId, accessToken: FacebookAccessToken, attributes: Set[_ <: FacebookPhotoAttribute]) =
-    manyParams(withAccessToken(accessToken).withPathSegments(photoId.show), attributes)
+  def photoUri(
+    photoId: FacebookPhotoId,
+    accessToken: FacebookAccessToken,
+    attributes: Set[_ <: FacebookPhotoAttribute]
+  ) =
+    manyParams(
+      withAccessToken(accessToken).withPathSegments(photoId.show),
+      attributes
+    )
 
   def likesUri(postId: FacebookPostId, accessToken: FacebookAccessToken, summary: Boolean = false) =
     withSummary(edge(likeUri, postUri(postId, accessToken, Set.empty)), summary)
 
   def commentsUri(
-    postId      : FacebookPostId,
-    accessToken : FacebookAccessToken,
-    attributes  : Set[_ <: FacebookCommentsAttribute],
-    summary     : Boolean = false) =
-    manyParams(withSummary(edge(commentsEdge, postUri(postId, accessToken, Set.empty)), summary), attributes)
+    postId: FacebookPostId,
+    accessToken: FacebookAccessToken,
+    attributes: Set[_ <: FacebookCommentsAttribute],
+    summary: Boolean = false
+  ) =
+    manyParams(
+      withSummary(
+        edge(commentsEdge, postUri(postId, accessToken, Set.empty)),
+        summary
+      ),
+      attributes
+    )
 
   def commentUri(
-    commentId   : FacebookCommentId,
-    accessToken : FacebookAccessToken,
-    attributes  : Set[_ <: FacebookCommentAttribute]) =
-    manyParams(withAccessToken(accessToken).withPathSegments(commentId.value), attributes)
+    commentId: FacebookCommentId,
+    accessToken: FacebookAccessToken,
+    attributes: Set[_ <: FacebookCommentAttribute]
+  ) =
+    manyParams(
+      withAccessToken(accessToken).withPathSegments(commentId.value),
+      attributes
+    )
 
   def albumsUri(profileId: FacebookProfileId, accessToken: FacebookAccessToken) =
     edge(albumsEdge, profileUri(accessToken, profileId))
 
-  def buildAuthUrl(permissions: Set[_ <: FacebookPermission],
-                   responseType: FacebookAttribute = FacebookCode,
-                   state: Option[String] = None) = {
+  def buildAuthUrl(
+    permissions: Set[_ <: FacebookPermission],
+    responseType: FacebookAttribute = FacebookCode,
+    state: Option[String]           = None
+  ) = {
     val params = Seq(
-      "client_id"     -> clientId.show,
-      "redirect_uri"  -> redirect().show,
+      "client_id" -> clientId.show,
+      "redirect_uri" -> redirect().show,
       "response_type" -> responseType.show
     ) ++ many("scope", permissions) ++ state.map("state" -> _)
-    baseHostBuilder.withPathSegments(FacebookConstants.authUri).withQueryParameters(params:_*)
+    baseHostBuilder
+      .withPathSegments(FacebookConstants.authUri)
+      .withQueryParameters(params: _*)
   }
 
-  def profileUri(accessToken : FacebookAccessToken,
-                 profileId   : FacebookProfileId) =
+  def profileUri(accessToken: FacebookAccessToken, profileId: FacebookProfileId) =
     withAccessToken(accessToken).withPathSegments(profileId.value)
 
-  def userUri(accessToken : FacebookAccessToken,
-              userId      : FacebookUserId = FacebookUserId("me"),
-              attributes  : Set[_ <: FacebookUserAttribute]) = {
-    val url = manyParams(withAccessToken(accessToken).withPathSegments(userId.show), attributes)
+  def userUri(
+    accessToken: FacebookAccessToken,
+    userId: FacebookUserId = FacebookUserId("me"),
+    attributes: Set[_ <: FacebookUserAttribute]
+  ) = {
+    val url = manyParams(
+      withAccessToken(accessToken).withPathSegments(userId.show),
+      attributes
+    )
     url
   }
 
   private[this] def manyParams(url: URLBuilder, attr: Set[_ <: FacebookAttribute]) =
-    url.withQueryParameters(Seq() ++ many("fields", attr):_*)
+    url.withQueryParameters(Seq() ++ many("fields", attr): _*)
 
   private[this] def edge(edge: String, uriBuilder: URLBuilder) =
     uriBuilder.withPathSegments(edge)
@@ -137,11 +186,14 @@ trait FacebookUrls extends LazyLogging {
     uriBuilder.withQueryParameters("summary" -> summary.toString)
 
   private[this] def redirect() =
-    redirectUri getOrElse(throw new RuntimeException("redirect uri is not set"))
+    redirectUri getOrElse (throw new RuntimeException(
+      "redirect uri is not set"
+    ))
 
   private[this] def many(key: String, attr: Set[_ <: FacebookAttribute]) =
     if (attr.nonEmpty) key -> commaSeparated(attr) some else none
 
-  private[this] def commaSeparated(permissions: Set[_ <: FacebookAttribute]) = permissions.map(_.value).mkString(",")
+  private[this] def commaSeparated(permissions: Set[_ <: FacebookAttribute]) =
+    permissions.map(_.value).mkString(",")
 
 }

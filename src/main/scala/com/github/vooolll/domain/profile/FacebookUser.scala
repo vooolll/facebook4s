@@ -21,17 +21,18 @@ final case class FacebookUserId(value: String) extends AnyVal
   * @param location current town
   */
 case class FacebookUser(
-  id        : FacebookUserId,
-  email     : Option[String],
-  name      : Option[String],
-  picture   : Option[FacebookUserPicture],
-  firstName : Option[String],
-  lastName  : Option[String],
-  link      : Option[URL],
-  gender    : Option[Gender],
-  ageRange  : Option[AgeRange],
-  hometown  : Option[FacebookTown],
-  location  : Option[FacebookTown]) extends FacebookProfile
+  id: FacebookUserId,
+  email: Option[String],
+  name: Option[String],
+  picture: Option[FacebookUserPicture],
+  firstName: Option[String],
+  lastName: Option[String],
+  link: Option[URL],
+  gender: Option[Gender],
+  ageRange: Option[AgeRange],
+  hometown: Option[FacebookTown],
+  location: Option[FacebookTown]
+) extends FacebookProfile
 
 /**
   * @param height image height
@@ -39,11 +40,7 @@ case class FacebookUser(
   * @param url link
   * @param wight image wight
   */
-case class FacebookUserPicture(
-  height       : Double,
-  isSilhouette : Boolean,
-  url          : URL,
-  wight        : Double)
+case class FacebookUserPicture(height: Double, isSilhouette: Boolean, url: URL, wight: Double)
 
 /**
   * @param id cover id
@@ -51,19 +48,13 @@ case class FacebookUserPicture(
   * @param offsetY y offset
   * @param source source link
   */
-case class Cover(
-  id      : Option[String],
-  offsetX : Double,
-  offsetY : Double,
-  source  : URL)
+case class Cover(id: Option[String], offsetX: Double, offsetY: Double, source: URL)
 
 /**
   * @param id town id
   * @param name name like New York, USA
   */
-case class FacebookTown(
-  id: String,
-  name: String)
+case class FacebookTown(id: String, name: String)
 
 /**
   * @param min upper bounds of the range for this person's age

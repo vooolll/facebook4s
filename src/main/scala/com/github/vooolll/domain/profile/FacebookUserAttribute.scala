@@ -3,8 +3,19 @@ package com.github.vooolll.domain.profile
 import com.github.vooolll.domain.FacebookAttribute
 
 object FacebookUserAttribute {
-  val defaultAttributeValues = Set(Email, Name, Id, Picture, FirstName, LastName, Link, AgeRange, Gender,
-    Hometown, Location)
+  val defaultAttributeValues = Set(
+    Email,
+    Name,
+    Id,
+    Picture,
+    FirstName,
+    LastName,
+    Link,
+    AgeRange,
+    Gender,
+    Hometown,
+    Location
+  )
 
   case object Email extends FacebookUserAttribute {
     override def value = "email"

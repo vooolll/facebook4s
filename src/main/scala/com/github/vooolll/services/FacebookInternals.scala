@@ -15,12 +15,14 @@ abstract class FacebookInternals extends FacebookUrls {
 
   def sendRequest[A](
     uri: URLBuilder,
-    context: RequestContext = GetRequestContext)(implicit decoder: Decoder[A]): Future[Either[FacebookError, A]] =
+    context: RequestContext = GetRequestContext
+  )(implicit decoder: Decoder[A]): Future[Either[FacebookError, A]] =
     asDomainResult(uri)(DomainParsingContext(decoder, context))
 
   def sendRequestOrFail[A](
     uri: URLBuilder,
-    context: RequestContext = GetRequestContext)(implicit decoder: Decoder[A]): Future[A] =
+    context: RequestContext = GetRequestContext
+  )(implicit decoder: Decoder[A]): Future[A] =
     asDomain(uri)(DomainParsingContext(decoder, context))
 
 }

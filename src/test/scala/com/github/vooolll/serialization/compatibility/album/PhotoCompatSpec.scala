@@ -15,12 +15,19 @@ class PhotoCompatSpec extends CompatibilitySpec {
   val albumPath = "testdata/photo_album.json"
   val photoPath = "testdata/photo.json"
 
-  val facebookImage = FacebookImage(225,
-    new URL("https://scontent.xx.fbcdn.net/v/t1.0-0/p75x225/25396081_117607225698641_6348338142026249400_n.jpg"),
-    450)
+  val facebookImage = FacebookImage(
+    225,
+    new URL(
+      "https://scontent.xx.fbcdn.net/v/t1.0-0/p75x225/25396081_117607225698641_6348338142026249400_n.jpg"
+    ),
+    450
+  )
 
   val facebookPhoto = FacebookPhoto(
-    FacebookPhotoId("117607225698641"), Some(toInstant("2017-12-18T11:30:11+0000")), List(facebookImage), Some(facebookProfileAlbum)
+    FacebookPhotoId("117607225698641"),
+    Some(toInstant("2017-12-18T11:30:11+0000")),
+    List(facebookImage),
+    Some(facebookProfileAlbum)
   )
 
   "FacebookPhoto" should {

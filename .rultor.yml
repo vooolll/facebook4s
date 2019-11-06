@@ -1,9 +1,9 @@
 architect:
-- vooolll
+  - vooolll
 docker:
   image: hseeberger/scala-sbt
 merge:
   script: |-
     sbt clean compile
   commanders:
-  - vooolll
+    - vooolll

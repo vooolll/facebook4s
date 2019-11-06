@@ -8,17 +8,25 @@ import com.github.vooolll.serialization.FacebookDecoders._
 
 class LikesCompatSpec extends CompatibilitySpec {
 
-  val likesPath = "testdata/likes.json"
-  val likePath = "testdata/like.json"
-  val likesPagingPath = "testdata/likes_paging.json"
-  val likesSummaryPath = "testdata/likes_summary.json"
+  val likesPath            = "testdata/likes.json"
+  val likePath             = "testdata/like.json"
+  val likesPagingPath      = "testdata/likes_paging.json"
+  val likesSummaryPath     = "testdata/likes_summary.json"
   val likesWithSummaryPath = "testdata/likes_with_summary.json"
 
-  val likesSummary = FacebookLikesSummary(totalCount = 1, canLike = true.some, hasLikes = true.some)
+  val likesSummary = FacebookLikesSummary(
+    totalCount = 1,
+    canLike    = true.some,
+    hasLikes   = true.some
+  )
 
-  val like = FacebookLike(FacebookUserId("215080582368050"), "Iana Baibossynova".some)
+  val like =
+    FacebookLike(FacebookUserId("215080582368050"), "Iana Baibossynova".some)
 
-  val likesPaging = FacebookPaging("MTkzMDAwNzk1MDU5NTAzOAZDZD".some, "MjE1MDgwNTgyMzY4MDUw".some)
+  val likesPaging = FacebookPaging(
+    "MTkzMDAwNzk1MDU5NTAzOAZDZD".some,
+    "MjE1MDgwNTgyMzY4MDUw".some
+  )
 
   val likes = FacebookLikes(List(like), Some(likesPaging))
 
@@ -41,7 +49,8 @@ class LikesCompatSpec extends CompatibilitySpec {
 
     s"be compatible with $likesWithSummaryPath" in {
       decodeJson[FacebookLikes](likesWithSummaryPath) shouldBe likes.copy(
-        summary = likesSummary.some)
+        summary = likesSummary.some
+      )
     }
   }
 

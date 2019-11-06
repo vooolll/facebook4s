@@ -9,24 +9,27 @@ class PostSpec extends FacebookClientSupport {
 
   "Facebook Graph Api" should {
     "return posts" in { c =>
-      c.post(postId) map(_.withoutQueryParams shouldBe post1)
+      c.post(postId) map (_.withoutQueryParams shouldBe post1)
     }
 
     "return posts result" in { c =>
-      c.postResult(postId) map(p => p.map(_.withoutQueryParams) shouldBe post1.asRight)
+      c.postResult(postId) map (
+        p => p.map(_.withoutQueryParams) shouldBe post1.asRight
+      )
     }
 
     "return error SpecifiedObjectNotFound" in { c =>
       c.postResult(postId.copy(value = "wrong id")).map {
         case Right(_) => fail("should return error")
-        case Left(e) => e.errorType shouldBe FacebookError.SpecifiedObjectNotFound
+        case Left(e) =>
+          e.errorType shouldBe FacebookError.SpecifiedObjectNotFound
       }
     }
 
-    "return error specified InvalidVerificationCodeFormat" in { c =>
+    "return error PermissionDenied" in { c =>
       c.postResult(postId.copy(value = "wrong")).map {
         case Right(_) => fail("should return error")
-        case Left(e) => e.errorType shouldBe FacebookError.InvalidVerificationCodeFormat
+        case Left(e)  => e.errorType shouldBe FacebookError.InvalidVerificationCodeFormat
       }
     }
   }

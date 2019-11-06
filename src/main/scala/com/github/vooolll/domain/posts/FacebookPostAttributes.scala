@@ -4,7 +4,8 @@ import com.github.vooolll.domain.FacebookAttribute
 
 object FacebookPostAttributes {
 
-  val defaultPostAttributeValues = Set(Id, Messages, CreatedTime, ObjectId, Picture, From, Name, Attachments)
+  val defaultPostAttributeValues =
+    Set(Id, Messages, CreatedTime, ObjectId, Picture, From, Name, Attachments)
 
   trait FacebookPostAttribute extends FacebookAttribute
 

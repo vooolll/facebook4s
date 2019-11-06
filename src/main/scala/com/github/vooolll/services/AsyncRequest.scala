@@ -12,14 +12,20 @@ import scala.concurrent.Future
   */
 class AsyncRequest() {
 
-  def apply(url: URLBuilder)(implicit appResources: AppResources): AsyncResponseContext = {
+  def apply(
+    url: URLBuilder
+  )(implicit appResources: AppResources): AsyncResponseContext = {
     import appResources._
     implicit val httpExtension = Http()
 
-    new AsyncResponseContext(httpExtension.singleRequest(HttpRequest(uri = url.toString())))
+    new AsyncResponseContext(
+      httpExtension.singleRequest(HttpRequest(uri = url.toString()))
+    )
   }
 
-  def post(url: URLBuilder, data: UntypedData)(implicit appResources: AppResources): AsyncResponseContext = {
+  def post(url: URLBuilder, data: UntypedData)(
+    implicit appResources: AppResources
+  ): AsyncResponseContext = {
     import appResources._
     implicit val httpExtension = Http()
 
@@ -40,7 +46,9 @@ object AsyncRequest {
 
   type UntypedData = Map[String, String]
 
-  class AsyncResponseContext(val response: Future[HttpResponse])(implicit val httpExtension: HttpExt) {
+  class AsyncResponseContext(val response: Future[HttpResponse])(
+    implicit val httpExtension: HttpExt
+  ) {
     def cleanResources() = {
       httpExtension.shutdownAllConnectionPools()
     }

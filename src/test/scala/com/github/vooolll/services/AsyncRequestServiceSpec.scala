@@ -13,7 +13,8 @@ class AsyncRequestServiceSpec extends AsyncResourceSpec {
   }
 
   "Should send POST request" in {
-    val responseContext = asyncRequest.post(TestUrls.appTokenUri, Map("test" -> "value"))
+    val responseContext =
+      asyncRequest.post(TestUrls.appTokenUri, Map("test" -> "value"))
     responseContext.cleanResources()
     responseContext.response.map(_.status shouldBe StatusCodes.OK)
   }

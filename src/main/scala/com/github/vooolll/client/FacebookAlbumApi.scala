@@ -14,7 +14,9 @@ trait FacebookAlbumApi extends FacebookInternals {
     * @param accessToken user access token
     * @return FacebookAlbums
     */
-  def albums(profileId: ProfileId)(implicit accessToken: AccessToken): Future[Albums] =
+  def albums(
+    profileId: ProfileId
+  )(implicit accessToken: AccessToken): Future[Albums] =
     sendRequestOrFail(albumsUri(profileId, accessToken))
 
   /**
@@ -22,7 +24,9 @@ trait FacebookAlbumApi extends FacebookInternals {
     * @param accessToken user access token
     * @return either FacebookAlbums or FacebookError
     */
-  def albumsResult(profileId: ProfileId)(implicit accessToken: AccessToken): FutureResult[Albums] =
+  def albumsResult(
+    profileId: ProfileId
+  )(implicit accessToken: AccessToken): FutureResult[Albums] =
     sendRequest(albumsUri(profileId, accessToken))
 
 }

@@ -4,9 +4,10 @@ import com.github.vooolll.domain.FacebookPaging
 import com.github.vooolll.domain.profile.FacebookUserId
 
 final case class FacebookLikes(
-  likes   : List[FacebookLike],
-  paging  : Option[FacebookPaging],
-  summary : Option[FacebookLikesSummary] = None)
+  likes: List[FacebookLike],
+  paging: Option[FacebookPaging],
+  summary: Option[FacebookLikesSummary] = None
+)
 
 final case class FacebookLike(id: FacebookUserId, name: Option[String])
 

@@ -15,7 +15,9 @@ trait FacebookApplicationApi extends FacebookInternals {
     * @return Facebook application details
     *         @throws scala.RuntimeException if facebook responds with bad request
     */
-  def application(applicationId: ApplicationId)(implicit accessToken: AccessToken): Future[Application] =
+  def application(
+    applicationId: ApplicationId
+  )(implicit accessToken: AccessToken): Future[Application] =
     sendRequestOrFail(applicationUri(accessToken, applicationId))
 
   /**
@@ -23,7 +25,9 @@ trait FacebookApplicationApi extends FacebookInternals {
     * @param accessToken Facebook user access token
     * @return Either facebook application details or error FacebookError
     */
-  def applicationResult(applicationId: ApplicationId)(implicit accessToken: AccessToken): FutureResult[Application] =
+  def applicationResult(
+    applicationId: ApplicationId
+  )(implicit accessToken: AccessToken): FutureResult[Application] =
     sendRequest(applicationUri(accessToken, applicationId))
-    
+
 }

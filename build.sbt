@@ -10,13 +10,16 @@ publishMavenStyle := true
 
 publishTo := {
   val nexus = "https://oss.sonatype.org/"
-  if (isSnapshot.value) Some("snapshots" at nexus + "content/repositories/snapshots")
+  if (isSnapshot.value)
+    Some("snapshots" at nexus + "content/repositories/snapshots")
   else Some("releases" at nexus + "service/local/staging/deploy/maven2")
 }
 
 publishArtifact in Test := false
 
-pomIncludeRepository := { _ => false }
+pomIncludeRepository := { _ =>
+  false
+}
 
 organization := "com.github.vooolll"
 
@@ -29,12 +32,18 @@ apiMappings ++= {
   val classpath = (fullClasspath in Compile).value
   def findJar(name: String): File = {
     val regex = ("/" + name + "[^/]*.jar$").r
-    classpath.find { jar => regex.findFirstIn(jar.data.toString).nonEmpty }.get.data // fail hard if not found
+    classpath
+      .find { jar =>
+        regex.findFirstIn(jar.data.toString).nonEmpty
+      }
+      .get
+      .data // fail hard if not found
   }
 
-
   Map(
-    findJar("scala-library") -> url("http://scala-lang.org/api/" + "2.12.6" + "/"),
+    findJar("scala-library") -> url(
+      "http://scala-lang.org/api/" + "2.12.6" + "/"
+    ),
     findJar("config") -> url("https://typesafehub.github.io/config/latest/api/")
   )
 }
@@ -45,7 +54,12 @@ tutSourceDirectory := (sourceDirectory in Compile).value / "docs"
 
 tutTargetDirectory := file("./docs")
 
-javaOptions in Tut ++= Seq(sys.env.getOrElse("TRAVIS_OPTION", "-Dconfig.file=src/test/resources/.facebook-dev.conf"))
+javaOptions in Tut ++= Seq(
+  sys.env.getOrElse(
+    "TRAVIS_OPTION",
+    "-Dconfig.file=src/test/resources/.facebook-dev.conf"
+  )
+)
 
 pomExtra :=
   <url>https://github.com/vooolll/facebook4s</url>
@@ -62,36 +76,39 @@ pomExtra :=
   </developers>
 
 libraryDependencies ++= {
-  val akkaHttpV = "10.1.1"
-  val scalaTestV = "3.0.1"
-  val typesafeV = "1.3.1"
-  val mockitoV = "1.8.5"
-  val scalaLoggingV = "3.7.2"
+  val akkaHttpV        = "10.1.1"
+  val scalaTestV       = "3.0.1"
+  val typesafeV        = "1.3.1"
+  val mockitoV         = "1.8.5"
+  val scalaLoggingV    = "3.7.2"
   val akkaJsonSupportV = "1.20.1"
-  val logbackClassicV = "1.2.3"
-  val uriBuilderV = "0.9.0"
-  val circeV = "0.9.3"
+  val logbackClassicV  = "1.2.3"
+  val uriBuilderV      = "0.9.0"
+  val circeV           = "0.9.3"
 
   val testDependencies = Seq(
-    "org.scalatest"  %% "scalatest"       % scalaTestV,
-    "ch.qos.logback" %  "logback-classic" % logbackClassicV,
-    "org.mockito"    %  "mockito-core"    % mockitoV,
-    "io.circe"       %% "circe-parser"    % circeV).map(_ % Test)
+    "org.scalatest"  %% "scalatest"      % scalaTestV,
+    "ch.qos.logback" % "logback-classic" % logbackClassicV,
+    "org.mockito"    % "mockito-core"    % mockitoV,
+    "io.circe"       %% "circe-parser"   % circeV
+  ).map(_ % Test)
 
   val dependencies = Seq(
-    "com.typesafe.akka"              %% "akka-http"           % akkaHttpV,
-    "com.typesafe.scala-logging"     %% "scala-logging"       % scalaLoggingV,
-    "de.heikoseeberger"              %% "akka-http-circe"     % akkaJsonSupportV,
-    "org.f100ded.scala-url-builder"  %% "scala-url-builder"   % uriBuilderV,
-    "io.circe"                       %% "circe-core"          % circeV,
-    "io.circe"                       %% "circe-generic"       % circeV,
-    "com.typesafe"                   %  "config"              % typesafeV
+    "com.typesafe.akka"             %% "akka-http"         % akkaHttpV,
+    "com.typesafe.scala-logging"    %% "scala-logging"     % scalaLoggingV,
+    "de.heikoseeberger"             %% "akka-http-circe"   % akkaJsonSupportV,
+    "org.f100ded.scala-url-builder" %% "scala-url-builder" % uriBuilderV,
+    "io.circe"                      %% "circe-core"        % circeV,
+    "io.circe"                      %% "circe-generic"     % circeV,
+    "com.typesafe"                  % "config"             % typesafeV
   )
 
   dependencies ++ testDependencies
 }
 
-licenses := Seq("Apache-2.0" -> url("http://opensource.org/licenses/Apache-2.0"))
+licenses := Seq(
+  "Apache-2.0" -> url("http://opensource.org/licenses/Apache-2.0")
+)
 
 scalacOptions ++= Seq(
   "-encoding",
@@ -101,11 +118,21 @@ scalacOptions ++= Seq(
   "-language:implicitConversions",
   "-language:existentials",
   "-feature",
-  "-deprecation")
-
+  "-deprecation"
+)
 
 fork := true
 
-testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-W", "120", "60")
+testOptions in Test += Tests.Argument(
+  TestFrameworks.ScalaTest,
+  "-W",
+  "120",
+  "60"
+)
 
-javaOptions in Test ++= Seq(sys.env.getOrElse("TRAVIS_OPTION", "-Dconfig.file=src/test/resources/.facebook-dev.conf"))
+javaOptions in Test ++= Seq(
+  sys.env.getOrElse(
+    "TRAVIS_OPTION",
+    "-Dconfig.file=src/test/resources/.facebook-dev.conf"
+  )
+)
