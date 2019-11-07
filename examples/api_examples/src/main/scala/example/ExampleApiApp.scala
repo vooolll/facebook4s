@@ -31,6 +31,10 @@ object ExampleApiApp extends App {
   println("User: " + user)
   println("------------------")
 
+  val currentUser = Await.result(facebookClient.currentUserProfile, 3.seconds)
+  println("Current user: " + user)
+  println("------------------")
+
   val feed = Await.result(facebookClient.feed(userId), 3.seconds)
   println("Feed: + " + feed)
   println("------------------")
