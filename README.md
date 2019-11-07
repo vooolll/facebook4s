@@ -6,7 +6,7 @@ facebook4s
 
 Prerequisites
 -------------
-* Scala 2.11.x and 2.12.x
+* Scala 2.12.x
 
 ### Installation
 Add the following line to your sbt dependencies:
