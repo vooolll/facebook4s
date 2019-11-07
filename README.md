@@ -11,7 +11,7 @@ Prerequisites
 ### Installation
 Add the following line to your sbt dependencies:
 ```scala
-"com.github.vooolll" %% "facebook4s" % "0.3.3"
+"com.github.vooolll" %% "facebook4s" % "0.3.4"
 ```
 
 Note: make sure that you have in your `build.sbt`
