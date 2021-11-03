@@ -1,4 +1,4 @@
-facebook4s
+facebook4s[Abandoned]
 =========
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/0c7d5adedcba4774988ad1fe3e075558)](https://www.codacy.com/app/baibossynov-valery/facebook4s?utm_source=github.com&utm_medium=referral&utm_content=vooolll/facebook4s&utm_campaign=badger)
